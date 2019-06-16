@@ -11,9 +11,9 @@ Every optimization problem can be written in matrix form. For some problems, it 
 The MILP can be formulated in the following matrixes:
 
 ```
-min  vecFf * vecXx + vecGg * vecYy
-s.t. matAa1 * vecXx + matCc1 * vecYy <= vecBb1'
-     matAa2 * vecXx + matCc2 * vecYy <= vecBb2'
+min  vecFf' * vecXx + vecGg' * vecYy
+s.t. matAa1 * vecXx + matCc1 * vecYy <= vecBb1
+     matAa2 * vecXx + matCc2 * vecYy <= vecBb2
      vecXx in R
      vecYy in Z+
 ```
