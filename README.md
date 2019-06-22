@@ -1,5 +1,7 @@
 # MatrixOptim 矩阵优化
 
+![Tangram](/images/tangram_1)
+
 MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
 
 通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法（使用 Julia 语言）。中文详解请见[wiki/9-zh](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
