@@ -1,6 +1,6 @@
 # MatrixOptim 矩阵优化
 
-![Tangram](/images/tangram_1)
+![Tangram](/images/tangram_1.png)
 
 MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
 
