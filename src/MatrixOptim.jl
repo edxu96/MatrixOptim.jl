@@ -8,7 +8,7 @@ using Random
 using SparseArrays
 using PrettyTables
 
-export doDWDecomp, Sense, leq, geq, eq
+export lp, doDWDecomp, Sense, leq, geq, eq
 
 include("benders.jl")
 include("robust.jl")
