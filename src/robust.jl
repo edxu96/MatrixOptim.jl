@@ -4,10 +4,6 @@
 # Version: 3.0
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 8th, 2019
-module RobustOptim
-using JuMP
-using GLPKMathProgInterface
-# using PrettyTables
 
 # Function for MILP with Box Uncertainty and Budget of Uncertainty
 function milpBoxBudget(; num_x, num_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b,
@@ -221,6 +217,4 @@ function lpBox(; num_x, m, num_z, vec_c, vec_b, mat_a, mat_a_bar, mat_a_hat, vec
             "   2/2. Nominal Ending\n",
             "---------------------------------------------------------\n")
     return (obj_result, vec_result_x, vec_result_theta2)
-end
-
 end
