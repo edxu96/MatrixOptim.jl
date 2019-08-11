@@ -2,12 +2,11 @@
 # Edward J. Xu
 # 2019.5.27
 ########################################################################################################################
-module DantzigWolfeDecomposition
+
 include("dw/sub.jl")
 include("dw/mas.jl")
 include("dw/stab.jl")
 include("dw/optim.jl")
-export doDWDecomp, Sense, leq, geq, eq
 ########################################################################################################################
 
 
@@ -47,7 +46,4 @@ function doDWDecomp(mat_a, vec_b, vec_c, vecSenseAll, indexMas, blocks, indexSub
     println("#### 4/4,  Print Result ########################################################") ########################
     printResult(vecStrNameVar, indexSub, vecLambda, vecLambdaResult, extremePointForSub, extremePoints)
     println("################################################################################")
-end
-
-
 end

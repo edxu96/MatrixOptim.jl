@@ -6,7 +6,7 @@
 
 
 mutable struct ModelSub
-    mod::JuMP.Model
+    mod::Model
     mat_e
     vec_l
     mat_d
@@ -16,7 +16,7 @@ mutable struct ModelSub
 end
 
 
-function setVariableSub(modSub::JuMP.Model, mat_d, vec_q, vecSense)
+function setVariableSub(modSub::Model, mat_d, vec_q, vecSense)
     (m_d, n_d) = size(mat_d)
     @variable(modSub, vec_x[1: n_d] >= 0, Bin)
     @objective(modSub, Max, 0)

@@ -1,0 +1,10 @@
+language: julia
+codecov: true
+coveralls: true
+julia:
+  - nightly
+  - 1.1
+  - 1.0.3
+os:
+  - osx
+  - linux
