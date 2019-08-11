@@ -3,6 +3,76 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: August 11, 2019
 
+@enum ColRow begin
+   row = 1
+   col = 2
+end
+
+function checkColVec(vec::Array{Int64,2}, str_name::String)
+    if size(vec)[2] == 1
+        throw("$str_name is not a column vector")
+    return
+end
+
+function checkMatrixMatch(array_1::Array{Int64,2}, array_2::Array{Int64,2}, whi_1::ColRow, whi_2::ColRow,
+    str_name_1::String, str_name_2::String)
+    if size(array_1)[Int(whi_1)] != size(array_2)[Int(whi_2)]
+        throw("The $(str(whi_1)) of $str_name_1 doesn't match the $(str(whi_2)) of $str_name_2.")
+    end
+end
+
+"""
+Model for Mixed Integer Programming
+"""
+mutable struct ModelMixed
+    vec_c::Array{Int64,2}  # the coefficient vector for linear variables in the objective function
+    mat_aCap::Array{Int64,2}  #
+    vec_f::Array{Int64,2}  # the coefficient vector for integer variables in the objective function
+    mat_bCap::Array{Int64,2}
+    vec_b::Array{Int64,2}
+
+    function checkSize(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+        if size(vec_c)[1] == size(mat_aCap)[2]
+            if size(vec_f)[1] == size(mat_bCap)[2]
+                if ~((size(mat_aCap)[1] == size(mat_bCap)[a]) & (size(mat_aCap)[1] == size(vec_b)[1]))
+                    throw("`mat_aCap`, `mat_bCap` and `vec_b` don't match each other.")
+                end
+            else
+                throw("`vec_f` doesn't match `mat_bCap`.")
+            end
+        else
+            throw("`vec_c` doesn't match `mat_aCap`.")
+        end
+        return true
+    end
+
+    function ModelMixed(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+        checkColVec(vec_c, "vec_c")
+        checkColVec(vec_f, "vec_f")
+        checkColVec(vec_b, "vec_b")
+        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c". "mat_aCap")
+        checkMatrixMatch(vec_f, mat_bCap, row, col, "vec_f". "mat_bCap")
+        checkMatrixMatch(mat_aCap, mat_bCap, row, row, "mat_aCap". "mat_bCap")
+        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap". "vec_b")
+        new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+    end
+end
+
+"""
+Append a constraint to ModelMixed
+"""
+function appendConstraint(model::ModelMixed, vec_a_new::Array{Int64,2}, vec_b_new::Array{Int64,2}, b_new::Float64)
+    if checkColVec(vec_a_new) & checkColVec(vec_b_new)
+        model.mat_aCap = vcat(model.mat_aCap, vec_a_new')
+        model.mat_bCap = vcat(model.mat_bCap, vec_b_new')
+        model.vec_b = vcat(mode.vec_b, b_new)
+    else
+        throw("At least one of the vectors is not column vector.")
+    end
+
+    return model
+end
+
 """
         lp(n_x, vec_c, vec_b, mat_a)
 
@@ -22,5 +92,5 @@ function lp(n_x, vec_c, vec_b, mat_a)
     vec_result_u = getdual(constraintsForDual)
     obj = getobjectivevalue(model)
     vec_result_x = getvalue(vec_x)
-    return (obj, vec_result_x, vec_result_u)
+    return obj, vec_result_x, vec_result_u
 end
