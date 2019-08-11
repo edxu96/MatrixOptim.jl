@@ -6,12 +6,7 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
 
-module Benders
-    using JuMP
-    using GLPKMathProgInterface
-    using PrettyTables
-    # 1.BendersOptim.milp: for MILP with Sub and Ray Problems
-    include("benders_milp.jl")
-    # 2. BendersOptim.lshaped: for stochastic programming
-    include("benders_lshaped.jl")
-end
+# 1.BendersOptim.milp: for MILP with Sub and Ray Problems
+include("benders/milp.jl")
+# 2. BendersOptim.lshaped: for stochastic programming
+include("benders/lshaped.jl")

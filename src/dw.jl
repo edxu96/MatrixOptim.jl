@@ -3,18 +3,10 @@
 # 2019.5.27
 ########################################################################################################################
 module DantzigWolfeDecomposition
-using JuMP
-using Gurobi
-using CPLEX
-using GLPKMathProgInterface
-using LinearAlgebra
-using MathProgBase
-using Random
-using SparseArrays
-include("FuncSub.jl")
-include("FuncMas.jl")
-include("FuncStab.jl")
-include("FuncOptim.jl")
+include("dw/sub.jl")
+include("dw/mas.jl")
+include("dw/stab.jl")
+include("dw/optim.jl")
 export doDWDecomp, Sense, leq, geq, eq
 ########################################################################################################################
 

@@ -2,7 +2,6 @@
 # Version: 2.0
 # Auther: Edward J. Xu
 # Date: Aprial 7th, 2019
-module CoeffMatrix
 # Function to initiate the coefficient matrix, update the last row, or add a row in the last.
 # 1. default double-script order:
 #   |     n(j)|
@@ -85,4 +84,3 @@ end
 #     mat_para = - mat_para, vec_i_x = [1 2 3], vec_j_x = collect(2: 1: 12))
 # (mat_coeff, mat_para_cal) = updateRow(add = 1, mat_coeff = mat_coeff, m = 3, n = 12,
 #     mat_para = mat_para, vec_i_x = [1 2 3], vec_j_x = collect(1: 1: 11), vec_j_a = collect(1: 1: 11) .+ 1)
-end  # module CoeffMatrix
