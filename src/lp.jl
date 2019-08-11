@@ -2,9 +2,7 @@
 # Version: 5.1
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
-# ----------------------------------------------------------------------------------------------------------------------
-# using JuMP
-# using GLPKMathProgInterface
+
 function lp(n_x, vec_c, vec_b, mat_a)
     # Linear Programming in Matrix Form
     # vec_c: [column vector] coefficient vector in objective function

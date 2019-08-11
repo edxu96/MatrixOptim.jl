@@ -1,22 +1,12 @@
 # Dantzig-Wolfe Reformulation and Column Generation
 # Edward J. Xu
 # 2019.5.26
-########################################################################################################################
 # include("$(homedir())/Documents/Github/DantzigWolfeDecomposition/Test/test.jl")
-push!(LOAD_PATH, "$(homedir())/Documents/Github/DantzigWolfeDecomposition")
-cd("$(homedir())/Documents/Github/DantzigWolfeDecomposition")
-using JuMP
-using CPLEX
-using GLPKMathProgInterface
-using Gurobi
-using LinearAlgebra
-using MathProgBase
-using SparseArrays
-########################################################################################################################
+# push!(LOAD_PATH, "$(homedir())/Documents/Github/DantzigWolfeDecomposition")
+# cd("$(homedir())/Documents/Github/DantzigWolfeDecomposition")
+
 include("FuncData.jl")
 using DantzigWolfeDecomposition
-########################################################################################################################
-
 
 function main(strFileName::String, series::Int64)
     println("#### 1/2,  Prepare Data ########################################################") ########################
