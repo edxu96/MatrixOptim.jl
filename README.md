@@ -40,6 +40,10 @@ Two decomposition algorithms are:
 
 ## 2,  How to Use
 
+```
+julia> Pkg.clone("https://github.com/edxu96/MatrixOptim.git")
+```
+
 ## 3,  More Info
 
 [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home)

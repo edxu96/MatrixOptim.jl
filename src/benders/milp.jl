@@ -4,6 +4,9 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
 
+"""
+Generic Benders Decomposition for Mixed Integer Linear Programming
+"""
 function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b, epsilon, timesIterationMax)
     println("-------------------------------------------------------------------------\n",
             "------------------------ 1/4. Begin Optimization ------------------------\n",
@@ -122,7 +125,7 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
                         "q: $result_q, obj_ray: $(round(obj_ray, digits = 5)).")
             end
             timesIteration += 1
-        end  # -----------------------------------------------------------------------------------------------------
+        end
         println("obj_mas: $(getobjectivevalue(model_mas))")
         println("----------------------------- Master Problem ----------------------------\n")
         # println(model_mas)

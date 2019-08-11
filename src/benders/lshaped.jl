@@ -4,6 +4,9 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
 
+"""
+L-Shaped Benders Decomposition for Stochastic Programming without Integer Variables in Second Stage
+"""
 function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
         vec_pi, mat_c, mat_h, mat3_t, mat3_w, epsilon, timesIterationMax)
     # vec_pi
