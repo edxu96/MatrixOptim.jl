@@ -48,13 +48,7 @@ end
 function setModelSub(mat_a, vec_b, vec_c, vecSense, indexMas, blocks, indexSub, gurobi_env, whiSolver)
     numSub = length(blocks)
     vecModelSub = Vector{ModelSub}(undef, numSub)
-    if whiSolver == 1
-        modWhiSolver = Model(solver = GurobiSolver(OutputFlag = 0, gurobi_env))
-    elseif whiSolver == 2
-        modWhiSolver = Model(solver = CplexSolver(CPX_PARAM_SCRIND=0))
-    else
-        modWhiSolver = Model(solver = GLPKSolverLP())
-    end
+    modWhiSolver = Model(solver = GLPKSolverLP())
     for k = 1:numSub
         vecModelSub[k] = ModelSub(
             modWhiSolver,                                                 # mod

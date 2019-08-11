@@ -56,7 +56,6 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
 
 
     function solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
-        # model_ray = Model(solver = GurobiSolver())
         model_ray = Model(solver = GLPKSolverLP())
         @variable(model_ray, vec_u[1: n_constraint] >= 0)
         @objective(model_ray, Max, 1)

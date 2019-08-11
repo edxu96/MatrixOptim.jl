@@ -2,8 +2,6 @@ module MatrixOptim
 
 using JuMP
 using GLPKMathProgInterface
-using Gurobi
-using CPLEX
 using LinearAlgebra
 using MathProgBase
 using Random

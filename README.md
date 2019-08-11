@@ -1,5 +1,7 @@
 # MatrixOptim 矩阵优化
 
+[![Build Status](https://travis-ci.org/edxu96/MatrixOptim.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim)
+
 ![Tangram](/images/tangram_1.png)
 
 MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)

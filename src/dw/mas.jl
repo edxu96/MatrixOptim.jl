@@ -9,13 +9,13 @@ function setModelMas(numQ, vecP, numSub, vecSenseP, dualPen, gurobi_env, whiSolv
     vecDualGuessPi = 100 * ones(Float64, numQ)
     vecDualGuessKappa = 0 * ones(Float64, numSub)
     ## X1: initial matrix of extreme points
-    if whiSolver == 1
-        modMas =  Model(solver = GurobiSolver(OutputFlag = 0, gurobi_env))
-    elseif whiSolver == 2
-        modMas =  Model(solver = CplexSolver(CPX_PARAM_SCRIND=0))
-    else
-        modMas =  Model(solver = GLPKSolverLP())
-    end
+    # if whiSolver == 1
+    #     modMas =  Model(solver = GurobiSolver(OutputFlag = 0, gurobi_env))
+    # elseif whiSolver == 2
+    #     modMas =  Model(solver = CplexSolver(CPX_PARAM_SCRIND=0))
+    # else
+    modMas =  Model(solver = GLPKSolverLP())
+    # end
     K = 1
     # In this case we do not use a starting set of extreme points.
     # we just use a dummy starting column
