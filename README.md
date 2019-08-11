@@ -1,4 +1,4 @@
-# MatrixOptim 矩阵优化
+# MatrixOptim
 
 [![Build Status](https://travis-ci.org/edxu96/MatrixOptim.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim)
 
@@ -6,9 +6,9 @@
 
 MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
 
-通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法（使用 Julia 语言）。中文详解请见[wiki/9-zh](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
+__矩阵优化__：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。中文详解请见[wiki/9-zh](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
 
-Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Secondly, when it comes to specific solving algorithms, it's more general in matrix form. Thirdly, the abstraction algorithm for problem modeling helps a lot in understanding.
+Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Secondly, when it comes to algorithms to solve them, it's more explicit in matrix form. Thirdly, the abstraction algorithm for problem modeling helps a lot in understanding.
 
 ## 1,  What? and Why?
 
