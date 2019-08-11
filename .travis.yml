@@ -8,3 +8,7 @@ julia:
 os:
   - osx
   - linux
+git:
+  depth: 3
+notification:
+  email: false
