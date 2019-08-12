@@ -14,7 +14,6 @@ function checkColVec(vec::Array{Int64,2}, str_name::String)
     if size(vec)[Int(col)] != 1
         throw("$str_name is not a column vector")
     end
-    return
 end
 
 
@@ -52,11 +51,11 @@ mutable struct ModelMix
         checkColVec(vec_c, "vec_c")
         checkColVec(vec_f, "vec_f")
         checkColVec(vec_b, "vec_b")
-        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c". "mat_aCap")
-        checkMatrixMatch(vec_f, mat_bCap, row, col, "vec_f". "mat_bCap")
-        checkMatrixMatch(mat_aCap, mat_bCap, row, row, "mat_aCap". "mat_bCap")
-        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap". "vec_b")
-        new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b, missing)
+        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c", "mat_aCap")
+        checkMatrixMatch(vec_f, mat_bCap, row, col, "vec_f", "mat_bCap")
+        checkMatrixMatch(mat_aCap, mat_bCap, row, row, "mat_aCap", "mat_bCap")
+        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap", "vec_b")
+        new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
     end
 end
 
@@ -72,9 +71,9 @@ mutable struct ModelLinear
     function ModelLinear(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_b::Array{Int64,2})
         checkColVec(vec_c, "vec_c")
         checkColVec(vec_b, "vec_b")
-        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c". "mat_aCap")
-        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap". "vec_b")
-        new(vec_c, mat_aCap, vec_b, missing)
+        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c", "mat_aCap")
+        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap", "vec_b")
+        new(vec_c, mat_aCap, vec_b)
     end
 end
 

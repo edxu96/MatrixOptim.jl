@@ -8,11 +8,10 @@ using Random
 using SparseArrays
 using PrettyTables
 
-include("benders.jl")
-include("robust.jl")
-include("milp.jl")
-include("dw.jl")
-include("coeff-matrix.jl")
+include("./benders/main.jl")
+include("./robust/main.jl")
+include("./milp/main.jl")
+include("./dw/main.jl")
 
 export getModel, solveModel!, appendConstraint!,
     doDWDecomp, Sense, leq, geq, eq
