@@ -5,9 +5,7 @@ function value_vec(vec_x::Array{VariableRef,1})
 end
 
 
-function dual_vec(vec_cons::Array{ConstraintRef{Model,
-    MathOptInterface.ConstraintIndex{MathOptInterface.ScalarAffineFunction{Float64},
-    MathOptInterface.GreaterThan{Float64}},ScalarShape},2})
+function dual_vec(vec_cons)
     return [dual(vec_cons[i]) for i = 1:length(vec_cons)]
 end
 

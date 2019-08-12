@@ -1,9 +1,9 @@
 # OptiGas: Optimize Gas Network using Benders Algorithm
-# Version: 3.0
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: Aug 12, 2019
 
 using LinearAlgebra
+using MatrixOptim
 
 
 function getData()
@@ -111,7 +111,7 @@ function getModelQ4(numNodes, vec_netEject, vec_netInject, mat_distance, mat_fix
 end
 
 
-function main
+function main()
     numNodes, vec_netEject, vec_netInject, mat_distance, mat_fixedCost = getData()
     vec_c, mat_aCap, vec_b, vec_f, vec_bCap, vec_y_min, vec_y_max = getModelQ4(
         numNodes, vec_netEject, vec_netInject, mat_distance, mat_fixedCost
@@ -131,3 +131,6 @@ function main
     )
     # 1280 - sum(mat_arcTwoNodes .* mat_fixedCost)
 end
+
+
+main()
