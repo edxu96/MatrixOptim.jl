@@ -7,6 +7,6 @@
 # Date: April 5th, 2019
 
 # 1.BendersOptim.milp: for MILP with Sub and Ray Problems
-include("benders/milp.jl")
+include("./milp.jl")
 # 2. BendersOptim.lshaped: for stochastic programming
-include("benders/lshaped.jl")
+include("./lshaped.jl")

@@ -5,6 +5,9 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: August 11, 2019
 
+include("./box.jl")
+
+
 """
 Fucntion for Two-Stage Stochastic MILP with Box Uncertainty
 """
