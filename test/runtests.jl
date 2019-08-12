@@ -1,5 +1,5 @@
 
 using MatrixOptim
-using Base.Test
+using Test
 
 include("./milp/test.jl")
