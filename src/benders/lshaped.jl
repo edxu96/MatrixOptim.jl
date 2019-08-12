@@ -42,7 +42,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
 
 
     function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c)
-        model_sub = Model(solver = GLPKSolverLP())
+        model_sub = Model(with_optimizer(GLPK.Optimizer))
         @variable(model_sub, vec_u[1: n_constraint] >= 0)
         @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1])
         constraintsForDual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
@@ -66,7 +66,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
 
 
     function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
-        model_ray = Model(solver = GLPKSolverLP())
+        model_ray = Model(with_optimizer(GLPK.Optimizer))
         @variable(model_ray, vec_u[1: n_constraint] >= 0)
         @objective(model_ray, Max, 1)
         @constraint(model_ray, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1] == 1)

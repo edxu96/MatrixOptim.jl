@@ -14,7 +14,7 @@ function setModelMas(numQ, vecP, numSub, vecSenseP, dualPen, gurobi_env, whiSolv
     # elseif whiSolver == 2
     #     modMas =  Model(solver = CplexSolver(CPX_PARAM_SCRIND=0))
     # else
-    modMas =  Model(solver = GLPKSolverLP())
+    modMas =  Model(with_optimizer(GLPK.Optimizer))
     # end
     K = 1
     # In this case we do not use a starting set of extreme points.

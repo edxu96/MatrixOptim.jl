@@ -35,7 +35,7 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
 
 
     function solve_sub(vec_yBar, n_constraint, vec_b, mat_b, mat_a, vec_c)
-        model_sub = Model(solver = GLPKSolverLP())
+        model_sub = Model(with_optimizer(GLPK.Optimizer))
         @variable(model_sub, vec_u[1: n_constraint] >= 0)
         @objective(model_sub, Max, (transpose(vec_b - mat_b * vec_yBar) * vec_u)[1])
         constraintsForDual = @constraint(model_sub, transpose(mat_a) * vec_u .<= vec_c)
@@ -59,7 +59,7 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
 
 
     function solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
-        model_ray = Model(solver = GLPKSolverLP())
+        model_ray = Model(with_optimizer(GLPK.Optimizer))
         @variable(model_ray, vec_u[1: n_constraint] >= 0)
         @objective(model_ray, Max, 1)
         @constraint(model_ray, (transpose(vec_b - mat_b * vec_yBar) * vec_u)[1] == 1)

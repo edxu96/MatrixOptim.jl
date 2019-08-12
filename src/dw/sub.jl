@@ -48,7 +48,7 @@ end
 function setModelSub(mat_a, vec_b, vec_c, vecSense, indexMas, blocks, indexSub, gurobi_env, whiSolver)
     numSub = length(blocks)
     vecModelSub = Vector{ModelSub}(undef, numSub)
-    modWhiSolver = Model(solver = GLPKSolverLP())
+    modWhiSolver = Model(with_optimizer(GLPK.Optimizer))
     for k = 1:numSub
         vecModelSub[k] = ModelSub(
             modWhiSolver,                                                 # mod

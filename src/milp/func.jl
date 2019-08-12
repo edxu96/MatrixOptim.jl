@@ -91,7 +91,7 @@ Linear Programming in Matrix Form
 """
 function solveLinear(vec_c, vec_b, mat_aCap)
     n_x = length(vec_c)
-    model = Model(solver = GLPKSolverLP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     @variable(model, vec_x[1: n_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     constraintsForDual = @constraint(model, mat_aCap * vec_x .>= vec_b)
@@ -104,7 +104,7 @@ end
 
 
 function solveMix(n_x, vec_c, vec_b, mat_aCap, vec_f, mat_b)
-    model = Model(solver = GLPKSolverLP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     @variable(model, vec_x[1: n_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     constraintsForDual = @constraint(model, mat_aCap * vec_x .>= vec_b)
