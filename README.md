@@ -28,6 +28,8 @@ In this package, there are formulated algorithm for four kinds of optimization p
 
 ## To Check
 
+There are many new updates on `JuMP`, so the algorithms need to be updated.
+
 - [x] Linear Programming
 - [x] Mixed Integer Linear Programming
 - [ ] Robust Optimization
@@ -35,6 +37,7 @@ In this package, there are formulated algorithm for four kinds of optimization p
 - [X] Benders Decomposition for MILP
 - [ ] L-Shaped Benders Decomposition
 - [ ] Dantzig-Wolfe Decomposition Family
+- [ ] Simulated Annealing
 
 ## How to Use
 
