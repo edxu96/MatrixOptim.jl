@@ -32,16 +32,11 @@ In this package, there are formulated algorithm for four kinds of optimization p
 - [x] Mixed Integer Linear Programming
 - [ ] Robust Optimization
 - [ ] Stochastic Optimization
-- [ ] Benders Decomposition
+- [X] Benders Decomposition for MILP
+- [ ] L-Shaped Benders Decomposition
 - [ ] Dantzig-Wolfe Decomposition Family
 
 ## How to Use
-
-```
-julia> Pkg.clone("https://github.com/edxu96/MatrixOptim.git")
-```
-
-Or
 
 ```
 (v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
@@ -50,13 +45,13 @@ Or
 Besides, remember to update it regularly after installation:
 
 ```
-julia> Pkg.update("MatrixOptim")
-```
-
-Or
-
-```
 (v1.1) pkg> update MatrixOptim
+```
+
+You can test the package:
+
+```
+(v1.1) pkg> test MatrixOptim
 ```
 
 ## More Info
