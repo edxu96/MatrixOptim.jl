@@ -5,3 +5,5 @@ vec_b = hcat([4; 12; 18])
 
 model = getModel(vec_c, mat_aCap, vec_b)
 solveModel!(model)
+
+@test model.solution.obj == 42
