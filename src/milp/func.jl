@@ -11,7 +11,7 @@ end
 
 
 function checkColVec(vec::Array{Int64,2}, str_name::String)
-    if size(vec)[2] == 1
+    if size(vec)[Int(col)] != 1
         throw("$str_name is not a column vector")
     end
     return
@@ -77,6 +77,7 @@ mutable struct ModelLinear
         new(vec_c, mat_aCap, vec_b, missing)
     end
 end
+
 
 """
     solveLinear(n_x, vec_c, vec_b, mat_a)
