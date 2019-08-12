@@ -59,7 +59,9 @@ end
 """
 Generic Benders Decomposition for Mixed Integer Linear Programming
 """
-function solveBendersMilp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b, epsilon, timesIterationMax)
+function solveBendersMilp(
+        ; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b, epsilon=1e-6, timesIterationMax=100
+    )
     println("-------------------------------------------------------------------------\n",
             "------------------------ 1/4. Begin Optimization ------------------------\n",
             "-------------------------------------------------------------------------\n")
