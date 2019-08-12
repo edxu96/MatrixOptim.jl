@@ -1,17 +1,13 @@
 name = "MatrixOptim"
 uuid = "cccf0e64-bc08-11e9-3692-c1021c9b9532"
-authors = ["edxu96 <edxu96@outlook.com>"]
-version = "0.1.0"
 license = "MIT"
 desc = "MILP, Robust Optim and Stochastic Optim with Decomposition Algorithm in Matrix"
-
-[compat]
-julia = ">= 1"
-JuMP = "= 0.19.2"
+authors = ["edxu96 <edxu96@outlook.com>"]
+version = "0.1.0"
 
 [deps]
 CPLEX = "a076750e-1247-5638-91d2-ce28b192dca0"
-GLPKMathProgInterface = "3c7084bd-78ad-589a-b5bb-dbd673274bea"
+GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
 Gurobi = "2e9cd046-0924-5485-92f1-d5272153d98b"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -19,3 +15,7 @@ MathProgBase = "fdba3010-5040-5b88-9595-932c9decdf73"
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
+[compat]
+JuMP = "= 0.19.2"
+julia = ">= 1"
