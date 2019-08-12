@@ -31,21 +31,6 @@ mutable struct ModelMixed
     mat_bCap::Array{Int64,2}
     vec_b::Array{Int64,2}
 
-    function checkSize(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
-        if size(vec_c)[1] == size(mat_aCap)[2]
-            if size(vec_f)[1] == size(mat_bCap)[2]
-                if ~((size(mat_aCap)[1] == size(mat_bCap)[a]) & (size(mat_aCap)[1] == size(vec_b)[1]))
-                    throw("`mat_aCap`, `mat_bCap` and `vec_b` don't match each other.")
-                end
-            else
-                throw("`vec_f` doesn't match `mat_bCap`.")
-            end
-        else
-            throw("`vec_c` doesn't match `mat_aCap`.")
-        end
-        return true
-    end
-
     function ModelMixed(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
         checkColVec(vec_c, "vec_c")
         checkColVec(vec_f, "vec_f")
@@ -62,19 +47,16 @@ end
 Append a constraint to ModelMixed
 """
 function appendConstraint(model::ModelMixed, vec_a_new::Array{Int64,2}, vec_b_new::Array{Int64,2}, b_new::Float64)
-    if checkColVec(vec_a_new) & checkColVec(vec_b_new)
-        model.mat_aCap = vcat(model.mat_aCap, vec_a_new')
-        model.mat_bCap = vcat(model.mat_bCap, vec_b_new')
-        model.vec_b = vcat(mode.vec_b, b_new)
-    else
-        throw("At least one of the vectors is not column vector.")
-    end
-
+    checkColVec(vec_a_new, "vec_a_new")
+    checkColVec(vec_b_new, "vec_b_new")
+    model.mat_aCap = vcat(model.mat_aCap, vec_a_new')
+    model.mat_bCap = vcat(model.mat_bCap, vec_b_new')
+    model.vec_b = vcat(mode.vec_b, b_new)
     return model
 end
 
 """
-        lp(n_x, vec_c, vec_b, mat_a)
+    lp(n_x, vec_c, vec_b, mat_a)
 
 Linear Programming in Matrix Form
 

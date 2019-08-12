@@ -8,12 +8,12 @@ using Random
 using SparseArrays
 using PrettyTables
 
-export ModelMixed, doDWDecomp, Sense, leq, geq, eq
-
 include("benders.jl")
 include("robust.jl")
-include("lp.jl")
+include("milp.jl")
 include("dw.jl")
 include("coeff-matrix.jl")
+
+export ModelMixed, doDWDecomp, Sense, leq, geq, eq
 
 end
