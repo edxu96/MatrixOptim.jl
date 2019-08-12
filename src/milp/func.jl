@@ -95,10 +95,10 @@ function solveLinear(vec_c, vec_b, mat_aCap)
     @variable(model, vec_x[1: n_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     constraintsForDual = @constraint(model, mat_aCap * vec_x .>= vec_b)
-    solve(model)
-    vec_result_u = getdual(constraintsForDual)
-    obj = getobjectivevalue(model)
-    vec_result_x = getvalue(vec_x)
+    optimize!(model)
+    vec_result_u = dual(constraintsForDual)
+    obj = objective_value(model)
+    vec_result_x = value(vec_x)
     return obj, vec_result_x, vec_result_u
 end
 
@@ -108,9 +108,9 @@ function solveMix(n_x, vec_c, vec_b, mat_aCap, vec_f, mat_b)
     @variable(model, vec_x[1: n_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     constraintsForDual = @constraint(model, mat_aCap * vec_x .>= vec_b)
-    solve(model)
-    vec_result_u = getdual(constraintsForDual)
-    obj = getobjectivevalue(model)
-    vec_result_x = getvalue(vec_x)
+    optimize!(model)
+    vec_result_u = dual(constraintsForDual)
+    obj = objective_value(model)
+    vec_result_x = value(vec_x)
     return obj, vec_result_x, vec_result_u
 end

@@ -70,8 +70,8 @@ function doOptim(vecModelSub, modMas, vecConsRef, vecConsConvex, vecLambda, dual
     end
     ## 5,  Print the Result
     println("Optimization Done After $(iter-1) Iterations.\n",
-            "objMaster = $(getobjectivevalue(modMas))")
-    vecLambdaResult = getvalue(vecLambda)
+            "objMaster = $(objective_value(modMas))")
+    vecLambdaResult = value(vecLambda)
     return (vecLambdaResult, extremePointForSub, extremePoints)
 end
 

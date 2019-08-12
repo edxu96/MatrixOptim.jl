@@ -74,11 +74,11 @@ function solveSub(modSub::ModelSub, vecPi, kappa)
     piA0 = vecPi * modSub.mat_e
     @objective(modSub.mod, Max, sum(modSub.vec_l[j] * modSub.vec_x[j] for j = 1: n) -
         sum(piA0[1, j] * modSub.vec_x[j] for j = 1: n) - kappa)
-    status = solve(modSub.mod)
+    status = optimize!(modSub.mod)
     if status != :Optimal
         throw("Error: Non-optimal sub-problem status")
     end
-    costReduce = getobjectivevalue(modSub.mod)
-    vec_x_result = getvalue(modSub.vec_x)
+    costReduce = objective_value(modSub.mod)
+    vec_x_result = value(modSub.vec_x)
     return (costReduce, vec_x_result)
 end

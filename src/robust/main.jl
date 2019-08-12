@@ -16,7 +16,7 @@ function milpAdjustBox(; num_x, num_y, num_z, vec_min_y, vec_max_y, vec_c, vec_f
     println("---------------------------------------------------------\n",
             "   1/2. Adjustable Robust LP with Box Uncertainty\n",
             "---------------------------------------------------------\n")
-    model = Model(solver = GLPKSolverMIP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     # 1. Standard LP
     @variable(model, vec_y[1: num_y], Int)
     @constraint(model, vec_y >= vec_min_y)
@@ -47,15 +47,15 @@ function milpAdjustBox(; num_x, num_y, num_z, vec_min_y, vec_max_y, vec_c, vec_f
     # @constraint(model, [m = 1: num_y, p = 1: num_z], vec_theta2[p] <=
     #     mat_a_hat[m, (p-1) * num_y + m] * vec_x[(p-1) * num_y + m])
     # Solve the model
-    solve(model)
-    obj_result = getobjectivevalue(model)
-    vec_result_y = getvalue(vec_y)
+    optimize!(model)
+    obj_result = objective_value(model)
+    vec_result_y = value(vec_y)
     println("Result: vec_y = $vec_result_y.")
-    vec_result_x = getvalue(vec_x)
+    vec_result_x = value(vec_x)
     println("Result: vec_x = $vec_result_x.")
-    vec_result_theta1 = getvalue(vec_theta1)
-    vec_result_theta2 = getvalue(vec_theta2)
-    vec_result_gamma = getvalue(gamma)
+    vec_result_theta1 = value(vec_theta1)
+    vec_result_theta2 = value(vec_theta2)
+    vec_result_gamma = value(gamma)
     println("---------------------------------------------------------\n",
             "   2/2. Nominal Ending\n",
             "---------------------------------------------------------\n")
@@ -70,7 +70,7 @@ function lpAdjustBox(; num_x, m, num_z, vec_c, vec_g, vec_b,
     println("---------------------------------------------------------\n",
             "   1/2. Adjustable Robust LP with Box Uncertainty\n",
             "---------------------------------------------------------\n")
-    model = Model(solver = GLPKSolverMIP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     # 1. Standard LP
     @variable(model, vec_x[1: num_x] >= 0)
     @variable(model, gamma)
@@ -92,14 +92,14 @@ function lpAdjustBox(; num_x, m, num_z, vec_c, vec_g, vec_b,
     @constraint(model, vec_theta2_rep .<= vec_x)
     @constraint(model, - vec_x .<= vec_theta2_rep)
     # Solve the model
-    solve(model)
-    obj_result = getobjectivevalue(model)
+    optimize!(model)
+    obj_result = objective_value(model)
     # println("Result: obj = $(obj).")
-    vec_result_x = getvalue(vec_x)
+    vec_result_x = value(vec_x)
     # println("Result: vec_x = $vec_result_x.")
-    vec_result_theta1 = getvalue(vec_theta1)
-    vec_result_theta2 = getvalue(vec_theta2)
-    vec_result_gamma = getvalue(gamma)
+    vec_result_theta1 = value(vec_theta1)
+    vec_result_theta2 = value(vec_theta2)
+    vec_result_gamma = value(gamma)
     println("---------------------------------------------------------\n",
             "   2/2. Nominal Ending\n",
             "---------------------------------------------------------\n")
@@ -113,7 +113,7 @@ function lpBox(; num_x, m, num_z, vec_c, vec_b, mat_a, mat_a_bar, mat_a_hat, vec
     println("---------------------------------------------------------\n",
             "   1/2. Adjustable Robust LP with Box Uncertainty\n",
             "---------------------------------------------------------\n")
-    model = Model(solver = GLPKSolverMIP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     # 1. Standard LP
     @variable(model, vec_x[1: num_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
@@ -125,12 +125,12 @@ function lpBox(; num_x, m, num_z, vec_c, vec_b, mat_a, mat_a_bar, mat_a_hat, vec
     @constraint(model, vec_theta2_rep .<= vec_x)
     @constraint(model, - vec_x .<= vec_theta2_rep)
     # Solve the model
-    solve(model)
-    obj_result = getobjectivevalue(model)
+    optimize!(model)
+    obj_result = objective_value(model)
     # println("Result: obj = $(obj).")
-    vec_result_x = getvalue(vec_x)
+    vec_result_x = value(vec_x)
     # println("Result: vec_x = $vec_result_x.")
-    vec_result_theta2 = getvalue(vec_theta2)
+    vec_result_theta2 = value(vec_theta2)
     println("---------------------------------------------------------\n",
             "   2/2. Nominal Ending\n",
             "---------------------------------------------------------\n")

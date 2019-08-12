@@ -57,7 +57,7 @@ function addColToMas(modMas::JuMP.Model, modSub::ModelSub, vec_x_result, vecCons
     vecConsTouched = ConstraintRef[]
     vals = Float64[]
     for i = 1: m
-        # only insert non-zero elements (this saves memory and may make the modMas problem easier to solve)
+        # only insert non-zero elements (this saves memory and may make the modMas problem easier to optimize!)
         if A0x[i] != 0
             push!(vecConsTouched, vecConsRef[i])
             push!(vals, A0x[i])
@@ -80,13 +80,13 @@ end
 
 
 function solveMas(modMas, vecConsRef, vecConsConvex)
-    status = solve(modMas)
+    status = optimize!(modMas)
     if status != :Optimal
         throw("Error: Non-optimal modMas-problem status")
     end
-    vecPi = getdual(vecConsRef)
-    vecKappa = getdual(vecConsConvex)
-    obj_master = getobjectivevalue(modMas)
+    vecPi = dual(vecConsRef)
+    vecKappa = dual(vecConsConvex)
+    obj_master = objective_value(modMas)
     ## ensure that vecPi and vecKappa are row vectors
     vecPi = reshape(vecPi, 1, length(vecPi))
     vecKappa = reshape(vecKappa, 1, length(vecKappa))

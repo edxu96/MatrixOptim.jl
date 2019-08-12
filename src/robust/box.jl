@@ -19,7 +19,7 @@ function milpBoxBudget(; num_x, num_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b
             "---------------------------------------------------------\n")
     println("Input: vec_gammaCap = $vec_gammaCap.")
     #
-    model = Model(solver = GLPKSolverMIP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     @variable(model, vec_y[1: num_y], Int)
     @variable(model, vec_x[1: num_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x + transpose(vec_f) * vec_y)[1])
@@ -38,15 +38,15 @@ function milpBoxBudget(; num_x, num_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b
             sum(mat_mu[i, :]) + transpose(mat_b_bar[i, :]) * vec_y <= vec_b_bar[i])
         @constraint(model, vec_lambda[i] .+ hcat(mat_mu[i, :]) .>=  hcat(mat_a_hat[i, :]) .* vec_z[:])
     end
-    solve(model)
-    obj_result = getobjectivevalue(model)
-    vec_result_y = getvalue(vec_y)
+    optimize!(model)
+    obj_result = objective_value(model)
+    vec_result_y = value(vec_y)
     println("Result: vec_y = $vec_result_y.")
-    vec_result_x = getvalue(vec_x)
+    vec_result_x = value(vec_x)
     println("Result: vec_x = $vec_result_x.")
-    vec_result_z = getvalue(vec_z)
-    mat_result_mu = getvalue(mat_mu)
-    vec_result_lambda = getvalue(vec_lambda)
+    vec_result_z = value(vec_z)
+    mat_result_mu = value(mat_mu)
+    vec_result_lambda = value(vec_lambda)
     println("---------------------------------------------------------\n",
             "   2/2. Nominal Ending\n",
             "---------------------------------------------------------\n")
@@ -69,7 +69,7 @@ function lpBoxBudget(; num_x, vec_c, vec_b, mat_a, mat_a_bar, mat_a_hat, vec_b_b
             "---------------------------------------------------------\n")
     println("Input: vec_gammaCap = $vec_gammaCap.")
     #
-    model = Model(solver = GLPKSolverMIP())
+    model = Model(with_optimizer(GLPK.Optimizer))
     @variable(model, vec_x[1: num_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     # Transformation of Box Uncertainty.
@@ -84,13 +84,13 @@ function lpBoxBudget(; num_x, vec_c, vec_b, mat_a, mat_a_bar, mat_a_hat, vec_b_b
             sum(mat_mu[i, :]) <= vec_b_bar[i])
         @constraint(model, vec_lambda[i] .+ hcat(mat_mu[i, :]) .>=  hcat(mat_a_hat[i, :]) .* vec_z[:])
     end
-    solve(model)
-    obj_result = getobjectivevalue(model)
-    vec_result_x = getvalue(vec_x)
+    optimize!(model)
+    obj_result = objective_value(model)
+    vec_result_x = value(vec_x)
     # println("Result: vec_x = $vec_result_x.")
-    vec_result_z = getvalue(vec_z)
-    mat_result_mu = getvalue(mat_mu)
-    vec_result_lambda = getvalue(vec_lambda)
+    vec_result_z = value(vec_z)
+    mat_result_mu = value(mat_mu)
+    vec_result_lambda = value(vec_lambda)
     println("---------------------------------------------------------\n",
             "   2/2. Nominal Ending\n",
             "---------------------------------------------------------\n")
