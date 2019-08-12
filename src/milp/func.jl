@@ -96,7 +96,7 @@ function solveLinear(vec_c, vec_b, mat_aCap)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     @constraint(model, cons, mat_aCap * vec_x .>= vec_b)
     optimize!(model)
-    vec_result_u = [dual(cons[i]) for i = 1:lenth(cons)]
+    vec_result_u = [dual(cons[i]) for i = 1:length(cons)]
     obj = objective_value(model)
     vec_result_x = value(vec_x)
     return obj, vec_result_x, vec_result_u
@@ -109,7 +109,7 @@ function solveMix(n_x, vec_c, vec_b, mat_aCap, vec_f, mat_b)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
     @constraint(model, cons, mat_aCap * vec_x .>= vec_b)
     optimize!(model)
-    vec_result_u = [dual(cons[i]) for i = 1:lenth(cons)]
+    vec_result_u = [dual(cons[i]) for i = 1:length(cons)]
     obj = objective_value(model)
     vec_result_x = value(vec_x)
     return obj, vec_result_x, vec_result_u
