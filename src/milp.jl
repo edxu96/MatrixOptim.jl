@@ -23,17 +23,17 @@ function checkMatrixMatch(array_1::Array{Int64,2}, array_2::Array{Int64,2}, whi_
 end
 
 """
-Model for Mixed Integer Programming
+Model for Mixed Integer Linear Programming
 """
-mutable struct ModelMixed
+mutable struct ModelMix
     vec_c    # the coefficient vector for linear variables in the objective function
     mat_aCap #
     vec_f    # the coefficient vector for integer variables in the objective function
     mat_bCap
     vec_b
 
-    function ModelMixed(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_f::Array{Int64,2},
-        mat_bCap::Array{Int64,2}, vec_b::Array{Int64,2})
+    function ModelMix(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_b::Array{Int64,2}, vec_f::Array{Int64,2},
+        mat_bCap::Array{Int64,2})
         checkColVec(vec_c, "vec_c")
         checkColVec(vec_f, "vec_f")
         checkColVec(vec_b, "vec_b")
@@ -42,6 +42,34 @@ mutable struct ModelMixed
         checkMatrixMatch(mat_aCap, mat_bCap, row, row, "mat_aCap". "mat_bCap")
         checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap". "vec_b")
         new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+    end
+end
+
+"""
+Model for Linear Programming
+"""
+mutable struct ModelLinear
+    vec_c    # the coefficient vector for linear variables in the objective function
+    mat_aCap #
+    vec_b
+
+    function ModelLinear(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_b::Array{Int64,2})
+        checkColVec(vec_c, "vec_c")
+        checkColVec(vec_b, "vec_b")
+        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c". "mat_aCap")
+        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap". "vec_b")
+        new(vec_c, mat_aCap, vec_b)
+    end
+end
+
+function getModelProgramming(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_b::Array{Int64,2},
+    vec_f::Union{Missing, Array{Int64,2}}=missing, mat_bCap::Union{Missing, Array{Int64,2}}=missing)
+    if (vec_f === missing) & (mat_bCap === missing)
+        ModelLinear(vec_c, mat_aCap, vec_b)
+    elseif isa(vec_f, Array{Int64,2}}) & isa(mat_bCap, Array{Int64,2}})
+        ModelMix(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+    else
+        throw("Input `vec_f` or `mat_bCap` do not match.")
     end
 end
 
@@ -77,4 +105,15 @@ function lp(n_x, vec_c, vec_b, mat_a)
     obj = getobjectivevalue(model)
     vec_result_x = getvalue(vec_x)
     return obj, vec_result_x, vec_result_u
+end
+
+macro p(n)
+    if typeof(n) == Expr
+       println(n.args)
+    end
+    return n
+end
+
+function plusOne(x)
+    x[2, 2] += 1
 end
