@@ -98,7 +98,7 @@ function solveLinear(vec_c, vec_b, mat_aCap)
     optimize!(model)
     vec_result_u = [dual(cons[i]) for i = 1:length(cons)]
     obj = objective_value(model)
-    vec_result_x = value(vec_x)
+    vec_result_x = [value(vec_x[i]) for i = 1:n_x]
     return obj, vec_result_x, vec_result_u
 end
 
@@ -111,6 +111,6 @@ function solveMix(n_x, vec_c, vec_b, mat_aCap, vec_f, mat_b)
     optimize!(model)
     vec_result_u = [dual(cons[i]) for i = 1:length(cons)]
     obj = objective_value(model)
-    vec_result_x = value(vec_x)
+    vec_result_x = [value(vec_x[i]) for i = 1:n_x]
     return obj, vec_result_x, vec_result_u
 end
