@@ -14,7 +14,7 @@ include("milp.jl")
 include("dw.jl")
 include("coeff-matrix.jl")
 
-export getModelProgramming, solveModel!, appendConstraint!,
+export getModel, solveModel!, appendConstraint!,
     doDWDecomp, Sense, leq, geq, eq
 
 end
