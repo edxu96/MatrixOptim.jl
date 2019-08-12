@@ -13,8 +13,10 @@ include("./benders/main.jl")
 include("./robust/main.jl")
 include("./milp/main.jl")
 include("./dw/main.jl")
+include("./func.jl")
 
-export getModel, solveModel!, appendConstraint!,
+
+export getModel, solveModel!, appendConstraint!, solveBendersMilp,
     doDWDecomp, Sense, leq, geq, eq
 
 end

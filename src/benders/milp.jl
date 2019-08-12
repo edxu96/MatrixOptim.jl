@@ -4,10 +4,62 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
 
+
+function solve_master(vec_uBar, opt_cut::Bool)
+    if opt_cut
+        @constraint(model_mas, (transpose(vec_uBar) * (vec_b - mat_b * vec_y))[1] <= q)
+    else  # Add feasible cut Constraints
+        @constraint(model_mas, (transpose(vec_uBar) * (vec_b - mat_b * vec_y))[1] <= 0)
+    end
+    @constraint(model_mas, (transpose(vec_uBar) * (vec_b - mat_b * vec_y))[1] <= q)
+    optimize!(model_mas)
+    vec_result_y = value_vec(vec_y)
+    return objective_value(model_mas)
+end
+
+
+function solve_sub(vec_yBar, n_constraint, vec_b, mat_b, mat_a, vec_c)
+    model_sub = Model(with_optimizer(GLPK.Optimizer))
+    @variable(model_sub, vec_u[1: n_constraint] >= 0)
+    @objective(model_sub, Max, (transpose(vec_b - mat_b * vec_yBar) * vec_u)[1])
+    constraintsForDual = @constraint(model_sub, transpose(mat_a) * vec_u .<= vec_c)
+    solution_sub = optimize!(model_sub)
+    print("------------------------------ Sub Problem ------------------------------\n")  # , model_sub)
+    vec_uBar = value_vec(vec_u)
+    if solution_sub == :Optimal
+        vec_result_x = zeros(length(vec_c))
+        vec_result_x = dual_vec(constraintsForDual)
+        return (true, objective_value(model_sub), vec_uBar, vec_result_x)
+    end
+    if solution_sub == :Unbounded
+        print("Not solved to optimality because feasible set is unbounded.\n")
+        return (false, objective_value(model_sub), vec_uBar, repeat([NaN], length(vec_c)))
+    end
+    if solution_sub == :Infeasible
+        print("Not solved to optimality because infeasibility. Something is wrong.\n")
+        return (false, NaN, vec_uBar, hcat(repeat([NaN], length(vec_c))))
+    end
+end
+
+
+function solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
+    model_ray = Model(with_optimizer(GLPK.Optimizer))
+    @variable(model_ray, vec_u[1: n_constraint] >= 0)
+    @objective(model_ray, Max, 1)
+    @constraint(model_ray, (transpose(vec_b - mat_b * vec_yBar) * vec_u)[1] == 1)
+    @constraint(model_ray, transpose(mat_a) * vec_u .<= 0)
+    optimize!(model_ray)
+    print("------------------------------ Ray Problem ------------------------------\n")  # , model_ray)
+    vec_uBar = value_vec(vec_u)
+    obj_ray = objective_value(model_ray)
+    return (obj_ray, vec_uBar)
+end
+
+
 """
 Generic Benders Decomposition for Mixed Integer Linear Programming
 """
-function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b, epsilon, timesIterationMax)
+function solveBendersMilp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b, epsilon, timesIterationMax)
     println("-------------------------------------------------------------------------\n",
             "------------------------ 1/4. Begin Optimization ------------------------\n",
             "-------------------------------------------------------------------------\n")
@@ -20,59 +72,6 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
     @constraint(model_mas, vec_y[1: n_y] .<= vec_max_y)
     @constraint(model_mas, vec_y[1: n_y] .>= vec_min_y)
 
-
-    function solve_master(vec_uBar, opt_cut::Bool)
-        if opt_cut
-            @constraint(model_mas, (transpose(vec_uBar) * (vec_b - mat_b * vec_y))[1] <= q)
-        else  # Add feasible cut Constraints
-            @constraint(model_mas, (transpose(vec_uBar) * (vec_b - mat_b * vec_y))[1] <= 0)
-        end
-        @constraint(model_mas, (transpose(vec_uBar) * (vec_b - mat_b * vec_y))[1] <= q)
-        optimize!(model_mas)
-        vec_result_y = value(vec_y)
-        return objective_value(model_mas)
-    end
-
-
-    function solve_sub(vec_yBar, n_constraint, vec_b, mat_b, mat_a, vec_c)
-        model_sub = Model(with_optimizer(GLPK.Optimizer))
-        @variable(model_sub, vec_u[1: n_constraint] >= 0)
-        @objective(model_sub, Max, (transpose(vec_b - mat_b * vec_yBar) * vec_u)[1])
-        constraintsForDual = @constraint(model_sub, transpose(mat_a) * vec_u .<= vec_c)
-        solution_sub = optimize!(model_sub)
-        print("------------------------------ Sub Problem ------------------------------\n")  # , model_sub)
-        vec_uBar = value(vec_u)
-        if solution_sub == :Optimal
-            vec_result_x = zeros(length(vec_c))
-            vec_result_x = dual(constraintsForDual)
-            return (true, objective_value(model_sub), vec_uBar, vec_result_x)
-        end
-        if solution_sub == :Unbounded
-            print("Not solved to optimality because feasible set is unbounded.\n")
-            return (false, objective_value(model_sub), vec_uBar, repeat([NaN], length(vec_c)))
-        end
-        if solution_sub == :Infeasible
-            print("Not solved to optimality because infeasibility. Something is wrong.\n")
-            return (false, NaN, vec_uBar, hcat(repeat([NaN], length(vec_c))))
-        end
-    end
-
-
-    function solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
-        model_ray = Model(with_optimizer(GLPK.Optimizer))
-        @variable(model_ray, vec_u[1: n_constraint] >= 0)
-        @objective(model_ray, Max, 1)
-        @constraint(model_ray, (transpose(vec_b - mat_b * vec_yBar) * vec_u)[1] == 1)
-        @constraint(model_ray, transpose(mat_a) * vec_u .<= 0)
-        optimize!(model_ray)
-        print("------------------------------ Ray Problem ------------------------------\n")  # , model_ray)
-        vec_uBar = value(vec_u)
-        obj_ray = objective_value(model_ray)
-        return (obj_ray, vec_uBar)
-    end
-
-
-    # Begin Calculation --------------------------------------------------------------------------------------------
     let
         boundUp = Inf
         boundLow = - Inf
@@ -93,22 +92,23 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
         # while ((boundUp - boundLow > epsilon) && (timesIteration <= timesIterationMax))  !!!
         while ((!((boundUp - boundLow <= epsilon) && ((result_q == obj_sub)))) &&
             (timesIteration <= timesIterationMax))
-            (bool_solutionSubModel, obj_sub, vec_uBar, vec_result_x) = solve_sub(vec_yBar, n_constraint,
-                                                                                 vec_b, mat_b, mat_a, vec_c)
+            bool_solutionSubModel, obj_sub, vec_uBar, vec_result_x = solve_sub(
+                vec_yBar, n_constraint, vec_b, mat_b, mat_a, vec_c
+                )
             if bool_solutionSubModel
                 boundUp = min(boundUp, obj_sub + (transpose(vec_f) * vec_yBar)[1])
             else
                 (obj_ray, vec_uBar) = solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
             end
             obj_mas = solve_master(vec_uBar, bool_solutionSubModel)
-            vec_yBar = value(vec_y)
+            vec_yBar = value_vec(vec_y)
             boundLow = max(boundLow, obj_mas)
             dict_boundUp[timesIteration] = boundUp
             dict_boundLow[timesIteration] = boundLow
             if bool_solutionSubModel
                 dict_obj_mas[timesIteration] = obj_mas
                 dict_obj_sub[timesIteration] = obj_sub
-                result_q = value(q)
+                result_q = value_vec(q)
                 dict_q[timesIteration] = result_q
                 println("------------------ Result in $(timesIteration)-th Iteration with Sub ",
                         "-------------------\n", "boundUp: $(round(boundUp, digits = 5)), ",
@@ -117,7 +117,7 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
             else
                 dict_obj_mas[timesIteration] = obj_mas
                 dict_obj_ray[timesIteration] = obj_ray
-                result_q = value(q)
+                result_q = value_vec(q)
                 dict_q[timesIteration] = result_q
                 println("------------------ Result in $(timesIteration)-th Iteration with Ray ",
                         "-------------------\n", "boundUp: $(round(boundUp, digits = 5)), ",
@@ -135,8 +135,8 @@ function milp(; n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_
         println("boundUp: $(round(boundUp, digits = 5)), boundLow: $(round(boundLow, digits = 5)), ",
                 "difference: $(round(boundUp - boundLow, digits = 5))")
         println("vec_x: $vec_result_x")
-        vec_result_y = value(vec_y)
-        result_q = value(q)
+        vec_result_y = value_vec(vec_y)
+        result_q = value_vec(q)
         println("vec_y: $vec_result_y")
         println("result_q: $result_q")
         println("-------------------------------------------------------------------------\n",

@@ -4,27 +4,6 @@
 # Date: August 11, 2019
 
 
-@enum ColRow begin
-   row = 1
-   col = 2
-end
-
-
-function checkColVec(vec::Array{Int64,2}, str_name::String)
-    if size(vec)[Int(col)] != 1
-        throw("$str_name is not a column vector")
-    end
-end
-
-
-function checkMatrixMatch(array_1::Array{Int64,2}, array_2::Array{Int64,2}, whi_1::ColRow, whi_2::ColRow,
-    str_name_1::String, str_name_2::String)
-    if size(array_1)[Int(whi_1)] != size(array_2)[Int(whi_2)]
-        throw("The $(str(whi_1)) of $str_name_1 doesn't match the $(str(whi_2)) of $str_name_2.")
-    end
-end
-
-
 """
 Solution for Model
 """
@@ -94,11 +73,11 @@ function solveLinear(vec_c, vec_b, mat_aCap)
     model = Model(with_optimizer(GLPK.Optimizer))
     @variable(model, vec_x[1: n_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
-    @constraint(model, cons, mat_aCap * vec_x .>= vec_b)
+    @constraint(model, vec_cons, mat_aCap * vec_x .>= vec_b)
     optimize!(model)
-    vec_result_u = [dual(cons[i]) for i = 1:length(cons)]
+    vec_result_u = dual_vec(vec_cons)
     obj = objective_value(model)
-    vec_result_x = [value(vec_x[i]) for i = 1:n_x]
+    vec_result_x =  value_vec(vec_x)
     return obj, vec_result_x, vec_result_u
 end
 
@@ -107,10 +86,10 @@ function solveMix(n_x, vec_c, vec_b, mat_aCap, vec_f, mat_b)
     model = Model(with_optimizer(GLPK.Optimizer))
     @variable(model, vec_x[1: n_x] >= 0)
     @objective(model, Min, (transpose(vec_c) * vec_x)[1])
-    @constraint(model, cons, mat_aCap * vec_x .>= vec_b)
+    @constraint(model, vec_cons, mat_aCap * vec_x .>= vec_b)
     optimize!(model)
-    vec_result_u = [dual(cons[i]) for i = 1:length(cons)]
+    vec_result_u = dual_vec(vec_cons)
     obj = objective_value(model)
-    vec_result_x = [value(vec_x[i]) for i = 1:n_x]
+    vec_result_x = value_vec(vec_x)
     return obj, vec_result_x, vec_result_u
 end
