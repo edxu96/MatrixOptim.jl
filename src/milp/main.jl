@@ -3,7 +3,7 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: August 11, 2019
 
-include("./milp/func.jl")
+include("./func.jl")
 
 
 """
@@ -24,13 +24,13 @@ end
 
 function solveModel!(model)
     if isa(model, ModelLinear)
-        obj, vec_result_x, vec_result_u = solveLinear(model.vec_c, model.vec_b, model.mat_a)
+        obj, vec_result_x, vec_result_u = solveLinear(model.vec_c, model.vec_b, model.mat_aCap)
     elseif isa(model, ModelMix)
-        obj, vec_result_x, vec_result_u = solveMix(model.vec_c, model.vec_b, model.mat_a, model.vec_f, model.mat_b)
+        obj, vec_result_x, vec_result_u = solveMix(model.vec_c, model.vec_b, model.mat_aCap, model.vec_f, model.mat_b)
     else
         throw("Wrong input model.")
     end
-    model.solution = Solution(obj, vec_result_x, vec_result_u)
+    model.solution = Solution(obj, hcat(vec_result_x), hcat(vec_result_u))
 end
 
 
