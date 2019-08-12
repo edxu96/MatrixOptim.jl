@@ -26,13 +26,14 @@ end
 Model for Mixed Integer Programming
 """
 mutable struct ModelMixed
-    vec_c::Array{Int64,2}  # the coefficient vector for linear variables in the objective function
-    mat_aCap::Array{Int64,2}  #
-    vec_f::Array{Int64,2}  # the coefficient vector for integer variables in the objective function
-    mat_bCap::Array{Int64,2}
-    vec_b::Array{Int64,2}
+    vec_c    # the coefficient vector for linear variables in the objective function
+    mat_aCap #
+    vec_f    # the coefficient vector for integer variables in the objective function
+    mat_bCap
+    vec_b
 
-    function ModelMixed(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+    function ModelMixed(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_f::Array{Int64,2},
+        mat_bCap::Array{Int64,2}, vec_b::Array{Int64,2})
         checkColVec(vec_c, "vec_c")
         checkColVec(vec_f, "vec_f")
         checkColVec(vec_b, "vec_b")
