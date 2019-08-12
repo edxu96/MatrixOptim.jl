@@ -1,7 +1,13 @@
 
 
-function value_vec(vec_x::Array{VariableRef,1})
-    return [value(vec_x[i]) for i = 1:length(vec_x)]
+function value_vec(vec_x::Union{Array{VariableRef,1}, VariableRef})
+    if isa(vec_x, VariableRef)
+        vec_value = value(vec_x)
+    else
+        vec_value = [value(vec_x[i]) for i = 1:length(vec_x)]
+    end
+    
+    return vec_value
 end
 
 

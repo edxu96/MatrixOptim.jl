@@ -2,7 +2,6 @@
 module MatrixOptim
 
 using JuMP
-# using GLPKMathProgInterface
 using GLPK
 using LinearAlgebra
 using MathProgBase
