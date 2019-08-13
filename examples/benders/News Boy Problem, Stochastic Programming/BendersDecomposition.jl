@@ -1,13 +1,15 @@
-# Benders Decomposition
-# 2. BendersOptim.lshaped: for stochastic programming
+# L-Shaped Benders Algorithm for Stochastic Programming with Sub and Ray Problems
 # Version: 1.0
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
+module BendersDecomposition
 
-"""
-L-Shaped Benders Decomposition for Stochastic Programming without Integer Variables in Second Stage
-"""
-function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
+using JuMP
+using GLPKMathProgInterface
+using PrettyTables
+
+# L-Shaped Benders Algorithm for Stochastic Programming with Sub and Ray Problems
+function l_shaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
         vec_pi, mat_c, mat_h, mat3_t, mat3_w, epsilon, timesIterationMax)
     # vec_pi
     # mat_c
@@ -20,7 +22,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
     # Define Master problem
     n_constraint = length(mat3_w[1, :, 1])
     num_s = length(mat3_t[:, 1, 1])
-    model_mas = Model(with_optimizer(GLPK.Optimizer))
+    model_mas = Model(solver = GLPKSolverMIP())
     @variable(model_mas, q)
     @variable(model_mas, vec_y[1: n_y], Int)
     @objective(model_mas, Min, (transpose(vec_f) * vec_y + q)[1])
@@ -35,28 +37,28 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             @constraint(model_mas, (mat_e1 * vec_y)[1] >= e2)
         end
         @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
-        optimize!(model_mas)
-        vec_result_y = value(vec_y)
-        return objective_value(model_mas)
+        solve(model_mas)
+        vec_result_y = getvalue(vec_y)
+        return getobjectivevalue(model_mas)
     end
 
 
     function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c)
-        model_sub = Model(with_optimizer(GLPK.Optimizer))
+        model_sub = Model(solver = GLPKSolverLP())
         @variable(model_sub, vec_u[1: n_constraint] >= 0)
         @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1])
         constraintsForDual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
-        solution_sub = optimize!(model_sub)
+        solution_sub = solve(model_sub)
         print("------------------------------ Sub Problem ------------------------------\n")  # , model_sub)
-        vec_uBar = value(vec_u)
+        vec_uBar = getvalue(vec_u)
         if solution_sub == :Optimal
             vec_result_x = zeros(length(vec_c))
-            vec_result_x = dual(constraintsForDual)
-            return (true, objective_value(model_sub), vec_uBar, vec_result_x)
+            vec_result_x = getdual(constraintsForDual)
+            return (true, getobjectivevalue(model_sub), vec_uBar, vec_result_x)
         end
         if solution_sub == :Unbounded
             print("Not solved to optimality because feasible set is unbounded.\n")
-            return (false, objective_value(model_sub), vec_uBar, repeat([NaN], length(vec_c)))
+            return (false, getobjectivevalue(model_sub), vec_uBar, repeat([NaN], length(vec_c)))
         end
         if solution_sub == :Infeasible
             print("Not solved to optimality because infeasibility. Something is wrong.\n")
@@ -66,15 +68,16 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
 
 
     function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
-        model_ray = Model(with_optimizer(GLPK.Optimizer))
+        # model_ray = Model(solver = GurobiSolver())
+        model_ray = Model(solver = GLPKSolverLP())
         @variable(model_ray, vec_u[1: n_constraint] >= 0)
         @objective(model_ray, Max, 1)
         @constraint(model_ray, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1] == 1)
         @constraint(model_ray, transpose(mat_w) * vec_u .<= 0)
-        optimize!(model_ray)
+        solve(model_ray)
         print("------------------------------ Ray Problem ------------------------------\n")  # , model_ray)
-        vec_uBar = value(vec_u)
-        obj_ray = objective_value(model_ray)
+        vec_uBar = getvalue(vec_u)
+        obj_ray = getobjectivevalue(model_ray)
         return (obj_ray, vec_uBar)
     end
 
@@ -119,7 +122,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             mat_e1 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat3_t[s, :, :])[1] for s = 1: num_s)
             e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat_h[s, :])[1] for s = 1: num_s)
             obj_mas = solve_master(mat_e1, e2, vec_bool_solutionSubModel[1])
-            vec_yBar = value(vec_y)
+            vec_yBar = getvalue(vec_y)
             # 3. Compare the bounds and decide whether to stop
             boundLow = max(boundLow, obj_mas)
             dict_boundUp[timesIteration] = boundUp
@@ -127,7 +130,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             if vec_bool_solutionSubModel[1]
                 dict_obj_mas[timesIteration] = obj_mas
                 dict_obj_sub[timesIteration] = obj_sub
-                result_q = value(q)
+                result_q = getvalue(q)
                 dict_q[timesIteration] = result_q
                 println("------------------ Result in $(timesIteration)-th Iteration with Sub ",
                         "-------------------\n", "boundUp: $(round(boundUp, digits = 5)), ",
@@ -136,7 +139,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             else
                 dict_obj_mas[timesIteration] = obj_mas
                 dict_obj_ray[timesIteration] = obj_sub
-                result_q = value(q)
+                result_q = getvalue(q)
                 dict_q[timesIteration] = result_q
                 println("------------------ Result in $(timesIteration)-th Iteration with Ray ",
                         "-------------------\n", "boundUp: $(round(boundUp, digits = 5)), ",
@@ -145,7 +148,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             end
             timesIteration += 1
         end  # -----------------------------------------------------------------------------------------------------
-        println("obj_mas: $(objective_value(model_mas))")
+        println("obj_mas: $(getobjectivevalue(model_mas))")
         println("----------------------------- Master Problem ----------------------------\n")
         # println(model_mas)
         println("-------------------------------------------------------------------------\n",
@@ -154,8 +157,8 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
         println("boundUp: $(round(boundUp, digits = 5)), boundLow: $(round(boundLow, digits = 5)), ",
                 "difference: $(round(boundUp - boundLow, digits = 5))")
         println("vec_x: $vec_result_x")
-        vec_result_y = value(vec_y)
-        result_q = value(q)
+        vec_result_y = getvalue(vec_y)
+        result_q = getvalue(q)
         println("vec_y: $vec_result_y")
         println("result_q: $result_q")
         println("-------------------------------------------------------------------------\n",
@@ -191,4 +194,5 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
     println("-------------------------------------------------------------------------\n",
             "-------------------------- 4/4. Nominal Ending --------------------------\n",
             "-------------------------------------------------------------------------\n")
+end
 end

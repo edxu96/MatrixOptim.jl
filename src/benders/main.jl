@@ -9,4 +9,4 @@
 # 1.BendersOptim.milp: for MILP with Sub and Ray Problems
 include("./milp.jl")
 # 2. BendersOptim.lshaped: for stochastic programming
-include("./lshaped.jl")
+include("./l-shaped.jl")

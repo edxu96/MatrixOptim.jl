@@ -37,7 +37,6 @@ There are many new updates on `JuMP`, so the algorithms need to be updated.
 - [X] Benders Decomposition for MILP
 - [ ] L-Shaped Benders Decomposition
 - [ ] Dantzig-Wolfe Decomposition Family
-- [ ] Simulated Annealing
 
 ## How to Use
 
