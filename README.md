@@ -7,7 +7,7 @@ MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix
 
 ![Tangram](/images/tangram_1.png)
 
-Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Besides, when it comes to algorithms to solve them, it's more explicit in matrix form. Finally, the abstraction algorithm for problem modeling helps a lot in understanding. In this package, there are formulated algorithm for four kinds of optimization problems, and two decomposition algorithms for faster MILP solving.
+Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Besides, when it comes to algorithms to solve them, it's more explicit in matrix form. Finally, the abstraction algorithm for problem modeling helps a lot in understanding. In this package, there are formulated algorithm for four kinds of optimization problems, and two decomposition algorithms for faster MILP solving. I also write cookbooks to explain the algorithms in more detail.
 
 ## Introduction
 
@@ -66,7 +66,9 @@ Right now, the project is still in alpha stage, so you can try to get the latest
 
 ## More Info
 
-- [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home)
+- wiki for documents and examples: [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home) .
+- [Cookbook for Benders Decomposition](./files/cookbook_benders.pdf) .
+- [Cookbook for Robust Optimization](./files/cookbook_robust.pdf) .
 - 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
 
 ## Contributers
