@@ -1,15 +1,13 @@
 
 # MatrixOptim
 
-[![Build Status](https://travis-ci.org/edxu96/MatrixOptim.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim)
+MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
+
+[![Build Status](https://travis-ci.org/edxu96/MatrixOptim.jl.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim.jl)
 
 ![Tangram](/images/tangram_1.png)
 
-MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
-
-__矩阵优化__：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。
-
-Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Secondly, when it comes to algorithms to solve them, it's more explicit in matrix form. Thirdly, the abstraction algorithm for problem modeling helps a lot in understanding.
+Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Besides, when it comes to algorithms to solve them, it's more explicit in matrix form. Finally, the abstraction algorithm for problem modeling helps a lot in understanding. In this package, there are formulated algorithm for four kinds of optimization problems, and two decomposition algorithms for faster MILP solving.
 
 ## Introduction
 
@@ -17,28 +15,16 @@ The MILP can always be formulated in the following matrixes:
 
 ```
 min  vec_c' * vec_x + vec_f' * vec_y
-s.t. mat_aCap * vec_x + mat_bCap * vec_y <= vec_b
+s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
      vec_x in R
      vec_y in Z
 ```
 
-There are two directions for matrix optimization to develop: make modeling easier and solving faster.
-
-In this package, there are formulated algorithm for four kinds of optimization problems, and two decomposition algorithms for faster MILP solving.
-
-## How to Install and Test
+## To Install and Test
 
 ```
-(v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
+(v1.1) pkg> add MatrixOptim
 ```
-
-Besides, remember to update it regularly after installation:
-
-```
-(v1.1) pkg> update MatrixOptim
-```
-
-You can test the package:
 
 ```
 (v1.1) pkg> test MatrixOptim
@@ -49,14 +35,15 @@ You can test the package:
 For mixed integer linear programming:
 
 ```Julia
-model = getModel(vec_c, mat_aCap, vec_b)
+model = getModel(vec_c, mat_aa, vec_b)
 solveModel!(model)
 ```
 
-For mixed integer linear programming with Benders decomposition.
+For mixed integer linear programming with Benders decomposition:
 
 ```Julia
-solveBendersMilp(n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b)
+model = getModelBenders(n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_aa, mat_bb)
+solveModelBenders!(model)
 ```
 
 ## To Check
@@ -71,10 +58,16 @@ There are many new updates on `JuMP`, so the algorithms need to be updated.
 - [ ] L-Shaped Benders Decomposition
 - [ ] Dantzig-Wolfe Decomposition Family
 
+Right now, the project is still in alpha stage, so you can try to get the latest feature by the following line.
+
+```
+(v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
+```
+
 ## More Info
 
 - [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home)
-- [中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)
+- 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
 
 ## Contributers
 
