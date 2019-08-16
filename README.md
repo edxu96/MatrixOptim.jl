@@ -46,6 +46,8 @@ model = getModelBenders(n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat
 solveModelBenders!(model)
 ```
 
+Right now, the supported solver is `GLPK`. I will add the feature to select other solvers, like `Gurobi` and `CPLEX` later.
+
 ## To Check
 
 There are many new updates on `JuMP`, so the algorithms need to be updated.
