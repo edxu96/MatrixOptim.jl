@@ -1,5 +1,5 @@
 
-# MatrixOptim
+# MatrixOptim.jl
 
 MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
 
