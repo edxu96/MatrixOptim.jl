@@ -58,6 +58,7 @@ Right now, the supported solver is `GLPK`. I will add the feature to select othe
 - [X] Benders Decomposition for MILP
 - [ ] L-Shaped Benders Decomp for Stochastic Optim
 - [ ] Dantzig-Wolfe Decomposition Family
+- [ ] Find Shortest Path
 
 Right now, the project is still in alpha stage. There are many new updates on `JuMP`, so the algorithms need to be updated. You can try to get the latest feature by the following line.
 
