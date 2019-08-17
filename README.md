@@ -48,19 +48,18 @@ solveModelBenders!(model)
 
 Right now, the supported solver is `GLPK`. I will add the feature to select other solvers, like `Gurobi` and `CPLEX` later.
 
-## To Check
-
-There are many new updates on `JuMP`, so the algorithms need to be updated.
+## Features
 
 - [x] Linear Programming
 - [x] Mixed Integer Linear Programming
 - [ ] Robust Optimization
 - [ ] Stochastic Optimization
+- [ ] Stochastic Dynamic Programming
 - [X] Benders Decomposition for MILP
-- [ ] L-Shaped Benders Decomposition
+- [ ] L-Shaped Benders Decomp for Stochastic Optim
 - [ ] Dantzig-Wolfe Decomposition Family
 
-Right now, the project is still in alpha stage, so you can try to get the latest feature by the following line.
+Right now, the project is still in alpha stage. There are many new updates on `JuMP`, so the algorithms need to be updated. You can try to get the latest feature by the following line.
 
 ```
 (v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
