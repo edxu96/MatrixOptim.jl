@@ -2,16 +2,68 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: August 11, 2019
 
+
+function solve_master(mat_e1, e2, opt_cut::Bool)
+    if opt_cut
+        @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
+    else  # Add feasible cut Constraints
+        @constraint(model_mas, (mat_e1 * vec_y)[1] >= e2)
+    end
+    @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
+    optimize!(model_mas)
+    vec_result_y = velue_vec(vec_y)
+    return objective_value(model_mas)
+end
+
+
+function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c)
+    model_sub = Model(with_optimizer(GLPK.Optimizer))
+    @variable(model_sub, vec_u[1: n_constraint] >= 0)
+    @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1])
+    constraintsForDual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
+    solution_sub = optimize!(model_sub)
+    print("------------------------------ Sub Problem ------------------------------\n")  # , model_sub)
+    vec_uBar = velue_vec(vec_u)
+    if solution_sub == :Optimal
+        vec_result_x = zeros(length(vec_c))
+        vec_result_x = dual(constraintsForDual)
+        return (true, objective_value(model_sub), vec_uBar, vec_result_x)
+    end
+    if solution_sub == :Unbounded
+        print("Not solved to optimality because feasible set is unbounded.\n")
+        return (false, objective_value(model_sub), vec_uBar, repeat([NaN], length(vec_c)))
+    end
+    if solution_sub == :Infeasible
+        print("Not solved to optimality because infeasibility. Something is wrong.\n")
+        return (false, NaN, hcat(vec_uBar), hcat(repeat([NaN], length(vec_c))))
+    end
+end
+
+
+function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
+    model_ray = Model(with_optimizer(GLPK.Optimizer))
+    @variable(model_ray, vec_u[1: n_constraint] >= 0)
+    @objective(model_ray, Max, 1)
+    @constraint(model_ray, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1] == 1)
+    @constraint(model_ray, transpose(mat_w) * vec_u .<= 0)
+    optimize!(model_ray)
+    print("------------------------------ Ray Problem ------------------------------\n")  # , model_ray)
+    vec_uBar = velue_vec(vec_u)
+    obj_ray = objective_value(model_ray)
+    return (obj_ray, vec_uBar)
+end
+
+
 """
 L-Shaped Benders Decomposition for Stochastic Programming without Integer Variables in Second Stage
+    vec_pi:
+    mat_c:
+    mat_h:
+    mat3_t:
+    mat3_w:
 """
 function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
         vec_pi, mat_c, mat_h, mat3_t, mat3_w, epsilon, timesIterationMax)
-    # vec_pi
-    # mat_c
-    # mat_h
-    # mat3_t
-    # mat3_w
     println("-------------------------------------------------------------------------\n",
             "------------------------ 1/4. Begin Optimization ------------------------\n",
             "-------------------------------------------------------------------------\n")
@@ -25,59 +77,6 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
     @constraint(model_mas, vec_y[1: n_y] .<= vec_max_y)
     @constraint(model_mas, vec_y[1: n_y] .>= vec_min_y)
 
-
-    function solve_master(mat_e1, e2, opt_cut::Bool)
-        if opt_cut
-            @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
-        else  # Add feasible cut Constraints
-            @constraint(model_mas, (mat_e1 * vec_y)[1] >= e2)
-        end
-        @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
-        optimize!(model_mas)
-        vec_result_y = value(vec_y)
-        return objective_value(model_mas)
-    end
-
-
-    function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c)
-        model_sub = Model(with_optimizer(GLPK.Optimizer))
-        @variable(model_sub, vec_u[1: n_constraint] >= 0)
-        @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1])
-        constraintsForDual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
-        solution_sub = optimize!(model_sub)
-        print("------------------------------ Sub Problem ------------------------------\n")  # , model_sub)
-        vec_uBar = value(vec_u)
-        if solution_sub == :Optimal
-            vec_result_x = zeros(length(vec_c))
-            vec_result_x = dual(constraintsForDual)
-            return (true, objective_value(model_sub), vec_uBar, vec_result_x)
-        end
-        if solution_sub == :Unbounded
-            print("Not solved to optimality because feasible set is unbounded.\n")
-            return (false, objective_value(model_sub), vec_uBar, repeat([NaN], length(vec_c)))
-        end
-        if solution_sub == :Infeasible
-            print("Not solved to optimality because infeasibility. Something is wrong.\n")
-            return (false, NaN, hcat(vec_uBar), hcat(repeat([NaN], length(vec_c))))
-        end
-    end
-
-
-    function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
-        model_ray = Model(with_optimizer(GLPK.Optimizer))
-        @variable(model_ray, vec_u[1: n_constraint] >= 0)
-        @objective(model_ray, Max, 1)
-        @constraint(model_ray, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1] == 1)
-        @constraint(model_ray, transpose(mat_w) * vec_u .<= 0)
-        optimize!(model_ray)
-        print("------------------------------ Ray Problem ------------------------------\n")  # , model_ray)
-        vec_uBar = value(vec_u)
-        obj_ray = objective_value(model_ray)
-        return (obj_ray, vec_uBar)
-    end
-
-
-    # Begin Calculation --------------------------------------------------------------------------------------------
     let
         boundUp = Inf
         boundLow = - Inf
@@ -117,7 +116,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             mat_e1 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat3_t[s, :, :])[1] for s = 1: num_s)
             e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat_h[s, :])[1] for s = 1: num_s)
             obj_mas = solve_master(mat_e1, e2, vec_bool_solutionSubModel[1])
-            vec_yBar = value(vec_y)
+            vec_yBar = velue_vec(vec_y)
             # 3. Compare the bounds and decide whether to stop
             boundLow = max(boundLow, obj_mas)
             dict_boundUp[timesIteration] = boundUp
@@ -125,7 +124,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             if vec_bool_solutionSubModel[1]
                 dict_obj_mas[timesIteration] = obj_mas
                 dict_obj_sub[timesIteration] = obj_sub
-                result_q = value(q)
+                result_q = velue_vec(q)
                 dict_q[timesIteration] = result_q
                 println("------------------ Result in $(timesIteration)-th Iteration with Sub ",
                         "-------------------\n", "boundUp: $(round(boundUp, digits = 5)), ",
@@ -134,7 +133,7 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             else
                 dict_obj_mas[timesIteration] = obj_mas
                 dict_obj_ray[timesIteration] = obj_sub
-                result_q = value(q)
+                result_q = velue_vec(q)
                 dict_q[timesIteration] = result_q
                 println("------------------ Result in $(timesIteration)-th Iteration with Ray ",
                         "-------------------\n", "boundUp: $(round(boundUp, digits = 5)), ",
@@ -152,8 +151,8 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
         println("boundUp: $(round(boundUp, digits = 5)), boundLow: $(round(boundLow, digits = 5)), ",
                 "difference: $(round(boundUp - boundLow, digits = 5))")
         println("vec_x: $vec_result_x")
-        vec_result_y = value(vec_y)
-        result_q = value(q)
+        vec_result_y = velue_vec(vec_y)
+        result_q = velue_vec(q)
         println("vec_y: $vec_result_y")
         println("result_q: $result_q")
         println("-------------------------------------------------------------------------\n",
