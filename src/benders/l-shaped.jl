@@ -2,6 +2,10 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: August 11, 2019
 
+mutable struct sol_sub
+
+end
+
 
 function solve_master(mat_e1, e2, opt_cut::Bool)
     if opt_cut
@@ -22,7 +26,7 @@ function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c
     @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1])
     constraintsForDual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
     solution_sub = optimize!(model_sub)
-    print("------------------------------ Sub Problem ------------------------------\n")  # , model_sub)
+    print("    Sub Problem")
     vec_uBar = velue_vec(vec_u)
     if solution_sub == :Optimal
         vec_result_x = zeros(length(vec_c))
@@ -47,7 +51,7 @@ function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
     @constraint(model_ray, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1] == 1)
     @constraint(model_ray, transpose(mat_w) * vec_u .<= 0)
     optimize!(model_ray)
-    print("------------------------------ Ray Problem ------------------------------\n")  # , model_ray)
+    print("    Ray Problem\n")
     vec_uBar = velue_vec(vec_u)
     obj_ray = objective_value(model_ray)
     return (obj_ray, vec_uBar)
@@ -62,25 +66,16 @@ L-Shaped Benders Decomposition for Stochastic Programming without Integer Variab
     mat3_t:
     mat3_w:
 """
-function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
-        vec_pi, mat_c, mat_h, mat3_t, mat3_w, epsilon, timesIterationMax)
-    println("-------------------------------------------------------------------------\n",
-            "------------------------ 1/4. Begin Optimization ------------------------\n",
-            "-------------------------------------------------------------------------\n")
-    # Define Master problem
-    n_constraint = length(mat3_w[1, :, 1])
+function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
+    mat3_t, mat3_w, epsilon=1e-6, timesIterationMax=100)
+    println("Begin L-Shaped Benders Decomposition")
+    n_y = length(vec_min_y)
     num_s = length(mat3_t[:, 1, 1])
-    model_mas = Model(with_optimizer(GLPK.Optimizer))
-    @variable(model_mas, q)
-    @variable(model_mas, vec_y[1: n_y], Int)
-    @objective(model_mas, Min, (transpose(vec_f) * vec_y + q)[1])
-    @constraint(model_mas, vec_y[1: n_y] .<= vec_max_y)
-    @constraint(model_mas, vec_y[1: n_y] .>= vec_min_y)
-
+    n_constraint = length(mat3_w[1, :, 1])
+    mod_mas = set_mod_mas(n_y, vec_min_y, vec_max_y)
     let
         boundUp = Inf
         boundLow = - Inf
-        epsilon = 0
         # initial value of master variables
         mat_uBar = zeros(num_s, n_constraint, 1)
         vec_yBar = zeros(n_y, 1)
@@ -96,8 +91,8 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
         timesIteration = 1
         # Must make sure "result_q == obj_sub" in the final iteration
         # while ((boundUp - boundLow > epsilon) && (timesIteration <= timesIterationMax))  !!!
-        while ((!((boundUp - boundLow <= epsilon) && ((result_q == obj_sub)))) &&
-            (timesIteration <= timesIterationMax))
+        while check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub,
+                timesIteration, timesIterationMax)
             # 1. Solve sub/ray problem for each scenario
             vec_bool_solutionSubModel = trues(num_s)
             for s = 1: num_s
@@ -143,8 +138,6 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
             timesIteration += 1
         end  # -----------------------------------------------------------------------------------------------------
         println("obj_mas: $(objective_value(model_mas))")
-        println("----------------------------- Master Problem ----------------------------\n")
-        # println(model_mas)
         println("-------------------------------------------------------------------------\n",
                 "------------------------------ 2/4. Result ------------------------------\n",
                 "-------------------------------------------------------------------------")
@@ -179,11 +172,15 @@ function lshaped(; n_x, n_y, vec_min_y, vec_max_y, vec_f,
                 vec_obj_subRay[i] = round(dict_obj_ray[i], digits = 5)
             end
         end
-        table_iterationResult = hcat(seq_timesIteration, vec_boundUp, vec_boundLow,
-                                     vec_obj_mas, vec_q, vec_type, vec_obj_subRay)
-        pretty_table(table_iterationResult,
-                     ["Seq", "boundUp", "boundLow", "obj_mas", "q", "sub/ray", "obj_sub/ray"],
-                     compact; alignment=:l)
+        table_iterationResult = hcat(
+            seq_timesIteration, vec_boundUp, vec_boundLow, vec_obj_mas, vec_q,
+            vec_type, vec_obj_subRay
+            )
+        pretty_table(
+            table_iterationResult,
+            ["Seq", "boundUp", "boundLow", "obj_mas", "q", "sub/ray", "obj_sub/ray"],
+            compact; alignment=:l
+            )
     end
     println("-------------------------------------------------------------------------\n",
             "-------------------------- 4/4. Nominal Ending --------------------------\n",

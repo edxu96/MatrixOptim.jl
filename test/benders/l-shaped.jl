@@ -34,6 +34,7 @@ function get_data()
     mat3_w = - ones(10, 2, 1)
     epsilon = 0.001
     timesIterationMax = 500
+    return 
 end
 
 

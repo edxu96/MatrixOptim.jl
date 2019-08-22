@@ -64,7 +64,8 @@ function solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
 end
 
 
-function check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub, timesIteration, timesIterationMax)
+function check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub,
+        timesIteration, timesIterationMax)
     whe_continue = true
     if (boundUp - boundLow <= epsilon) & (boundUp - boundLow >= - epsilon)
         if (result_q - obj_sub <= epsilon) & (result_q - obj_sub >= - epsilon)
@@ -82,16 +83,8 @@ Generic Benders Decomposition for Mixed Integer Linear Programming
 function solveBendersMilp(
         n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat_a, mat_b, epsilon=1e-6, timesIterationMax=100
     )
-    println("################################################################################")
-    # Define Master problem
     n_constraint = length(mat_a[:, 1])
-    model_mas = Model(with_optimizer(GLPK.Optimizer))
-    @variable(model_mas, q)
-    @variable(model_mas, vec_y[1: n_y], Int)
-    @objective(model_mas, Min, (transpose(vec_f) * vec_y)[1] + q)
-    @constraint(model_mas, vec_y[1: n_y] .<= vec_max_y)
-    @constraint(model_mas, vec_y[1: n_y] .>= vec_min_y)
-
+    mod_mas = set_mod_mas(n_y, vec_min_y, vec_max_y)
     let
         boundUp = Inf
         boundLow = - Inf
@@ -110,16 +103,22 @@ function solveBendersMilp(
         timesIteration = 1
         # Must make sure "result_q == obj_sub" in the final iteration
         # while ((boundUp - boundLow > epsilon) && (timesIteration <= timesIterationMax))  !!!
-        while check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub, timesIteration, timesIterationMax)
-            bool_solution_sub, obj_sub, vec_uBar, vec_result_x = solve_sub(vec_yBar, n_constraint, vec_b, mat_b,
-                mat_a, vec_c)
+        while check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub,
+                timesIteration, timesIterationMax)
+            bool_solution_sub, obj_sub, vec_uBar, vec_result_x = solve_sub(
+                vec_yBar, n_constraint, vec_b, mat_b, mat_a, vec_c
+                )
             if bool_solution_sub
                 println("obj_sub = $(obj_sub) ;")
                 boundUp = min(boundUp, obj_sub + (transpose(vec_f) * vec_yBar)[1])
             else
-                (obj_ray, vec_uBar) = solve_ray(vec_yBar, n_constraint, vec_b, mat_b, mat_a)
+                (obj_ray, vec_uBar) = solve_ray(
+                    vec_yBar, n_constraint, vec_b, mat_b, mat_a
+                    )
             end
-            obj_mas = solve_master(model_mas, q, vec_y, vec_b, mat_b, vec_uBar, bool_solution_sub)
+            obj_mas = solve_master(
+                model_mas, q, vec_y, vec_b, mat_b, vec_uBar, bool_solution_sub
+                )
             vec_yBar = value_vec(vec_y)
             boundLow = max(boundLow, obj_mas)
             dict_boundUp[timesIteration] = boundUp
@@ -180,11 +179,15 @@ function solveBendersMilp(
                 vec_obj_subRay[i] = round(dict_obj_ray[i], digits = 5)
             end
         end
-        table_iterationResult = hcat(seq_timesIteration, vec_boundUp, vec_boundLow,
-                                     vec_obj_mas, vec_q, vec_type, vec_obj_subRay)
-        pretty_table(table_iterationResult,
-                     ["Seq", "boundUp", "boundLow", "obj_mas", "q", "sub/ray", "obj_sub/ray"],
-                     compact; alignment=:l)
+        table_iterationResult = hcat(
+            seq_timesIteration, vec_boundUp, vec_boundLow, vec_obj_mas, vec_q,
+            vec_type, vec_obj_subRay
+            )
+        pretty_table(
+            table_iterationResult,
+            ["Seq", "boundUp", "boundLow", "obj_mas", "q", "sub/ray",
+                "obj_sub/ray"],
+            compact; alignment=:l)
     end
-    println("################################################################################\n")
+    println("End")
 end
