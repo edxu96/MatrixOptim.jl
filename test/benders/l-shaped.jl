@@ -34,11 +34,12 @@ function get_data()
     mat3_w = - ones(10, 2, 1)
     epsilon = 0.001
     timesIterationMax = 500
-    return 
+    return
 end
 
 
 function main()
+    
     BendersLshaped(; n_x = n_x, n_y = n_y, vec_min_y = vec_min_y, vec_max_y = vec_max_y, vec_f = vec_f,
         vec_pi = vec_pi, mat_c = mat_c, mat_h = mat_h, mat3_t = mat3_t, mat3_w = mat3_w,
         epsilon = epsilon, timesIterationMax = timesIterationMax)

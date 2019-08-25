@@ -5,16 +5,6 @@
 
 
 """
-Solution for Model
-"""
-mutable struct Solution
-    obj::Float64
-    vec_result_x::Array{Float64,2}
-    vec_result_u::Array{Float64,2}
-end
-
-
-"""
 Model for Mixed Integer Linear Programming
 """
 mutable struct ModelMix

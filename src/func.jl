@@ -6,7 +6,7 @@ function value_vec(vec_x::Union{Array{VariableRef,1}, VariableRef})
     else
         vec_value = [value(vec_x[i]) for i = 1:length(vec_x)]
     end
-    
+
     return vec_value
 end
 
@@ -29,9 +29,30 @@ function checkColVec(vec::Array{Int64,2}, str_name::String)
 end
 
 
-function checkMatrixMatch(array_1::Array{Int64,2}, array_2::Array{Int64,2}, whi_1::ColRow, whi_2::ColRow,
-    str_name_1::String, str_name_2::String)
-    if size(array_1)[Int(whi_1)] != size(array_2)[Int(whi_2)]
-        throw("The $(str(whi_1)) of $str_name_1 doesn't match the $(str(whi_2)) of $str_name_2.")
+function checkMatrixMatch(
+        len::Float64, array::Array{Int64,2}, whi::ColRow,
+        str_len::String, str_array::String
+        )
+    if size(array)[Int(whi)] != len
+        throw("The $(str(whi)) of $str_array doesn't match the $str_len.")
     end
+end
+
+
+function checkListMatch(
+        len::Float64, list::Array{Int64,1}, str_len::String, str_list::String,
+        )
+    if length(list_1) != length(list_2)
+        throw("The length of list $str_list doesn't match the $str_len.")
+    end
+end
+
+
+"""
+Solution for Model
+"""
+mutable struct Solution
+    obj::Float64
+    vec_result_x::Array{Float64,2}
+    vec_result_u::Array{Float64,2}
 end

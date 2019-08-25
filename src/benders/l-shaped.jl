@@ -2,8 +2,35 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: August 11, 2019
 
-mutable struct sol_sub
 
+"MILP model for L-Shaped Benders decomposition (LSBD) in matrix form."
+mutable struct ModelLSBD
+    n_x
+    vec_min_y
+    vec_max_y
+    vec_c
+    vec_f
+    vec_b
+    mat_aCap
+    mat_bCap
+    solution::Union{Solution, Missing}
+
+    function ModelLSBD(
+            vec_min_y::Array{Int64,1}, vec_max_y::Array{Int64,1},
+            vec_c::Array{Int64,2}, vec_b::Array{Int64,2},
+            vec_f::Array{Int64,2}, mat_aCap::Array{Int64,2},
+            mat_bCap::Array{Int64,2}
+            )
+        checkListLength(vec_min_y, vec_max_y, 'vec_min_y', 'vec_max_y')
+        checkColVec(vec_c, "vec_c")
+        checkColVec(vec_f, "vec_f")
+        checkColVec(vec_b, "vec_b")
+        checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c", "mat_aCap")
+        checkMatrixMatch(vec_f, mat_bCap, row, col, "vec_f", "mat_bCap")
+        checkMatrixMatch(mat_aCap, mat_bCap, row, row, "mat_aCap", "mat_bCap")
+        checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap", "vec_b")
+        new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b, missing)
+    end
 end
 
 
