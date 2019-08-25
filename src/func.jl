@@ -51,8 +51,15 @@ end
 """
 Solution for Model
 """
-mutable struct Solution
+mutable struct Sol
     obj::Float64
     vec_result_x::Array{Float64,2}
     vec_result_u::Array{Float64,2}
+end
+
+
+mutable struct SolMix
+    obj::Float64
+    vec_result_x::Array{Float64,2}
+    vec_result_y::Array{Float64,2}
 end
