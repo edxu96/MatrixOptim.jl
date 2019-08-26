@@ -1,3 +1,6 @@
+# Benders Decomposition for MILP with Sub and Ray Problems
+# Edward J. Xu, edxu96@outlook.com
+# April 25th, 2019
 
 mutable struct ModRay
     expr

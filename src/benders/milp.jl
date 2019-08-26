@@ -1,6 +1,6 @@
 # Benders Decomposition for MILP with Sub and Ray Problems
 # Author: Edward J. Xu, edxu96@outlook.com
-# Date: April 5th, 2019
+# Date: April 25th, 2019
 
 "MILP model for Benders decomposition in matrix form."
 mutable struct ModMilpBenders

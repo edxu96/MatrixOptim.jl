@@ -25,7 +25,7 @@ end
 
 "JuMP Model of Master Problem"
 mutable struct ModMas
-    expr
+    expr::Model
     vec_y
 
     function ModMas(n_y, vec_min_y, vec_max_y)
@@ -110,6 +110,8 @@ end
 
 include("./milp.jl")
 include("./l-shaped.jl")
+include("./slave.jl")
+
 
 export ModMilpBenders, solveModMilpBenders!
 
