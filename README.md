@@ -69,8 +69,7 @@ Right now, the project is still in alpha stage. There are many new updates on `J
 ## More Info
 
 - wiki for documents and examples: [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home) .
-- [Cookbook for Benders Decomposition](./files/cookbook_benders.pdf) .
-- [Cookbook for Robust Optimization](./files/cookbook_robust.pdf) .
+- Cookbook for theories and algorithms in MatrixOptim: [MatrixOptim-Cookbook](./files/MatrixOptim-Cookbook.pdf) .
 - 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
 
 ## Contributers
