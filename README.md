@@ -7,7 +7,7 @@ MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix
 
 ![Tangram](/images/tangram_1.png)
 
-Every optimization problem can be written in matrix form. For some problems, it may seems trivial, but it's coherent and easy to understand. Besides, when it comes to algorithms to solve them, it's more explicit in matrix form. Finally, the abstraction algorithm for problem modeling helps a lot in understanding. In this package, there are formulated algorithm for four kinds of optimization problems, and two decomposition algorithms for faster MILP solving. I also write cookbooks to explain the algorithms in more detail.
+`MatrixOptim.jl` is a package to model and solve optimization in uncertain context. The templates for robust optimization and stochastic optimization formulated in matrix are very coherent comprehensive, and the algorithms in matrix are very explicit.
 
 ## Introduction
 
