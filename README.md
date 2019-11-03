@@ -9,7 +9,7 @@ MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix
 
 `MatrixOptim.jl` is a package to model and solve optimization in uncertain context. The templates for robust optimization and stochastic optimization formulated in matrix are very coherent comprehensive, and the algorithms in matrix are very explicit.
 
-## Introduction
+## 1, Introduction
 
 The MILP can always be formulated in the following matrixes:
 
@@ -20,7 +20,7 @@ s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
      vec_y in Z
 ```
 
-## To Install and Test
+## 2, To Install and Test
 
 ```
 (v1.1) pkg> add MatrixOptim
@@ -30,7 +30,7 @@ s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
 (v1.1) pkg> test MatrixOptim
 ```
 
-## How to Use
+## 3, How to Use
 
 For mixed integer linear programming:
 
@@ -48,7 +48,7 @@ solveModelBenders!(model)
 
 Right now, the supported solver is `GLPK`. I will add the feature to select other solvers, like `Gurobi` and `CPLEX` later.
 
-## Features
+## 4, Features
 
 - [x] Linear Programming
 - [x] Mixed Integer Linear Programming
@@ -58,6 +58,8 @@ Right now, the supported solver is `GLPK`. I will add the feature to select othe
 - [X] Benders Decomposition for MILP
 - [ ] L-Shaped Benders Decomp for Stochastic Optim
 - [ ] Dantzig-Wolfe Decomposition Family
+- [ ] Dynamic Programming with State Space Model
+- [ ] Markov Decision Process
 - [ ] Find Shortest Path
 
 Right now, the project is still in alpha stage. There are many new updates on `JuMP`, so the algorithms need to be updated. You can try to get the latest feature by the following line.
@@ -66,12 +68,8 @@ Right now, the project is still in alpha stage. There are many new updates on `J
 (v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
 ```
 
-## More Info
+## 5, More Info
 
 - wiki for documents and examples: [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home) .
 - Cookbook for theories and algorithms in MatrixOptim: [MatrixOptim-Cookbook](./files/MatrixOptim-Cookbook.pdf) .
 - 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
-
-## Contributers
-
-Edward J. Xu (<edxu96@outlook.com>) (<https://edxu96.github.io>)
