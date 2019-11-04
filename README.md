@@ -50,23 +50,31 @@ Right now, the supported solver is `GLPK`. I will add the feature to select othe
 
 ## 4, Features
 
-- [x] Linear Programming
-- [x] Mixed Integer Linear Programming
-- [ ] Robust Optimization
-- [ ] Stochastic Optimization
-- [ ] Stochastic Dynamic Programming
-- [X] Benders Decomposition for MILP
-- [ ] L-Shaped Benders Decomp for Stochastic Optim
-- [ ] Dantzig-Wolfe Decomposition Family
-- [ ] Dynamic Programming with State Space Model
-- [ ] Markov Decision Process
-- [ ] Find Shortest Path
-
 Right now, the project is still in alpha stage. There are many new updates on `JuMP`, so the algorithms need to be updated. You can try to get the latest feature by the following line.
 
 ```
 (v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
 ```
+
+## 4.1, Models
+
+- [x] Linear Programming
+- [x] Mixed Integer Linear Programming
+- [ ] Robust Optimization
+- [ ] Stochastic Optimization
+- [ ] Dynamical Systems and State Space Model
+- [ ] Markov Decision Process
+
+## 4.2, Algorithms
+
+- [ ] Simplex Method
+- [ ] Branch and Cut for MILP
+- [X] Benders Decomposition for MILP
+- [ ] L-Shaped Benders Decomp for Stochastic Optim
+- [ ] Dantzig-Wolfe Decomposition Family
+- [ ] Dynamic Programming
+- [ ] Stochastic Dynamic Programming
+- [ ] Find Shortest Path
 
 ## 5, More Info
 
