@@ -14,11 +14,11 @@ where the end points are:
 
 The (steady state) potential energy can be written as:
 
-<p align="center"><img src="/examples/dynamic/project/tex/bd1751e7d3ae07d2c53c0492891f13ed.svg?invert_in_darkmode&sanitize=true" align=middle width=178.17881895pt height=47.806078649999996pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/a381899fdf98fdfd103db242eba21819.svg?invert_in_darkmode&sanitize=true" align=middle width=233.98111605pt height=105.4751709pt/></p>
 
 where
 
-<p align="center"><img src="/examples/dynamic/project/tex/a1109c7cba1186f39921d6ceb3d267c1.svg?invert_in_darkmode&sanitize=true" align=middle width=227.91264045pt height=87.1240095pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/2b27a0c5827073622e30f34ca0d83eb9.svg?invert_in_darkmode&sanitize=true" align=middle width=277.14659939999996pt height=87.1240095pt/></p>
 
 ### Solve the Problem
 
@@ -26,7 +26,7 @@ Solve the problem by using the relation in (3) and plot the shape of the chain (
 
 Euler-Lagrange equations are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/157a3082ea3c2a8f684a463c2c504fcc.svg?invert_in_darkmode&sanitize=true" align=middle width=246.9587604pt height=88.493889pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/4ce41bd35f07c48eb70aa37d89d8d395.svg?invert_in_darkmode&sanitize=true" align=middle width=246.9587604pt height=88.493889pt/></p>
 
 ###
 
