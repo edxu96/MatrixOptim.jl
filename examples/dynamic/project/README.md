@@ -28,11 +28,15 @@ The Hamiltonian function is:
 
 Euler-Lagrange equations are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/36ff54a15119606fc6af25889c57daba.svg?invert_in_darkmode&sanitize=true" align=middle width=312.91698735pt height=138.28108139999998pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/9d16e79283f23393303970095a8b8786.svg?invert_in_darkmode&sanitize=true" align=middle width=312.91698735pt height=138.28108139999998pt/></p>
 
 where the boundary conditions are:
 
 <p align="center"><img src="/examples/dynamic/project/tex/d5e976a1a29efc4411c34a227b2d2a27.svg?invert_in_darkmode&sanitize=true" align=middle width=120.08604629999999pt height=87.1240095pt/></p>
+
+The calculate procedure for iterations can be expressed by:
+
+<p align="center"><img src="/examples/dynamic/project/tex/1b8746e5df5cfcf9dd7f7b0cc76ff510.svg?invert_in_darkmode&sanitize=true" align=middle width=278.34147659999996pt height=137.5294668pt/></p>
 
 When <img src="/examples/dynamic/project/tex/ed6ccff2a53f69f4c96dce6a9fc774d4.svg?invert_in_darkmode&sanitize=true" align=middle width=212.30146904999998pt height=22.831056599999986pt/>, the results are:
 
