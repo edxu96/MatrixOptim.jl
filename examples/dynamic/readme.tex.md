@@ -43,3 +43,13 @@ $$
 	0 &= r u_{i} - \lambda_{i+1}
 \end{align}
 $$
+
+The calculation procedure can be expressed as:
+
+$$
+\begin{align}
+	\lambda_{i+1} &= (\lambda_{i} - q x_{i}) / (1 + \alpha) \\
+	u_{i} &= \lambda_{i+1} / r \\
+	x_{i+1} &= (1 + \alpha) x_{i} - u_{i}
+\end{align}
+$$
