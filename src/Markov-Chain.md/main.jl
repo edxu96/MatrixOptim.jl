@@ -20,6 +20,8 @@ end
 
 "Calculate limiting probability distribution of a Markov chain family."
 function cal_vec_lpd(stpm::Array{Float64,2})
+
+    hcat([1; 1; 1])
     return vec_lpd
 end
 
