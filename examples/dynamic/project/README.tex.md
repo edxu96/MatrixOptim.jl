@@ -25,7 +25,10 @@ $$
 The (steady state) potential energy can be written as:
 
 $$
-J = \sum_{i=0}^{N-1} \frac{1}{2} m g \left( y_{i} + y_{i+1} \right)
+\begin{align}
+	J &= \sum_{i=0}^{N-1} \frac{1}{2} m g \left( y_{i} + y_{i+1} \right) \\
+	&= \sum_{i=0}^{N-1} \left( m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right)
+\end{align}
 $$
 
 where
@@ -33,7 +36,7 @@ where
 $$
 \begin{align}
 	\phi \left( \left[ \begin{array}{l}{z} \\ {y} \end{array} \right]_{N} \right) &= 0 \\
-	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} \right) &= \frac{1}{2} m g \left( y_{i} + y_{i+1} \right)
+	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_i \right) &= m g y_{i} + \frac{1}{2} m g l sin(\theta_i)
 \end{align}
 $$
 
@@ -46,7 +49,7 @@ Euler-Lagrange equations are:
 $$
 \begin{align}
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i+1} &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right] \\
-	\left[ \begin{array}{l}{\lambda^z} \\ {\lambda^y}\end{array}  \right]_{i} &= \left[ \begin{array}{l}{\lambda^z} \\ {\lambda^y}\end{array}  \right]_{i}
+	\left[ \begin{array}{l}{\lambda^z} \\ {\lambda^y}\end{array}  \right]_{i} &= \left[ \begin{array}{l}{0} \\ {m g} \end{array}  \right]_{i}
 \end{align}
 $$
 
