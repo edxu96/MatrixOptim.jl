@@ -53,7 +53,7 @@ Euler-Lagrange equations are:
 $$
 \begin{align}
 	z_{i+1} &= z_{i} + \cos \left(\theta_{i} \right) \\
-	y_{i+1} &= y_{i} + \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
 	\lambda^{z}_{i} &= \lambda^z_{i+1} \\
 	\lambda^{y}_{i} &= m g + \lambda^y_{i+1} \\
 	0 &= \left[ \frac{1}{2} m g l + \lambda^y_{i+1} \right] \cos(\theta_i) - \lambda^z_{i+1} \sin(\theta_i)
@@ -66,6 +66,18 @@ $$
 \begin{align}
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+\end{align}
+$$
+
+The calculate procedure for iterations can be expressed by:
+
+$$
+\begin{align}
+	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
+	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
+	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g l \right) / \lambda^z_{i+1} \right] \\
+	z_{i+1} &= z_{i} + \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
 \end{align}
 $$
 

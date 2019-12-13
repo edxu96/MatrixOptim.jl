@@ -1,6 +1,6 @@
 
 
-function [err, u_t, x_t, lambda_t] = fejlf(lambda_0)
+function [err, u_t, x_t, lambda_t] = cal_fejlf(lambda_0)
 % Usage: [err,ut,xt,lambda_t]=fejlf(lambda_0)
 %
 % lambda_0: guess on the initial value of the costate.
@@ -8,9 +8,9 @@ function [err, u_t, x_t, lambda_t] = fejlf(lambda_0)
 [alf, a, b, x_0, n, q, r, p] = get_para();
 
 %% Initialize the vectors to store the result
-x_t = zeros(3, 1);
-lambda_t = zeros(3, 1);
-u_t = zeros(3, 1);
+x_t = zeros(n, 1);
+lambda_t = zeros(n, 1);
+u_t = zeros(n, 1);
 
 x_t(1) = x_0;
 lambda_t(1) = lambda_0;

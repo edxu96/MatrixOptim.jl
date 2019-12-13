@@ -13,4 +13,5 @@
 % opt = optimset(opt, 'Display', 'off');
 % fsolve('fz', [1; 1], opt)
 
-solve_exer_3()
+% solve_exer_3()
+solve_project()
