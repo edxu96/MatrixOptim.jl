@@ -24,3 +24,7 @@ The Hamiltonian function of the problem is:
 The Euler-Lagrange equations can be expressed as:
 
 <p align="center"><img src="/examples/dynamic/tex/8700038f517b51564b85e8038bf29a9d.svg?invert_in_darkmode&sanitize=true" align=middle width=178.87260105pt height=65.47944315pt/></p>
+
+The calculation procedure can be expressed as:
+
+<p align="center"><img src="/examples/dynamic/tex/ed4052666bbd37b3c57cb9161451bc47.svg?invert_in_darkmode&sanitize=true" align=middle width=184.24933889999997pt height=65.753424pt/></p>
