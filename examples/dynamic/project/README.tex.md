@@ -68,7 +68,8 @@ where the boundary conditions are:
 $$
 \begin{align}
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{\lambda_z} \\ {\lambda_y} \\ {\theta} \end{array} \right]_{N} &= \left[ \begin{array}{l}{\nu_z} \\ {\nu_y} \\ {1} \end{array} \right] \\
 \end{align}
 $$
 
