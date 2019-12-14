@@ -128,29 +128,68 @@ $$
 \end{align}
 $$
 
-$N = 2n$
+When $N = 2n$
 
 ## 2, Trajectory of a Suspended Wire
 
-Now, the chain is substituted by a wire and the problem becomes a continuous problem. Let ρ = M/L and s the distance along the wire. The positions along the wire obey
+Now, the chain is substituted by a wire and the problem becomes a continuous problem. Let $s$ the distance along the wire. The positions along the wire obey
 
 $$
-\frac{d}{d s} \left[ \begin{array}{l}{z_{s}} \\ {y_{s}}\end{array} \right] = \left[ \begin{array}{c}{\cos \left( \theta_{s}\right)} \\ {\sin \left( \theta_{s} \right)}\end{array} \right]
+\frac{d}{d s} \left[ \begin{array}{l}{z_{s}} \\ {y_{s}}\end{array} \right] = f(\theta_s) = \left[ \begin{array}{c}{\cos \left( \theta_{s}\right)} \\ {\sin \left( \theta_{s} \right)}\end{array} \right]
 $$
 
 where the boundary conditions are:
 
 $$
 \begin{align}
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} = \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{L} = \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+	\left[ \begin{array}{l}{z} \\ {y} \end{array} \right]_{0} = \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{L} = \left[ \begin{array}{l}{h} \\ {0} \end{array} \right]
 \end{align}
 $$
 
 So the potential energy in steady state can be expressed by:
 
 $$
-J = \int_{0}^{L} \rho g y_{s} d s
+J = \int_{0}^{S} M g y / S \mathrm{d} s
 $$
 
-Formulate the problem as a continuous problem and solve it (e.g. analytically or numerically). Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of $s$). Plot the function as function of s and explain what you see - and why.
+where
+
+$$
+\begin{align}
+	\phi(\theta_S) &= 0 \\
+	L(y_s) &= \rho M g y / S
+\end{align}
+$$
+
+The Hamiltonian function is:
+
+$$
+H_s = \rho M g y / S + \lambda^z \cos \left( \theta\right) + \lambda^y \sin \left( \theta\right)
+$$
+
+Euler-Lagrange equations are:
+
+$$
+\begin{align}
+	\dot{z} &= \cos \left( \theta\right) \\
+	\dot{y} &= \sin \left( \theta\right) \\
+	- \lambda^z &= 0 \\
+	- \lambda^y &= \rho M g / S \\
+	0 &= - \lambda^z \sin \left( \theta\right) + \lambda^y \cos \left( \theta\right)
+\end{align}
+$$
+
+or the following equations according to Pontryagins Maximum principle:
+
+$$
+\begin{align}
+	- \lambda^z &= 0 \\
+	- \lambda^y &= \rho M g / S \\
+	\theta &= \arg \min_{-\pi/2 \leq \theta \leq \pi/2} \left[ \rho M g y / S + \lambda^z \cos \left( \theta\right) + \lambda^y \sin \left( \theta\right) \right] \\
+	\dot{z} &= \cos \left( \theta\right) \\
+	\dot{y} &= \sin \left( \theta\right)
+\end{align}
+$$
+
+Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of $s$). Plot the function as function of s and explain what you see - and why.
