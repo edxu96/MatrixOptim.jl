@@ -38,6 +38,10 @@ The calculate procedure for iterations can be expressed by:
 
 <p align="center"><img src="/examples/dynamic/project/tex/1b8746e5df5cfcf9dd7f7b0cc76ff510.svg?invert_in_darkmode&sanitize=true" align=middle width=278.34147659999996pt height=137.5294668pt/></p>
 
+or
+
+<p align="center"><img src="/examples/dynamic/project/tex/8f657142ac15fbb67879bb7326143a41.svg?invert_in_darkmode&sanitize=true" align=middle width=573.69488055pt height=137.5294668pt/></p>
+
 When <img src="/examples/dynamic/project/tex/ed6ccff2a53f69f4c96dce6a9fc774d4.svg?invert_in_darkmode&sanitize=true" align=middle width=212.30146904999998pt height=22.831056599999986pt/>, the results are:
 
 The value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is:
