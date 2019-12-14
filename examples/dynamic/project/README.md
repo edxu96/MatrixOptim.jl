@@ -1,6 +1,9 @@
 
+# Find the Trajectory using Dynamic Optimization
 
-The objective in this assignment is primely to apply dynamic optimization on a specific problem rather than determining the shape of a suspended chain or cable. (This can be found in just about any text book in mechanics). In the report, it is important to give the results and an interpretation of those, but certainly also to describe the chosen method, its background and assumptions.
+In the report, it is important to give the results and an interpretation of those, but certainly also to describe the chosen method, its background and assumptions.
+
+## 1, Trajectory of a Suspended Chain
 
 ### Rewrite the Cost Function in Standard Form
 
@@ -40,7 +43,7 @@ The calculate procedure for iterations can be expressed by the following equatio
 
 or the following equations according to Pontryagins Maximum principle:
 
-<p align="center"><img src="/examples/dynamic/project/tex/8f657142ac15fbb67879bb7326143a41.svg?invert_in_darkmode&sanitize=true" align=middle width=573.69488055pt height=137.5294668pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/0123cb69d017e6328ec866dd8ea34393.svg?invert_in_darkmode&sanitize=true" align=middle width=631.3636725pt height=137.80322325pt/></p>
 
 When <img src="/examples/dynamic/project/tex/ed6ccff2a53f69f4c96dce6a9fc774d4.svg?invert_in_darkmode&sanitize=true" align=middle width=212.30146904999998pt height=22.831056599999986pt/>, the results are:
 
@@ -53,3 +56,31 @@ The value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d
 ### Vertical Force and Costate Vector
 
 Determine the vertical force in the origin (i = 0). Compare this with the costate at the origin. Discuss your observations. Give a qualified guess on the sign of horizontal force in the origin.
+
+### Two Symmetric Half Chains
+
+For <img src="/examples/dynamic/project/tex/87b1657177022f790cc2ab8fbcc138bb.svg?invert_in_darkmode&sanitize=true" align=middle width=123.85906005pt height=22.465723500000017pt/>, we have:
+
+<p align="center"><img src="/examples/dynamic/project/tex/44878bfbb42d9a7a5e1ae410d52674cf.svg?invert_in_darkmode&sanitize=true" align=middle width=412.2651489pt height=88.493889pt/></p>
+
+where the boundary conditions are:
+
+<p align="center"><img src="/examples/dynamic/project/tex/d49fde9de438443f411722033b803ff4.svg?invert_in_darkmode&sanitize=true" align=middle width=113.74056540000001pt height=64.7674335pt/></p>
+
+<img src="/examples/dynamic/project/tex/4d8fc1d3851286cb7b423eaf172ee903.svg?invert_in_darkmode&sanitize=true" align=middle width=55.00368554999999pt height=22.465723500000017pt/>
+
+## 2, Trajectory of a Suspended Wire
+
+Now, the chain is substituted by a wire and the problem becomes a continuous problem. Let ρ = M/L and s the distance along the wire. The positions along the wire obey
+
+<p align="center"><img src="/examples/dynamic/project/tex/09ac7676049ee6de81f154b39f230e38.svg?invert_in_darkmode&sanitize=true" align=middle width=177.8345019pt height=39.452455349999994pt/></p>
+
+where the boundary conditions are:
+
+<p align="center"><img src="/examples/dynamic/project/tex/1f35458ba3c425386f837eb8d54b1874.svg?invert_in_darkmode&sanitize=true" align=middle width=117.4582332pt height=87.1240095pt/></p>
+
+So the potential energy in steady state can be expressed by:
+
+<p align="center"><img src="/examples/dynamic/project/tex/670b3ef03b3a8049a8aede1fdb4e3822.svg?invert_in_darkmode&sanitize=true" align=middle width=109.90865985pt height=41.15109735pt/></p>
+
+Formulate the problem as a continuous problem and solve it (e.g. analytically or numerically). Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of <img src="/examples/dynamic/project/tex/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode&sanitize=true" align=middle width=7.7054801999999905pt height=14.15524440000002pt/>). Plot the function as function of s and explain what you see - and why.
