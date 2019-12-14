@@ -5,13 +5,55 @@
 % cd ~/GitHub/MatrixOptim.jl/src/dynamic
 % addpath('~/GitHub/MatrixOptim.jl/src/dynamic')
 
-% opt = optimset;
-% opt = optimset(opt, 'Display', 'iter');
-% fminsearch('fopt', [1; 1], opt)
-%
-% opt = optimset;
-% opt = optimset(opt, 'Display', 'off');
-% fsolve('fz', [1; 1], opt)
 
-% solve_exer_3()
-solve_project()
+function main()
+	% solve_exer_1()
+	% solve_exer_2()
+	% solve_exer_3()
+	solve_project()
+end
+
+
+function solve_exer_1()
+	opt = optimset;
+	opt = optimset(opt, 'Display', 'iter');
+	fminsearch('fopt', [1; 1], opt)
+end
+
+
+function loss = fopt(u)
+	loss = sum((u - [1; 3]).^2) + 1;
+end
+
+
+function solve_exer_2()
+	opt = optimset;
+	opt = optimset(opt, 'Display', 'off');
+	fsolve('fz', [1; 1], opt)
+end
+
+
+function f = fz(u)
+	f = u - [1; 3];
+end
+
+
+function [lambda_0_star, u_t, x_t, lambda_t] = solve_exer_3()
+	% format bank
+
+	opt = optimset('fsolve');
+	opt = optimset(opt, 'Display', 'iter');
+
+	lambda_0_star = fsolve('cal_fejlf', 0, opt);
+	% Initial guess search of lambda_0 is 0
+	[~, u_t, x_t, lambda_t] = fejlf(lambda_0_star);
+
+	%% Plot the results
+	subplot(211);
+	bar(u_t); grid; title('Input sequence');
+	axis([0 15 0 50000]);
+	subplot(212);
+	bar(x_t); grid; title('Balance');
+	axis([0 15 0 50000]);
+	shg
+end

@@ -5,7 +5,7 @@ function [err, u_t, x_t, lambda_t] = cal_fejlf(lambda_0)
 %
 % lambda_0: guess on the initial value of the costate.
 
-[alf, a, b, x_0, n, q, r, p] = get_para();
+[alf, a, b, x_0, n, q, r, p] = get_data();
 
 %% Initialize the vectors to store the result
 x_t = zeros(n, 1);
@@ -27,4 +27,21 @@ end
 %% the error in the end point condition
 err = lambda_t(n) - p * x_t(n);
 
+end
+
+
+function [alf, a, b, x0, N, q, r, p] = get_data()
+    alf = 0.05;
+    a = 1 + alf;
+    b = -1;
+    x0 = 50000;
+    N = 10;
+    q = alf^2;
+    r = q;
+    p = q;
+
+    %r=10*q;
+    %r=q/10;
+    %p=0;
+    %p=100*q;
 end
