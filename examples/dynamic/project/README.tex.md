@@ -81,6 +81,18 @@ $$
 \end{align}
 $$
 
+or
+
+$$
+\begin{align}
+	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
+	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
+	\theta_i &= \arg \min_{\theta_i} \left\{ m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + \sin \left(\theta_{i} \right) \right] \right\} \\
+	z_{i+1} &= z_{i} + \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
+\end{align}
+$$
+
 When $h = 6, L = 10, M = 14, N = 6$, the results are:
 
 The value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is:
