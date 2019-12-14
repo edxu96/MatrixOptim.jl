@@ -69,7 +69,7 @@ $$
 \end{align}
 $$
 
-The calculate procedure for iterations can be expressed by:
+The calculate procedure for iterations can be expressed by the following equations:
 
 $$
 \begin{align}
@@ -81,7 +81,7 @@ $$
 \end{align}
 $$
 
-or
+or the following equations according to Pontryagins Maximum principle:
 
 $$
 \begin{align}
@@ -97,9 +97,9 @@ When $h = 6, L = 10, M = 14, N = 6$, the results are:
 
 The value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is:
 
+When $h = 6, L = 10, M = 14, N = 100$, the results are:
 
-
-Determine  Increase the number of elements in the chain to e.g. N = 100 and plot the chain again. Also determine the value of the costate vector in the beginning of the chain.
+The value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is:
 
 ### Vertical Force and Costate Vector
 
