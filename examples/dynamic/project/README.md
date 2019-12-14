@@ -67,20 +67,36 @@ where the boundary conditions are:
 
 <p align="center"><img src="/examples/dynamic/project/tex/d49fde9de438443f411722033b803ff4.svg?invert_in_darkmode&sanitize=true" align=middle width=113.74056540000001pt height=64.7674335pt/></p>
 
-<img src="/examples/dynamic/project/tex/4d8fc1d3851286cb7b423eaf172ee903.svg?invert_in_darkmode&sanitize=true" align=middle width=55.00368554999999pt height=22.465723500000017pt/>
+When <img src="/examples/dynamic/project/tex/4d8fc1d3851286cb7b423eaf172ee903.svg?invert_in_darkmode&sanitize=true" align=middle width=55.00368554999999pt height=22.465723500000017pt/>
 
 ## 2, Trajectory of a Suspended Wire
 
-Now, the chain is substituted by a wire and the problem becomes a continuous problem. Let ρ = M/L and s the distance along the wire. The positions along the wire obey
+Now, the chain is substituted by a wire and the problem becomes a continuous problem. Let <img src="/examples/dynamic/project/tex/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode&sanitize=true" align=middle width=7.7054801999999905pt height=14.15524440000002pt/> the distance along the wire. The positions along the wire obey
 
-<p align="center"><img src="/examples/dynamic/project/tex/09ac7676049ee6de81f154b39f230e38.svg?invert_in_darkmode&sanitize=true" align=middle width=177.8345019pt height=39.452455349999994pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/0992366c43f1ad69bf7ac24eec97428b.svg?invert_in_darkmode&sanitize=true" align=middle width=237.09815415pt height=39.452455349999994pt/></p>
 
 where the boundary conditions are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/1f35458ba3c425386f837eb8d54b1874.svg?invert_in_darkmode&sanitize=true" align=middle width=117.4582332pt height=87.1240095pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/6fe55ab3c01b53af069221da5fe99c2e.svg?invert_in_darkmode&sanitize=true" align=middle width=117.4582332pt height=87.1240095pt/></p>
 
 So the potential energy in steady state can be expressed by:
 
-<p align="center"><img src="/examples/dynamic/project/tex/670b3ef03b3a8049a8aede1fdb4e3822.svg?invert_in_darkmode&sanitize=true" align=middle width=109.90865985pt height=41.15109735pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/ef421a9d6e7ad7bc5344795837fa8180.svg?invert_in_darkmode&sanitize=true" align=middle width=132.2186844pt height=41.15109735pt/></p>
 
-Formulate the problem as a continuous problem and solve it (e.g. analytically or numerically). Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of <img src="/examples/dynamic/project/tex/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode&sanitize=true" align=middle width=7.7054801999999905pt height=14.15524440000002pt/>). Plot the function as function of s and explain what you see - and why.
+where
+
+<p align="center"><img src="/examples/dynamic/project/tex/d43a5cd1ea7359573d72e34fda511dd5.svg?invert_in_darkmode&sanitize=true" align=middle width=124.30212629999998pt height=41.09589pt/></p>
+
+The Hamiltonian function is:
+
+<p align="center"><img src="/examples/dynamic/project/tex/6513a3c7887729b7936195665ddcb56d.svg?invert_in_darkmode&sanitize=true" align=middle width=275.07778155pt height=16.438356pt/></p>
+
+Euler-Lagrange equations are:
+
+<p align="center"><img src="/examples/dynamic/project/tex/86b5be090f00b1faa74c4d2337c83325.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=115.06849364999998pt/></p>
+
+or the following equations according to Pontryagins Maximum principle:
+
+<p align="center"><img src="/examples/dynamic/project/tex/cbde22906356a6c052548caceb047a2b.svg?invert_in_darkmode&sanitize=true" align=middle width=402.59250735pt height=126.09769095pt/></p>
+
+Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of <img src="/examples/dynamic/project/tex/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode&sanitize=true" align=middle width=7.7054801999999905pt height=14.15524440000002pt/>). Plot the function as function of s and explain what you see - and why.
