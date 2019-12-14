@@ -35,7 +35,7 @@ Euler-Lagrange equations are:
 
 where the boundary conditions are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/d5e976a1a29efc4411c34a227b2d2a27.svg?invert_in_darkmode&sanitize=true" align=middle width=120.08604629999999pt height=87.1240095pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/cef1dcb53809470999e3cd014c94521e.svg?invert_in_darkmode&sanitize=true" align=middle width=144.61048799999998pt height=153.69987765pt/></p>
 
 The calculate procedure for iterations can be expressed by the following equations:
 
