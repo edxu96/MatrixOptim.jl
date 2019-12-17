@@ -18,13 +18,13 @@ function solve_project()
 	s_data_1 = get_data_chain(6);
 	s_data_2 = get_data_chain(100);
 
-	[vec_guess_star_1, z_t_1, y_t_1, ~, ~] = solve_chain(s_data_1);
+	% [vec_guess_star_1, z_t_1, y_t_1, ~, ~] = solve_chain(s_data_1);
 	[vec_guess_star_2, z_t_2, y_t_2, ~, ~] = solve_chain(s_data_2);
-
-	vec_guess_star_1
+	%
+	% vec_guess_star_1
 	vec_guess_star_2
-
-	plot_chain(z_t_1, y_t_1, z_t_2, y_t_2)
+	%
+	% plot_chain(z_t_1, y_t_1, z_t_2, y_t_2)
 end
 
 

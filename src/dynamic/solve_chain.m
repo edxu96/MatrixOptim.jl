@@ -12,7 +12,7 @@ function [vec_guess_star, z_t, y_t, lambda_z_t, lambda_y_t] = ...
 	% err_star
 	% z_t
 	% y_t
-	% theta_t
+	% theta_t(50:51)
 	% lambda_z_t
 	% lambda_y_t
 

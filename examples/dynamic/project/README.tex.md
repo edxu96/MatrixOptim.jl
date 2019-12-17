@@ -81,6 +81,30 @@ $$
 \end{align}
 $$
 
+When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
+
+When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
+
+The two results can be visualized by the figure 1:
+
+![](/images/dynamic_1.png)
+
+### Vertical Force and Costate Vector
+
+Determine the vertical force in the origin (i = 0). Compare this with the costate at the origin. Discuss your observations. Give a qualified guess on the sign of horizontal force in the origin.
+
+The vertical forces at the left end and the right end are equal, and their sum equals the weight of the chain. So The vertical forces at the left end is $68.67$, which is the same value as $\lambda^{y}_{i}$.
+
+The horizontal forces at different joints are the same. We can get the force at the end of the 2nd $f_3$ sections by analyzing the balance of 3rd and 4th sections of the chain:
+
+$$
+2 f_3 \sin \left(\theta_{2} \right) = 2 m g
+$$
+
+So we can get $f_3 = 50.2457$, so the value of horizontal force is $44.7289$, which is two times of the value of $\lambda^{z}_{0}$. When $N = 100$, $f_{50} = 44.8394$, and the value of horizontal force is $44.8183$. So we can say that the vertical force at the left end equals $\lambda^{y}_{0}$, the horizontal force at the left end is two times of $\lambda^{z}_{0}$.
+
+### Pontryagins Maximum principle 
+
 If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
 
 $$
@@ -98,18 +122,6 @@ $$
 	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
 \end{align}
 $$
-
-When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
-
-When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
-
-The two results can be visualized by the figure 1:
-
-![](/images/dynamic_1.png)
-
-### Vertical Force and Costate Vector
-
-Determine the vertical force in the origin (i = 0). Compare this with the costate at the origin. Discuss your observations. Give a qualified guess on the sign of horizontal force in the origin.
 
 ### Two Symmetric Half Chains
 
