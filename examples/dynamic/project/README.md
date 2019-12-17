@@ -69,6 +69,8 @@ according to Pontryagins Maximum principle, if we consider :
 
 <p align="center"><img src="/examples/dynamic/project/tex/f87764a60d42e4143c5624af39aaedb8.svg?invert_in_darkmode&sanitize=true" align=middle width=523.446858pt height=139.03248645pt/></p>
 
+The optimization algorithms and the inputed original values have large influence on the final result. If the correct values are inputed as the original values, we can get the correct values.
+
 ### Two Symmetric Half Chains
 
 For <img src="/examples/dynamic/project/tex/87b1657177022f790cc2ab8fbcc138bb.svg?invert_in_darkmode&sanitize=true" align=middle width=123.85906005pt height=22.465723500000017pt/>, we have:
