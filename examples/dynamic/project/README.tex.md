@@ -103,7 +103,7 @@ $$
 
 So we can get $f_3 = 50.2457$, so the value of horizontal force is $44.7289$, which is two times of the value of $\lambda^{z}_{0}$. When $N = 100$, $f_{50} = 44.8394$, and the value of horizontal force is $44.8183$. So we can say that the vertical force at the left end equals $\lambda^{y}_{0}$, the horizontal force at the left end is two times of $\lambda^{z}_{0}$.
 
-### Pontryagins Maximum principle 
+### Pontryagins Maximum principle
 
 If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
 
@@ -117,9 +117,9 @@ $$
 \begin{align}
 	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
 	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
-	\theta_i &= \arg \min_{-\pi/2 \leq \theta_i \leq \pi/2} \left\{ m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + \sin \left(\theta_{i} \right) \right] \right\} \\
-	z_{i+1} &= z_{i} + \cos \left(\theta_{i} \right) \\
-	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
+	\theta_i &= \arg \min_{u_i^2 + v_i^2 = l^2} \left\{ m g y_{i} + \frac{1}{2} m g v_i + \lambda^z_{i+1} \left( z_{i} + u_i \right) + \lambda^y_{i+1} \left( y_{i} + v_i \right) \right\} \\
+	z_{i+1} &= z_{i} + u_i \\
+	y_{i+1} &= y_{i} + v_i \\
 \end{align}
 $$
 

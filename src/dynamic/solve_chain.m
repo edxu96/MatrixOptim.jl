@@ -6,18 +6,15 @@ function [vec_guess_star, z_t, y_t, lambda_z_t, lambda_y_t] = ...
 	vec_guess_star = optim_fsolve(s_data);
 	% vec_guess_star = optim_fmincon(s_data);
 
-	[err_star, z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = ...
+	[err_star, z_t, y_t, lambda_z_t, lambda_y_t] = ...
 		cal_chain_vector(vec_guess_star, s_data);
 
 	% err_star
 	% z_t
 	% y_t
-	% theta_t(50:51)
 	% lambda_z_t
 	% lambda_y_t
 
-	%% Plot the results
-	% shg
 end
 
 
@@ -29,9 +26,9 @@ function vec_guess_star = optim_fsolve(s_data)
 end
 
 
-function [err, z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = ...
+function [err, z_t, y_t, lambda_z_t, lambda_y_t] = ...
 	cal_chain_vector(vec_guess, s_data)
-	[z_n, y_n, z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = ...
+	[z_n, y_n, z_t, y_t, lambda_z_t, lambda_y_t] = ...
 		cal_chain(vec_guess, s_data);
 
 	h = s_data.h;
