@@ -139,11 +139,23 @@ where the boundary conditions are:
 $$
 \begin{align}
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
-	z_{N} &= h / 2
+	z_{N / 2} &= h / 2
 \end{align}
 $$
 
-When $N = 2n$
+Numerical method is almost the same as that in the above section. The calculate procedure for iterations can be expressed by the following five equations:
+
+$$
+\begin{align}
+	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
+	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
+	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g \right) / \lambda^z_{i+1} \right] \\
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
+\end{align}
+$$
+
+When $N = 2n$, for example, $6$, the result is:
 
 ## 2, Trajectory of a Suspended Wire
 
@@ -195,7 +207,7 @@ $$
 \end{align}
 $$
 
-or the following equations according to Pontryagins Maximum principle:
+<!-- or the following equations according to Pontryagins Maximum principle:
 
 $$
 \begin{align}
@@ -207,4 +219,4 @@ $$
 \end{align}
 $$
 
-Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of $s$). Plot the function as function of s and explain what you see - and why.
+Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of $s$). Plot the function as function of s and explain what you see - and why. -->

@@ -19,8 +19,9 @@ function solve_project()
 
 	%% When the number of sections is 6
 	s_data_1 = get_data_chain(6);
-	% solve_chain(s_data_1, 1);
-	solve_chain(s_data_1, 2);
+	% solve_chain(s_data_1, false, 1);
+	% solve_chain(s_data_1, false, 2);
+	solve_chain(s_data_1, true, 1);
 
 	%% When the number of sections is 100
 	% s_data_2 = get_data_chain(100);
