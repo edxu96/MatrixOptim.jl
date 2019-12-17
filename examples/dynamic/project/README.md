@@ -1,6 +1,8 @@
 
 # Find the Trajectory using Dynamic Optimization
 
+__Jie Xu (s181238)__
+
 In the report, it is important to give the results and an interpretation of those, but certainly also to describe the chosen method, its background and assumptions.
 
 ## 1, Trajectory of a Suspended Chain
@@ -81,7 +83,9 @@ Numerical method is almost the same as that in the above section. The calculate 
 
 <p align="center"><img src="/examples/dynamic/project/tex/397c4c47d6336f399de6506b38ba2450.svg?invert_in_darkmode&sanitize=true" align=middle width=273.11313809999996pt height=137.5294668pt/></p>
 
-When <img src="/examples/dynamic/project/tex/4d8fc1d3851286cb7b423eaf172ee903.svg?invert_in_darkmode&sanitize=true" align=middle width=55.00368554999999pt height=22.465723500000017pt/>, for example, <img src="/examples/dynamic/project/tex/327c36301dc71617dc7032f8ce30b236.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/>, the result is:
+The two results when <img src="/examples/dynamic/project/tex/425f5f8d624c587e7cd54c3baf170a6c.svg?invert_in_darkmode&sanitize=true" align=middle width=45.13680929999999pt height=22.465723500000017pt/> and <img src="/examples/dynamic/project/tex/1e5b009b8d2d62183b67e516a803decb.svg?invert_in_darkmode&sanitize=true" align=middle width=61.57522799999998pt height=22.465723500000017pt/> respectively can be visualized by the figure 2, which is the same as figure 1:
+
+![](/images/dynamic_2.png)
 
 ## 2, Trajectory of a Suspended Wire
 
