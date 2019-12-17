@@ -5,9 +5,7 @@ In the report, it is important to give the results and an interpretation of thos
 
 ## 1, Trajectory of a Suspended Chain
 
-### Rewrite the Cost Function in Standard Form
-
-For <img src="/examples/dynamic/project/tex/87b1657177022f790cc2ab8fbcc138bb.svg?invert_in_darkmode&sanitize=true" align=middle width=123.85906005pt height=22.465723500000017pt/>, we have:
+The shape of a suspended chain can be described and solved using dynamic optimization. The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For <img src="/examples/dynamic/project/tex/87b1657177022f790cc2ab8fbcc138bb.svg?invert_in_darkmode&sanitize=true" align=middle width=123.85906005pt height=22.465723500000017pt/>, we have:
 
 <p align="center"><img src="/examples/dynamic/project/tex/44878bfbb42d9a7a5e1ae410d52674cf.svg?invert_in_darkmode&sanitize=true" align=middle width=412.2651489pt height=88.493889pt/></p>
 
@@ -15,33 +13,35 @@ where the end points are:
 
 <p align="center"><img src="/examples/dynamic/project/tex/d5e976a1a29efc4411c34a227b2d2a27.svg?invert_in_darkmode&sanitize=true" align=middle width=120.08604629999999pt height=87.1240095pt/></p>
 
-The (steady state) potential energy can be written as:
+So the constraint <img src="/examples/dynamic/project/tex/f55b7967ddf692791f1bc3c4b6e7a087.svg?invert_in_darkmode&sanitize=true" align=middle width=86.50674779999999pt height=26.76175259999998pt/> is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between <img src="/examples/dynamic/project/tex/d19a001d2d6c915bc12a160ba0b2d72c.svg?invert_in_darkmode&sanitize=true" align=middle width=43.750182299999985pt height=21.18721440000001pt/> and <img src="/examples/dynamic/project/tex/b417bd5ef96f350bc2ed82e53ba48a0f.svg?invert_in_darkmode&sanitize=true" align=middle width=30.96474974999999pt height=21.18721440000001pt/>. With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
 
 <p align="center"><img src="/examples/dynamic/project/tex/a381899fdf98fdfd103db242eba21819.svg?invert_in_darkmode&sanitize=true" align=middle width=233.98111605pt height=105.4751709pt/></p>
 
-where
+where the scalar <img src="/examples/dynamic/project/tex/f50853d41be7d55874e952eb0d80c53e.svg?invert_in_darkmode&sanitize=true" align=middle width=9.794543549999991pt height=22.831056599999986pt/>, <img src="/examples/dynamic/project/tex/ddcb483302ed36a59286424aa5e0be17.svg?invert_in_darkmode&sanitize=true" align=middle width=11.18724254999999pt height=22.465723500000017pt/> can be expressed by the following equations with <img src="/examples/dynamic/project/tex/f9c4988898e7f532b9f826a75014ed3c.svg?invert_in_darkmode&sanitize=true" align=middle width=14.99998994999999pt height=22.465723500000017pt/> fixed:
 
 <p align="center"><img src="/examples/dynamic/project/tex/2b27a0c5827073622e30f34ca0d83eb9.svg?invert_in_darkmode&sanitize=true" align=middle width=277.14659939999996pt height=87.1240095pt/></p>
 
-### Solve the Problem
+The Hamiltonian function of the cost function can be expressed as:
 
-The Hamiltonian function is:
+<p align="center"><img src="/examples/dynamic/project/tex/7f64e0b1bbf2b68b5a1f370db5955016.svg?invert_in_darkmode&sanitize=true" align=middle width=496.4229995999999pt height=32.990165999999995pt/></p>
 
-<p align="center"><img src="/examples/dynamic/project/tex/0c63070d48ae3596e30bd20135460ab9.svg?invert_in_darkmode&sanitize=true" align=middle width=480.48699765000003pt height=32.990165999999995pt/></p>
+Hence the set of Euler-Lagrange equations can be expressed by the following five equations:
 
-Euler-Lagrange equations are:
-
-<p align="center"><img src="/examples/dynamic/project/tex/9d16e79283f23393303970095a8b8786.svg?invert_in_darkmode&sanitize=true" align=middle width=312.91698735pt height=138.28108139999998pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/8024d48888de36ca74c60341dc22367d.svg?invert_in_darkmode&sanitize=true" align=middle width=307.68864885pt height=138.28108139999998pt/></p>
 
 where the boundary conditions are:
 
 <p align="center"><img src="/examples/dynamic/project/tex/cef1dcb53809470999e3cd014c94521e.svg?invert_in_darkmode&sanitize=true" align=middle width=144.61048799999998pt height=153.69987765pt/></p>
 
-The calculate procedure for iterations can be expressed by the following equations:
+Numerical method can be used to find the optimal values. The calculate procedure for iterations can be expressed by the following five equations:
 
-<p align="center"><img src="/examples/dynamic/project/tex/1b8746e5df5cfcf9dd7f7b0cc76ff510.svg?invert_in_darkmode&sanitize=true" align=middle width=278.34147659999996pt height=137.5294668pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/397c4c47d6336f399de6506b38ba2450.svg?invert_in_darkmode&sanitize=true" align=middle width=273.11313809999996pt height=137.5294668pt/></p>
 
-or the following equations according to Pontryagins Maximum principle:
+If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
+
+<p align="center"><img src="/examples/dynamic/project/tex/e80094cd26592b707e07c34ee5eb1c9c.svg?invert_in_darkmode&sanitize=true" align=middle width=375.81054555pt height=32.990165999999995pt/></p>
+
+according to Pontryagins Maximum principle, if we consider :
 
 <p align="center"><img src="/examples/dynamic/project/tex/0123cb69d017e6328ec866dd8ea34393.svg?invert_in_darkmode&sanitize=true" align=middle width=631.3636725pt height=137.80322325pt/></p>
 
