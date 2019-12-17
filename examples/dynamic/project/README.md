@@ -37,14 +37,6 @@ Numerical method can be used to find the optimal values. The calculate procedure
 
 <p align="center"><img src="/examples/dynamic/project/tex/397c4c47d6336f399de6506b38ba2450.svg?invert_in_darkmode&sanitize=true" align=middle width=273.11313809999996pt height=137.5294668pt/></p>
 
-If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
-
-<p align="center"><img src="/examples/dynamic/project/tex/e80094cd26592b707e07c34ee5eb1c9c.svg?invert_in_darkmode&sanitize=true" align=middle width=375.81054555pt height=32.990165999999995pt/></p>
-
-according to Pontryagins Maximum principle, if we consider :
-
-<p align="center"><img src="/examples/dynamic/project/tex/0123cb69d017e6328ec866dd8ea34393.svg?invert_in_darkmode&sanitize=true" align=middle width=631.3636725pt height=137.80322325pt/></p>
-
 When <img src="/examples/dynamic/project/tex/ed6ccff2a53f69f4c96dce6a9fc774d4.svg?invert_in_darkmode&sanitize=true" align=middle width=212.30146904999998pt height=22.831056599999986pt/>, the value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is <img src="/examples/dynamic/project/tex/b0a45c0329676a48b17dfdfcdf0bd3aa.svg?invert_in_darkmode&sanitize=true" align=middle width=136.9867257pt height=24.65753399999998pt/>.
 
 When <img src="/examples/dynamic/project/tex/8ab74d51f506ab3d319edfc456af1e16.svg?invert_in_darkmode&sanitize=true" align=middle width=228.73988774999995pt height=22.831056599999986pt/>, the value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is <img src="/examples/dynamic/project/tex/e024497239b0e3e8f9e7636c776e2910.svg?invert_in_darkmode&sanitize=true" align=middle width=136.9867257pt height=24.65753399999998pt/>.
@@ -56,6 +48,24 @@ The two results can be visualized by the figure 1:
 ### Vertical Force and Costate Vector
 
 Determine the vertical force in the origin (i = 0). Compare this with the costate at the origin. Discuss your observations. Give a qualified guess on the sign of horizontal force in the origin.
+
+The vertical forces at the left end and the right end are equal, and their sum equals the weight of the chain. So The vertical forces at the left end is <img src="/examples/dynamic/project/tex/ef0b19b5719e8fc2a54d45097a27ece5.svg?invert_in_darkmode&sanitize=true" align=middle width=37.44306224999999pt height=21.18721440000001pt/>, which is the same value as <img src="/examples/dynamic/project/tex/d94fb70d80191fe64b8188174e07804f.svg?invert_in_darkmode&sanitize=true" align=middle width=16.66868939999999pt height=25.70766330000001pt/>.
+
+The horizontal forces at different joints are the same. We can get the force at the end of the 2nd <img src="/examples/dynamic/project/tex/dcaacf702de430bdba0d509e0d43c82c.svg?invert_in_darkmode&sanitize=true" align=middle width=14.60053319999999pt height=22.831056599999986pt/> sections by analyzing the balance of 3rd and 4th sections of the chain:
+
+<p align="center"><img src="/examples/dynamic/project/tex/e5566c8370c5f811eb52b1d878d4ce90.svg?invert_in_darkmode&sanitize=true" align=middle width=130.18075785pt height=16.438356pt/></p>
+
+So we can get <img src="/examples/dynamic/project/tex/948d66ca0f8afd959be9112aa1e5a3eb.svg?invert_in_darkmode&sanitize=true" align=middle width=91.22155844999997pt height=22.831056599999986pt/>, so the value of horizontal force is <img src="/examples/dynamic/project/tex/4b4b0d7b8841faa83e789821bd979f3b.svg?invert_in_darkmode&sanitize=true" align=middle width=53.88148094999998pt height=21.18721440000001pt/>, which is two times of the value of <img src="/examples/dynamic/project/tex/22c397438b695da9bc41588871fd03c4.svg?invert_in_darkmode&sanitize=true" align=middle width=16.34143994999999pt height=22.831056599999986pt/>. When <img src="/examples/dynamic/project/tex/1e5b009b8d2d62183b67e516a803decb.svg?invert_in_darkmode&sanitize=true" align=middle width=61.57522799999998pt height=22.465723500000017pt/>, <img src="/examples/dynamic/project/tex/f03f301bd35253cdd50c7a5de3c35da9.svg?invert_in_darkmode&sanitize=true" align=middle width=97.77409949999999pt height=22.831056599999986pt/>, and the value of horizontal force is <img src="/examples/dynamic/project/tex/2b5c341bd51ec25c32d487db7a5fc3a5.svg?invert_in_darkmode&sanitize=true" align=middle width=53.88148094999998pt height=21.18721440000001pt/>. So we can say that the vertical force at the left end equals <img src="/examples/dynamic/project/tex/b35ae5b398767fe2e9b926a4eb3f3ded.svg?invert_in_darkmode&sanitize=true" align=middle width=16.66868939999999pt height=25.70766330000001pt/>, the horizontal force at the left end is two times of <img src="/examples/dynamic/project/tex/22c397438b695da9bc41588871fd03c4.svg?invert_in_darkmode&sanitize=true" align=middle width=16.34143994999999pt height=22.831056599999986pt/>.
+
+### Pontryagins Maximum principle 
+
+If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
+
+<p align="center"><img src="/examples/dynamic/project/tex/e80094cd26592b707e07c34ee5eb1c9c.svg?invert_in_darkmode&sanitize=true" align=middle width=375.81054555pt height=32.990165999999995pt/></p>
+
+according to Pontryagins Maximum principle, if we consider :
+
+<p align="center"><img src="/examples/dynamic/project/tex/0123cb69d017e6328ec866dd8ea34393.svg?invert_in_darkmode&sanitize=true" align=middle width=631.3636725pt height=137.80322325pt/></p>
 
 ### Two Symmetric Half Chains
 
