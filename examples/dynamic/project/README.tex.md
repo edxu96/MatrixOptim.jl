@@ -5,9 +5,7 @@ In the report, it is important to give the results and an interpretation of thos
 
 ## 1, Trajectory of a Suspended Chain
 
-### Rewrite the Cost Function in Standard Form
-
-For $i=0,1, \ldots N-1$, we have:
+The shape of a suspended chain can be described and solved using dynamic optimization. The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For $i=0,1, \ldots N-1$, we have:
 
 $$
 \begin{align}
@@ -25,7 +23,7 @@ $$
 \end{align}
 $$
 
-The (steady state) potential energy can be written as:
+So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$. With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
 
 $$
 \begin{align}
@@ -34,7 +32,7 @@ $$
 \end{align}
 $$
 
-where
+where the scalar $\phi$, $L$ can be expressed by the following equations with $N$ fixed:
 
 $$
 \begin{align}
@@ -43,23 +41,21 @@ $$
 \end{align}
 $$
 
-### Solve the Problem
-
-The Hamiltonian function is:
+The Hamiltonian function of the cost function can be expressed as:
 
 $$
-H_i = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + \sin \left(\theta_{i} \right)  \right]
+H_i = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + l \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + l \sin \left(\theta_{i} \right)  \right]
 $$
 
-Euler-Lagrange equations are:
+Hence the set of Euler-Lagrange equations can be expressed by the following five equations:
 
 $$
 \begin{align}
-	z_{i+1} &= z_{i} + \cos \left(\theta_{i} \right) \\
-	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
 	\lambda^{z}_{i} &= \lambda^z_{i+1} \\
 	\lambda^{y}_{i} &= m g + \lambda^y_{i+1} \\
-	0 &= \left[ \frac{1}{2} m g l + \lambda^y_{i+1} \right] \cos(\theta_i) - \lambda^z_{i+1} \sin(\theta_i)
+	0 &= \left[ \frac{1}{2} m g + \lambda^y_{i+1} \right] \cos(\theta_i) - \lambda^z_{i+1} \sin(\theta_i)
 \end{align}
 $$
 
@@ -73,19 +69,25 @@ $$
 \end{align}
 $$
 
-The calculate procedure for iterations can be expressed by the following equations:
+Numerical method can be used to find the optimal values. The calculate procedure for iterations can be expressed by the following five equations:
 
 $$
 \begin{align}
 	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
 	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
-	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g l \right) / \lambda^z_{i+1} \right] \\
-	z_{i+1} &= z_{i} + \cos \left(\theta_{i} \right) \\
-	y_{i+1} &= y_{i} + \sin \left(\theta_{i} \right) \\
+	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g \right) / \lambda^z_{i+1} \right] \\
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
 \end{align}
 $$
 
-or the following equations according to Pontryagins Maximum principle:
+If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
+
+$$
+H_i = m g y_{i} + \frac{1}{2} m g v_{i} + \lambda^z_{i+1} \left( z_{i} + u_{i} \right) + \lambda^y_{i+1} \left( y_{i} + v_{i} \right)
+$$
+
+according to Pontryagins Maximum principle, if we consider :
 
 $$
 \begin{align}
