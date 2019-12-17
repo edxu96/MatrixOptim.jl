@@ -1,15 +1,13 @@
 
 
-function err = cal_chain(vec_guess, s_data, dim, whe_print)
+function [err, z_t, y_t] = cal_chain(vec_guess, s_data, dim, whe_print)
 % Calculate `z_n` and `y_n` using guessed `lambda_z_0` and `lambda_z_0`
 % using either 1 dimensional method or 2 dimensional method.
 
 	if dim == 1
-		[z_t, y_t, lambda_z_t, lambda_y_t] = cal_chain_1d(...
-			vec_guess, s_data, whe_print);
+		[z_t, y_t, ~, ~] = cal_chain_1d(vec_guess, s_data, whe_print);
 	elseif dim == 2
-		[z_t, y_t, lambda_z_t, lambda_y_t] = cal_chain_2d(...
-			vec_guess, s_data, whe_print);
+		[z_t, y_t, ~, ~] = cal_chain_2d(vec_guess, s_data, whe_print);
 	end
 
 	%% Calculate the error
@@ -69,7 +67,7 @@ end
 % function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
 % % Trigonometric	functions cannot be used in `solve`
 %
-% 	x = optimvar('x', 2, 1);  % , 'LowerBound', [-l; -l], 'UpperBound', [l; l]
+% 	x = optimvar('x', 2, 1, 'LowerBound', [-l; -l], 'UpperBound', [l; l]);
 % 	obj = m * g * y_i + 0.5 * m * g * x(2) + ...
 % 		lambda_z_i1 * (z_i + x(1)) + lambda_y_i1 * (y_i + x(2));
 % 	prob = optimproblem('Objective', obj);
@@ -94,11 +92,12 @@ function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
 	b = [];
 	Aeq = [];
 	beq = [];
-	lb = [-1.0; -1.0] * l;
-	ub = [1.0; 1.0] * l;
+	lb = [-1; -1] * l;
+	ub = [1; 1] * l;
 	nonlcon = @(x) get_nonlcon(x, l);
 	x0 = [l / sqrt(2); - l / sqrt(2)];
-	options = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'sqp');
+	options = optimoptions('fmincon', 'Display', 'off');
+	% , 'Algorithm', 'sqp'
 	sol = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, nonlcon, options);
 	u_i = sol(1);
 	v_i = sol(2);
@@ -138,9 +137,9 @@ function [z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = cal_chain_1d(...
 		% [z_t(i); y_t(i); lambda_z_t(i); lambda_y_t(i)]
 		lambda_z_t(i+1) = lambda_z_t(i);
 		lambda_y_t(i+1) = lambda_y_t(i) - m * g;
-		theta_t(i) = cal_theta_i(lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
-		% theta_t(i) = cal_theta_i_pontryagins(z_i, y_i, lambda_z_i1, ...
-		% 	lambda_y_i1, m, g, l);
+		% theta_t(i) = cal_theta_i(lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
+		theta_t(i) = cal_theta_i_pontryagins(z_t(i), y_t(i), ...
+			lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
 		z_t(i+1) = z_t(i) + l * cos(theta_t(i));
 		y_t(i+1) = y_t(i) + l * sin(theta_t(i));
 	end
@@ -158,4 +157,24 @@ end
 function theta_i = cal_theta_i(lambda_z_i1, lambda_y_i1, m, g, l)
 % "_i1" indicates the index is (i+1)
 	theta_i = atan((lambda_y_i1 + 0.5 * m * g) / lambda_z_i1);
+end
+
+
+function theta_i = cal_theta_i_pontryagins(z_i, y_i, lambda_z_i1, ...
+		lambda_y_i1, m, g, l)
+
+	fun = @(theta) m * g * y_i + 0.5 * m * g * l * sin(theta) + ...
+		lambda_z_i1 * (z_i + l * cos(theta)) + ...
+		lambda_y_i1 * (y_i + l * sin(theta));
+	A = [];
+	b = [];
+	Aeq = [];
+	beq = [];
+	lb = - pi;
+	ub = pi;
+	nonlcon = [];
+	x0 = - pi / 4;
+	options = optimoptions('fmincon', 'Display', 'off');
+	% , 'Algorithm', 'sqp'
+	theta_i = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, nonlcon, options);
 end
