@@ -57,7 +57,7 @@ The horizontal forces at different joints are the same. We can get the force at 
 
 So we can get <img src="/examples/dynamic/project/tex/948d66ca0f8afd959be9112aa1e5a3eb.svg?invert_in_darkmode&sanitize=true" align=middle width=91.22155844999997pt height=22.831056599999986pt/>, so the value of horizontal force is <img src="/examples/dynamic/project/tex/4b4b0d7b8841faa83e789821bd979f3b.svg?invert_in_darkmode&sanitize=true" align=middle width=53.88148094999998pt height=21.18721440000001pt/>, which is two times of the value of <img src="/examples/dynamic/project/tex/22c397438b695da9bc41588871fd03c4.svg?invert_in_darkmode&sanitize=true" align=middle width=16.34143994999999pt height=22.831056599999986pt/>. When <img src="/examples/dynamic/project/tex/1e5b009b8d2d62183b67e516a803decb.svg?invert_in_darkmode&sanitize=true" align=middle width=61.57522799999998pt height=22.465723500000017pt/>, <img src="/examples/dynamic/project/tex/f03f301bd35253cdd50c7a5de3c35da9.svg?invert_in_darkmode&sanitize=true" align=middle width=97.77409949999999pt height=22.831056599999986pt/>, and the value of horizontal force is <img src="/examples/dynamic/project/tex/2b5c341bd51ec25c32d487db7a5fc3a5.svg?invert_in_darkmode&sanitize=true" align=middle width=53.88148094999998pt height=21.18721440000001pt/>. So we can say that the vertical force at the left end equals <img src="/examples/dynamic/project/tex/b35ae5b398767fe2e9b926a4eb3f3ded.svg?invert_in_darkmode&sanitize=true" align=middle width=16.66868939999999pt height=25.70766330000001pt/>, the horizontal force at the left end is two times of <img src="/examples/dynamic/project/tex/22c397438b695da9bc41588871fd03c4.svg?invert_in_darkmode&sanitize=true" align=middle width=16.34143994999999pt height=22.831056599999986pt/>.
 
-### Pontryagins Maximum principle 
+### Pontryagins Maximum principle
 
 If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
 
@@ -65,7 +65,7 @@ If the original two-dimensional expressions are to be used, we can write the cor
 
 according to Pontryagins Maximum principle, if we consider :
 
-<p align="center"><img src="/examples/dynamic/project/tex/0123cb69d017e6328ec866dd8ea34393.svg?invert_in_darkmode&sanitize=true" align=middle width=631.3636725pt height=137.80322325pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/5a7e6e581804df4c160255c3709ae6f9.svg?invert_in_darkmode&sanitize=true" align=middle width=500.03481659999994pt height=139.03248645pt/></p>
 
 ### Two Symmetric Half Chains
 
