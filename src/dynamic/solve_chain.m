@@ -1,7 +1,6 @@
 
-function [vec_guess_star, z_t, y_t, lambda_z_t, lambda_y_t] = solve_project()
-
-	s_data = get_data_chain();
+function [vec_guess_star, z_t, y_t, lambda_z_t, lambda_y_t] = ...
+		solve_chain(s_data)
 
 	%% Chose the function to optimize
 	vec_guess_star = optim_fsolve(s_data);
@@ -10,16 +9,15 @@ function [vec_guess_star, z_t, y_t, lambda_z_t, lambda_y_t] = solve_project()
 	[err_star, z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = ...
 		cal_chain_vector(vec_guess_star, s_data);
 
-	err_star
-	z_t
-	y_t
-	theta_t
-	lambda_z_t
-	lambda_y_t
+	% err_star
+	% z_t
+	% y_t
+	% theta_t
+	% lambda_z_t
+	% lambda_y_t
 
 	%% Plot the results
 	% shg
-
 end
 
 
@@ -27,7 +25,7 @@ function vec_guess_star = optim_fsolve(s_data)
 	opt = optimoptions('fsolve', 'Display', 'iter', 'Algorithm', 'levenberg-marquardt');
 	%
 	vec_guess_star = fsolve(@(vec_guess) ...
-		cal_chain_vector(vec_guess, s_data), [0; 0], opt);
+		cal_chain_vector(vec_guess, s_data), [-1; -1], opt);
 end
 
 

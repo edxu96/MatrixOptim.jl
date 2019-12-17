@@ -1,8 +1,7 @@
 
 
-function s_data = get_data_chain(varargin)
+function s_data = get_data_chain(n)
 	l_total = 10;
-	n = 6;
 	m_total = 14;
 
 	s_data = struct(...

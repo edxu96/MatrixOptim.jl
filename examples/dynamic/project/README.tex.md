@@ -99,13 +99,13 @@ $$
 \end{align}
 $$
 
-When $h = 6, L = 10, M = 14, N = 6$, the results are:
+When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
 
-The value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is:
+When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
 
-When $h = 6, L = 10, M = 14, N = 100$, the results are:
+The two results can be visualized by the figure 1:
 
-The value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is:
+![](/images/dynamic_1.png)
 
 ### Vertical Force and Costate Vector
 
