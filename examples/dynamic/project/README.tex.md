@@ -117,7 +117,7 @@ $$
 \begin{align}
 	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
 	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
-	\theta_i &= \arg \min_{u_i^2 + v_i^2 = l^2} \left\{ m g y_{i} + \frac{1}{2} m g v_i + \lambda^z_{i+1} \left( z_{i} + u_i \right) + \lambda^y_{i+1} \left( y_{i} + v_i \right) \right\} \\
+	\left[u_i, v_i \right]^T &= \arg \min_{u_i^2 + v_i^2 = l^2} \left\{ m g y_{i} + \frac{1}{2} m g v_i + \lambda^z_{i+1} \left( z_{i} + u_i \right) + \lambda^y_{i+1} \left( y_{i} + v_i \right) \right\} \\
 	z_{i+1} &= z_{i} + u_i \\
 	y_{i+1} &= y_{i} + v_i \\
 \end{align}
