@@ -45,13 +45,13 @@ according to Pontryagins Maximum principle, if we consider :
 
 <p align="center"><img src="/examples/dynamic/project/tex/0123cb69d017e6328ec866dd8ea34393.svg?invert_in_darkmode&sanitize=true" align=middle width=631.3636725pt height=137.80322325pt/></p>
 
-When <img src="/examples/dynamic/project/tex/ed6ccff2a53f69f4c96dce6a9fc774d4.svg?invert_in_darkmode&sanitize=true" align=middle width=212.30146904999998pt height=22.831056599999986pt/>, the results are:
+When <img src="/examples/dynamic/project/tex/ed6ccff2a53f69f4c96dce6a9fc774d4.svg?invert_in_darkmode&sanitize=true" align=middle width=212.30146904999998pt height=22.831056599999986pt/>, the value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is <img src="/examples/dynamic/project/tex/b0a45c0329676a48b17dfdfcdf0bd3aa.svg?invert_in_darkmode&sanitize=true" align=middle width=136.9867257pt height=24.65753399999998pt/>.
 
-The value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is:
+When <img src="/examples/dynamic/project/tex/8ab74d51f506ab3d319edfc456af1e16.svg?invert_in_darkmode&sanitize=true" align=middle width=228.73988774999995pt height=22.831056599999986pt/>, the value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is <img src="/examples/dynamic/project/tex/e024497239b0e3e8f9e7636c776e2910.svg?invert_in_darkmode&sanitize=true" align=middle width=136.9867257pt height=24.65753399999998pt/>.
 
-When <img src="/examples/dynamic/project/tex/8ab74d51f506ab3d319edfc456af1e16.svg?invert_in_darkmode&sanitize=true" align=middle width=228.73988774999995pt height=22.831056599999986pt/>, the results are:
+The two results can be visualized by the figure 1:
 
-The value of the costate vector at 0, <img src="/examples/dynamic/project/tex/8d54550f8c3f314c8645aa4db192e631.svg?invert_in_darkmode&sanitize=true" align=middle width=60.62598794999999pt height=33.305929799999994pt/>, is:
+![](/images/dynamic_1.png)
 
 ### Vertical Force and Costate Vector
 
