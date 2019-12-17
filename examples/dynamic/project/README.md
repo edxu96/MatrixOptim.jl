@@ -65,7 +65,7 @@ If the original two-dimensional expressions are to be used, we can write the cor
 
 according to Pontryagins Maximum principle, if we consider :
 
-<p align="center"><img src="/examples/dynamic/project/tex/5a7e6e581804df4c160255c3709ae6f9.svg?invert_in_darkmode&sanitize=true" align=middle width=500.03481659999994pt height=139.03248645pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/f87764a60d42e4143c5624af39aaedb8.svg?invert_in_darkmode&sanitize=true" align=middle width=523.446858pt height=139.03248645pt/></p>
 
 ### Two Symmetric Half Chains
 
