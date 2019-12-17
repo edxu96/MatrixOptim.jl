@@ -125,6 +125,8 @@ $$
 \end{align}
 $$
 
+The optimization algorithms and the inputed original values have large influence on the final result. If the correct values are inputed as the original values, we can get the correct values.
+
 ### Two Symmetric Half Chains
 
 For $i=0,1, \ldots N-1$, we have:
