@@ -60,9 +60,9 @@ function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
 		lambda_z_i1 * (z_i + x(1)) + lambda_y_i1 * (y_i + x(2));
 	prob = optimproblem('Objective', obj);
 	% nlcons = x(1)^2 + x(2)^2 - 1 <= 10E-6;
-	nlcons = x(1)^2 + x(2)^2 == 1;
+	nlcons = x(1)^2 + x(2)^2 == l^2;
 	prob.Constraints.circlecons = nlcons;
-	x_0.x = [1 / sqrt(2); 1 / sqrt(2)];
+	x_0.x = [l / sqrt(2); l / sqrt(2)];
 	% opt = optimoptions('fmincon', 'Display', 'off');
 
 	[sol, fval, exitflag, output] = solve(prob, x_0);
