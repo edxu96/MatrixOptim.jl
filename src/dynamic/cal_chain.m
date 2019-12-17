@@ -47,7 +47,7 @@ function [z_t, y_t, lambda_z_t, lambda_y_t] = cal_chain_2d(...
 		% [z_t(i); y_t(i); lambda_z_t(i); lambda_y_t(i)]
 		lambda_z_t(i+1) = lambda_z_t(i);
 		lambda_y_t(i+1) = lambda_y_t(i) - m * g;
-		[u_t(i), v_t(i)] = optim_2d(z_t(i), y_t(i), lambda_z_t(i+1), ...
+		[u_t(i), v_t(i)] = optim_2d_fmincon(z_t(i), y_t(i), lambda_z_t(i+1), ...
 			lambda_y_t(i+1), m, g, l);
 		z_t(i+1) = z_t(i) + u_t(i);
 		y_t(i+1) = y_t(i) + v_t(i);
@@ -83,7 +83,8 @@ end
 % end
 
 
-function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
+function [u_i, v_i] = optim_2d_fmincon(z_i, y_i, lambda_z_i1, lambda_y_i1, ...
+		m, g, l)
 % Trigonometric	functions can be used in `fmincon`
 
 	fun = @(x) m * g * y_i + 0.5 * m * g * x(2) + ...
@@ -95,7 +96,7 @@ function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
 	lb = [-1; -1] * l;
 	ub = [1; 1] * l;
 	nonlcon = @(x) get_nonlcon(x, l);
-	x0 = [l / sqrt(2); - l / sqrt(2)];
+	x0 = [l; 0]; % [l / sqrt(2); - l / sqrt(2)];
 	options = optimoptions('fmincon', 'Display', 'off');
 	% , 'Algorithm', 'sqp'
 	sol = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, nonlcon, options);
@@ -137,11 +138,11 @@ function [z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = cal_chain_1d(...
 		% [z_t(i); y_t(i); lambda_z_t(i); lambda_y_t(i)]
 		lambda_z_t(i+1) = lambda_z_t(i);
 		lambda_y_t(i+1) = lambda_y_t(i) - m * g;
-		% theta_t(i) = cal_theta_i(lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
-		theta_t(i) = cal_theta_i_pontryagins(z_t(i), y_t(i), ...
-			lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
-		theta_t(i) = cal_theta_i_pontryagins_2(z_t(i), y_t(i), ...
-			lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
+		theta_t(i) = cal_theta_i(lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
+		% theta_t(i) = cal_theta_i_pontryagins_fmincon(z_t(i), y_t(i), ...
+		% 	lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
+		% theta_t(i) = cal_theta_i_pontryagins_fsolve(z_t(i), y_t(i), ...
+		% 	lambda_z_t(i+1), lambda_y_t(i+1), m, g, l);
 		z_t(i+1) = z_t(i) + l * cos(theta_t(i));
 		y_t(i+1) = y_t(i) + l * sin(theta_t(i));
 	end
@@ -162,7 +163,7 @@ function theta_i = cal_theta_i(lambda_z_i1, lambda_y_i1, m, g, l)
 end
 
 
-function theta_i = cal_theta_i_pontryagins(z_i, y_i, lambda_z_i1, ...
+function theta_i = cal_theta_i_pontryagins_fmincon(z_i, y_i, lambda_z_i1, ...
 		lambda_y_i1, m, g, l)
 
 	fun = @(theta) m * g * y_i + 0.5 * m * g * l * sin(theta) + ...
@@ -182,13 +183,14 @@ function theta_i = cal_theta_i_pontryagins(z_i, y_i, lambda_z_i1, ...
 end
 
 
-function theta_i = cal_theta_i_pontryagins_2(z_i, y_i, lambda_z_i1, ...
+function theta_i = cal_theta_i_pontryagins_fsolve(z_i, y_i, lambda_z_i1, ...
 		lambda_y_i1, m, g, l)
 
-	options = optimoptions('fsolve', 'Display', 'off');
-	% , 'Algorithm', 'levenberg-marquardt'
+	options = optimoptions('fsolve', 'Display', 'off', ...
+		'Algorithm', 'levenberg-marquardt');
+	%
 	theta_i = fsolve(@(theta) m * g * y_i + ...
 		0.5 * m * g * l * sin(theta) + ...
 		lambda_z_i1 * (z_i + l * cos(theta)) + ...
-		lambda_y_i1 * (y_i + l * sin(theta)), - pi / 4, options);
+		lambda_y_i1 * (y_i + l * sin(theta)), 0, options);
 end

@@ -16,5 +16,5 @@ function vec_guess_star = optim_fsolve(s_data, dim)
 	opt = optimoptions('fsolve', 'Display', 'iter');
 	% , 'Algorithm', 'levenberg-marquardt'
 	vec_guess_star = fsolve(@(vec_guess) ...
-		cal_chain(vec_guess, s_data, dim, false), [-10; 10], opt);
+		cal_chain(vec_guess, s_data, dim, false), [- 22.3645; 68.6700], opt);
 end
