@@ -11,24 +11,25 @@ function main()
 	% solve_exer_2()
 	% solve_exer_3()
 	% solve_chain()
-	solve_project()
+	solve_project(true)
 end
 
 
-function solve_project()
+function solve_project(whe_sym)
 
-	%% When the number of sections is 6
-	s_data_1 = get_data_chain(6);
-	% solve_chain(s_data_1, false, 1);
-	% solve_chain(s_data_1, false, 2);
-	solve_chain(s_data_1, true, 1);
+	s_data_1 = get_data_chain(6);  % When the number of sections is 6
+	s_data_2 = get_data_chain(100);  % When the number of sections is 100
 
-	%% When the number of sections is 100
-	% s_data_2 = get_data_chain(100);
-	% [vec_guess_star_2, z_t_2, y_t_2, ~, ~] = solve_chain(s_data_2);
-	% vec_guess_star_2
+	if whe_sym
+		[~, z_t_1, y_t_1] = solve_chain(s_data_1, true, 1);
+		[~, z_t_2, y_t_2] = solve_chain(s_data_2, true, 1);
+	else
+		% solve_chain(s_data_1, false, 1);
+		% solve_chain(s_data_1, false, 2);
+		% solve_chain(s_data_2, false, 1);
+	end
 
-	% plot_chain(z_t_1, y_t_1, z_t_2, y_t_2)
+	plot_chain(z_t_1, y_t_1, z_t_2, y_t_2)
 end
 
 

@@ -1,6 +1,8 @@
 
 # Find the Trajectory using Dynamic Optimization
 
+__Jie Xu (s181238)__
+
 In the report, it is important to give the results and an interpretation of those, but certainly also to describe the chosen method, its background and assumptions.
 
 ## 1, Trajectory of a Suspended Chain
@@ -155,7 +157,9 @@ $$
 \end{align}
 $$
 
-When $N = 2n$, for example, $6$, the result is:
+The two results when $N = 6$ and $N = 100$ respectively can be visualized by the figure 2, which is the same as figure 1:
+
+![](/images/dynamic_2.png)
 
 ## 2, Trajectory of a Suspended Wire
 
