@@ -75,9 +75,13 @@ For <img src="/examples/dynamic/project/tex/87b1657177022f790cc2ab8fbcc138bb.svg
 
 where the boundary conditions are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/d49fde9de438443f411722033b803ff4.svg?invert_in_darkmode&sanitize=true" align=middle width=113.74056540000001pt height=64.7674335pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/bc0d7df1f1929b53a5d6b97039bb8722.svg?invert_in_darkmode&sanitize=true" align=middle width=113.74056540000001pt height=66.50262135pt/></p>
 
-When <img src="/examples/dynamic/project/tex/4d8fc1d3851286cb7b423eaf172ee903.svg?invert_in_darkmode&sanitize=true" align=middle width=55.00368554999999pt height=22.465723500000017pt/>
+Numerical method is almost the same as that in the above section. The calculate procedure for iterations can be expressed by the following five equations:
+
+<p align="center"><img src="/examples/dynamic/project/tex/397c4c47d6336f399de6506b38ba2450.svg?invert_in_darkmode&sanitize=true" align=middle width=273.11313809999996pt height=137.5294668pt/></p>
+
+When <img src="/examples/dynamic/project/tex/4d8fc1d3851286cb7b423eaf172ee903.svg?invert_in_darkmode&sanitize=true" align=middle width=55.00368554999999pt height=22.465723500000017pt/>, for example, <img src="/examples/dynamic/project/tex/327c36301dc71617dc7032f8ce30b236.svg?invert_in_darkmode&sanitize=true" align=middle width=8.219209349999991pt height=21.18721440000001pt/>, the result is:
 
 ## 2, Trajectory of a Suspended Wire
 
@@ -105,8 +109,8 @@ Euler-Lagrange equations are:
 
 <p align="center"><img src="/examples/dynamic/project/tex/86b5be090f00b1faa74c4d2337c83325.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=115.06849364999998pt/></p>
 
-or the following equations according to Pontryagins Maximum principle:
+<!-- or the following equations according to Pontryagins Maximum principle:
 
 <p align="center"><img src="/examples/dynamic/project/tex/cbde22906356a6c052548caceb047a2b.svg?invert_in_darkmode&sanitize=true" align=middle width=402.59250735pt height=126.09769095pt/></p>
 
-Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of <img src="/examples/dynamic/project/tex/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode&sanitize=true" align=middle width=7.7054801999999905pt height=14.15524440000002pt/>). Plot the function as function of s and explain what you see - and why.
+Plot the shape of the wire and discuss your observations. Determine the value of the costate vector in origin. Investigate the variation of the Hamiltonian function (i.e. the variation of the Hamiltonian as function of <img src="/examples/dynamic/project/tex/6f9bad7347b91ceebebd3ad7e6f6f2d1.svg?invert_in_darkmode&sanitize=true" align=middle width=7.7054801999999905pt height=14.15524440000002pt/>). Plot the function as function of s and explain what you see - and why. -->
