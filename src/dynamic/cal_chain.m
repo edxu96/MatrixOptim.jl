@@ -51,23 +51,49 @@ function [z_t, y_t, u_t, v_t, lambda_z_t, lambda_y_t] = cal_chain_2d(...
 end
 
 
+% function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
+% % Trigonometric	functions cannot be used in `solve`
+%
+% 	x = optimvar('x', 2, 1, 'LowerBound', [-1.0; -1.0] * l, ...
+% 		'UpperBound', [1.0; 1.0] * l);
+% 	obj = m * g * y_i + 0.5 * m * g * x(2) + ...
+% 		lambda_z_i1 * (z_i + x(1)) + lambda_y_i1 * (y_i + x(2));
+% 	prob = optimproblem('Objective', obj);
+% 	% nlcons = x(1)^2 + x(2)^2 - 1 <= 10E-6;
+% 	nlcons = x(1)^2 + x(2)^2 == l^2;
+% 	prob.Constraints.circlecons = nlcons;
+% 	x_0.x = [l / sqrt(2); l / sqrt(2)];
+% 	% opt = optimoptions('fmincon', 'Display', 'off');
+%
+% 	[sol, fval, exitflag, output] = solve(prob, x_0);
+% 	u_i = sol.x(1);
+% 	v_i = sol.x(2);
+% end
+
+
 function [u_i, v_i] = optim_2d(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
-% Trigonometric	functions cannot be used in `solve`
+% Trigonometric	functions can be used in `fmincon`
 
-	x = optimvar('x', 2, 1, 'LowerBound', [-1.0; -1.0] * l, ...
-		'UpperBound', [1.0; 1.0] * l);
-	obj = m * g * y_i + 0.5 * m * g * x(2) + ...
+	fun = @(x) m * g * y_i + 0.5 * m * g * x(2) + ...
 		lambda_z_i1 * (z_i + x(1)) + lambda_y_i1 * (y_i + x(2));
-	prob = optimproblem('Objective', obj);
-	% nlcons = x(1)^2 + x(2)^2 - 1 <= 10E-6;
-	nlcons = x(1)^2 + x(2)^2 == l^2;
-	prob.Constraints.circlecons = nlcons;
-	x_0.x = [l / sqrt(2); l / sqrt(2)];
-	% opt = optimoptions('fmincon', 'Display', 'off');
-
-	[sol, fval, exitflag, output] = solve(prob, x_0);
+	A = [];
+	b = [];
+	Aeq = [];
+	beq = [];
+	lb = [-1.0; -1.0] * l;
+	ub = [1.0; 1.0] * l;
+	nonlcon = @(x) get_nonlcon(x, l);
+	x0 = [l / sqrt(2); l / sqrt(2)];
+	options = optimoptions('fmincon', 'Display', 'off', 'Algorithm', 'sqp');
+	sol = fmincon(fun, x0, A, b, Aeq, beq, lb, ub, nonlcon, options);
 	u_i = sol.x(1);
 	v_i = sol.x(2);
+end
+
+
+function [c, ceq] = get_nonlcon(x, l)
+	c = x(1)^2 + x(2)^2 == l^2;
+	ceq = [];
 end
 
 
