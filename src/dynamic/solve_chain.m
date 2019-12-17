@@ -1,4 +1,5 @@
 
+
 function [vec_guess_star, z_t, y_t, lambda_z_t, lambda_y_t] = ...
 		solve_chain(s_data)
 
@@ -19,17 +20,18 @@ end
 
 
 function vec_guess_star = optim_fsolve(s_data)
-	opt = optimoptions('fsolve', 'Display', 'iter', 'Algorithm', 'levenberg-marquardt');
-	%
+	opt = optimoptions('fsolve', 'Display', 'iter', 'Algorithm', ...
+		'levenberg-marquardt');
+
 	vec_guess_star = fsolve(@(vec_guess) ...
 		cal_chain_vector(vec_guess, s_data), [-1; -1], opt);
 end
 
 
-function [err, z_t, y_t, lambda_z_t, lambda_y_t] = ...
-	cal_chain_vector(vec_guess, s_data)
-	[z_n, y_n, z_t, y_t, lambda_z_t, lambda_y_t] = ...
-		cal_chain(vec_guess, s_data);
+function [err, z_t, y_t, lambda_z_t, lambda_y_t] = cal_chain_vector(...
+		vec_guess, s_data)
+	[z_n, y_n, z_t, y_t, lambda_z_t, lambda_y_t] = cal_chain(...
+		vec_guess, s_data);
 
 	h = s_data.h;
 	err = [z_n - h; y_n];
