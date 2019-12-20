@@ -113,7 +113,7 @@ The Hamiltonian function is:
 
 Euler-Lagrange equations are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/86b5be090f00b1faa74c4d2337c83325.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=115.06849364999998pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/493c1c72a7119b6df0342359f2cdf597.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=121.37268825pt/></p>
 
 <!-- or the following equations according to Pontryagins Maximum principle:
 
