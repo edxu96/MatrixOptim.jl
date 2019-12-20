@@ -183,7 +183,7 @@ $$
 So the potential energy in steady state can be expressed by:
 
 $$
-J = \int_{0}^{S} M g y / S \mathrm{d} s
+J = \int_{0}^{S} \rho g y / S \mathrm{d} s
 $$
 
 where
@@ -191,14 +191,14 @@ where
 $$
 \begin{align}
 	\phi(\theta_S) &= 0 \\
-	L(y_s) &= \rho M g y / S
+	L(y_s) &= \rho g y / S
 \end{align}
 $$
 
 The Hamiltonian function is:
 
 $$
-H_s = \rho M g y / S + \lambda^z \cos \left( \theta\right) + \lambda^y \sin \left( \theta\right)
+H_s = \rho g y / S + \lambda^z \cos \left( \theta\right) + \lambda^y \sin \left( \theta\right)
 $$
 
 Euler-Lagrange equations are:
@@ -208,7 +208,7 @@ $$
 	\dot{z} &= \cos \left( \theta\right) \\
 	\dot{y} &= \sin \left( \theta\right) \\
 	- \dot{\lambda}^z &= 0 \\
-	- \dot{\lambda}^y &= \rho M g / S \\
+	- \dot{\lambda}^y &= \rho g / S \\
 	0 &= - \lambda^z \sin \left( \theta\right) + \lambda^y \cos \left( \theta\right)
 \end{align}
 $$
