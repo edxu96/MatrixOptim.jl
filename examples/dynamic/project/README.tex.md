@@ -207,8 +207,8 @@ $$
 \begin{align}
 	\dot{z} &= \cos \left( \theta\right) \\
 	\dot{y} &= \sin \left( \theta\right) \\
-	- \lambda^z &= 0 \\
-	- \lambda^y &= \rho M g / S \\
+	- \dot{\lambda}^z &= 0 \\
+	- \dot{\lambda}^y &= \rho M g / S \\
 	0 &= - \lambda^z \sin \left( \theta\right) + \lambda^y \cos \left( \theta\right)
 \end{align}
 $$
