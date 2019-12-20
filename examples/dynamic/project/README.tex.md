@@ -213,6 +213,22 @@ $$
 \end{align}
 $$
 
+The equations in `ode45` can be expressed as:
+
+$$
+\begin{align}
+	\theta = \arctan \left(\lambda^y / \lambda^z \right)
+	\dot{z} &= \cos \left( \theta\right) \\
+	\dot{y} &= \sin \left( \theta\right) \\
+	\dot{\lambda}^z &= 0 \\
+	\dot{\lambda}^y &= - \rho g / S \\
+\end{align}
+$$
+
+The results are compared with results when the number of sections of a chain is 6:
+
+![](/images/dynamic_3.png)
+
 <!-- or the following equations according to Pontryagins Maximum principle:
 
 $$

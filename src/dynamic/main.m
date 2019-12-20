@@ -11,11 +11,13 @@ function main()
 	% solve_exer_2()
 	% solve_exer_3()
 	% solve_chain()
-	solve_project(true)
+	% [x2, y2] = solve_project_discrete(true)
+	[x2, y2] = solve_project_discrete(false)
+	solve_project_conti(x2, y2)
 end
 
 
-function solve_project(whe_sym)
+function [z_t_1, y_t_1] = solve_project_discrete(whe_sym)
 
 	s_data_1 = get_data_chain(6);  % When the number of sections is 6
 	s_data_2 = get_data_chain(100);  % When the number of sections is 100
@@ -24,14 +26,53 @@ function solve_project(whe_sym)
 		[~, z_t_1, y_t_1] = solve_chain(s_data_1, true, 1);
 		[~, z_t_2, y_t_2] = solve_chain(s_data_2, true, 1);
 	else
-		% solve_chain(s_data_1, false, 1);
+		[~, z_t_1, y_t_1] = solve_chain(s_data_1, false, 1);
 		% solve_chain(s_data_1, false, 2);
-		% solve_chain(s_data_2, false, 1);
+		% [~, z_t_2, y_t_2] = solve_chain(s_data_2, false, 1);
 	end
 
-	plot_chain(z_t_1, y_t_1, z_t_2, y_t_2)
+	% plot_chain_discrete(z_t_1, y_t_1, z_t_2, y_t_2)
 end
 
+
+function plot_chain_discrete(x1, y1, x2, y2)
+	figure
+
+	plot(x1, y1, 'b', x2, y2, 'r-.', 'LineWidth', 2)
+	grid on
+	% Set the axis limits
+	% axis([0 2*pi -1.5 1.5])
+	% Add title and axis labels
+	title('Trajectories of Suspended Chains')
+	xlabel('z')
+	ylabel('y')
+	legend('when N = 6','when N = 6')
+end
+
+
+function solve_project_conti(x2, y2)
+	struct_data = get_data_chain_diff();
+
+	[vec_s, mat_x_s] = solve_chain_diff(struct_data);
+
+	plot_chain_conti(mat_x_s(:, 1), mat_x_s(:, 2), x2, y2)
+end
+
+
+function plot_chain_conti(vec_x, vec_y, x1, y1)
+	figure
+
+	plot(vec_x, vec_y, 'blue', x1, y1, 'r-.', 'LineWidth', 2)
+	grid on
+	% Set the axis limits
+	% axis([0 2*pi -1.5 1.5])
+	% Add title and axis labels
+	title('Trajectories of Suspended a Chain and a Wire')
+	xlabel('z')
+	ylabel('y')
+	legend('Suspended Wire','Suspended Chain with N = 100')
+
+end
 
 %%%% Exercises %%%%
 
