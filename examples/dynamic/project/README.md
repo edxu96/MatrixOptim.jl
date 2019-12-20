@@ -101,19 +101,19 @@ where the boundary conditions are:
 
 So the potential energy in steady state can be expressed by:
 
-<p align="center"><img src="/examples/dynamic/project/tex/ef421a9d6e7ad7bc5344795837fa8180.svg?invert_in_darkmode&sanitize=true" align=middle width=132.2186844pt height=41.15109735pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/63c88916cf68c8fc3304091dd8b47a54.svg?invert_in_darkmode&sanitize=true" align=middle width=122.9778528pt height=41.15109735pt/></p>
 
 where
 
-<p align="center"><img src="/examples/dynamic/project/tex/d43a5cd1ea7359573d72e34fda511dd5.svg?invert_in_darkmode&sanitize=true" align=middle width=124.30212629999998pt height=41.09589pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/fc36a1700d34a81a069cdca3848d5c12.svg?invert_in_darkmode&sanitize=true" align=middle width=106.56241035000001pt height=41.09589pt/></p>
 
 The Hamiltonian function is:
 
-<p align="center"><img src="/examples/dynamic/project/tex/6513a3c7887729b7936195665ddcb56d.svg?invert_in_darkmode&sanitize=true" align=middle width=275.07778155pt height=16.438356pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/c1c78996e33ad381b2881bf497553d62.svg?invert_in_darkmode&sanitize=true" align=middle width=257.3380656pt height=16.438356pt/></p>
 
 Euler-Lagrange equations are:
 
-<p align="center"><img src="/examples/dynamic/project/tex/493c1c72a7119b6df0342359f2cdf597.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=121.37268825pt/></p>
+<p align="center"><img src="/examples/dynamic/project/tex/a5dab213192bc221cacba79c43ad69d5.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=121.37268825pt/></p>
 
 <!-- or the following equations according to Pontryagins Maximum principle:
 
