@@ -115,6 +115,14 @@ Euler-Lagrange equations are:
 
 <p align="center"><img src="/examples/dynamic/project/tex/a5dab213192bc221cacba79c43ad69d5.svg?invert_in_darkmode&sanitize=true" align=middle width=214.7925945pt height=121.37268825pt/></p>
 
+The equations in `ode45` can be expressed as:
+
+<p align="center"><img src="/examples/dynamic/project/tex/cc4a7f11fe86415c1e60d2146ae3b03b.svg?invert_in_darkmode&sanitize=true" align=middle width=216.18344054999997pt height=96.71515425pt/></p>
+
+The results are compared with results when the number of sections of a chain is 6:
+
+![](/images/dynamic_3.png)
+
 <!-- or the following equations according to Pontryagins Maximum principle:
 
 <p align="center"><img src="/examples/dynamic/project/tex/cbde22906356a6c052548caceb047a2b.svg?invert_in_darkmode&sanitize=true" align=middle width=402.59250735pt height=126.09769095pt/></p>
