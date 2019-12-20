@@ -10,10 +10,15 @@ function main()
 	% solve_exer_1()
 	% solve_exer_2()
 	% solve_exer_3()
-	% solve_chain()
-	% [x2, y2] = solve_project_discrete(true)
-	[x2, y2] = solve_project_discrete(false)
-	solve_project_conti(x2, y2)
+
+	%% Trajectory of a Suspended Chain
+	[z_t_1, y_t_1] = solve_project_discrete(false)
+
+	%% Trajectory of a Suspended Chain using Two Symmetric Half Chains
+	[z_t_1, y_t_1] = solve_project_discrete(true)
+
+	%% Continuous Wire
+	solve_project_conti(z_t_1, y_t_1)
 end
 
 
@@ -23,12 +28,17 @@ function [z_t_1, y_t_1] = solve_project_discrete(whe_sym)
 	s_data_2 = get_data_chain(100);  % When the number of sections is 100
 
 	if whe_sym
+		%% Symmetric Method when N = 6
 		[~, z_t_1, y_t_1] = solve_chain(s_data_1, true, 1);
+		%% Symmetric Method when N = 100
 		[~, z_t_2, y_t_2] = solve_chain(s_data_2, true, 1);
 	else
+		%% One Dimension Method when N = 6
 		[~, z_t_1, y_t_1] = solve_chain(s_data_1, false, 1);
-		% solve_chain(s_data_1, false, 2);
-		% [~, z_t_2, y_t_2] = solve_chain(s_data_2, false, 1);
+		%% Two Dimension Method using Pontryagins Maximum Principle when N = 6
+		[~, z_t_1, y_t_1] = solve_chain(s_data_1, false, 2);
+		%% One Dimension Method when N = 100
+		[~, z_t_2, y_t_2] = solve_chain(s_data_2, false, 1);
 	end
 
 	% plot_chain_discrete(z_t_1, y_t_1, z_t_2, y_t_2)

@@ -87,6 +87,7 @@ end
 
 function [u_i, v_i] = optim_2d_fmincon(z_i, y_i, lambda_z_i1, lambda_y_i1, ...
 		m, g, l)
+% Two Dimension Method using Pontryagins Maximum Principle
 % Trigonometric	functions can be used in `fmincon`
 
 	fun = @(x) m * g * y_i + 0.5 * m * g * x(2) + ...
@@ -115,6 +116,7 @@ end
 
 function [z_t, y_t, theta_t, lambda_z_t, lambda_y_t] = cal_chain_1d(...
 		vec_guess, s_data, whe_print)
+% One Dimension Method
 
 	m = s_data.m;
 	g = s_data.g;
@@ -167,6 +169,7 @@ end
 
 function theta_i = cal_theta_i_pontryagins_fmincon(z_i, y_i, lambda_z_i1, ...
 		lambda_y_i1, m, g, l)
+% One Dimension Method using Pontryagins Maximum principle
 
 	fun = @(theta) m * g * y_i + 0.5 * m * g * l * sin(theta) + ...
 		lambda_z_i1 * (z_i + l * cos(theta)) + ...
