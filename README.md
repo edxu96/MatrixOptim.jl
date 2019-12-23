@@ -64,6 +64,7 @@ Right now, the project is still in alpha stage. There are many new updates on `J
 - [ ] Stochastic Optimization
 - [ ] Dynamical Systems and State Space Model
 - [ ] Markov Decision Process
+- [x] Dynamic Optimization
 
 ## 4.2, Algorithms
 
