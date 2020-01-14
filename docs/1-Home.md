@@ -1,5 +1,4 @@
 
-
 ## Introduction
 
 `MatrixOptim.jl` can make it easier to solve some optimization models. There are several prefabricated algorithms to solve the models in matrix form.
@@ -29,6 +28,8 @@ The principle of decomposition as a solution technique is to break a problem dow
 
 ### Dantzig-Wolfe Decomposition
 
+[3]
+
 ## References
 
 [1]: https://books.google.dk/books?hl=en&lr=&id=hUBWCgAAQBAJ&oi=fnd&pg=PR7&dq=decision+making+under+uncertainty+theory&ots=529NaoMOT3&sig=bZmuKQa-w9fE_uwu_wWmnIgGUmY&redir_esc=y#v=onepage&q=decision%20making%20under%20uncertainty%20theory&f=false
@@ -38,3 +39,5 @@ The principle of decomposition as a solution technique is to break a problem dow
 [2]: http://eaton.math.rpi.edu/CourseMaterials/PreviousSemesters/PreviousSemesters/Spring08/JM6640/tebboth.pdf
 
 2. Tebboth, J.R., 2001. A computational study of Dantzig-Wolfe decomposition. University of Buckingham.
+
+[3]: ./0-ref.md
