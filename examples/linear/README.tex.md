@@ -1,9 +1,9 @@
 
 # Linear Programming
 
-## 1, Basic Structure
+## 1, Introduction
 
-## 2, Supporting Tables
+## 2, Definition of Mathematical Expressions
 
 $$
 \begin{array}{c c c}
@@ -34,7 +34,7 @@ $$
 _Table 1, summary of sets_
 
 $$
-\begin{array}{c l c c}
+\begin{array}{c l c c c}
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
 		\hline
@@ -99,31 +99,33 @@ $$
 
 ## 4, Constraints
 
-limits of wood processing due to timber amount:
+Besides all variables are non-negative, there are five sets of constraints:
+
+1. limits of wood processing due to timber amount:
 
 $$
 h_t \geq \sum_{i \in I^{T1}_t} a^I_i y^I_i \quad \forall t \in T^1
 $$
 
-limit of pulp production due to timber amount:
+2. limit of pulp production due to timber amount:
 
 $$
 \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_j + a^{\text{paper}}_t y^{\text{paper}} \quad \forall t \in T^2
 $$
 
-Limit of wood selling due to production amount:
+3. limit of wood selling due to production amount:
 
 $$
 y^I_i \geq \sum_{k \in K} z^I_i \quad \forall i \in I
 $$
 
-Limit of pulp selling due to production amount:
+4. limit of pulp selling due to production amount:
 
 $$
 y^J_j + b^{\text{paper}}_j y^{\text{paper}} \geq \sum_{k \in K} z^J_{j, k} \quad \forall j \in J
 $$
 
-Limit of paper selling due to production amount:
+5. limit of paper selling due to production amount:
 
 $$
 y^{\text{paper}} \geq \sum_{k \in K} z^{\text{paper}}_k
