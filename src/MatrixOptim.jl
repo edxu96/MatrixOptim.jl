@@ -15,7 +15,6 @@ include("./milp/main.jl")
 include("./dw/main.jl")
 include("./func.jl")
 
-
 export getModel, solveModel!, appendConstraint!, solveBendersMilp,
     doDWDecomp, Sense, leq, geq, eq
 

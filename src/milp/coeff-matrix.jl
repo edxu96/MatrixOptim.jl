@@ -2,19 +2,33 @@
 # Version: 2.0
 # Auther: Edward J. Xu
 # Date: Aprial 7th, 2019
-# Function to initiate the coefficient matrix, update the last row, or add a row in the last.
-# 1. default double-script order:
-#   |     n(j)|
-#   |m(i)  *  |
-#
-# 2. default single-script order: k = (j - 1) * m + i (To bottom, then right)
-#    to convert back: i = k % m
-#                     j = Int8((k - i) / m)
-#
-# 3. if inverse == TURE, use inversed single-script order: k = (i - 1) * n + j (To right, then bottom)
-#    to convert back: j = k % n
-#                     i = Int8((k - j) / n)
-#
+
+
+"""
+Function to initiate the coefficient matrix, update the last row, or add a row in the last.
+1. default double-script order:
+  |     n(j)|
+  |m(i)  *  |
+
+2. default single-script order: k = (j - 1) * m + i (To bottom, then right)
+   to convert back: i = k % m
+                    j = Int8((k - i) / m)
+
+3. if inverse == TURE, use inversed single-script order: k = (i - 1) * n + j (To right, then bottom)
+   to convert back: j = k % n
+                    i = Int8((k - j) / n)
+
+Example:
+mat_para = [99.74  99.21  100.21  99.76  100.48  100.7  99.42  99.11  97.69  98.94  97.22  98.99;
+         1.89   2.02   1.95    2.16   2.16    2.08   2.08   2.09   1.97   1.99   1.89   1.95;
+         15.58  15.11  14.93   14.86  15.06   15.51  14.41  14.96  15.62  14.4   15.64  14.52]
+(mat_coeff, mat_para_cal) = updateRow(m = 3, n = 12, mat_para = - hcat(mat_para[:,1]),
+    vec_i_x = [1 2 3], vec_j_x = [1])
+(mat_coeff, mat_para_cal) = updateRow(add = 1, mat_coeff = mat_coeff, m = 3, n = 12,
+    mat_para = - mat_para, vec_i_x = [1 2 3], vec_j_x = collect(2: 1: 12))
+(mat_coeff, mat_para_cal) = updateRow(add = 1, mat_coeff = mat_coeff, m = 3, n = 12,
+    mat_para = mat_para, vec_i_x = [1 2 3], vec_j_x = collect(1: 1: 11), vec_j_a = collect(1: 1: 11) .+ 1)
+"""
 function updateRow(; mat_coeff = 0, add = false, m, n, mat_para,
     vec_i_x, vec_j_x, vec_i_a = vec_i_x, vec_j_a = vec_j_x, inverse = false)
     num_x = m * n
@@ -74,13 +88,3 @@ function updateRow(; mat_coeff = 0, add = false, m, n, mat_para,
     end
     return (mat_coeff, mat_para_cal)
 end
-# Example:
-# mat_para = [99.74  99.21  100.21  99.76  100.48  100.7  99.42  99.11  97.69  98.94  97.22  98.99;
-#          1.89   2.02   1.95    2.16   2.16    2.08   2.08   2.09   1.97   1.99   1.89   1.95;
-#          15.58  15.11  14.93   14.86  15.06   15.51  14.41  14.96  15.62  14.4   15.64  14.52]
-# (mat_coeff, mat_para_cal) = updateRow(m = 3, n = 12, mat_para = - hcat(mat_para[:,1]),
-#     vec_i_x = [1 2 3], vec_j_x = [1])
-# (mat_coeff, mat_para_cal) = updateRow(add = 1, mat_coeff = mat_coeff, m = 3, n = 12,
-#     mat_para = - mat_para, vec_i_x = [1 2 3], vec_j_x = collect(2: 1: 12))
-# (mat_coeff, mat_para_cal) = updateRow(add = 1, mat_coeff = mat_coeff, m = 3, n = 12,
-#     mat_para = mat_para, vec_i_x = [1 2 3], vec_j_x = collect(1: 1: 11), vec_j_a = collect(1: 1: 11) .+ 1)

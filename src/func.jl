@@ -1,5 +1,8 @@
+## Functions for MatrixOptim.jl
+## Edward J. Xu <edxu96@outlook.com>
+## Jan 19th, 2020
 
-
+"Get results of variables and store them in a vector."
 function value_vec(vec_x::Union{Array{VariableRef,1}, VariableRef})
     if isa(vec_x, VariableRef)
         vec_value = value(vec_x)
@@ -11,6 +14,7 @@ function value_vec(vec_x::Union{Array{VariableRef,1}, VariableRef})
 end
 
 
+"Get results of corresponding variables in the dual problem."
 function dual_vec(vec_cons)
     return [dual(vec_cons[i]) for i = 1:length(vec_cons)]
 end
@@ -22,24 +26,25 @@ end
 end
 
 
-function checkColVec(vec::Array{Int64,2}, str_name::String)
+"Check if the array is a column vector."
+function check_col_vec(vec::Array{Int64,2}, str_name::String)
     if size(vec)[Int(col)] != 1
         throw("$str_name is not a column vector")
     end
 end
 
 
-function checkMatrixMatch(
-        len::Float64, array::Array{Int64,2}, whi::ColRow,
-        str_len::String, str_array::String
-        )
+"Check if the size of the matrix if right."
+function check_mat_match(len::Float64, array::Array{Int64,2}, whi::ColRow,
+        str_len::String, str_array::String)
     if size(array)[Int(whi)] != len
         throw("The $(str(whi)) of $str_array doesn't match the $str_len.")
     end
 end
 
 
-function checkListMatch(
+"Check if the length of the list is right."
+function check_li_match(
         len::Float64, list::Array{Int64,1}, str_len::String, str_list::String,
         )
     if length(list_1) != length(list_2)
@@ -48,9 +53,7 @@ function checkListMatch(
 end
 
 
-"""
-Solution for Model
-"""
+"Solution for Model"
 mutable struct Sol
     obj::Float64
     vec_result_x::Array{Float64,2}

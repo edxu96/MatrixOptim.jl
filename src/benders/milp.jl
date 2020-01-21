@@ -1,6 +1,7 @@
-# Benders Decomposition for MILP with Sub and Ray Problems
-# Author: Edward J. Xu, edxu96@outlook.com
-# Date: April 25th, 2019
+## Benders Decomposition for MILP with Sub and Ray Problems
+## Edward J. Xu <edxu96@outlook.com>
+## April 25th, 2019
+
 
 "MILP model for Benders decomposition in matrix form."
 mutable struct ModMilpBenders
@@ -52,15 +53,16 @@ mutable struct ModMilpBenders
     end
 end
 
+
 """
 Benders Decomposition for Mixed Integer Linear Programming
 
     mod = ModMilpBenders()
     solveModMilpBenders!(mod)
 """
-function solveModMilpBenders!(
-        mod::ModMilpBenders, epsilon=1e-6, timesIterationMax=100
-        )
+function solveModMilpBenders!(mod::ModMilpBenders,
+        epsilon=1e-6, timesIterationMax=100)
+        
     if mod.solution is not missing
         println("The model has been solved.")
     else

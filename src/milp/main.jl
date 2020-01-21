@@ -1,46 +1,79 @@
-# Linear programming in matrix form
-# Version: 6.0
-# Author: Edward J. Xu, edxu96@outlook.com
-# Date: August 11, 2019
+## Linear programming in MatrixOptim.jl
+## Edward J. Xu, edxu96@outlook.com
+## August 11, 2019
 
 include("./func.jl")
 
 
-"""
-Get the model for optimization
-"""
-function getModel(vec_c::Array{Int64,2}, mat_aCap::Array{Int64,2}, vec_b::Array{Int64,2},
-    vec_f::Union{Missing, Array{Int64,2}}=missing, mat_bCap::Union{Missing, Array{Int64,2}}=missing)
-    if (vec_f === missing) & (mat_bCap === missing)
-        model = ModelLinear(vec_c, mat_aCap, vec_b)
-    elseif isa(vec_f, Array{Int64,2}) & isa(mat_bCap, Array{Int64,2})
-        model = ModelMix(vec_c, mat_aCap, vec_f, mat_bCap, vec_b)
+"Get the mod for optimization"
+function get_mod(vec_c::Array{Int64,2}, mat_aa::Array{Int64,2}, vec_b::Array{Int64,2},
+    vec_f::Union{Missing, Array{Int64,2}}=missing, mat_bb::Union{Missing, Array{Int64,2}}=missing)
+    if (vec_f === missing) & (mat_bb === missing)
+        mod = ModLinear(vec_c, mat_aa, vec_b)
+    elseif isa(vec_f, Array{Int64,2}) & isa(mat_bb, Array{Int64,2})
+        mod = ModMix(vec_c, mat_aa, vec_f, mat_bb, vec_b)
     else
-        throw("Input `vec_f` or `mat_bCap` do not match.")
+        throw("Input `vec_f` or `mat_bb` do not match.")
     end
-    return model
+    return mod
 end
 
 
-function solveModel!(model)
-    if isa(model, ModelLinear)
-        obj, vec_result_x, vec_result_u = solveLinear(model.vec_c, model.vec_b, model.mat_aCap)
-    elseif isa(model, ModelMix)
-        obj, vec_result_x, vec_result_u = solveMix(model.vec_c, model.vec_b, model.mat_aCap, model.vec_f, model.mat_b)
+"Solve the model."
+function solve_mod!(mod::Union{ModLinear, ModMix})
+    if isa(mod, ModLinear)
+        obj, vec_result_x, vec_result_u = solve_lp(mod.vec_c, mod.vec_b,
+            mod.mat_aa)
     else
-        throw("Wrong input model.")
+        obj, vec_result_x, vec_result_u = solve_milp(mod.vec_c, mod.vec_b, 
+            mod.mat_aa, mod.vec_f, mod.mat_b)
     end
-    model.solution = Solution(obj, hcat(vec_result_x), hcat(vec_result_u))
+    mod.solution = Solution(obj, hcat(vec_result_x), hcat(vec_result_u))
 end
 
 
 """
-Append a constraint to ModelMix
+    solveLinear(n_x, vec_c, vec_b, mat_aCap)
+
+Linear Programming in Matrix Form
+
+# Arguments
+- vec_c: [column vector] coefficient vector in objective function
+- vec_b: [column vector] right-hand-side coefficient vector in constraint
+- mat_aCap: Coefficient Matrix
 """
-function appendConstraint!(model::ModelMix, vec_a_new::Array{Int64,2}, vec_b_new::Array{Int64,2}, b_new::Float64)
+function solveLinear(vec_c, vec_b, mat_aCap)
+    n_x = length(vec_c)
+    model = Model(with_optimizer(GLPK.Optimizer))
+    @variable(model, vec_x[1: n_x] >= 0)
+    @objective(model, Min, (transpose(vec_c) * vec_x)[1])
+    @constraint(model, vec_cons, mat_aCap * vec_x .>= vec_b)
+    optimize!(model)
+    vec_result_u = dual_vec(vec_cons)
+    obj = objective_value(model)
+    vec_result_x =  value_vec(vec_x)
+    return obj, vec_result_x, vec_result_u
+end
+
+
+function solveMix(n_x, vec_c, vec_b, mat_aCap, vec_f, mat_b)
+    model = Model(with_optimizer(GLPK.Optimizer))
+    @variable(model, vec_x[1: n_x] >= 0)
+    @objective(model, Min, (transpose(vec_c) * vec_x)[1])
+    @constraint(model, vec_cons, mat_aCap * vec_x .>= vec_b)
+    optimize!(model)
+    vec_result_u = dual_vec(vec_cons)
+    obj = objective_value(model)
+    vec_result_x = value_vec(vec_x)
+    return obj, vec_result_x, vec_result_u
+end
+
+
+"Append a constraint"
+function append_cons!(mod::ModMix, vec_a_new::Array{Int64,2}, vec_b_new::Array{Int64,2}, b_new::Float64)
     checkColVec(vec_a_new, "vec_a_new")
     checkColVec(vec_b_new, "vec_b_new")
-    model.mat_aCap = vcat(model.mat_aCap, vec_a_new')
-    model.mat_bCap = vcat(model.mat_bCap, vec_b_new')
-    model.vec_b = vcat(mode.vec_b, b_new)
+    mod.mat_aa = vcat(mod.mat_aa, vec_a_new')
+    mod.mat_bb = vcat(mod.mat_bb, vec_b_new')
+    mod.vec_b = vcat(mode.vec_b, b_new)
 end

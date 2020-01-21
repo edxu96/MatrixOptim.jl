@@ -122,11 +122,6 @@ function check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub,
 end
 
 
-mutable struct name
-    fields
-end
-
-
 """
 Generic Benders Decomposition for Mixed Integer Linear Programming
 """

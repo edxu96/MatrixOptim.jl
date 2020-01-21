@@ -1,6 +1,6 @@
-# L-Shaped Benders Decomposition for Stochastic Programming
-# Author: Edward J. Xu, edxu96@outlook.com
-# Date: August 11, 2019
+## L-Shaped Benders Decomposition for Stochastic Programming
+## Edward J. Xu <edxu96@outlook.com>
+## August 11, 2019
 
 
 "MILP model for L-Shaped Benders decomposition (LSBD) in matrix form."
@@ -34,7 +34,7 @@ mutable struct ModelLSBD
 end
 
 
-function solve_master(mat_e1, e2, opt_cut::Bool)
+function solve_master!(model_mas, mat_e1, e2, opt_cut::Bool)
     if opt_cut
         @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
     else  # Add feasible cut Constraints
@@ -43,16 +43,18 @@ function solve_master(mat_e1, e2, opt_cut::Bool)
     @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
     optimize!(model_mas)
     vec_result_y = velue_vec(vec_y)
+
     return objective_value(model_mas)
 end
 
 
-function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c)
+function solve_sub!(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c)
     model_sub = Model(with_optimizer(GLPK.Optimizer))
     @variable(model_sub, vec_u[1: n_constraint] >= 0)
     @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1])
     constraintsForDual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
     solution_sub = optimize!(model_sub)
+
     print("    Sub Problem")
     vec_uBar = velue_vec(vec_u)
     if solution_sub == :Optimal
@@ -71,6 +73,7 @@ function solve_sub(vec_uBar, vec_yBar, n_constraint, vec_h , mat_t, mat_w, vec_c
 end
 
 
+"Solve sub-problem with ray."
 function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
     model_ray = Model(with_optimizer(GLPK.Optimizer))
     @variable(model_ray, vec_u[1: n_constraint] >= 0)
@@ -78,6 +81,7 @@ function solve_ray(vec_uBar, vec_yBar, n_constraint, vec_h, mat_t, mat_w)
     @constraint(model_ray, (transpose(vec_h - mat_t * vec_yBar) * vec_u)[1] == 1)
     @constraint(model_ray, transpose(mat_w) * vec_u .<= 0)
     optimize!(model_ray)
+
     print("    Ray Problem\n")
     vec_uBar = velue_vec(vec_u)
     obj_ray = objective_value(model_ray)

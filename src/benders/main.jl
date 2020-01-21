@@ -1,17 +1,20 @@
-# Benders Decomposition
-# Edward J. Xu, edxu96@outlook.com
-# April 25th, 2019
+## Benders Decomposition
+## Edward J. Xu <edxu96@outlook.com>
+## April 25th, 2019
 
 module BendersDecomp
+
+include("./milp.jl")
+include("./l-shaped.jl")
+include("./slave.jl")
+
 
 """
 Make sure "result_q == obj_sub" in the final iteration,
 while ((bu - bl > epsilon) && (ite <= timesIterationMax))  !!!
 """
-function check_whe_continue(
-        bu, bl, epsilon, result_q, obj_sub,
-        ite, timesIterationMax
-        )
+function check_whe_continue(bu, bl, epsilon, result_q, obj_sub,
+        ite, timesIterationMax)
     whe_continue = true
     if (bu - bl <= epsilon) & (bu - bl >= - epsilon)
         if (result_q - obj_sub <= epsilon) & (result_q - obj_sub >= - epsilon)
@@ -39,14 +42,16 @@ mutable struct ModMas
     end
 end
 
+
+"Results of master problem."
 struct LogMas
     obj
     vec_y_result
 end
 
-function solve_mas!(
-        mas::ModMas, q, vec_y, vec_b, mat_b
-        )
+
+"Solve master problem."
+function solve_mas!(mas::ModMas, q, vec_y, vec_b, mat_b)
     if bool_solution_sub
         @constraint(
             mas.mod,
@@ -63,10 +68,13 @@ function solve_mas!(
         )
 
     optimize!(mas.mod)
-    log = LogMas(obj=objective_value(mas), vec_y=value_vec(vec_y))
+    log = LogMas(obj = objective_value(mas), vec_y = value_vec(vec_y))
+
     return log
 end
 
+
+"Linked lists for optimization results."
 mutable struct Log
     ite::Int64
     log_slave::Union{LogRay,LogSub,Missing}
@@ -80,12 +88,6 @@ mutable struct Log
     end
 end
 
-"Append a new log after this log."
-function append_log!(log::Log)
-    log.next = Log(log.ite + 1)
-    log.next.bu = log.bu
-    log.next.bl = log.bl
-end
 
 "Head of Linked List for Log"
 struct LogHead
@@ -100,17 +102,24 @@ struct LogHead
     end
 end
 
-function findLogLastest(logs::LogHead)
+
+"Append a new log after this log."
+function append_log!(log::Log)
+    log.next = Log(log.ite + 1)
+    log.next.bu = log.bu
+    log.next.bl = log.bl
+end
+
+
+"Find latest log."
+function find_log_lastest(logs::LogHead)
     crt = LogHead
     while !(isequal(missing, crt.next))
         crt = crt.next
     end
+
     return crt
 end
-
-include("./milp.jl")
-include("./l-shaped.jl")
-include("./slave.jl")
 
 
 export ModMilpBenders, solveModMilpBenders!

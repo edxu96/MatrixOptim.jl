@@ -1,5 +1,7 @@
 
-# Decomposition Algorithms for MILP
+# Decomposition Algorithms for MILP using MatrixOptim.jl
+
+The principle of decomposition as a solution technique is to break a problem down into a set of smaller problems, and, by solving the smaller problems, obtain a solution to the original problem. [2]
 
 ## 1, Benders Decomposition, MatrixOptim
 
@@ -9,7 +11,7 @@ According to wikipedia:
 
 ### 1.1, Generic Benders Decomposition for Mixed Integer Linear Programming
 
-![Standard MILP](https://github.com/edxu96/MatrixOptim.jl/blob/master/images/2.png)
+![Standard MILP](../images/2.png)
 
 ```
 ModMilpBenders
@@ -26,6 +28,12 @@ ModMilpBenders
 
 ### 1.2, L-Shaped Benders Decomposition for Stochastic Programming without Integer Variables in Second Stage
 
-![Stochastic Programming without Integer Variables in Second Stage](https://github.com/edxu96/MatrixOptim.jl/blob/master/images/1.png)
+![Stochastic Programming without Integer Variables in Second Stage](../images/1.png)
 
 ## 2, Dantzig-Wolfe Decomposition
+
+##
+
+Cannot guarantee the complete privacy, because any sub-problem can be guessed from iterations.
+
+2. Tebboth, J.R., 2001. A computational study of Dantzig-Wolfe decomposition. University of Buckingham.

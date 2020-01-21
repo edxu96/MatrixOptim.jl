@@ -1,5 +1,5 @@
 
-# Linear Programming using MatrixOptim
+# Linear Programming using MatrixOptim.jl
 
 Example:
 
