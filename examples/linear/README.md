@@ -1,15 +1,15 @@
 
 # Linear Programming
 
-## 1, Basic Structure
+## 1, Introduction
 
-## 2, Supporting Tables
+## 2, Definition of Mathematical Expressions
 
 <p align="center"><img src="/examples/linear/tex/8bddddb32ef95a899a679dd665fbdbde.svg?invert_in_darkmode&sanitize=true" align=middle width=675.18395835pt height=357.51909599999993pt/></p>
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/linear/tex/1634264cc25e2312a69a7df1130c0d52.svg?invert_in_darkmode&sanitize=true" align=middle width=532.2194724pt height=320.218305pt/></p>
+<p align="center"><img src="/examples/linear/tex/9af7bda5a5c2007694b83da0ba766f82.svg?invert_in_darkmode&sanitize=true" align=middle width=600.88377195pt height=162.41008575pt/></p>
 
 _Table 2, summary of decision variables_
 
@@ -34,22 +34,24 @@ The Objective function composes of seven parts:
 
 ## 4, Constraints
 
-limits of wood processing due to timber amount:
+Besides all variables are non-negative, there are five sets of constraints:
+
+1. limits of wood processing due to timber amount:
 
 <p align="center"><img src="/examples/linear/tex/be71294c428b4264e0fba57c44b04bb4.svg?invert_in_darkmode&sanitize=true" align=middle width=177.2920248pt height=41.9486826pt/></p>
 
-limit of pulp production due to timber amount:
+2. limit of pulp production due to timber amount:
 
 <p align="center"><img src="/examples/linear/tex/29ea5580ef018de33d61f4cad6b78e7e.svg?invert_in_darkmode&sanitize=true" align=middle width=404.8505472pt height=59.1786591pt/></p>
 
-Limit of wood selling due to production amount:
+3. limit of wood selling due to production amount:
 
 <p align="center"><img src="/examples/linear/tex/5b52ce8539f371dda15e492a5a637a95.svg?invert_in_darkmode&sanitize=true" align=middle width=144.5759832pt height=37.90293045pt/></p>
 
-Limit of pulp selling due to production amount:
+4. limit of pulp selling due to production amount:
 
 <p align="center"><img src="/examples/linear/tex/92cda86d89f876ba8dc08a618f367d90.svg?invert_in_darkmode&sanitize=true" align=middle width=261.82183499999996pt height=37.90293045pt/></p>
 
-Limit of paper selling due to production amount:
+5. limit of paper selling due to production amount:
 
 <p align="center"><img src="/examples/linear/tex/98b373f111a64de6fa05473c2941578e.svg?invert_in_darkmode&sanitize=true" align=middle width=135.28984425pt height=37.90293045pt/></p>
