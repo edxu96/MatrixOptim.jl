@@ -73,11 +73,11 @@ $$
 		r^{\text{paper}} & \text{capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
 		\gamma^{I}_{i, k} & \text{fixed price factor of wood products in different regions} & \circ / (1000 m^3) & I, K \\
 		\delta^{I}_{i, k} & \text{unit price factor of wood products in different regions} & \circ / (10^6 m^6) & I, K \\
-		\gamma^{J}_{j, k} & \text{fixed price factor of pulp in different regions} & \circ / (1000 m^3) & J, K \\
-		\delta^{J}_{j, k} & \text{unit price factor of pulp in different regions} & \circ / (10^6 m^6) m^6 & J, K \\
-		\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in different regions} & \circ / (1000 m^3) & K \\
-		\delta^{\text{paper}}_{k} & \text{unit price factor of paper in different regions} & \circ / (10^6 m^6) m^6 & K \\
-		p^{\text{fuel}} & \text{price of fuel} & \circ / (1000 m^3) & - \\
+		\gamma^{J}_{j, k} & \text{fixed price factor of pulp in different regions} & \circ / (1000 \text{ton}) & J, K \\
+		\delta^{J}_{j, k} & \text{unit price factor of pulp in different regions} & \circ / (10^6 \text{ton}^2) m^6 & J, K \\
+		\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in different regions} & \circ / (1000 \text{ton}) & K \\
+		\delta^{\text{paper}}_{k} & \text{unit price factor of paper in different regions} & \circ / (10^6 \text{ton}^2) m^6 & K \\
+		p^{\text{fuel}} & \text{price of fuel wood} & \circ / (1000 m^3) & - \\
 		\hline
 \end{array}
 $$
@@ -103,7 +103,7 @@ $$
 
 ## 4, Constraints
 
-Besides the constraints that all variables are non-negative, there are nine sets of constraints:
+Besides the constraints that all variables are non-negative, there are ten sets of constraints:
 
 1. limits of wood processing due to timber amount:
 
@@ -123,37 +123,43 @@ $$
 y^I_i \geq \sum_{k \in K} z^I_i \quad \forall i \in I
 $$
 
-4. limit of pulp selling due to production amount:
+4. limit of pulp amount due to paper production:
 
 $$
-y^J_j + b^{\text{paper}}_j y^{\text{paper}} \geq \sum_{k \in K} z^J_{j, k} \quad \forall j \in J
+y^J_j \geq b^{\text{paper}}_j y^{\text{paper}} \quad \forall j \in J
 $$
 
-5. limit of paper selling due to production amount:
+5. limit of pulp selling due to production amount:
+
+$$
+y^J_j - b^{\text{paper}}_j y^{\text{paper}} \geq \sum_{k \in K} z^J_{j, k} \quad \forall j \in J
+$$
+
+6. limit of paper selling due to production amount:
 
 $$
 y^{\text{paper}} \geq \sum_{k \in K} z^{\text{paper}}_k
 $$
 
-6. limit of production capacity in saw mill:
+7. limit of production capacity in saw mill:
 
 $$
 \sum_{i \in I^{\text{saw}}} y^I_i \leq r^{\text{saw}}
 $$
 
-7. limit of production capacity in plywood:
+8. limit of production capacity in plywood:
 
 $$
 \sum_{i \in I^{\text{plywood}}} y^I_i \leq r^{\text{plywood}}
 $$
 
-8. limit of production capacity in pulp production:
+9. limit of production capacity in pulp production:
 
 $$
 y^J_j \leq r^J_j \quad \forall j \in J
 $$
 
-9. limit of production capacity in paper production:
+10. limit of production capacity in paper production:
 
 $$
 y^{\text{paper}} \leq r^{\text{paper}}
