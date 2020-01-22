@@ -34,44 +34,48 @@ The Objective function composes of seven parts:
 
 ## 4, Constraints
 
-Besides the constraints that all variables are non-negative, there are ten sets of constraints:
+Besides the constraints that all variables are non-negative, there are eleven sets of constraints:
 
-1. limits of wood processing due to timber amount:
+1. limits of timber amount in wood production:
 
 <p align="center"><img src="/examples/linear/tex/be71294c428b4264e0fba57c44b04bb4.svg?invert_in_darkmode&sanitize=true" align=middle width=177.2920248pt height=41.9486826pt/></p>
 
-2. limit of pulp production due to timber amount:
+2. limit of timber amount in pulp production:
 
 <p align="center"><img src="/examples/linear/tex/29ea5580ef018de33d61f4cad6b78e7e.svg?invert_in_darkmode&sanitize=true" align=middle width=404.8505472pt height=59.1786591pt/></p>
 
-3. limit of wood selling due to production amount:
+3. limit of wood amount in selling:
 
 <p align="center"><img src="/examples/linear/tex/5b52ce8539f371dda15e492a5a637a95.svg?invert_in_darkmode&sanitize=true" align=middle width=144.5759832pt height=37.90293045pt/></p>
 
-4. limit of pulp amount due to paper production:
+4. limit of pulp amount in paper production:
 
 <p align="center"><img src="/examples/linear/tex/0b1693f36fbcb61a4d51175e6ceb773b.svg?invert_in_darkmode&sanitize=true" align=middle width=185.98139999999998pt height=21.469790099999997pt/></p>
 
-5. limit of pulp selling due to production amount:
+5. limit of timber amount in paper production:
+
+<p align="center"><img src="/examples/linear/tex/193668b70fcd166004006f105e1f839d.svg?invert_in_darkmode&sanitize=true" align=middle width=194.76217695pt height=18.7141317pt/></p>
+
+6. limit of pulp amount in selling:
 
 <p align="center"><img src="/examples/linear/tex/fef6cb834042954053fc776e2a4e1e54.svg?invert_in_darkmode&sanitize=true" align=middle width=261.82183499999996pt height=37.90293045pt/></p>
 
-6. limit of paper selling due to production amount:
+7. limit of paper amount in selling:
 
 <p align="center"><img src="/examples/linear/tex/98b373f111a64de6fa05473c2941578e.svg?invert_in_darkmode&sanitize=true" align=middle width=135.28984425pt height=37.90293045pt/></p>
 
-7. limit of production capacity in saw mill:
+8. limit of capacity in saw mill:
 
 <p align="center"><img src="/examples/linear/tex/9e0b5c9fc8266bed2ebf1fabd3ca182f.svg?invert_in_darkmode&sanitize=true" align=middle width=108.4345977pt height=37.775108249999995pt/></p>
 
-8. limit of production capacity in plywood:
+9. limit of capacity in plywood production:
 
 <p align="center"><img src="/examples/linear/tex/fe07094ff82eb5cbe3c99b7598ff71df.svg?invert_in_darkmode&sanitize=true" align=middle width=158.63258565pt height=38.90747685pt/></p>
 
-9. limit of production capacity in pulp production:
+10. limit of capacity in pulp production:
 
 <p align="center"><img src="/examples/linear/tex/cc4149a797b3bb04b3bbd2ddfd463412.svg?invert_in_darkmode&sanitize=true" align=middle width=120.86924355pt height=20.95157625pt/></p>
 
-10. limit of production capacity in paper production:
+11. limit of capacity in paper production:
 
 <p align="center"><img src="/examples/linear/tex/2adbbe89b80b1c9fc8ed4da55392c3e6.svg?invert_in_darkmode&sanitize=true" align=middle width=104.07936329999998pt height=14.937954899999998pt/></p>
