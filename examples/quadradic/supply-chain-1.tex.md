@@ -3,6 +3,10 @@
 
 ## 1, Introduction
 
+The supply chain is illustrated using the following figure:
+
+![](./images/1.png)
+
 ## 2, Definition of Mathematical Expressions
 
 $$
@@ -178,15 +182,17 @@ $$
 
 ## 5, Result
 
-obj = $\underline{\underline{5.9649e6}}$
+obj = $\underline{\underline{0.3940e6}}$
+
+Produced quantity of final products {MAS, KUS, KOS, KUV, KOV, HSEL, LSEL, PAPER} = [0, 0, 0, 0, 0, 16, 16, 80]. The units of first five quantities are $1000 m^3 / \text{year}$, and the units of last three are $1000 \text{ton} / \text{year}$.
 
 ```
-result_h_t = [0.0, -0.0, -0.0, 77.0, 80.0, 68.0]
-result_y_i = [0.0, 0.0, 0.0, 0.0, 0.0]
-result_y_j = [16.0, 16.0]
-result_y_paper = 80.0
+result_h_t = [0, -0, -0, 77, 80, 68]
+result_y_i = [0, 0, 0, 0, 0]
+result_y_j = [16, 16]
+result_y_paper = 80
 result_z_ik = [
-	0.0 130.0 58.33 50.0; 
+	0.0 130.0 58.33 50.0;
 	0.0 60.0 54.17 46.67;
 	0.0 35.0 31.25 32.0;
 	0.0 190.0 150.0 97.22;

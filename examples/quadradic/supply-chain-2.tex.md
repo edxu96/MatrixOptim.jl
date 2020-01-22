@@ -148,7 +148,7 @@ $$
 2. limit of timber amount in pulp and paper production:
 
 $$
-\left(h_{m, t} + \sum_{i \in I^{T2}_t} b^I_{i} y^I_{m, i} \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_{m, j} + a^{\text{paper}}_{m, t} y^{\text{paper}}_m \quad \forall t \in T^2, m \in M
+\left(h_{m, t} + \sum_{i \in I^{T2}_t} b^I_{i} y^I_{m, i} \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_{m, j} + a^{\text{paper}}_t y^{\text{paper}}_m \quad \forall t \in T^2, m \in M
 $$
 
 3. limit of pulp amount in paper production:
@@ -199,7 +199,7 @@ $$
 y^{\text{paper}}_{m} \leq x^{\text{paper}}_{m} \quad \forall m \in M
 $$
 
-11. relation between capacity expansion factors
+11. relation between capacities
 
 $$
 \begin{align}
@@ -209,3 +209,7 @@ $$
     & x_{m} \leq \nu r \quad \forall x, m \in M \\
 \end{align}
 $$
+
+## 4, Result
+
+obj = $\underline{\underline{1.7382e6}}$
