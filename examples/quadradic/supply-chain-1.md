@@ -59,7 +59,7 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 4. limit of wood amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/5b52ce8539f371dda15e492a5a637a95.svg?invert_in_darkmode&sanitize=true" align=middle width=144.5759832pt height=37.90293045pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/b8242fd212c676db6bf72c24647ae054.svg?invert_in_darkmode&sanitize=true" align=middle width=152.95368495pt height=37.90293045pt/></p>
 
 5. limit of pulp amount in selling:
 
