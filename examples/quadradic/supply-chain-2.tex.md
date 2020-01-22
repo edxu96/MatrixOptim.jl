@@ -62,6 +62,7 @@ $$
 		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
 		\hline
 		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
+    \sigma & \text{annual discounting factor} & - & - \\
 		\alpha_t & \text{fixed cost factor of purchasing wood} & \text{euro} / (1000 m^3) & T \\
 		\beta_t & \text{unit cost factor of purchasing wood} & \text{euro} / (1000 m^6) & T \\
 		a^I_i & \text{relation of timber input and output in wood production} & - & I\\
@@ -72,15 +73,19 @@ $$
 		r^{\text{plywood}} & \text{original capacity of plywood mill} & 1000 m^3 / \text{year} & - \\
     o^{\text{saw}} & \text{capacity expansion cost of saw mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
     o^{\text{plywood}} & \text{capacity expansion cost of plywood mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    \nu^{\text{saw}} & \text{max capacity expansion factor of saw mill} & - & - \\
+    \nu^{\text{plywood}} & \text{max capacity expansion factor of saw mill} & - & - \\
 		a^J_j & \text{input and output relation of pulp production} & - & J \\
 		c^J_j & \text{cost of pulp production} & \text{euro} / (1000 \text{ton}) & J \\
 		r^J_j & \text{original capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
     o^J_j & \text{capacity expansion cost of pulp production $j$} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    \nu^J_j & \text{max capacity expansion factor of pulp production $j$} & - & J \\
 		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
 		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
 		c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
 		r^{\text{paper}} & \text{original capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
     o^{\text{paper}} & \text{capacity expansion cost of paper production} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    \nu^{\text{paper}} & \text{max capacity expansion factor of paper production} & - & - \\
 		\gamma^{I}_{m, i, k} & \text{fixed price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (1000 m^3) & M, I, K \\
 		\delta^{I}_{m, i, k} & \text{unit price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (10^6 m^6) & M, I, K \\
 		\gamma^{J}_{m, j, k} & \text{fixed price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, J, K \\
@@ -98,7 +103,7 @@ _Table 3, summary of constants_
 The Objective function composes of seven parts:
 
 $$
-\sum_{m \in M} \left[ f^{\text{timber}}_m + f^{\text{wood}}_m + f^{\text{pp}}_m + g^{\text{timber}}_m + g^{\text{fuel}}_m + g^{\text{wood}}_m + g^{\text{pulp}}_m + g^{\text{paper}}_m \right] + f^{\text{cap}}
+\sum_{m \in M} \sigma^{m - 1} \left[ f^{\text{timber}}_m + f^{\text{wood}}_m + f^{\text{pp}}_m + g^{\text{timber}}_m + g^{\text{fuel}}_m + g^{\text{wood}}_m + g^{\text{pulp}}_m + g^{\text{paper}}_m \right] + f^{\text{cap}}
 $$
 
 1. cost of timber procurement: $ f^{\text{timber}}_m = - \sum_{t \in T} h_{m, t} (\alpha_t + \beta_t h_{m, t}) $
@@ -124,7 +129,7 @@ $$
 9. cost of capacity expansion:
 
 $$
-f^{\text{cap}} = \sum_{m = 2}^{3} \left[o^{\text{saw}} (x^{\text{saw}}_m - x^{\text{saw}}_{m-1}) + o^{\text{plywood}} (x^{\text{plywood}}_m - x^{\text{plywood}}_{m-1}) + \sum_{j \in J} o^J_j (x^J_{m, j} - x^J_{m-1, j}) + o^{\text{paper}} (x^{\text{paper}}_m - x^{\text{paper}}_{m-1}) \right]
+f^{\text{cap}} = \sum_{m = 2}^{3} \sigma^{m - 2} \left[o^{\text{saw}} (x^{\text{saw}}_m - x^{\text{saw}}_{m-1}) + o^{\text{plywood}} (x^{\text{plywood}}_m - x^{\text{plywood}}_{m-1}) + \sum_{j \in J} o^J_j (x^J_{m, j} - x^J_{m-1, j}) + o^{\text{paper}} (x^{\text{paper}}_m - x^{\text{paper}}_{m-1}) \right]
 $$
 
 ## 4, Constraints
@@ -195,8 +200,9 @@ $$
 
 $$
 \begin{align}
-    x_{1} = r \quad \forall x, r \\
-    x_{2} \geq x_{1} \quad \forall x \\
-    x_{3} \geq x_{2} \quad \forall x \\
+    & x_{1} = r \quad \forall x, r \\
+    & x_{2} \geq x_{1} \quad \forall x \\
+    & x_{3} \geq x_{2} \quad \forall x \\
+    & x_{m} \leq \nu r \quad \forall x, m \in M \\
 \end{align}
 $$
