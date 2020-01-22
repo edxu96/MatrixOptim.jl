@@ -13,7 +13,7 @@ _Table 1, summary of sets_
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/bdc20e05cf23e0c3c86832ddaccf5073.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=644.4105261pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/d77ff47ff87bdc176ed4dfcb29ecfe87.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=704.2273705499999pt/></p>
 
 _Table 3, summary of constants_
 
@@ -35,11 +35,11 @@ The Objective function composes of seven parts:
 
 5. profit of fuel wood selling: <img src="/examples/quadradic/tex/f624dba7a12f224efaaec04a32aad3fa.svg?invert_in_darkmode&sanitize=true" align=middle width=166.68490904999996pt height=27.91243950000002pt/>
 
-6. profit of wood selling: <img src="/examples/quadradic/tex/bac683088af69c7a82230ce2bc1cc973.svg?invert_in_darkmode&sanitize=true" align=middle width=344.13512099999997pt height=27.91243950000002pt/>
+6. profit of wood selling: <img src="/examples/quadradic/tex/c5ed8ea10f973eed767c45a2c89d64b6.svg?invert_in_darkmode&sanitize=true" align=middle width=401.85837119999997pt height=27.91243950000002pt/>
 
-7. profit of pulp selling: <img src="/examples/quadradic/tex/892c99cf36ff7ab16e0b1b42ca083cd4.svg?invert_in_darkmode&sanitize=true" align=middle width=345.60974744999993pt height=27.91243950000002pt/>
+7. profit of pulp selling: <img src="/examples/quadradic/tex/39bf204ecccfab6a6c8ee84667e50480.svg?invert_in_darkmode&sanitize=true" align=middle width=404.97108959999997pt height=27.91243950000002pt/>
 
-8. profit of paper selling: <img src="/examples/quadradic/tex/09f907260064a3aaa9d37b06f0ed6133.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
+8. profit of paper selling: <img src="/examples/quadradic/tex/23e96fe6cc6b2de23fbc15b9cb399925.svg?invert_in_darkmode&sanitize=true" align=middle width=395.76655304999997pt height=26.76175259999998pt/>
 
 9. cost of capacity expansion:
 

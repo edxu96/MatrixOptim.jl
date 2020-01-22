@@ -13,7 +13,7 @@ _Table 1, summary of sets_
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/d333093f661fbdaa715b6efd032919d4.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=664.1365533pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/d92dcfaed95fdc9c0b01b9862ca774da.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=743.67942495pt/></p>
 
 _Table 3, summary of constants_
 
@@ -21,7 +21,7 @@ _Table 3, summary of constants_
 
 The Objective function composes of many parts:
 
-<p align="center"><img src="/examples/quadradic/tex/29f02ffff6c8baa5033f4e5c506735fc.svg?invert_in_darkmode&sanitize=true" align=middle width=676.96246365pt height=78.5391552pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/153eab036a17f82b21b7f84570eb9d93.svg?invert_in_darkmode&sanitize=true" align=middle width=676.96246365pt height=78.5391552pt/></p>
 
 1. cost of timber procurement: <img src="/examples/quadradic/tex/9ef2df73999b9e34cebc98b451a23586.svg?invert_in_darkmode&sanitize=true" align=middle width=256.1740203pt height=27.91243950000002pt/>
 
@@ -35,19 +35,19 @@ The Objective function composes of many parts:
 
 5. profit of fuel wood selling: <img src="/examples/quadradic/tex/f624dba7a12f224efaaec04a32aad3fa.svg?invert_in_darkmode&sanitize=true" align=middle width=166.68490904999996pt height=27.91243950000002pt/>
 
-6. profit of wood selling: <img src="/examples/quadradic/tex/bac683088af69c7a82230ce2bc1cc973.svg?invert_in_darkmode&sanitize=true" align=middle width=344.13512099999997pt height=27.91243950000002pt/>
+6. profit of wood selling: <img src="/examples/quadradic/tex/0c4e7e23ad978a37aec9bd257668e5ff.svg?invert_in_darkmode&sanitize=true" align=middle width=437.61380849999995pt height=27.91243950000002pt/>
 
-7. profit of pulp selling: <img src="/examples/quadradic/tex/892c99cf36ff7ab16e0b1b42ca083cd4.svg?invert_in_darkmode&sanitize=true" align=middle width=345.60974744999993pt height=27.91243950000002pt/>
+7. profit of pulp selling: <img src="/examples/quadradic/tex/70ac47ca6310863c27a5092a714beac4.svg?invert_in_darkmode&sanitize=true" align=middle width=440.7265269pt height=27.91243950000002pt/>
 
-8. profit of paper selling: <img src="/examples/quadradic/tex/09f907260064a3aaa9d37b06f0ed6133.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
+8. profit of paper selling: <img src="/examples/quadradic/tex/3aa7ad0308485051febfb1dbd22269e8.svg?invert_in_darkmode&sanitize=true" align=middle width=431.52199035pt height=26.76175259999998pt/>
 
 9. cost of capacity expansion:
 
-<p align="center"><img src="/examples/quadradic/tex/298534a3c089394d31fa5aa70c53501d.svg?invert_in_darkmode&sanitize=true" align=middle width=732.42427005pt height=86.50267889999999pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/42b04216e12a859680f3ba69e0318d4e.svg?invert_in_darkmode&sanitize=true" align=middle width=732.42427005pt height=86.50267889999999pt/></p>
 
 ## 4, Constraints
 
-Besides the constraints that all variables are non-negative, there are ten sets of constraints:
+Besides the constraints that all variables are non-negative, there many ten sets of constraints:
 
 1. limit of timber amount in wood production:
 
