@@ -21,17 +21,29 @@ _Table 3, summary of constants_
 
 The Objective function composes of seven parts:
 
-<p align="center"><img src="/examples/quadradic/tex/c61df3fb68bf65340623a6208daa538a.svg?invert_in_darkmode&sanitize=true" align=middle width=497.72279864999996pt height=18.84197535pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/2f0a44598a2d924df78da505da994ecd.svg?invert_in_darkmode&sanitize=true" align=middle width=548.45382405pt height=37.775108249999995pt/></p>
 
-1. cost of timber procurement: <img src="/examples/quadradic/tex/772a07e4a65de6c6fb4ac5dcaf685803.svg?invert_in_darkmode&sanitize=true" align=middle width=240.60506415pt height=27.91243950000002pt/>
-2. cost of wood production: <img src="/examples/quadradic/tex/37206ee5228e3dd15db1bb8cf46d0e12.svg?invert_in_darkmode&sanitize=true" align=middle width=149.35345919999997pt height=27.91243950000002pt/>
-3. cost of pulp and paper production: <img src="/examples/quadradic/tex/43a2635f44a9f56b79a8ae1e3c391e44.svg?invert_in_darkmode&sanitize=true" align=middle width=242.45478509999998pt height=27.6567522pt/>
-4. profit of left timbers selling: <img src="/examples/quadradic/tex/e1ffbd27546576af623355f81a0d5646.svg?invert_in_darkmode&sanitize=true" align=middle width=724.7473859999999pt height=37.80850590000001pt/>
-5. profit of fuel wood selling: <img src="/examples/quadradic/tex/1b659a4d826919922811b7d275bf2e58.svg?invert_in_darkmode&sanitize=true" align=middle width=153.77517044999996pt height=27.91243950000002pt/>
-6. profit of wood selling: <img src="/examples/quadradic/tex/32ca75984f86e56e01c418b7f6d5ef0f.svg?invert_in_darkmode&sanitize=true" align=middle width=281.8592964pt height=27.91243950000002pt/>
-7. profit of pulp selling: <img src="/examples/quadradic/tex/39b6d494aa52f9c75518cf3e6269dd88.svg?invert_in_darkmode&sanitize=true" align=middle width=283.33392285pt height=27.91243950000002pt/>
-8. profit of paper selling: <img src="/examples/quadradic/tex/92ca546912179d9956f45eddf58b3232.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
-9. cost of capacity expansion: <img src="/examples/quadradic/tex/ea7f4d9f60baa367986afea9cbadce97.svg?invert_in_darkmode&sanitize=true" align=middle width=849.6745256999999pt height=37.80850590000001pt/>
+1. cost of timber procurement: <img src="/examples/quadradic/tex/9ef2df73999b9e34cebc98b451a23586.svg?invert_in_darkmode&sanitize=true" align=middle width=256.1740203pt height=27.91243950000002pt/>
+
+2. cost of wood production: <img src="/examples/quadradic/tex/a0f688b49aee6538fa36879fc524c813.svg?invert_in_darkmode&sanitize=true" align=middle width=162.26319779999997pt height=27.91243950000002pt/>
+
+3. cost of pulp and paper production: <img src="/examples/quadradic/tex/a530cd9609956ba8e65a443c56475442.svg?invert_in_darkmode&sanitize=true" align=middle width=310.38598469999994pt height=27.6567522pt/>
+
+4. profit of left timbers selling:
+
+<p align="center"><img src="/examples/quadradic/tex/29e061fbccb1cdb13491df5948921c0e.svg?invert_in_darkmode&sanitize=true" align=middle width=721.82700315pt height=59.1786591pt/></p>
+
+5. profit of fuel wood selling: <img src="/examples/quadradic/tex/f624dba7a12f224efaaec04a32aad3fa.svg?invert_in_darkmode&sanitize=true" align=middle width=166.68490904999996pt height=27.91243950000002pt/>
+
+6. profit of wood selling: <img src="/examples/quadradic/tex/bac683088af69c7a82230ce2bc1cc973.svg?invert_in_darkmode&sanitize=true" align=middle width=344.13512099999997pt height=27.91243950000002pt/>
+
+7. profit of pulp selling: <img src="/examples/quadradic/tex/892c99cf36ff7ab16e0b1b42ca083cd4.svg?invert_in_darkmode&sanitize=true" align=middle width=345.60974744999993pt height=27.91243950000002pt/>
+
+8. profit of paper selling: <img src="/examples/quadradic/tex/09f907260064a3aaa9d37b06f0ed6133.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
+
+9. cost of capacity expansion:
+
+<p align="center"><img src="/examples/quadradic/tex/fe6e2d067663aba667dee3258f1cf37b.svg?invert_in_darkmode&sanitize=true" align=middle width=820.1430550499999pt height=59.1786591pt/></p>
 
 ## 4, Constraints
 
@@ -39,43 +51,43 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 1. limit of timber amount in wood production:
 
-<p align="center"><img src="/examples/quadradic/tex/be71294c428b4264e0fba57c44b04bb4.svg?invert_in_darkmode&sanitize=true" align=middle width=177.2920248pt height=41.9486826pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/84d301a60a213be364e66b5ed77689c1.svg?invert_in_darkmode&sanitize=true" align=middle width=266.16246689999997pt height=41.9486826pt/></p>
 
 2. limit of timber amount in pulp and paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/29ea5580ef018de33d61f4cad6b78e7e.svg?invert_in_darkmode&sanitize=true" align=middle width=404.8505472pt height=59.1786591pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/032abd4d20e696a69e2b4706ce7a9d9b.svg?invert_in_darkmode&sanitize=true" align=middle width=506.44621829999994pt height=59.1786591pt/></p>
 
 3. limit of pulp amount in paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/0b1693f36fbcb61a4d51175e6ceb773b.svg?invert_in_darkmode&sanitize=true" align=middle width=185.98139999999998pt height=21.469790099999997pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/bf2ad5901b00c22350eff8fe62496778.svg?invert_in_darkmode&sanitize=true" align=middle width=256.4499696pt height=21.469790099999997pt/></p>
 
 4. limit of wood amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/5b52ce8539f371dda15e492a5a637a95.svg?invert_in_darkmode&sanitize=true" align=middle width=144.5759832pt height=37.90293045pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/ba92ba5ca127dfd696d7378a84b2773c.svg?invert_in_darkmode&sanitize=true" align=middle width=229.83205575pt height=37.90293045pt/></p>
 
 5. limit of pulp amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/fef6cb834042954053fc776e2a4e1e54.svg?invert_in_darkmode&sanitize=true" align=middle width=261.82183499999996pt height=37.90293045pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/bfad9e837928c6b95cee808a7e0c7644.svg?invert_in_darkmode&sanitize=true" align=middle width=347.85936075pt height=37.90293045pt/></p>
 
 6. limit of paper amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/98b373f111a64de6fa05473c2941578e.svg?invert_in_darkmode&sanitize=true" align=middle width=135.28984425pt height=37.90293045pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/13a029c6d928d57f76e9447e7de78312.svg?invert_in_darkmode&sanitize=true" align=middle width=213.94654379999997pt height=37.90293045pt/></p>
 
 7. limit of capacity in saw mill:
 
-<p align="center"><img src="/examples/quadradic/tex/9e0b5c9fc8266bed2ebf1fabd3ca182f.svg?invert_in_darkmode&sanitize=true" align=middle width=108.4345977pt height=37.775108249999995pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/161b50a8d5880c70e720faea41a2e242.svg?invert_in_darkmode&sanitize=true" align=middle width=201.34612575pt height=37.775108249999995pt/></p>
 
 8. limit of capacity in plywood mill:
 
-<p align="center"><img src="/examples/quadradic/tex/fe07094ff82eb5cbe3c99b7598ff71df.svg?invert_in_darkmode&sanitize=true" align=middle width=158.63258565pt height=38.90747685pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/1a4d177cdf3eef267931af94fbf2ff37.svg?invert_in_darkmode&sanitize=true" align=middle width=251.7210234pt height=38.90747685pt/></p>
 
 9. limit of capacity in pulp production:
 
-<p align="center"><img src="/examples/quadradic/tex/cc4149a797b3bb04b3bbd2ddfd463412.svg?invert_in_darkmode&sanitize=true" align=middle width=120.86924355pt height=20.95157625pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/82647487eda6cf4aa1cb82ea61248bbc.svg?invert_in_darkmode&sanitize=true" align=middle width=206.1748491pt height=20.95157625pt/></p>
 
 10. limit of capacity in paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/2adbbe89b80b1c9fc8ed4da55392c3e6.svg?invert_in_darkmode&sanitize=true" align=middle width=104.07936329999998pt height=14.937954899999998pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/a87f0eeebd6e3b5251b085afe08f65fd.svg?invert_in_darkmode&sanitize=true" align=middle width=184.25809544999998pt height=15.805440749999999pt/></p>
 
 11. relation between capacity expansion factors
 
