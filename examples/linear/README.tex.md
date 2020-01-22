@@ -68,7 +68,7 @@ $$
 		c^J_j & \text{cost of pulp production} & \circ & J \\
 		r^J_j & \text{capacity of pulp production} & 1000 \text{ton} / \text{year} & J \\
 		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
-		b^{\text{paper}}_{j} & \text{relation of pulp outputs in paper production} & - & J \\
+		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
 		c^{\text{paper}} & \text{cost of paper production} & \circ & - \\
 		r^{\text{paper}} & \text{capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
 		\gamma^{I}_{i, k} & \text{fixed price factor of wood products in different regions} & \circ / (1000 m^3) & I, K \\
@@ -95,7 +95,7 @@ $$
 1. cost of timber procurement: $ f^{timber} = - \sum_{t \in T} h_{\text{t}} (\alpha_t + \beta_t h_{\text{t}}) $
 2. cost of wood production: $ f^{wood} = - \sum_{i \in I} y^I_i c^I_i $
 3. cost of pulp and paper production: $ f^{pp} = - \sum_{j \in J} y^J_j c^J_j - y^{\text{paper}} c^{\text{paper}} $
-4. profit of left timbers: $ g^{\text{timber}} = \sum_{t \in T^1} \alpha_{\text{t}} \left(h_{\text{t}} - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) $
+4. profit of left timbers selling: $ g^{\text{timber}} = \sum_{t \in T^1} \alpha_t \left(h_t - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) + \sum_{t \in T^2} \alpha_t \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i - \sum_{j \in J^{T2}_t} a^J_j y^J_j - a^{\text{paper}}_t y^{\text{paper}} \right) $
 5. profit of fuel wood selling: $ g^{\text{fuel}} = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_i $
 6. profit of wood selling: $ g^{\text{wood}} = \sum_{i \in I} \sum_{k \in K} z^I_{i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{i, k}) $
 7. profit of pulp selling: $ g^{\text{pulp}} = \sum_{j \in J} \sum_{k \in K} z^J_{j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{j, k}) $
