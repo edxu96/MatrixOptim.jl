@@ -1,5 +1,4 @@
 
-
 # Metsa-Oy Production and Supply Chain 2: Dynamic
 
 ## 1, Introduction
@@ -28,6 +27,7 @@ $$
 		J^{T2}_{t = \text{KUK}} & \text{outputs of pulp production corresponding to input KUK} & \varnothing \\
 		J^{T2}_{t = \text{KOK}} & \text{outputs of pulp production corresponding to input KOK} & \{\text{LSEL} \} \\
 		K & \text{regions to sell products} & \{\text{EU}, \text{IE}, \text{PA}, \text{KI} \} \\
+    M & \text{three years in the planning horizon} & \{1, 2, 3 \} \\
 	  \hline
 \end{array}
 $$
@@ -39,13 +39,17 @@ $$
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
 		\hline
-		h_t & \text{purchasing amount of timber} & \text{integer} & 1000 m^3 & T \\
-		y^I_{i} & \text{production amount of wood} & \text{linear} & 1000 m^3 & I \\
-		y^J_{j} & \text{production amount of pulp} & \text{linear} & 1000 m^3 & J \\
-		y^{\text{paper}} & \text{production amount of paper} & \text{linear} & 1000 m^3 & - \\
-		z^I_{i, k} & \text{selling amount of wood in different regions} & \text{linear} & 1000 m^3 & I, K \\
-		z^J_{j, k} & \text{selling amount of pulp in different regions} & \text{linear} & 1000 m^3 & J, K \\
-		z^{\text{paper}}_{k} & \text{selling amount of paper in different regions} & \text{linear} & 1000 m^3 & K \\
+		h_{m, t} & \text{purchasing amount of timber $t$ in the year $m$} & \text{integer} & 1000 m^3 & M, T \\
+		y^I_{m, i} & \text{production amount of wood $i$ in the year $m$} & \text{linear} & 1000 m^3 & M, I \\
+		y^J_{m, j} & \text{production amount of pulp $j$ in the year $m$} & \text{linear} & 1000 m^3 & M, J \\
+		y^{\text{paper}}_{m} & \text{production amount of paper in the year $m$} & \text{linear} & 1000 m^3 & M \\
+		z^I_{m, i, k} & \text{selling amount of wood in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, I, K \\
+		z^J_{m, j, k} & \text{selling amount of pulp in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, J, K \\
+		z^{\text{paper}}_{m, k} & \text{selling amount of paper in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, K \\
+    x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & - & M^{2} \\
+    x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & - & M^{2} \\
+    x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & - & M^{2}, J \\
+    x^{\text{paper}}_{m} & \text{capacity of paper production line} & \text{linear} & - & M^{2} \\
 		\hline
 \end{array}
 $$
@@ -57,28 +61,32 @@ $$
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
 		\hline
+		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
 		\alpha_t & \text{fixed cost factor of purchasing wood} & \text{euro} / (1000 m^3) & T \\
 		\beta_t & \text{unit cost factor of purchasing wood} & \text{euro} / (1000 m^6) & T \\
 		a^I_i & \text{relation of timber input and output in wood production} & - & I\\
 		b^I_i & \text{relation of timber output and output in wood production} & - & I \\
 		e^I_i & \text{relation of fuel output and output in wood production} & - & I \\
 		c^I_i & \text{cost of wood production} & \text{euro} / (1000 m^3) & I \\
-		r^{\text{saw}} & \text{capacity of saw mill in wood production} & 1000 m^3 / \text{year} & - \\
-		r^{\text{plywood}} & \text{capacity of plywood mill in wood production} & 1000 m^3 / \text{year} & - \\
+		r^{\text{saw}} & \text{original capacity of saw mill} & 1000 m^3 / \text{year} & - \\
+		r^{\text{plywood}} & \text{original capacity of plywood mill} & 1000 m^3 / \text{year} & - \\
+    o^{\text{saw}} & \text{capacity expansion cost of saw mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    o^{\text{plywood}} & \text{capacity expansion cost of plywood mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
 		a^J_j & \text{input and output relation of pulp production} & - & J \\
 		c^J_j & \text{cost of pulp production} & \text{euro} / (1000 \text{ton}) & J \\
-		r^J_j & \text{capacity of pulp production} & 1000 \text{ton} / \text{year} & J \\
+		r^J_j & \text{original capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
+    o^J_j & \text{capacity expansion cost of pulp production $j$} & \text{euro} / (1000 m^3 / \text{year}) & - \\
 		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
 		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
 		c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
-		r^{\text{paper}} & \text{capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
-		\gamma^{I}_{i, k} & \text{fixed price factor of wood products in different regions} & \text{euro} / (1000 m^3) & I, K \\
-		\delta^{I}_{i, k} & \text{unit price factor of wood products in different regions} & \text{euro} / (10^6 m^6) & I, K \\
-		\gamma^{J}_{j, k} & \text{fixed price factor of pulp in different regions} & \text{euro} / (1000 \text{ton}) & J, K \\
-		\delta^{J}_{j, k} & \text{unit price factor of pulp in different regions} & \text{euro} / (10^6 \text{ton}^2) & J, K \\
-		\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in different regions} & \text{euro} / (1000 \text{ton}) & K \\
-		\delta^{\text{paper}}_{k} & \text{unit price factor of paper in different regions} & \text{euro} / (10^6 \text{ton}^2) & K \\
-		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
+		r^{\text{paper}} & \text{original capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
+    o^{\text{paper}} & \text{capacity expansion cost of paper production} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+		\gamma^{I}_{m, i, k} & \text{fixed price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (1000 m^3) & M, I, K \\
+		\delta^{I}_{m, i, k} & \text{unit price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (10^6 m^6) & M, I, K \\
+		\gamma^{J}_{m, j, k} & \text{fixed price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, J, K \\
+		\delta^{J}_{m, j, k} & \text{unit price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (10^6 \text{ton}^2) & M, J, K \\
+		\gamma^{\text{paper}}_{m, k} & \text{fixed price factor of paper in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, K \\
+		\delta^{\text{paper}}_{m, k} & \text{unit price factor of paper in the region $k$ in the year $m$} & \text{euro} / (10^6 \text{ton}^2) & M, K \\
 		\hline
 \end{array}
 $$
@@ -90,17 +98,18 @@ _Table 3, summary of constants_
 The Objective function composes of seven parts:
 
 $$
-f^{timber} + f^{wood} + f^{pp} + g^{\text{timber}} + g^{\text{fuel}} + g^{\text{wood}} + g^{\text{pulp}} + g^{\text{paper}}
+f^{\text{timber}}_m + f^{\text{wood}}_m + f^{\text{pp}}_m + g^{\text{timber}}_m + g^{\text{fuel}}_m + g^{\text{wood}}_m + g^{\text{pulp}}_m + g^{\text{paper}}_m + f^{\text{cap}}_m
 $$
 
-1. cost of timber procurement: $ f^{timber} = - \sum_{t \in T} h_{\text{t}} (\alpha_t + \beta_t h_{\text{t}}) $
-2. cost of wood production: $ f^{wood} = - \sum_{i \in I} c^I_i y^I_i $
-3. cost of pulp and paper production: $ f^{pp} = - \sum_{j \in J} c^J_j y^J_j - c^{\text{paper}} y^{\text{paper}} $
+1. cost of timber procurement: $ f^{\text{timber}}_m = - \sum_{t \in T} h_{m, t} (\alpha_t + \beta_t h_t) $
+2. cost of wood production: $ f^{\text{wood}} = - \sum_{i \in I} c^I_i y^I_i $
+3. cost of pulp and paper production: $ f^{\text{pp}} = - \sum_{j \in J} c^J_j y^J_j - c^{\text{paper}} y^{\text{paper}} $
 4. profit of left timbers selling: $ g^{\text{timber}} = \sum_{t \in T^1} \alpha_t \left(h_t - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) + \sum_{t \in T^2} \alpha_t \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i - \sum_{j \in J^{T2}_t} a^J_j y^J_j - a^{\text{paper}}_t y^{\text{paper}} \right) $
 5. profit of fuel wood selling: $ g^{\text{fuel}} = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_i $
 6. profit of wood selling: $ g^{\text{wood}} = \sum_{i \in I} \sum_{k \in K} z^I_{i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{i, k}) $
 7. profit of pulp selling: $ g^{\text{pulp}} = \sum_{j \in J} \sum_{k \in K} z^J_{j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{j, k}) $
 8. profit of paper selling: $ g^{\text{paper}} = \sum_{k \in K} z^{\text{paper}}_k (\gamma^{\text{paper}}_k - \delta^{\text{paper}}_k z^{\text{paper}}_k) $
+9. cost of capacity expansion: $ f^{\text{cap}}_m = \sum_{m = 2}^{3} \left[o^{\text{saw}} (x^{\text{saw}}_m - x^{\text{saw}}_{m-1}) + o^{\text{plywood}} (x^{\text{plywood}}_m - x^{\text{plywood}}_{m-1}) + \sum_{j \in J} o^J_j (x^J_{m, j} - x^J_{m-1, j}) + o^{\text{paper}} (x^{\text{paper}}_m - x^{\text{paper}}_{m-1}) \right] $
 
 ## 4, Constraints
 
@@ -164,4 +173,14 @@ $$
 
 $$
 y^{\text{paper}} \leq r^{\text{paper}}
+$$
+
+11. relation between capacity expansion factors
+
+$$
+\begin{align}
+    x_{1} = r \quad \forall x, r \\
+    x_{2} \geq x_{1} \quad \forall x \\
+    x_{3} \geq x_{2} \quad \forall x \\
+\end{align}
 $$
