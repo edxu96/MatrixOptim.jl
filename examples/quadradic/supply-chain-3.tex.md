@@ -66,6 +66,10 @@ $$
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
 		\hline
+		\rho_{n, m} & \text{price coefficient of the scenario $n$ in the year $m$} & - & N, M \\
+		\omega^I_i & \text{demand growth coefficient of wood $i$} & - & I \\
+		\omega^J_j & \text{demand growth coefficient of pulp $j$} & - & J \\
+		\omega^{\text{paper}} & \text{demand growth coefficient of paper} & - & - \\
 		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
     \sigma & \text{annual discounting factor} & - & - \\
 		\pi_{n} & \text{probability of scenario $n$} & - & N \\
@@ -110,8 +114,8 @@ The Objective function composes of many parts:
 
 $$
 \begin{align}
-    & f^{\text{timber}}_1 + f^{\text{wood}}_1 + f^{\text{pp}}_1 + g^{\text{timber}}_1 + g^{\text{fuel}}_1 + g^{\text{wood}}_1 + g^{\text{pulp}}_1 + g^{\text{paper}}_1 + f^{\text{cap}}_1 + \\
-		& \sum_{n \in N} \pi_{n} \left\{ \sum_{m = 2}^3 \sigma^{m - 1} \left[f^{\text{timber}}_m + f^{\text{wood}}_m + f^{\text{pp}}_m + g^{\text{timber}}_m + g^{\text{fuel}}_m + g^{\text{wood}}_m + g^{\text{pulp}}_m + g^{\text{paper}}_m \right] + \sigma f^{\text{cap}}_2 \right\}
+    & f^{\text{timber}}_1 + f^{\text{wood}}_1 + f^{\text{pp}}_1 + g^{\text{timber}}_1 + g^{\text{fuel}}_1 + g^{\text{wood}}_1 + g^{\text{pulp}}_1 + g^{\text{paper}}_1 + f^{\text{cap}}_2 + \\
+		& \sum_{n \in N} \pi_{n} \left\{ \sum_{m = 2}^3 \sigma^{m - 1} \left[f^{\text{timber}}_m + f^{\text{wood}}_m + f^{\text{pp}}_m + g^{\text{timber}}_m + g^{\text{fuel}}_m + g^{\text{wood}}_m + g^{\text{pulp}}_m + g^{\text{paper}}_m \right] + \sigma f^{\text{cap}}_3 \right\}
 \end{align}
 $$
 
@@ -129,24 +133,24 @@ $$
 
 5. profit of fuel wood selling: $ g^{\text{fuel}}_m = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_{m, i} $
 
-6. profit of wood selling: $ g^{\text{wood}}_m = \sum_{i \in I} \sum_{k \in K} z^I_{m, i, k} (\gamma^{I}_{m, i, k} - \delta^{I}_{m, i, k} z^I_{m, i, k}) $
+6. profit of wood selling: $ g^{\text{wood}}_m = \sum_{i \in I} \sum_{k \in K} \rho_{n, m} (\omega^{I}_i)^{m-1} z^I_{m, i, k} (\gamma^{I}_{m, i, k} - \delta^{I}_{m, i, k} z^I_{m, i, k}) $
 
-7. profit of pulp selling: $ g^{\text{pulp}}_m = \sum_{j \in J} \sum_{k \in K} z^J_{m, j, k} (\gamma^{J}_{m, j, k} - \delta^{J}_{m, j, k} z^J_{m, j, k}) $
+7. profit of pulp selling: $ g^{\text{pulp}}_m = \sum_{j \in J} \sum_{k \in K} \rho_{n, m} (\omega^{J}_j)^{m-1} z^J_{m, j, k} (\gamma^{J}_{m, j, k} - \delta^{J}_{m, j, k} z^J_{m, j, k}) $
 
-8. profit of paper selling: $ g^{\text{paper}}_m = \sum_{k \in K} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{m, k} - \delta^{\text{paper}}_{m, k} z^{\text{paper}}_{m, k}) $
+8. profit of paper selling: $ g^{\text{paper}}_m = \sum_{k \in K} \rho_{n, m} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{m, k} - \delta^{\text{paper}}_{m, k} z^{\text{paper}}_{m, k}) $
 
 9. cost of capacity expansion:
 
 $$
 \begin{align}
-		f^{\text{cap}}_1 = o^{\text{saw}} (x^{\text{saw}}_2 - x^{\text{saw}}_{1}) + o^{\text{plywood}} (x^{\text{plywood}}_2 - x^{\text{plywood}}_{1}) + \sum_{j \in J} o^J_j (x^J_{2, j} - x^J_{1, j}) + o^{\text{paper}} (x^{\text{paper}}_2 - x^{\text{paper}}_1) \\
-		f^{\text{cap}}_2 = o^{\text{saw}} (x^{\text{saw}}_3 - x^{\text{saw}}_2) + o^{\text{plywood}} (x^{\text{plywood}}_3 - x^{\text{plywood}}_2) + \sum_{j \in J} o^J_j (x^J_{3, j} - x^J_{2, j}) + o^{\text{paper}} (x^{\text{paper}}_3 - x^{\text{paper}}_2)
+		f^{\text{cap}}_2 = o^{\text{saw}} (x^{\text{saw}}_2 - x^{\text{saw}}_{1}) + o^{\text{plywood}} (x^{\text{plywood}}_2 - x^{\text{plywood}}_{1}) + \sum_{j \in J} o^J_j (x^J_{2, j} - x^J_{1, j}) + o^{\text{paper}} (x^{\text{paper}}_2 - x^{\text{paper}}_1) \\
+		f^{\text{cap}}_3 = o^{\text{saw}} (x^{\text{saw}}_3 - x^{\text{saw}}_2) + o^{\text{plywood}} (x^{\text{plywood}}_3 - x^{\text{plywood}}_2) + \sum_{j \in J} o^J_j (x^J_{3, j} - x^J_{2, j}) + o^{\text{paper}} (x^{\text{paper}}_3 - x^{\text{paper}}_2)
 \end{align}
 $$
 
 ## 4, Constraints
 
-Besides the constraints that all variables are non-negative, there are ten sets of constraints:
+Besides the constraints that all variables are non-negative, there many ten sets of constraints:
 
 1. limit of timber amount in wood production:
 
