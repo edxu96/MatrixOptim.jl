@@ -173,7 +173,7 @@ $$
 4. limit of wood amount in selling:
 
 $$
-y^I_{m, i} \geq \sum_{k \in K} z^I_{m, i} \quad \forall i \in I, m \in M
+y^I_{m, i} \geq \sum_{k \in K} z^I_{m, i, k} \quad \forall i \in I, m \in M
 $$
 
 5. limit of pulp amount in selling:
