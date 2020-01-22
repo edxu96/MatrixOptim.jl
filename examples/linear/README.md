@@ -13,7 +13,7 @@ _Table 1, summary of sets_
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/linear/tex/3ec0498a03292e38dd8c4fc8a563c3a6.svg?invert_in_darkmode&sanitize=true" align=middle width=672.1818311999999pt height=462.78645599999993pt/></p>
+<p align="center"><img src="/examples/linear/tex/e7aa9f44471b2646d22f1344b8fcd858.svg?invert_in_darkmode&sanitize=true" align=middle width=672.1818311999999pt height=462.78645599999993pt/></p>
 
 _Table 3, summary of constants_
 
@@ -26,7 +26,7 @@ The Objective function composes of seven parts:
 1. cost of timber procurement: <img src="/examples/linear/tex/3105ef12d4124914bdf6eca550abd4f4.svg?invert_in_darkmode&sanitize=true" align=middle width=227.23550519999995pt height=27.91243950000002pt/>
 2. cost of wood production: <img src="/examples/linear/tex/1e00f4a6a4054fc7e82e0ceb70415bf9.svg?invert_in_darkmode&sanitize=true" align=middle width=148.89015239999998pt height=27.91243950000002pt/>
 3. cost of pulp and paper production: <img src="/examples/linear/tex/0eb6e878fc02e30a9498da6da53e2683.svg?invert_in_darkmode&sanitize=true" align=middle width=241.48708485000003pt height=27.6567522pt/>
-4. profit of left timbers: <img src="/examples/linear/tex/2266dd63ff97aee78dc1afe07dea1f42.svg?invert_in_darkmode&sanitize=true" align=middle width=282.37581405000003pt height=37.80850590000001pt/>
+4. profit of left timbers selling: <img src="/examples/linear/tex/e1ffbd27546576af623355f81a0d5646.svg?invert_in_darkmode&sanitize=true" align=middle width=724.7473859999999pt height=37.80850590000001pt/>
 5. profit of fuel wood selling: <img src="/examples/linear/tex/1b659a4d826919922811b7d275bf2e58.svg?invert_in_darkmode&sanitize=true" align=middle width=153.77517044999996pt height=27.91243950000002pt/>
 6. profit of wood selling: <img src="/examples/linear/tex/32ca75984f86e56e01c418b7f6d5ef0f.svg?invert_in_darkmode&sanitize=true" align=middle width=281.8592964pt height=27.91243950000002pt/>
 7. profit of pulp selling: <img src="/examples/linear/tex/39b6d494aa52f9c75518cf3e6269dd88.svg?invert_in_darkmode&sanitize=true" align=middle width=283.33392285pt height=27.91243950000002pt/>
