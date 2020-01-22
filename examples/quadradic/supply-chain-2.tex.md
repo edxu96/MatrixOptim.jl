@@ -123,11 +123,11 @@ $$
 
 5. profit of fuel wood selling: $ g^{\text{fuel}}_m = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_{m, i} $
 
-6. profit of wood selling: $ g^{\text{wood}}_m = \sum_{i \in I} \sum_{k \in K} (\omega^{I}_i)^{m-1} z^I_{m, i, k} (\gamma^{I}_{m, i, k} - \delta^{I}_{m, i, k} z^I_{m, i, k}) $
+6. profit of wood selling: $ g^{\text{wood}}_m = \sum_{i \in I} \sum_{k \in K} (\omega^{I}_i)^{m-1} z^I_{m, i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{m, i, k}) $
 
-7. profit of pulp selling: $ g^{\text{pulp}}_m = \sum_{j \in J} \sum_{k \in K} (\omega^{J}_j)^{m-1} z^J_{m, j, k} (\gamma^{J}_{m, j, k} - \delta^{J}_{m, j, k} z^J_{m, j, k}) $
+7. profit of pulp selling: $ g^{\text{pulp}}_m = \sum_{j \in J} \sum_{k \in K} (\omega^{J}_j)^{m-1} z^J_{m, j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{m, j, k}) $
 
-8. profit of paper selling: $ g^{\text{paper}}_m = \sum_{k \in K} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{m, k} - \delta^{\text{paper}}_{m, k} z^{\text{paper}}_{m, k}) $
+8. profit of paper selling: $ g^{\text{paper}}_m = \sum_{k \in K} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{k} - \delta^{\text{paper}}_{k} z^{\text{paper}}_{m, k}) $
 
 9. cost of capacity expansion:
 

@@ -115,9 +115,11 @@ The Objective function composes of many parts:
 $$
 \begin{align}
     & f^{\text{timber}}_1 + f^{\text{wood}}_1 + f^{\text{pp}}_1 + g^{\text{timber}}_1 + g^{\text{fuel}}_1 + g^{\text{wood}}_1 + g^{\text{pulp}}_1 + g^{\text{paper}}_1 + f^{\text{cap}}_2 + \\
-		& \sum_{n \in N} \pi_{n} \left\{ \sum_{m = 2}^3 \sigma^{m - 1} \left[f^{\text{timber}}_m + f^{\text{wood}}_m + f^{\text{pp}}_m + g^{\text{timber}}_m + g^{\text{fuel}}_m + g^{\text{wood}}_m + g^{\text{pulp}}_m + g^{\text{paper}}_m \right] + \sigma f^{\text{cap}}_3 \right\}
+		& \sum_{n \in N} \pi_{n} \left\{ \sum_{m = 2}^3 \sigma^{m - 1} \left[f^{\text{timber}}_{n, m} + f^{\text{wood}}_{n, m} + f^{\text{pp}}_{n, m} + g^{\text{timber}}_{n, m} + g^{\text{fuel}}_{n, m} + g^{\text{wood}}_{n, m} + g^{\text{pulp}}_{n, m} + g^{\text{paper}}_{n, m} \right] + \sigma f^{\text{cap}}_{n, 3} \right\}
 \end{align}
 $$
+
+- When m = 1, the variables are here-and-now decisions variables:
 
 1. cost of timber procurement: $ f^{\text{timber}}_m = - \sum_{t \in T} h_{m, t} (\alpha_t + \beta_t h_{m, t}) $
 
@@ -133,83 +135,108 @@ $$
 
 5. profit of fuel wood selling: $ g^{\text{fuel}}_m = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_{m, i} $
 
-6. profit of wood selling: $ g^{\text{wood}}_m = \sum_{i \in I} \sum_{k \in K} \rho_{n, m} (\omega^{I}_i)^{m-1} z^I_{m, i, k} (\gamma^{I}_{m, i, k} - \delta^{I}_{m, i, k} z^I_{m, i, k}) $
+6. profit of wood selling: $ g^{\text{wood}}_{m} = \sum_{i \in I} \sum_{k \in K} (\omega^{I}_i)^{m-1} z^I_{m, i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{m, i, k}) $
 
-7. profit of pulp selling: $ g^{\text{pulp}}_m = \sum_{j \in J} \sum_{k \in K} \rho_{n, m} (\omega^{J}_j)^{m-1} z^J_{m, j, k} (\gamma^{J}_{m, j, k} - \delta^{J}_{m, j, k} z^J_{m, j, k}) $
+7. profit of pulp selling: $ g^{\text{pulp}}_{m} = \sum_{j \in J} \sum_{k \in K} (\omega^{J}_j)^{m-1} z^J_{m, j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{m, j, k}) $
 
-8. profit of paper selling: $ g^{\text{paper}}_m = \sum_{k \in K} \rho_{n, m} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{m, k} - \delta^{\text{paper}}_{m, k} z^{\text{paper}}_{m, k}) $
+8. profit of paper selling: $ g^{\text{paper}}_{m} = \sum_{k \in K} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{k} - \delta^{\text{paper}}_{k} z^{\text{paper}}_{m, k}) $
 
-9. cost of capacity expansion:
+- When m = 2 or 3, the variables are wait-and-see decisions variables:
+
+1. cost of timber procurement: $ f^{\text{timber}}_{n, m} = - \sum_{t \in T} h_{n, m, t} (\alpha_t + \beta_t h_{n, m, t}) $
+
+2. cost of wood production: $ f^{\text{wood}}_{n, m} = - \sum_{i \in I} c^I_i y^I_{n, m, i} $
+
+3. cost of pulp and paper production: $ f^{\text{pp}}_{n, m} = - \sum_{j \in J} c^J_j y^J_{n, m, j} - \sum_{m \in M} c^{\text{paper}} y^{\text{paper}}_{n, m} $
+
+4. profit of left timbers selling:
+
+$$
+g^{\text{timber}}_{n, m} = \sum_{t \in T^1} \alpha_t \left(h_{n, m, t} - \sum_{i \in I^{T1}_t} a^I_i y^I_{n, m, i} \right) + \sum_{t \in T^2} \alpha_t \left(h_{n, m, t} + \sum_{i \in I^{T2}_t} b^I_i y^I_{n, m, i} - \sum_{j \in J^{T2}_t} a^J_j y^J_{n, m, j} - a^{\text{paper}}_t  y^{\text{paper}}_{n, m} \right)
+$$
+
+5. profit of fuel wood selling: $ g^{\text{fuel}}_{n, m} = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_{n, m, i} $
+
+6. profit of wood selling: $ g^{\text{wood}}_{n, m} = \sum_{i \in I} \sum_{k \in K} \rho_{n, m} (\omega^{I}_i)^{m-1} z^I_{n, m, i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{n, m, i, k}) $
+
+7. profit of pulp selling: $ g^{\text{pulp}}_{n, m} = \sum_{j \in J} \sum_{k \in K} \rho_{n, m} (\omega^{J}_j)^{m-1} z^J_{n, m, j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{n, m, j, k}) $
+
+8. profit of paper selling: $ g^{\text{paper}}_{n, m} = \sum_{k \in K} \rho_{n, m} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{n, m, k} (\gamma^{\text{paper}}_{k} - \delta^{\text{paper}}_{k} z^{\text{paper}}_{n, m, k}) $
+
+- Cost of capacity expansion:
 
 $$
 \begin{align}
 		f^{\text{cap}}_2 = o^{\text{saw}} (x^{\text{saw}}_2 - x^{\text{saw}}_{1}) + o^{\text{plywood}} (x^{\text{plywood}}_2 - x^{\text{plywood}}_{1}) + \sum_{j \in J} o^J_j (x^J_{2, j} - x^J_{1, j}) + o^{\text{paper}} (x^{\text{paper}}_2 - x^{\text{paper}}_1) \\
-		f^{\text{cap}}_3 = o^{\text{saw}} (x^{\text{saw}}_3 - x^{\text{saw}}_2) + o^{\text{plywood}} (x^{\text{plywood}}_3 - x^{\text{plywood}}_2) + \sum_{j \in J} o^J_j (x^J_{3, j} - x^J_{2, j}) + o^{\text{paper}} (x^{\text{paper}}_3 - x^{\text{paper}}_2)
+		f^{\text{cap}}_{n, 3} = o^{\text{saw}} (x^{\text{saw}}_{n, 3} - x^{\text{saw}}_{n, 2}) + o^{\text{plywood}} (x^{\text{plywood}}_{n, 3} - x^{\text{plywood}}_{n, 2}) + \sum_{j \in J} o^J_j (x^J_{n, 3, j} - x^J_{n, 2, j}) + o^{\text{paper}} (x^{\text{paper}}_{n, 3} - x^{\text{paper}}_{n, 2})
 \end{align}
 $$
 
 ## 4, Constraints
 
-Besides the constraints that all variables are non-negative, there many ten sets of constraints:
+When $m = 1$, the constraints are the same as those in dynamic model. When $m = 2 \text{ or } 3$, besides the constraints that all variables are non-negative, there many ten sets of constraints:
 
 1. limit of timber amount in wood production:
 
 $$
-h_{m, t} \geq \sum_{i \in I^{T1}_t} a^I_{i} y^I_{m, i} \quad \forall t \in T^1, m \in M
+h_{n, m, t} \geq \sum_{i \in I^{T1}_t} a^I_{i} y^I_{n, m, i} \quad \forall t \in T^1, m \in \{2, 3\}, n \in N
 $$
 
 2. limit of timber amount in pulp and paper production:
 
 $$
-\left(h_{m, t} + \sum_{i \in I^{T2}_t} b^I_{i} y^I_{m, i} \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_{m, j} + a^{\text{paper}}_{m, t} y^{\text{paper}}_m \quad \forall t \in T^2, m \in M
+\left(h_{n, m, t} + \sum_{i \in I^{T2}_t} b^I_{i} y^I_{n, m, i} \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_{n, m, j} + a^{\text{paper}}_{t} y^{\text{paper}}_{n, m} \quad \forall t \in T^2, m \in \{2, 3\}, n \in N
 $$
 
 3. limit of pulp amount in paper production:
 
 $$
-y^J_{m, j} \geq b^{\text{paper}}_j y^{\text{paper}}_{m} \quad \forall j \in J, m \in M
+y^J_{n, m, j} \geq b^{\text{paper}}_j y^{\text{paper}}_{n, m} \quad \forall j \in J, m \in \{2, 3\}, n \in N
 $$
 
 4. limit of wood amount in selling:
 
 $$
-y^I_{m, i} \geq \sum_{k \in K} z^I_{m, i, k} \quad \forall i \in I, m \in M
+y^I_{n, m, i} \geq \sum_{k \in K} z^I_{n, m, i, k} \quad \forall i \in I, m \in \{2, 3\}, n \in N
 $$
 
 5. limit of pulp amount in selling:
 
 $$
-y^J_{m, j} - b^{\text{paper}}_j y^{\text{paper}}_{m} \geq \sum_{k \in K} z^J_{m, j, k} \quad \forall j \in J, m \in M
+y^J_{n, m, j} - b^{\text{paper}}_j y^{\text{paper}}_{n, m} \geq \sum_{k \in K} z^J_{n, m, j, k} \quad \forall j \in J, m \in \{2, 3\}, n \in N
 $$
 
 6. limit of paper amount in selling:
 
 $$
-y^{\text{paper}}_{m} \geq \sum_{k \in K} z^{\text{paper}}_{m, k} \quad \forall m \in M
+y^{\text{paper}}_{n, m} \geq \sum_{k \in K} z^{\text{paper}}_{n, m, k} \quad \forall m \in \{2, 3\}, n \in N
 $$
 
 7. limit of capacity in saw mill:
 
 $$
-\sum_{i \in I^{\text{saw}}} y^I_{m, i} \leq x^{\text{saw}}_{m} \quad \forall m \in M
+\begin{align}
+    & \sum_{i \in I^{\text{saw}}} y^I_{n, m, i} \leq x^{\text{saw}}_{n, m} \quad \forall m \in \{2, 3\}, n \in N \\
+		& x^{\text{saw}}_{1, 2} = x^{\text{saw}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
+\end{align}
 $$
 
 8. limit of capacity in plywood mill:
 
 $$
-\sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{m} \quad \forall m \in M
+\sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{m} \quad \forall m \in \{2, 3\}, n \in N
 $$
 
 9. limit of capacity in pulp production:
 
 $$
-y^J_{m, j} \leq x^J_{m, j} \quad \forall j \in J, m \in M
+y^J_{m, j} \leq x^J_{m, j} \quad \forall j \in J, m \in \{2, 3\}, n \in N
 $$
 
 10. limit of capacity in paper production:
 
 $$
-y^{\text{paper}}_{m} \leq x^{\text{paper}}_{m} \quad \forall m \in M
+y^{\text{paper}}_{m} \leq x^{\text{paper}}_{m} \quad \forall m \in \{2, 3\}, n \in N
 $$
 
 11. relation between capacity expansion factors
