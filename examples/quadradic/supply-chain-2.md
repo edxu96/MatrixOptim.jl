@@ -55,7 +55,7 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 2. limit of timber amount in pulp and paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/032abd4d20e696a69e2b4706ce7a9d9b.svg?invert_in_darkmode&sanitize=true" align=middle width=506.44621829999994pt height=59.1786591pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/713bfb223a5e9fced1b09fde481e1497.svg?invert_in_darkmode&sanitize=true" align=middle width=506.44621829999994pt height=59.1786591pt/></p>
 
 3. limit of pulp amount in paper production:
 
@@ -89,6 +89,10 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 <p align="center"><img src="/examples/quadradic/tex/a87f0eeebd6e3b5251b085afe08f65fd.svg?invert_in_darkmode&sanitize=true" align=middle width=184.25809544999998pt height=15.805440749999999pt/></p>
 
-11. relation between capacity expansion factors
+11. relation between capacities
 
 <p align="center"><img src="/examples/quadradic/tex/093c5077d93657dcfaddcfd524d62a28.svg?invert_in_darkmode&sanitize=true" align=middle width=155.37469695pt height=88.58448225pt/></p>
+
+## 4, Result
+
+obj = <img src="/examples/quadradic/tex/802a3775f25032ef62fd5fcc44769405.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>

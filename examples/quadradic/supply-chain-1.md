@@ -3,6 +3,10 @@
 
 ## 1, Introduction
 
+The supply chain is illustrated using the following figure:
+
+![](./images/1.png)
+
 ## 2, Definition of Mathematical Expressions
 
 <p align="center"><img src="/examples/quadradic/tex/5826e1b3c1cb519a62f10219cc1d90c0.svg?invert_in_darkmode&sanitize=true" align=middle width=679.5676040999999pt height=357.51909599999993pt/></p>
@@ -87,15 +91,17 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 ## 5, Result
 
-obj = <img src="/examples/quadradic/tex/b3952241c68825fbb298a5d8df54c4d4.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+obj = <img src="/examples/quadradic/tex/5cd9210cd4aac1f23498aecaf49797b6.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+
+Produced quantity of final products {MAS, KUS, KOS, KUV, KOV, HSEL, LSEL, PAPER} = [0, 0, 0, 0, 0, 16, 16, 80]. The units of first five quantities are <img src="/examples/quadradic/tex/e19e1d4fc2f89a8a1a4c66e84bf22b09.svg?invert_in_darkmode&sanitize=true" align=middle width=93.08636534999998pt height=26.76175259999998pt/>, and the units of last three are <img src="/examples/quadradic/tex/01df07585615c41a5b91b5949690b3f6.svg?invert_in_darkmode&sanitize=true" align=middle width=95.02317pt height=24.65753399999998pt/>.
 
 ```
-result_h_t = [0.0, -0.0, -0.0, 77.0, 80.0, 68.0]
-result_y_i = [0.0, 0.0, 0.0, 0.0, 0.0]
-result_y_j = [16.0, 16.0]
-result_y_paper = 80.0
+result_h_t = [0, -0, -0, 77, 80, 68]
+result_y_i = [0, 0, 0, 0, 0]
+result_y_j = [16, 16]
+result_y_paper = 80
 result_z_ik = [
-	0.0 130.0 58.33 50.0; 
+	0.0 130.0 58.33 50.0;
 	0.0 60.0 54.17 46.67;
 	0.0 35.0 31.25 32.0;
 	0.0 190.0 150.0 97.22;
