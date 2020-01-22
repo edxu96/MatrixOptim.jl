@@ -6,27 +6,27 @@
 ## 2, Definition of Mathematical Expressions
 
 $$
-\begin{array}{c c c}
+\begin{array}{c l c}
 	  \hline
 	  \text{Symbol} & \text{Definition} & \text{Expression} \\
 	  \hline
 	  T^1 & \text{type of timber 1} & \{\text{MAT}, \text{KUT}, \text{KOT} \} \\
 	  T^2 & \text{type of timber 2} & \{\text{MAK}, \text{KUK}, \text{KOK} \} \\
 		T & \text{type of timber} & T^1 \cup T^2 \\
-		I^{T1}_{t = \text{MAT}} & \text{outputs of wood processing corresponding to input MAT} & \{\text{MAS} \} \\
-		I^{T1}_{t = \text{KUT}} & \text{outputs of wood processing corresponding to input KUT} & \{\text{KUS}, \text{KUV} \} \\
-		I^{T1}_{t = \text{KOT}} & \text{outputs of wood processing corresponding to input KOT} & \{\text{KOS}, \text{KOV} \} \\
-		I^{T2}_{t = \text{MAK}} & \text{outputs of wood processing corresponding to output MAK} & \{\text{MAS} \} \\
-		I^{T2}_{t = \text{KUK}} & \text{outputs of wood processing corresponding to output KUK} & \{\text{KUS}, \text{KUV} \} \\
-		I^{T2}_{t = \text{KOK}} & \text{outputs of wood processing corresponding to output KOK} & \{\text{KOS}, \text{KOV} \} \\
-	  I^{\text{saw}} & \text{outputs of wood processing in saw mill} & \{\text{MAS}, \text{KUS}, \text{KOS} \} \\
-	  I^{\text{plywood}} & \text{outputs of wood processing in plywood mill} & \{\text{KUV}, \text{KOV} \} \\
-		I & \text{outputs of wood processing} & I^{\text{saw}} \cup I^{\text{plywood}} \\
-		J & \text{pulp production} & \{\text{HSEL}, \text{LSEL} \} \\
+		I^{T1}_{t = \text{MAT}} & \text{outputs of wood production corresponding to input MAT} & \{\text{MAS} \} \\
+		I^{T1}_{t = \text{KUT}} & \text{outputs of wood production corresponding to input KUT} & \{\text{KUS}, \text{KUV} \} \\
+		I^{T1}_{t = \text{KOT}} & \text{outputs of wood production corresponding to input KOT} & \{\text{KOS}, \text{KOV} \} \\
+		I^{T2}_{t = \text{MAK}} & \text{outputs of wood production corresponding to output MAK} & \{\text{MAS} \} \\
+		I^{T2}_{t = \text{KUK}} & \text{outputs of wood production corresponding to output KUK} & \{\text{KUS}, \text{KUV} \} \\
+		I^{T2}_{t = \text{KOK}} & \text{outputs of wood production corresponding to output KOK} & \{\text{KOS}, \text{KOV} \} \\
+	  I^{\text{saw}} & \text{outputs of wood production in saw mill} & \{\text{MAS}, \text{KUS}, \text{KOS} \} \\
+	  I^{\text{plywood}} & \text{outputs of wood production in plywood mill} & \{\text{KUV}, \text{KOV} \} \\
+		I & \text{outputs of wood production} & I^{\text{saw}} \cup I^{\text{plywood}} \\
+		J & \text{outputs of pulp production} & \{\text{HSEL}, \text{LSEL} \} \\
 		J^{T2}_{t = \text{MAK}} & \text{outputs of pulp production corresponding to input MAK} & \{\text{HSEL} \} \\
 		J^{T2}_{t = \text{KUK}} & \text{outputs of pulp production corresponding to input KUK} & \varnothing \\
 		J^{T2}_{t = \text{KOK}} & \text{outputs of pulp production corresponding to input KOK} & \{\text{LSEL} \} \\
-		K & \text{region} & \{\text{EU}, \text{IE}, \text{PA}, \text{KI} \} \\
+		K & \text{regions to sell products} & \{\text{EU}, \text{IE}, \text{PA}, \text{KI} \} \\
 	  \hline
 \end{array}
 $$
@@ -38,8 +38,8 @@ $$
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
 		\hline
-		h_t & \text{purchasing amount of timber} & \text{integer} & 1000 m^3 & T_1 \cup T_2 \\
-		y^I_{i} & \text{production amount of wood} & \text{linear} & 1000 m^3 & I^1 \cup I^2 \\
+		h_t & \text{purchasing amount of timber} & \text{integer} & 1000 m^3 & T \\
+		y^I_{i} & \text{production amount of wood} & \text{linear} & 1000 m^3 & I \\
 		y^J_{j} & \text{production amount of pulp} & \text{linear} & 1000 m^3 & J \\
 		y^{\text{paper}} & \text{production amount of paper} & \text{linear} & 1000 m^3 & - \\
 		z^I_{i, k} & \text{selling amount of wood in different regions} & \text{linear} & 1000 m^3 & I, K \\
@@ -56,28 +56,28 @@ $$
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
 		\hline
-		\alpha_t & \text{fixed cost factor of purchasing wood} & \circ / 1000 m^3 & T \\
-		\beta_t & \text{unit cost factor of purchasing wood} & \circ / 1000 m^6 & T \\
+		\alpha_t & \text{fixed cost factor of purchasing wood} & \text{euro} / (1000 m^3) & T \\
+		\beta_t & \text{unit cost factor of purchasing wood} & \text{euro} / (1000 m^6) & T \\
 		a^I_i & \text{relation of timber input and output in wood production} & - & I\\
 		b^I_i & \text{relation of timber output and output in wood production} & - & I \\
 		e^I_i & \text{relation of fuel output and output in wood production} & - & I \\
-		c^I_i & \text{cost of wood production} & \circ & I \\
+		c^I_i & \text{cost of wood production} & \text{euro} / (1000 m^3) & I \\
 		r^{\text{saw}} & \text{capacity of saw mill in wood production} & 1000 m^3 / \text{year} & - \\
 		r^{\text{plywood}} & \text{capacity of plywood mill in wood production} & 1000 m^3 / \text{year} & - \\
 		a^J_j & \text{input and output relation of pulp production} & - & J \\
-		c^J_j & \text{cost of pulp production} & \circ & J \\
+		c^J_j & \text{cost of pulp production} & \text{euro} / (1000 \text{ton}) & J \\
 		r^J_j & \text{capacity of pulp production} & 1000 \text{ton} / \text{year} & J \\
 		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
 		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
-		c^{\text{paper}} & \text{cost of paper production} & \circ & - \\
+		c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
 		r^{\text{paper}} & \text{capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
-		\gamma^{I}_{i, k} & \text{fixed price factor of wood products in different regions} & \circ / (1000 m^3) & I, K \\
-		\delta^{I}_{i, k} & \text{unit price factor of wood products in different regions} & \circ / (10^6 m^6) & I, K \\
-		\gamma^{J}_{j, k} & \text{fixed price factor of pulp in different regions} & \circ / (1000 \text{ton}) & J, K \\
-		\delta^{J}_{j, k} & \text{unit price factor of pulp in different regions} & \circ / (10^6 \text{ton}^2) m^6 & J, K \\
-		\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in different regions} & \circ / (1000 \text{ton}) & K \\
-		\delta^{\text{paper}}_{k} & \text{unit price factor of paper in different regions} & \circ / (10^6 \text{ton}^2) m^6 & K \\
-		p^{\text{fuel}} & \text{price of fuel wood} & \circ / (1000 m^3) & - \\
+		\gamma^{I}_{i, k} & \text{fixed price factor of wood products in different regions} & \text{euro} / (1000 m^3) & I, K \\
+		\delta^{I}_{i, k} & \text{unit price factor of wood products in different regions} & \text{euro} / (10^6 m^6) & I, K \\
+		\gamma^{J}_{j, k} & \text{fixed price factor of pulp in different regions} & \text{euro} / (1000 \text{ton}) & J, K \\
+		\delta^{J}_{j, k} & \text{unit price factor of pulp in different regions} & \text{euro} / (10^6 \text{ton}^2) & J, K \\
+		\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in different regions} & \text{euro} / (1000 \text{ton}) & K \\
+		\delta^{\text{paper}}_{k} & \text{unit price factor of paper in different regions} & \text{euro} / (10^6 \text{ton}^2) & K \\
+		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
 		\hline
 \end{array}
 $$
