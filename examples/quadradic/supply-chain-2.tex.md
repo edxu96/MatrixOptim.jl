@@ -63,20 +63,20 @@ $$
 		\hline
 		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
     \sigma & \text{annual discounting factor} & - & - \\
-		\alpha_t & \text{fixed cost factor of purchasing wood} & \text{euro} / (1000 m^3) & T \\
-		\beta_t & \text{unit cost factor of purchasing wood} & \text{euro} / (1000 m^6) & T \\
-		a^I_i & \text{relation of timber input and output in wood production} & - & I\\
-		b^I_i & \text{relation of timber output and output in wood production} & - & I \\
-		e^I_i & \text{relation of fuel output and output in wood production} & - & I \\
-		c^I_i & \text{cost of wood production} & \text{euro} / (1000 m^3) & I \\
+		\alpha_t & \text{fixed cost factor of purchasing timber $t$} & \text{euro} / (1000 m^3) & T \\
+		\beta_t & \text{unit cost factor of purchasing timber $t$} & \text{euro} / (1000 m^6) & T \\
+		a^I_i & \text{relation of timber input and output in wood production $i$} & - & I\\
+		b^I_i & \text{relation of timber output and output in wood production $i$ $i$} & - & I \\
+		e^I_i & \text{relation of fuel output and output in wood production $i$} & - & I \\
+		c^I_i & \text{cost of wood production $i$} & \text{euro} / (1000 m^3) & I \\
 		r^{\text{saw}} & \text{original capacity of saw mill} & 1000 m^3 / \text{year} & - \\
 		r^{\text{plywood}} & \text{original capacity of plywood mill} & 1000 m^3 / \text{year} & - \\
     o^{\text{saw}} & \text{capacity expansion cost of saw mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
     o^{\text{plywood}} & \text{capacity expansion cost of plywood mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
     \nu^{\text{saw}} & \text{max capacity expansion factor of saw mill} & - & - \\
     \nu^{\text{plywood}} & \text{max capacity expansion factor of saw mill} & - & - \\
-		a^J_j & \text{input and output relation of pulp production} & - & J \\
-		c^J_j & \text{cost of pulp production} & \text{euro} / (1000 \text{ton}) & J \\
+		a^J_j & \text{input and output relation of pulp production $j$} & - & J \\
+		c^J_j & \text{cost of pulp production $j$} & \text{euro} / (1000 \text{ton}) & J \\
 		r^J_j & \text{original capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
     o^J_j & \text{capacity expansion cost of pulp production $j$} & \text{euro} / (1000 m^3 / \text{year}) & - \\
     \nu^J_j & \text{max capacity expansion factor of pulp production $j$} & - & J \\
