@@ -84,3 +84,26 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 10. limit of capacity in paper production:
 
 <p align="center"><img src="/examples/quadradic/tex/2adbbe89b80b1c9fc8ed4da55392c3e6.svg?invert_in_darkmode&sanitize=true" align=middle width=104.07936329999998pt height=14.937954899999998pt/></p>
+
+## 5, Result
+
+obj = <img src="/examples/quadradic/tex/b3952241c68825fbb298a5d8df54c4d4.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+
+```
+result_h_t = [0.0, -0.0, -0.0, 77.0, 80.0, 68.0]
+result_y_i = [0.0, 0.0, 0.0, 0.0, 0.0]
+result_y_j = [16.0, 16.0]
+result_y_paper = 80.0
+result_z_ik = [
+	0.0 130.0 58.33 50.0; 
+	0.0 60.0 54.17 46.67;
+	0.0 35.0 31.25 32.0;
+	0.0 190.0 150.0 97.22;
+	537.5 292.86 162.5 126.67
+	]
+result_z_jk = [
+	0.0 312.5 230.0 216.67;
+	0.0 700.0 191.67 178.57142857142858
+	]
+result_z_paper_k = [24.85, 27.39, 6.16, 21.60]
+```
