@@ -157,6 +157,15 @@ function main()
     c_paper, r_paper, gamma_ik, delta_ik, gamma_jk, delta_jk, gamma_paper_k,
     delta_paper_k, p_fuel)
 
+  println(result_h_t)
+  println(result_y_i)
+  println(result_y_j)
+  println(result_y_paper)
+  println(result_z_ik)
+  println(result_z_jk)
+  println(result_z_paper_k)
+  println(result_obj)
+
   return result_h_t, result_y_i, result_y_j, result_y_paper, result_z_ik,
     result_z_jk, result_z_paper_k, result_obj
 end
