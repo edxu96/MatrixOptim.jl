@@ -35,11 +35,11 @@ The Objective function composes of seven parts:
 
 5. profit of fuel wood selling: <img src="/examples/quadradic/tex/f624dba7a12f224efaaec04a32aad3fa.svg?invert_in_darkmode&sanitize=true" align=middle width=166.68490904999996pt height=27.91243950000002pt/>
 
-6. profit of wood selling: <img src="/examples/quadradic/tex/c5ed8ea10f973eed767c45a2c89d64b6.svg?invert_in_darkmode&sanitize=true" align=middle width=401.85837119999997pt height=27.91243950000002pt/>
+6. profit of wood selling: <img src="/examples/quadradic/tex/8354474e12e69ee942aa8eeac3c58182.svg?invert_in_darkmode&sanitize=true" align=middle width=370.7204588999999pt height=27.91243950000002pt/>
 
-7. profit of pulp selling: <img src="/examples/quadradic/tex/39bf204ecccfab6a6c8ee84667e50480.svg?invert_in_darkmode&sanitize=true" align=middle width=404.97108959999997pt height=27.91243950000002pt/>
+7. profit of pulp selling: <img src="/examples/quadradic/tex/e6af97183aa4d9f14e6a3171e2069e80.svg?invert_in_darkmode&sanitize=true" align=middle width=373.83317565pt height=27.91243950000002pt/>
 
-8. profit of paper selling: <img src="/examples/quadradic/tex/23e96fe6cc6b2de23fbc15b9cb399925.svg?invert_in_darkmode&sanitize=true" align=middle width=395.76655304999997pt height=26.76175259999998pt/>
+8. profit of paper selling: <img src="/examples/quadradic/tex/18be2a997b4160a88336457a53778454.svg?invert_in_darkmode&sanitize=true" align=middle width=395.76655304999997pt height=26.76175259999998pt/>
 
 9. cost of capacity expansion:
 
