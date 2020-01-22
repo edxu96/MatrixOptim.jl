@@ -5,15 +5,15 @@
 
 ## 2, Definition of Mathematical Expressions
 
-<p align="center"><img src="/examples/linear/tex/8bddddb32ef95a899a679dd665fbdbde.svg?invert_in_darkmode&sanitize=true" align=middle width=675.18395835pt height=357.51909599999993pt/></p>
+<p align="center"><img src="/examples/linear/tex/5826e1b3c1cb519a62f10219cc1d90c0.svg?invert_in_darkmode&sanitize=true" align=middle width=679.5676040999999pt height=357.51909599999993pt/></p>
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/linear/tex/b4ca526a841945d6eda9e6decd2b32d2.svg?invert_in_darkmode&sanitize=true" align=middle width=600.88377195pt height=162.41008575pt/></p>
+<p align="center"><img src="/examples/linear/tex/6d9f6a66377da3c3b84dec2249363713.svg?invert_in_darkmode&sanitize=true" align=middle width=579.9705186pt height=162.41008575pt/></p>
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/linear/tex/e7aa9f44471b2646d22f1344b8fcd858.svg?invert_in_darkmode&sanitize=true" align=middle width=672.1818311999999pt height=462.78645599999993pt/></p>
+<p align="center"><img src="/examples/linear/tex/a91654646c8a3c72b4551f7ad21f4511.svg?invert_in_darkmode&sanitize=true" align=middle width=674.9405025pt height=462.78645599999993pt/></p>
 
 _Table 3, summary of constants_
 
