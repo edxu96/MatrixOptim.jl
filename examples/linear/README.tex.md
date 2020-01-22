@@ -103,7 +103,7 @@ $$
 
 ## 4, Constraints
 
-Besides the constraints that all variables are non-negative, there are eleven sets of constraints:
+Besides the constraints that all variables are non-negative, there are ten sets of constraints:
 
 1. limits of timber amount in wood production:
 
@@ -111,61 +111,55 @@ $$
 h_t \geq \sum_{i \in I^{T1}_t} a^I_i y^I_i \quad \forall t \in T^1
 $$
 
-2. limit of timber amount in pulp production:
+2. limit of timber amount in pulp and paper production:
 
 $$
 \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_j + a^{\text{paper}}_t y^{\text{paper}} \quad \forall t \in T^2
 $$
 
-3. limit of wood amount in selling:
-
-$$
-y^I_i \geq \sum_{k \in K} z^I_i \quad \forall i \in I
-$$
-
-4. limit of pulp amount in paper production:
+3. limit of pulp amount in paper production:
 
 $$
 y^J_j \geq b^{\text{paper}}_j y^{\text{paper}} \quad \forall j \in J
 $$
 
-5. limit of timber amount in paper production:
+4. limit of wood amount in selling:
 
 $$
-y^T_t \geq a^{\text{paper}}_t y^{\text{paper}} \quad \forall t \in T^2
+y^I_i \geq \sum_{k \in K} z^I_i \quad \forall i \in I
 $$
 
-6. limit of pulp amount in selling:
+5. limit of pulp amount in selling:
 
 $$
 y^J_j - b^{\text{paper}}_j y^{\text{paper}} \geq \sum_{k \in K} z^J_{j, k} \quad \forall j \in J
 $$
 
-7. limit of paper amount in selling:
+6. limit of paper amount in selling:
 
 $$
 y^{\text{paper}} \geq \sum_{k \in K} z^{\text{paper}}_k
 $$
 
-8. limit of capacity in saw mill:
+7. limit of capacity in saw mill:
 
 $$
 \sum_{i \in I^{\text{saw}}} y^I_i \leq r^{\text{saw}}
 $$
 
-9. limit of capacity in plywood production:
+8. limit of capacity in plywood mill:
 
 $$
 \sum_{i \in I^{\text{plywood}}} y^I_i \leq r^{\text{plywood}}
 $$
 
-10. limit of capacity in pulp production:
+9. limit of capacity in pulp production:
 
 $$
 y^J_j \leq r^J_j \quad \forall j \in J
 $$
 
-11. limit of capacity in paper production:
+10. limit of capacity in paper production:
 
 $$
 y^{\text{paper}} \leq r^{\text{paper}}
