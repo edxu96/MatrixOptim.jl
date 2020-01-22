@@ -13,7 +13,7 @@ _Table 1, summary of sets_
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/7132e77b63c26401a5407a215854aaee.svg?invert_in_darkmode&sanitize=true" align=middle width=735.63306795pt height=545.0138034pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/059bfc247c42a11b35bb414eea693b80.svg?invert_in_darkmode&sanitize=true" align=middle width=736.8316824pt height=644.4105261pt/></p>
 
 _Table 3, summary of constants_
 
@@ -21,7 +21,7 @@ _Table 3, summary of constants_
 
 The Objective function composes of seven parts:
 
-<p align="center"><img src="/examples/quadradic/tex/2f0a44598a2d924df78da505da994ecd.svg?invert_in_darkmode&sanitize=true" align=middle width=548.45382405pt height=37.775108249999995pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/1ac1da39bc183d4319251012fea9fc08.svg?invert_in_darkmode&sanitize=true" align=middle width=590.4896695499999pt height=37.775108249999995pt/></p>
 
 1. cost of timber procurement: <img src="/examples/quadradic/tex/9ef2df73999b9e34cebc98b451a23586.svg?invert_in_darkmode&sanitize=true" align=middle width=256.1740203pt height=27.91243950000002pt/>
 
@@ -43,7 +43,7 @@ The Objective function composes of seven parts:
 
 9. cost of capacity expansion:
 
-<p align="center"><img src="/examples/quadradic/tex/fe6e2d067663aba667dee3258f1cf37b.svg?invert_in_darkmode&sanitize=true" align=middle width=820.1430550499999pt height=59.1786591pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/78e55a113a4226335119bad2aa000c1f.svg?invert_in_darkmode&sanitize=true" align=middle width=862.1789005499999pt height=59.1786591pt/></p>
 
 ## 4, Constraints
 
@@ -91,4 +91,4 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 11. relation between capacity expansion factors
 
-<p align="center"><img src="/examples/quadradic/tex/02653a7def9031e049690aa1534c877a.svg?invert_in_darkmode&sanitize=true" align=middle width=96.7046883pt height=63.19632495pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/093c5077d93657dcfaddcfd524d62a28.svg?invert_in_darkmode&sanitize=true" align=middle width=155.37469695pt height=88.58448225pt/></p>
