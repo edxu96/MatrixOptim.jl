@@ -9,11 +9,11 @@
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/quadradic/tex/6d9f6a66377da3c3b84dec2249363713.svg?invert_in_darkmode&sanitize=true" align=middle width=579.9705186pt height=162.41008575pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/3836148835e7bf1815d988a931bb109d.svg?invert_in_darkmode&sanitize=true" align=middle width=531.5126355pt height=162.41008575pt/></p>
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/a91654646c8a3c72b4551f7ad21f4511.svg?invert_in_darkmode&sanitize=true" align=middle width=674.9405025pt height=462.78645599999993pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/45bc7b394c378423a429e9fe779cd34c.svg?invert_in_darkmode&sanitize=true" align=middle width=686.0831735999999pt height=462.78645599999993pt/></p>
 
 _Table 3, summary of constants_
 
@@ -21,15 +21,24 @@ _Table 3, summary of constants_
 
 The Objective function composes of seven parts:
 
-<p align="center"><img src="/examples/quadradic/tex/b47bd68f22e7dcf085c3ab6c5d60db32.svg?invert_in_darkmode&sanitize=true" align=middle width=447.76056765pt height=17.9744895pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/d16780476c1029e7e141aa8f57d13f2e.svg?invert_in_darkmode&sanitize=true" align=middle width=447.33465975pt height=17.9744895pt/></p>
 
-1. cost of timber procurement: <img src="/examples/quadradic/tex/3105ef12d4124914bdf6eca550abd4f4.svg?invert_in_darkmode&sanitize=true" align=middle width=227.23550519999995pt height=27.91243950000002pt/>
-2. cost of wood production: <img src="/examples/quadradic/tex/634db65b9fca68182839f7741352c0d8.svg?invert_in_darkmode&sanitize=true" align=middle width=148.89015239999998pt height=27.91243950000002pt/>
-3. cost of pulp and paper production: <img src="/examples/quadradic/tex/cd082c2b411b98ff9fc8b6ff2d81dccb.svg?invert_in_darkmode&sanitize=true" align=middle width=241.48708485000003pt height=27.6567522pt/>
-4. profit of left timbers selling: <img src="/examples/quadradic/tex/e1ffbd27546576af623355f81a0d5646.svg?invert_in_darkmode&sanitize=true" align=middle width=724.7473859999999pt height=37.80850590000001pt/>
+1. cost of timber procurement: <img src="/examples/quadradic/tex/e684e451ee0e696d2097a1abacbb0633.svg?invert_in_darkmode&sanitize=true" align=middle width=225.03610634999995pt height=27.91243950000002pt/>
+
+2. cost of wood production: <img src="/examples/quadradic/tex/37206ee5228e3dd15db1bb8cf46d0e12.svg?invert_in_darkmode&sanitize=true" align=middle width=149.35345919999997pt height=27.91243950000002pt/>
+
+3. cost of pulp and paper production: <img src="/examples/quadradic/tex/43a2635f44a9f56b79a8ae1e3c391e44.svg?invert_in_darkmode&sanitize=true" align=middle width=242.45478509999998pt height=27.6567522pt/>
+
+4. profit of left timbers selling:
+
+<p align="center"><img src="/examples/quadradic/tex/7b8dfc0b566a3a63e6e3accaabfa0eb8.svg?invert_in_darkmode&sanitize=true" align=middle width=659.45019525pt height=59.1786591pt/></p>
+
 5. profit of fuel wood selling: <img src="/examples/quadradic/tex/1b659a4d826919922811b7d275bf2e58.svg?invert_in_darkmode&sanitize=true" align=middle width=153.77517044999996pt height=27.91243950000002pt/>
+
 6. profit of wood selling: <img src="/examples/quadradic/tex/32ca75984f86e56e01c418b7f6d5ef0f.svg?invert_in_darkmode&sanitize=true" align=middle width=281.8592964pt height=27.91243950000002pt/>
+
 7. profit of pulp selling: <img src="/examples/quadradic/tex/39b6d494aa52f9c75518cf3e6269dd88.svg?invert_in_darkmode&sanitize=true" align=middle width=283.33392285pt height=27.91243950000002pt/>
+
 8. profit of paper selling: <img src="/examples/quadradic/tex/92ca546912179d9956f45eddf58b3232.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
 
 ## 4, Constraints
