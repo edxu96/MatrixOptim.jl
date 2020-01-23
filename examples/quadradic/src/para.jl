@@ -63,10 +63,16 @@ function get_para()
 
   ## Extra parameters in model 3
   pi_n = [0.5, 0.5, 0.5, 0.5]
+  rho_nm = [
+    1 1.05 1.07;
+    1 1.05 0.95;
+    1 0.95 1.05;
+    1 0.95 0.93
+    ]
 
   return alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j, c_j,
     r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik, gamma_jk,
     delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i, omega_j,
     omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood, o_j,
-    o_paper, i_t1, i_t2, j_t2, pi_n
+    o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm
 end

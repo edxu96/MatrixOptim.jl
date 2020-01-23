@@ -7,7 +7,7 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
     c_j, r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik,
     gamma_jk, delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i,
     omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
-    o_j, o_paper, i_t1, i_t2, j_t2, pi_n)
+    o_j, o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm)
 
   mod = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0))
 
@@ -84,17 +84,17 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
             ## 5, profit of fuel wood selling
             p_fuel * sum(e_i[i] * y_nmi[n, m, i] for i=1:5) +
             ## 6, profit of wood selling
-            sum(omega_i[i]^(m-1) * gamma_ik[i, k] * z_nmik[n, m, i, k] -
-              omega_i[i]^(m-1) * delta_ik[i, k] * z_nmik[n, m, i, k]^2
-              for i=1:5, k=1:4) +
+            sum(omega_i[i]^(m-1) * rho_nm[n, m] * gamma_ik[i, k] *
+              z_nmik[n, m, i, k] - omega_i[i]^(m-1) * rho_nm[n, m] *
+              delta_ik[i, k] * z_nmik[n, m, i, k]^2 for i=1:5, k=1:4) +
             ## 7, profit of pulp selling
-            sum(omega_j[j]^(m-1) * gamma_jk[j, k] * z_nmjk[n, m, j, k] -
-              omega_j[j]^(m-1) * delta_jk[j, k] * z_nmjk[n, m, j, k]^2
-              for j=1:2, k=1:4) +
+            sum(omega_j[j]^(m-1) * rho_nm[n, m] * gamma_jk[j, k] *
+              z_nmjk[n, m, j, k] - omega_j[j]^(m-1) * rho_nm[n, m] *
+              delta_jk[j, k] * z_nmjk[n, m, j, k]^2 for j=1:2, k=1:4) +
             ## 8, profit of paper selling
-            sum(omega_paper^(m-1) * gamma_paper_k[k] * z_paper_nmk[n, m, k] -
-              omega_paper^(m-1) * delta_paper_k[k] * z_paper_nmk[n, m, k]^2
-              for k=1:4)
+            sum(omega_paper^(m-1) * rho_nm[n, m] * gamma_paper_k[k] *
+              z_paper_nmk[n, m, k] - omega_paper^(m-1) * rho_nm[n, m] *
+              delta_paper_k[k] * z_paper_nmk[n, m, k]^2 for k=1:4)
             ) for m = 2:3
           ) +
 
