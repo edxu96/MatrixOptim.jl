@@ -65,10 +65,10 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
 
     ## here-and-now capacity in the second year.
     ## those in the first scenario are used because they are the same.
-    o_saw * (x_saw_nm[1, 2] - r_saw) +
+    - (o_saw * (x_saw_nm[1, 2] - r_saw) +
       o_plywood * (x_plywood_nm[1, 2] - r_plywood) +
       sum(o_j[j] * (x_nmj[1, 2, j] - r_j[j]) for j=1:2) +
-      o_paper * (x_paper_nm[1, 2] - r_paper) +
+      o_paper * (x_paper_nm[1, 2] - r_paper)) +
 
     ## Objective fucntions regarding wait-and-see decision variables.
     sum(
@@ -107,7 +107,7 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
           ) +
 
         ## Cost of capacity expansion in the third year
-        sigma * (
+        - sigma * (
           o_saw * (x_saw_nm[n, 3] - x_saw_nm[1, 2]) +
           o_plywood * (x_plywood_nm[n, 3] - x_plywood_nm[1, 2]) +
           sum(o_j[j] * (x_nmj[n, 3, j] - x_nmj[1, 2, j]) for j=1:2) +
@@ -171,21 +171,39 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
 
   optimize!(mod)
 
-  # result_h_mt = value_mat(h_mt)
-  # result_y_mi = value_mat(y_mi)
-  # result_y_mj = value_mat(y_mj)
-  # result_y_paper_m = value_vec(y_paper_m)
-  # result_z_mik = value_mat3(z_mik)
-  # result_z_mjk = value_mat3(z_mjk)
-  # result_z_paper_mk = value_mat(z_paper_mk)
-  result_obj = objective_value(mod)
+  ##
+  result_h_t = value_vec(h_t)
+  result_y_i = value_vec(y_i)
+  result_y_j = value_vec(y_j)
+  result_y_paper = value(y_paper)
+  result_z_ik = value_mat(z_ik)
+  result_z_jk = value_mat(z_jk)
+  result_z_paper_k = value_vec(z_paper_k)
 
-  # println(result_h_mt)
-  # println(result_y_mi)
-  # println(result_y_mj)
-  # println(result_y_paper_m)
-  # println(result_z_mik)
-  # println(result_z_mjk)
-  # println(result_z_paper_mk)
+  result_h_nmt = value_mat3_extra1(h_nmt)
+  result_y_nmi = value_mat3_extra1(y_nmi)
+  result_y_nmj = value_mat3_extra1(y_nmj)
+  result_y_paper_nm = value_mat_extra1(y_paper_nm)
+  result_z_nmik = value_mat4_extra1(z_nmik)
+  result_z_nmjk = value_mat4_extra1(z_nmjk)
+  result_z_paper_nmk = value_mat3_extra1(z_paper_nmk)
+
+  result_x_saw_nm = value_mat_extra1(x_saw_nm)
+  result_x_plywood_nm = value_mat_extra1(x_plywood_nm)
+  result_x_nmj = value_mat3_extra1(x_nmj)
+  result_x_paper_nm = value_mat_extra1(x_paper_nm)
+
+  result_obj = objective_value(mod)
   println(result_obj)
+
+  # print_result_3(
+  #   result_h_t, result_y_i, result_y_j, result_y_paper, result_z_ik,
+  #   result_z_jk, result_z_paper_k, result_h_nmt, result_y_nmi, result_y_nmj,
+  #   result_y_paper_nm, result_z_nmik, result_z_nmjk, result_z_paper_nmk,
+  #   alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
+  #   c_j, r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik,
+  #   gamma_jk, delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i,
+  #   omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
+  #   o_j, o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm, result_x_saw_nm,
+  #   result_x_plywood_nm, result_x_nmj, result_x_paper_nm)
 end
