@@ -47,14 +47,14 @@ $$
 		z^I_{m, i, k} & \text{selling amount of wood in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, I, K \\
 		z^J_{m, j, k} & \text{selling amount of pulp in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, J, K \\
 		z^{\text{paper}}_{m, k} & \text{selling amount of paper in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, K \\
-    x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & - & M \\
-    x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & - & M \\
-    x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & - & M, J \\
-    x^{\text{paper}}_{m} & \text{capacity of paper production line} & \text{linear} & - & M \\
-		x^{\text{saw}}_{n, 3} & \text{capacity of saw mill in the year $3$ decide in the year 2} & \text{linear} & - & N \\
-    x^{\text{plywood}}_{n, 3} & \text{capacity of plywood mill in the year $3$ decide in the year 2} & \text{linear} & - & N \\
-    x^J_{n, 3, j} & \text{capacity of pulp production line in the year $3$ decide in the year 2} & \text{linear} & - & N, J \\
-    x^{\text{paper}}_{n, 3} & \text{capacity of paper production line in the year $3$ decide in the year 2} & \text{linear} & - & N \\
+    x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & 1000 m^3 / \text{year} & M / \{3\} \\
+    x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & 1000 m^3 / \text{year} & M / \{3\} \\
+    x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & 1000 \text{ton} / \text{year} & M / \{3\}, J \\
+    x^{\text{paper}}_{m} & \text{capacity of paper production line} & \text{linear} & 1000 \text{ton} / \text{year} & M / \{3\} \\
+		x^{\text{saw}}_{n, 3} & \text{capacity of saw mill in the year $3$ decide in the year 2} & \text{linear} & 1000 m^3 / \text{year} & N \\
+    x^{\text{plywood}}_{n, 3} & \text{capacity of plywood mill in the year $3$ decide in the year 2} & \text{linear} & 1000 m^3 / \text{year} & N \\
+    x^J_{n, 3, j} & \text{capacity of pulp production line in the year $3$ decide in the year 2} & \text{linear} & 1000 \text{ton} / \text{year} & N, J \\
+    x^{\text{paper}}_{n, 3} & \text{capacity of paper production line in the year $3$ decide in the year 2} & \text{linear} & 1000 \text{ton} / \text{year} & N \\
 		\hline
 \end{array}
 $$
@@ -168,7 +168,7 @@ $$
 $$
 \begin{align}
 		f^{\text{cap}}_2 = o^{\text{saw}} (x^{\text{saw}}_2 - x^{\text{saw}}_{1}) + o^{\text{plywood}} (x^{\text{plywood}}_2 - x^{\text{plywood}}_{1}) + \sum_{j \in J} o^J_j (x^J_{2, j} - x^J_{1, j}) + o^{\text{paper}} (x^{\text{paper}}_2 - x^{\text{paper}}_1) \\
-		f^{\text{cap}}_{n, 3} = o^{\text{saw}} (x^{\text{saw}}_{n, 3} - x^{\text{saw}}_{n, 2}) + o^{\text{plywood}} (x^{\text{plywood}}_{n, 3} - x^{\text{plywood}}_{n, 2}) + \sum_{j \in J} o^J_j (x^J_{n, 3, j} - x^J_{n, 2, j}) + o^{\text{paper}} (x^{\text{paper}}_{n, 3} - x^{\text{paper}}_{n, 2})
+		f^{\text{cap}}_{n, 3} = o^{\text{saw}} (x^{\text{saw}}_{n, 3} - x^{\text{saw}}_{2}) + o^{\text{plywood}} (x^{\text{plywood}}_{n, 3} - x^{\text{plywood}}_{2}) + \sum_{j \in J} o^J_j (x^J_{n, 3, j} - x^J_{2, j}) + o^{\text{paper}} (x^{\text{paper}}_{n, 3} - x^{\text{paper}}_{2})
 \end{align}
 $$
 
@@ -224,19 +224,28 @@ $$
 8. limit of capacity in plywood mill:
 
 $$
-\sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{m} \quad \forall m \in \{2, 3\}, n \in N
+\begin{align}
+    & \sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{m} \quad \forall m \in \{2, 3\}, n \in N \\
+		& x^{\text{plywood}}_{1, 2} = x^{\text{plywood}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
+\end{align}
 $$
 
 9. limit of capacity in pulp production:
 
 $$
-y^J_{m, j} \leq x^J_{m, j} \quad \forall j \in J, m \in \{2, 3\}, n \in N
+\begin{align}
+		& y^J_{n, m, j} \leq x^J_{n, m, j} \quad \forall j \in J, m \in \{2, 3\}, n \in N \\
+		& x^J_{1, 2, j} = x^J_{n, 2, j} \quad \forall n \in \{2, 3, 4\}, j \in J
+\end{align}
 $$
 
 10. limit of capacity in paper production:
 
 $$
-y^{\text{paper}}_{m} \leq x^{\text{paper}}_{m} \quad \forall m \in \{2, 3\}, n \in N
+\begin{align}
+    & y^{\text{paper}}_{n, m} \leq x^{\text{paper}}_{n, m} \quad \forall m \in \{2, 3\}, n \in N \\
+		& x^{\text{paper}}_{1, 2} = x^{\text{paper}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
+\end{align}
 $$
 
 11. relation between capacity expansion factors

@@ -46,10 +46,10 @@ $$
 		z^I_{m, i, k} & \text{selling amount of wood in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, I, K \\
 		z^J_{m, j, k} & \text{selling amount of pulp in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, J, K \\
 		z^{\text{paper}}_{m, k} & \text{selling amount of paper in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, K \\
-    x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & - & M^{2} \\
-    x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & - & M^{2} \\
-    x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & - & M^{2}, J \\
-    x^{\text{paper}}_{m} & \text{capacity of paper production line} & \text{linear} & - & M^{2} \\
+    x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & 1000 m^3 / \text{year} & M^{2} \\
+    x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & 1000 m^3 / \text{year} & M^{2} \\
+    x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & 1000 \text{ton} / \text{year} & M^{2}, J \\
+    x^{\text{paper}}_{m} & \text{capacity of paper production line} & \text{linear} & 1000 \text{ton} / \text{year} & M^{2} \\
 		\hline
 \end{array}
 $$
