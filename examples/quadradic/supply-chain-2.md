@@ -9,7 +9,7 @@
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/quadradic/tex/e32faef5aff14bb0102b79579fd6124a.svg?invert_in_darkmode&sanitize=true" align=middle width=683.4446982pt height=243.95743514999998pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/645c3ad049b948ae45c914cb0b0c4d9f.svg?invert_in_darkmode&sanitize=true" align=middle width=723.7834098pt height=243.95743514999998pt/></p>
 
 _Table 2, summary of decision variables_
 

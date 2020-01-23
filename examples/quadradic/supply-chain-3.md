@@ -9,7 +9,7 @@
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/quadradic/tex/7322f45d3aff966e1656d1d751545370.svg?invert_in_darkmode&sanitize=true" align=middle width=782.2652145pt height=327.36799755pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/fa46f76aee0405b23779f0beec19c1d4.svg?invert_in_darkmode&sanitize=true" align=middle width=834.864393pt height=327.36799755pt/></p>
 
 _Table 2, summary of decision variables_
 
@@ -65,7 +65,7 @@ The Objective function composes of many parts:
 
 - Cost of capacity expansion:
 
-<p align="center"><img src="/examples/quadradic/tex/0d26930068971ef02557ca1f0dfc5a85.svg?invert_in_darkmode&sanitize=true" align=middle width=756.48453045pt height=86.50267889999999pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/aa5777dad7fc4a20b461c70e45b75ec2.svg?invert_in_darkmode&sanitize=true" align=middle width=744.4544002499999pt height=86.50267889999999pt/></p>
 
 ## 4, Constraints
 
@@ -101,15 +101,15 @@ When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?inve
 
 8. limit of capacity in plywood mill:
 
-<p align="center"><img src="/examples/quadradic/tex/e25080d3f390be8c5ee999247c4e1b3d.svg?invert_in_darkmode&sanitize=true" align=middle width=326.4278952pt height=38.90747685pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/9e5f28e6917906bcdbfb9a1474edfd97.svg?invert_in_darkmode&sanitize=true" align=middle width=329.16755355pt height=69.63788865pt/></p>
 
 9. limit of capacity in pulp production:
 
-<p align="center"><img src="/examples/quadradic/tex/3b809b1ba2092018ef16ebc6da507d56.svg?invert_in_darkmode&sanitize=true" align=middle width=280.88171925pt height=20.95157625pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/e6052920e5c407b94c09850de256d7a1.svg?invert_in_darkmode&sanitize=true" align=middle width=304.94197965pt height=48.478473449999996pt/></p>
 
 10. limit of capacity in paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/ccbc19add29235e7d674accd5dc95839.svg?invert_in_darkmode&sanitize=true" align=middle width=258.96496725pt height=16.438356pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/33153e97b3d700fb293e5ff0654c7edf.svg?invert_in_darkmode&sanitize=true" align=middle width=258.96496725pt height=45.634419599999994pt/></p>
 
 11. relation between capacity expansion factors
 
