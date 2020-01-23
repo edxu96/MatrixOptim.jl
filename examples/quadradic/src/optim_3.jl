@@ -3,188 +3,202 @@
 ## Jan 23rd, 2020
 
 
-"Get parameters for model 3."
-function get_para_3()
-  alpha_t = [190, 150, 120, 180, 150, 150]
-  beta_t = [1, 0.5, 3, 0.2, 0.3, 0.2]
-  a_i = [2, 2, 2, 2.8, 2.8]
-  b_i = [0.8, 0.8, 0.8, 1.6, 1.6]
-  e_i = [0.2, 0.2, 0.2, 0.2, 0.2]
-  c_i = [550, 500, 450, 2500, 2600]
-  r_saw = 200
-  r_plywood = 90
-  a_j = [4.8, 4.2]
-  c_j = [820, 800]
-  r_j = [220, 180]
-  a_paper_t = [0, 1, 0]
-  b_paper_j = [0.2, 0.2]
-  c_paper = 1700
-  r_paper = 80
-  gamma_ik = [
-    1600 1300 1400 1500;
-    1400 1200 1300 1400;
-    1300 1400 1500 1600;
-    4400 3800 3600 3500;
-    4300 4100 3900 3800
-    ]
-  delta_ik = [
-    4 5 12 15;
-    2 10 12 15;
-    14 20 24 25;
-    4 10 12 18;
-    4 7 12 15
-    ]
-  gamma_jk = [
-    2300 2500 2300 2600;
-    2500 2800 2300 2500
-    ]
-  delta_jk = [
-    1 4 5 6;
-    3 2 6 7
-    ]
-  gamma_paper_k = [4500, 4700, 4300, 4800]
-  delta_paper_k = [7, 10, 12, 15]
-  p_fuel = 40
-
-  ## Extra parameters in model 2
-  sigma = 0.95
-  omega_i = [1.010, 1.008, 1.015, 1.015, 1.020]
-  omega_j = [1.025, 1.030]
-  omega_paper = 1.035
-  nu_saw = 1.5
-  nu_plywood = 1.5
-  nu_j = [2, 2]
-  nu_paper = 2
-  o_saw = 100
-  o_plywood = 300
-  o_j = [500, 500]
-  o_paper = 700
-
-  return alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j, c_j,
-    r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik, gamma_jk,
-    delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i, omega_j,
-    omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood, o_j,
-    o_paper
-end
-
-
 function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
     c_j, r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik,
     gamma_jk, delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i,
     omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
-    o_j, o_paper)
+    o_j, o_paper, i_t1, i_t2, j_t2, pi_n)
 
   mod = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0))
 
-  @variable(mod, h_mt[1:3, 1:6]>=0, integer=true)
-  @variable(mod, y_mi[1:3, 1:5]>=0)
-  @variable(mod, y_mj[1:3, 1:2]>=0)
-  @variable(mod, y_paper_m[1:3]>=0)
-  @variable(mod, z_mik[1:3, 1:5, 1:4]>=0)
-  @variable(mod, z_mjk[1:3, 1:2, 1:4]>=0)
-  @variable(mod, z_paper_mk[1:3, 1:4]>=0)
-  @variable(mod, 0 <= x_saw_m[1:3] <= r_saw * nu_saw)
-  @variable(mod, 0 <= x_plywood_m[1:3] <= r_plywood * nu_plywood)
-  @variable(mod, x_mj[1:3, 1:2] >= 0)
-  @variable(mod, 0 <= x_paper_m[1:3] <= r_paper * nu_paper)
+  ## Here-and-now decision variables in the first year.
+  @variable(mod, h_t[1:6]>=0, integer=true)
+  @variable(mod, y_i[1:5]>=0)
+  @variable(mod, y_j[1:2]>=0)
+  @variable(mod, y_paper>=0)
+  @variable(mod, z_ik[1:5, 1:4]>=0)
+  @variable(mod, z_jk[1:2, 1:4]>=0)
+  @variable(mod, z_paper_k[1:4]>=0)
 
-  i_t1 = [[1], [2, 4], [3, 5]]
-  i_t2 = [[1], [2, 4], [3, 5]]
-  j_t2 = [[1], [], [2]]
+  ## Wait-and-see decisions variables in the second and third year.
+  @variable(mod, h_nmt[1:4, 2:3, 1:6]>=0, integer=true)
+  @variable(mod, y_nmi[1:4, 2:3, 1:5]>=0)
+  @variable(mod, y_nmj[1:4, 2:3, 1:2]>=0)
+  @variable(mod, y_paper_nm[1:4, 2:3]>=0)
+  @variable(mod, z_nmik[1:4, 2:3, 1:5, 1:4]>=0)
+  @variable(mod, z_nmjk[1:4, 2:3, 1:2, 1:4]>=0)
+  @variable(mod, z_paper_nmk[1:4, 2:3, 1:4]>=0)
+
+  @variable(mod, 0 <= x_saw_nm[1:4, 2:3] <= r_saw * nu_saw)
+  @variable(mod, 0 <= x_plywood_nm[1:4, 2:3] <= r_plywood * nu_plywood)
+  @variable(mod, x_nmj[1:4, 2:3, 1:2] >= 0)
+  @variable(mod, 0 <= x_paper_nm[1:4, 2:3] <= r_paper * nu_paper)
 
   @objective(mod, Max,
+    ## Objective fucntions regarding here-and-now decision variables.
+    -sum(alpha_t[t] * h_t[t] + beta_t[t] * h_t[t]^2 for t = 1:6) +
+    -sum(c_i[i] * y_i[i] for i=1:5) +
+    -sum(c_j[j] * y_j[j] for j=1:2) - c_paper * y_paper +
+    sum(alpha_t[t] * (
+      h_t[t] - sum(a_i[i] * y_i[i] for i in i_t1[t])
+      ) for t=1:3) +
+    sum(alpha_t[t] * (
+      h_t[t] + sum(b_i[i] * y_i[i] for i in i_t2[t-3]) -
+      sum(a_j[j] * y_j[j] for j in j_t2[t-3]) -
+        a_paper_t[t-3] * y_paper) for t=4:6) +
+    sum(e_i[i] * y_i[i] for i=1:5) * p_fuel +
+    sum(gamma_ik[i, k] * z_ik[i, k] - delta_ik[i, k] * z_ik[i, k]^2
+      for i=1:5, k=1:4) +
+    sum(gamma_jk[j, k] * z_jk[j, k] - delta_jk[j, k] * z_jk[j, k]^2
+      for j=1:2, k=1:4) +
+    sum(gamma_paper_k[k] * z_paper_k[k] -
+      delta_paper_k[k] * z_paper_k[k]^2
+      for k=1:4) +
+
+    ## here-and-now capacity in the second year.
+    ## those in the first scenario are used because they are the same.
+    o_saw * (x_saw_nm[1, 2] - r_saw) +
+      o_plywood * (x_plywood_nm[1, 2] - r_plywood) +
+      sum(o_j[j] * (x_nmj[1, 2, j] - r_j[j]) for j=1:2) +
+      o_paper * (x_paper_nm[1, 2] - r_paper) +
+
+    ## Objective fucntions regarding wait-and-see decision variables.
     sum(
-      (-sum(alpha_t[t] * h_mt[m, t] + beta_t[t] * h_mt[m, t]^2
-        for t = 1:6) +
-      -sum(c_i[i] * y_mi[m, i] for i=1:5) +
-      -sum(c_j[j] * y_mj[m, j] for j=1:2) - c_paper * y_paper_m[m] +
-      sum(alpha_t[t] * (
-        h_mt[m, t] - sum(a_i[i] * y_mi[m, i] for i in i_t1[t])
-        ) for t=1:3) +
-      sum(alpha_t[t] * (
-        h_mt[m, t] + sum(b_i[i] * y_mi[m, i] for i in i_t2[t-3]) -
-        sum(a_j[j] * y_mj[m, j] for j in j_t2[t-3]) -
-          a_paper_t[t-3] * y_paper_m[m]) for t=4:6) +
-      p_fuel * sum(e_i[i] * y_mi[m, i] for i=1:5) +
-      sum(omega_i[i]^(m-1) * gamma_ik[i, k] * z_mik[m, i, k] -
-        omega_i[i]^(m-1) * delta_ik[i, k] * z_mik[m, i, k]^2
-        for i=1:5, k=1:4) +
-      sum(omega_j[j]^(m-1) * gamma_jk[j, k] * z_mjk[m, j, k] -
-        omega_j[j]^(m-1) * delta_jk[j, k] * z_mjk[m, j, k]^2
-        for j=1:2, k=1:4) +
-      sum(omega_paper^(m-1) * gamma_paper_k[k] * z_paper_mk[m, k] -
-        omega_paper^(m-1) * delta_paper_k[k] * z_paper_mk[m, k]^2
-        for k=1:4)) * sigma^(m-1) for m = 1:3
-      ) +
-    sum(
-      (o_saw * (x_saw_m[m] - x_saw_m[m - 1]) +
-        o_plywood * (x_plywood_m[m] - x_plywood_m[m-1]) +
-        sum(o_j[j] * (x_mj[m, j] - x_mj[m-1, j]) for j=1:2) +
-        o_paper * (x_paper_m[m] - x_paper_m[m-1])
-        ) * sigma^(m-2) for m = 2:3
+      pi_n[n] * (
+        sum(
+          sigma^(m-1) * (
+            ## 1, cost of timber procurement
+            -sum(alpha_t[t] * h_nmt[n, m, t] + beta_t[t] * h_nmt[n, m, t]^2
+              for t = 1:6) +
+            ## 2, cost of wood production
+            -sum(c_i[i] * y_nmi[n, m, i] for i=1:5) +
+            ## 3, cost of pulp and paper production
+            -sum(c_j[j] * y_nmj[n, m, j] for j=1:2) +
+            -c_paper * y_paper_nm[n, m] +
+            ## 4, profit of left timbers selling
+            sum(alpha_t[t] * (h_nmt[n, m, t] - sum(a_i[i] * y_nmi[n, m, i]
+              for i in i_t1[t])) for t=1:3) +
+            sum(alpha_t[t] * (h_nmt[n, m, t] + sum(b_i[i] * y_nmi[n, m, i]
+              for i in i_t2[t-3]) - sum(a_j[j] * y_nmj[n, m, j] for j in
+              j_t2[t-3]) - a_paper_t[t-3] * y_paper_nm[n, m]) for t=4:6) +
+            ## 5, profit of fuel wood selling
+            p_fuel * sum(e_i[i] * y_nmi[n, m, i] for i=1:5) +
+            ## 6, profit of wood selling
+            sum(omega_i[i]^(m-1) * gamma_ik[i, k] * z_nmik[n, m, i, k] -
+              omega_i[i]^(m-1) * delta_ik[i, k] * z_nmik[n, m, i, k]^2
+              for i=1:5, k=1:4) +
+            ## 7, profit of pulp selling
+            sum(omega_j[j]^(m-1) * gamma_jk[j, k] * z_nmjk[n, m, j, k] -
+              omega_j[j]^(m-1) * delta_jk[j, k] * z_nmjk[n, m, j, k]^2
+              for j=1:2, k=1:4) +
+            ## 8, profit of paper selling
+            sum(omega_paper^(m-1) * gamma_paper_k[k] * z_paper_nmk[n, m, k] -
+              omega_paper^(m-1) * delta_paper_k[k] * z_paper_nmk[n, m, k]^2
+              for k=1:4)
+            ) for m = 2:3
+          ) +
+
+        ## Cost of capacity expansion in the third year
+        sigma * (
+          o_saw * (x_saw_nm[n, 3] - x_saw_nm[1, 2]) +
+          o_plywood * (x_plywood_nm[n, 3] - x_plywood_nm[1, 2]) +
+          sum(o_j[j] * (x_nmj[n, 3, j] - x_nmj[1, 2, j]) for j=1:2) +
+          o_paper * (x_paper_nm[n, 3] - x_paper_nm[n, 2])
+          )
+
+        ) for n=1:4
       )
     )
 
-  @constraint(mod, mat_cons_1[t=1:3, m=1:3],
-    h_mt[m, t] >= sum(a_i[i] * y_mi[m, i] for i in i_t1[t]))
-  @constraint(mod, mat_cons_2[t=4:6, m=1:3],
-    h_mt[m, t] + sum(b_i[i] * y_mi[m, i] for i in i_t2[t-3]) >=
-    sum(a_j[j] * y_mj[m, j] for j in j_t2[t-3]) +
-    a_paper_t[t-3] * y_paper_m[m])
-  @constraint(mod, mat_cons_3[j=1:2, m=1:3],
-    y_mj[m, j] >= b_paper_j[j] * y_paper_m[m])
-  @constraint(mod, mat_cons_4[i=1:5, m=1:3],
-    y_mi[m, i] >= sum(z_mik[m, i, k] for k=1:4))
-  @constraint(mod, mat_cons_5[j=1:2, m=1:3],
-    y_mj[m, j] - b_paper_j[j] * y_paper_m[m] >= sum(z_mjk[m, j, k] for k=1:4))
-  @constraint(mod, vec_cons_6[m=1:3],
-    y_paper_m[m] >= sum(z_paper_mk[m, k] for k=1:4))
-  @constraint(mod, vec_cons_7[m=1:3],
-    sum(y_mi[m, i] for i=1:3) <= x_saw_m[m])
-  @constraint(mod, vec_cons_8[m=1:3],
-    sum(y_mi[i] for i=4:5) <= x_plywood_m[m])
-  @constraint(mod, mat_cons_9[j=1:2, m=1:3],
-    y_mj[m, j] <= x_mj[m, j])
-  @constraint(mod, vec_cons_10[m=1:3],
-    y_paper_m[m] <= x_paper_m[m])
+  ## Constraints for here-and-now decision variables
+  @constraint(mod, [t=1:3],
+    h_t[t] >= sum(a_i[i] * y_i[i] for i in i_t1[t]))
+  @constraint(mod, [t=4:6],
+    h_t[t] + sum(b_i[i] * y_i[i] for i in i_t2[t-3]) >=
+    sum(a_j[j] * y_j[j] for j in j_t2[t-3]) + a_paper_t[t-3] * y_paper)
+  @constraint(mod, [j=1:2],
+    y_j[j] >= b_paper_j[j] * y_paper)
+  @constraint(mod, [i=1:5],
+    y_i[i] >= sum(z_ik[i, k] for k=1:4))
+  @constraint(mod, [j=1:2],
+    y_j[j] - b_paper_j[j] * y_paper >= sum(z_jk[j, k] for k=1:4))
+  @constraint(mod, y_paper >= sum(z_paper_k[k] for k=1:4))
+  @constraint(mod, sum(y_i[i] for i=1:3) <= r_saw)
+  @constraint(mod, sum(y_i[i] for i=4:5) <= r_plywood)
+  @constraint(mod, [j=1:2], y_j[j] <= r_j[j])
+  @constraint(mod, y_paper <= r_paper)
+
+  ## Constraints for wait-and-see decision variables.
+  @constraint(mod, [n=1:4, t=1:3, m=2:3],
+    h_nmt[n, m, t] >= sum(a_i[i] * y_nmi[n, m, i] for i in i_t1[t]))
+  @constraint(mod, [n=1:4, t=4:6, m=2:3],
+    h_nmt[n, m, t] + sum(b_i[i] * y_nmi[n, m, i] for i in i_t2[t-3]) >=
+    sum(a_j[j] * y_nmj[n, m, j] for j in j_t2[t-3]) +
+    a_paper_t[t-3] * y_paper_nm[n, m])
+  @constraint(mod, [n=1:4, j=1:2, m=2:3],
+    y_nmj[n, m, j] >= b_paper_j[j] * y_paper_nm[n, m])
+  @constraint(mod, [n=1:4, i=1:5, m=2:3],
+    y_nmi[n, m, i] >= sum(z_nmik[n, m, i, k] for k=1:4))
+  @constraint(mod, [n=1:4, j=1:2, m=2:3],
+    y_nmj[n, m, j] - b_paper_j[j] * y_paper_nm[n, m] >=
+    sum(z_nmjk[n, m, j, k] for k=1:4))
+  @constraint(mod, [n=1:4, m=2:3],
+    y_paper_nm[n, m] >= sum(z_paper_nmk[n, m, k] for k=1:4))
+  @constraint(mod, [n=1:4, m=2:3],
+    sum(y_nmi[n, m, i] for i=1:3) <= x_saw_nm[n, m])
+  @constraint(mod, [n=1:4, m=2:3],
+    sum(y_nmi[n, m, i] for i=4:5) <= x_plywood_nm[n, m])
+  @constraint(mod, [n=1:4, j=1:2, m=2:3],
+    y_nmj[n, m, j] <= x_nmj[n, m, j])
+  @constraint(mod, [n=1:4, m=2:3],
+    y_paper_nm[n, m] <= x_paper_nm[n, m])
 
   ## relation between capacities
-  @constraint(mod, vec_cons_11[m=2:3],
-    x_saw_m[m-1] <= x_saw_m[m])
-  @constraint(mod, vec_cons_12[m=2:3],
-    x_plywood_m[m-1] <= x_plywood_m[m])
-  @constraint(mod, mat_cons_13[m=2:3, j=1:2],
-    x_mj[m-1, j] <= x_mj[m, j])
-  @constraint(mod, vec_cons_14[m=2:3],
-    x_paper_m[m-1] <= x_paper_m[m])
-  @constraint(mod, mat_cons_15[m=2:3, j=1:2],
-    x_mj[m, j] <= r_j[j] * nu_j[j])
-    # the result of max constraints are set when defining the variables.
-  @constraint(mod, x_saw_m[1] == r_saw)
-  @constraint(mod, x_plywood_m[1] == r_plywood)
-  @constraint(mod, vec_cons_16[j=1:2], x_mj[1, j] == r_j[j])
-  @constraint(mod, x_paper_m[1] == r_paper)
+  @constraint(mod, [n=1:4],
+    x_saw_nm[n, 2] <= x_saw_nm[n, 3])
+  @constraint(mod, [n=1:4],
+    x_plywood_nm[n, 2] <= x_plywood_nm[n, 3])
+  @constraint(mod, [n=1:4, j=1:2],
+    x_nmj[n, 2, j] <= x_nmj[n, 3, j])
+  @constraint(mod, [n=1:4],
+    x_paper_nm[n, 2] <= x_paper_nm[n, 3])
+
+  @constraint(mod, r_saw <= x_saw_nm[1, 2])
+  @constraint(mod, r_plywood <= x_plywood_nm[1, 2])
+  @constraint(mod, vec_cons_16[j=1:2], r_j[j] <= x_nmj[1, 2, j])
+  @constraint(mod, r_paper <= x_paper_nm[1, 2])
+
+  ## Make sure that the capacities in the second year are here-and-now variables
+  @constraint(mod, [n=2:4],
+    x_saw_nm[1, 2] == x_saw_nm[n, 2])
+  @constraint(mod, [n=2:4],
+    x_plywood_nm[1, 2] <= x_plywood_nm[n, 2])
+  @constraint(mod, [n=2:4, j=1:2],
+    x_nmj[1, 2, j] <= x_nmj[n, 2, j])
+  @constraint(mod, [n=2:4],
+    x_paper_nm[1, 2] <= x_paper_nm[n, 2])
+
+  ## the result of max constraints are set when defining the variables.
+  @constraint(mod, [n=1:4, m=2:3, j=1:2],
+    x_nmj[n, m, j] <= r_j[j] * nu_j[j])
 
   optimize!(mod)
 
-  result_h_mt = value_mat(h_mt)
-  result_y_mi = value_mat(y_mi)
-  result_y_mj = value_mat(y_mj)
-  result_y_paper_m = value_vec(y_paper_m)
-  result_z_mik = value_mat3(z_mik)
-  result_z_mjk = value_mat3(z_mjk)
-  result_z_paper_mk = value_mat(z_paper_mk)
+  # result_h_mt = value_mat(h_mt)
+  # result_y_mi = value_mat(y_mi)
+  # result_y_mj = value_mat(y_mj)
+  # result_y_paper_m = value_vec(y_paper_m)
+  # result_z_mik = value_mat3(z_mik)
+  # result_z_mjk = value_mat3(z_mjk)
+  # result_z_paper_mk = value_mat(z_paper_mk)
   result_obj = objective_value(mod)
 
-  println(result_h_mt)
-  println(result_y_mi)
-  println(result_y_mj)
-  println(result_y_paper_m)
-  println(result_z_mik)
-  println(result_z_mjk)
-  println(result_z_paper_mk)
+  # println(result_h_mt)
+  # println(result_y_mi)
+  # println(result_y_mj)
+  # println(result_y_paper_m)
+  # println(result_z_mik)
+  # println(result_z_mjk)
+  # println(result_z_paper_mk)
   println(result_obj)
-
-  # return result_h_mt, result_y_mi, result_y_mj, result_y_paper_m,
-  #   result_z_mik, result_z_mjk, result_z_paper_mk, result_obj
 end

@@ -212,4 +212,4 @@ $$
 
 ## 4, Result
 
-obj = $\underline{\underline{1.7382e6}}$
+obj = $\underline{\underline{1.7241e6}}$

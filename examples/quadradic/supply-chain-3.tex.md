@@ -40,13 +40,22 @@ $$
 		\hline
 		\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
 		\hline
-		h_{m, t} & \text{purchasing amount of timber $t$ in the year $m$} & \text{integer} & 1000 m^3 & M, T \\
-		y^I_{m, i} & \text{production amount of wood $i$ in the year $m$} & \text{linear} & 1000 m^3 & M, I \\
-		y^J_{m, j} & \text{production amount of pulp $j$ in the year $m$} & \text{linear} & 1000 m^3 & M, J \\
-		y^{\text{paper}}_{m} & \text{production amount of paper in the year $m$} & \text{linear} & 1000 m^3 & M \\
-		z^I_{m, i, k} & \text{selling amount of wood in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, I, K \\
-		z^J_{m, j, k} & \text{selling amount of pulp in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, J, K \\
-		z^{\text{paper}}_{m, k} & \text{selling amount of paper in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M, K \\
+		h_t & \text{purchasing amount of timber $t$ in the first year} & \text{integer} & 1000 m^3 & T \\
+		y^I_{i} & \text{production amount of wood $i$ in the first year} & \text{linear} & 1000 m^3 & I \\
+		y^J_{j} & \text{production amount of pulp $j$ in the first year} & \text{linear} & 1000 m^3 & J \\
+		y^{\text{paper}} & \text{production amount of paper in the first year} & \text{linear} & 1000 m^3 & - \\
+		z^I_{i, k} & \text{selling amount of wood $i$ in region $k$ in the first year} & \text{linear} & 1000 m^3 & I, K \\
+		z^J_{j, k} & \text{selling amount of pulp $j$ in region $k$ in the first year} & \text{linear} & 1000 m^3 & J, K \\
+		z^{\text{paper}}_{k} & \text{selling amount of paper in region $k$ in the first year} & \text{linear} & 1000 m^3 & K \\
+		\hline
+		h_{m, t} & \text{purchasing amount of timber $t$ in the year $m$} & \text{integer} & 1000 m^3 & M / \{1\}, T \\
+		y^I_{m, i} & \text{production amount of wood $i$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, I \\
+		y^J_{m, j} & \text{production amount of pulp $j$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, J \\
+		y^{\text{paper}}_{m} & \text{production amount of paper in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\} \\
+		z^I_{m, i, k} & \text{selling amount of wood in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, I, K \\
+		z^J_{m, j, k} & \text{selling amount of pulp in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, J, K \\
+		z^{\text{paper}}_{m, k} & \text{selling amount of paper in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, K \\
+		\hline
     x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & 1000 m^3 / \text{year} & M / \{3\} \\
     x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & 1000 m^3 / \text{year} & M / \{3\} \\
     x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & 1000 \text{ton} / \text{year} & M / \{3\}, J \\
@@ -119,27 +128,27 @@ $$
 \end{align}
 $$
 
-- When m = 1, the variables are here-and-now decisions variables:
+- When m = 1, the variables are here-and-now decisions variables, and this part of the objective function is the same as those in the static model:
 
-1. cost of timber procurement: $ f^{\text{timber}}_m = - \sum_{t \in T} h_{m, t} (\alpha_t + \beta_t h_{m, t}) $
+1. cost of timber procurement: $ f^{\text{timber}}_1 = - \sum_{t \in T} h_{t} (\alpha_t + \beta_t h_{t}) $
 
-2. cost of wood production: $ f^{\text{wood}}_m = - \sum_{i \in I} c^I_i y^I_{m, i} $
+2. cost of wood production: $ f^{\text{wood}}_1 = - \sum_{i \in I} c^I_i y^I_i $
 
-3. cost of pulp and paper production: $ f^{\text{pp}}_m = - \sum_{j \in J} c^J_j y^J_{m, j} - \sum_{m \in M} c^{\text{paper}} y^{\text{paper}}_m $
+3. cost of pulp and paper production: $ f^{\text{pp}}_1 = - \sum_{j \in J} c^J_j y^J_j - c^{\text{paper}} y^{\text{paper}} $
 
 4. profit of left timbers selling:
 
 $$
-g^{\text{timber}}_m = \sum_{t \in T^1} \alpha_t \left(h_{m, t} - \sum_{i \in I^{T1}_t} a^I_i y^I_{m, i} \right) + \sum_{t \in T^2} \alpha_t \left(h_{m, t} + \sum_{i \in I^{T2}_t} b^I_i y^I_{m, i} - \sum_{j \in J^{T2}_t} a^J_j y^J_{m, j} - a^{\text{paper}}_t  y^{\text{paper}}_m \right)
+g^{\text{timber}}_1 = \sum_{t \in T^1} \alpha_t \left(h_t - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) + \sum_{t \in T^2} \alpha_t \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i - \sum_{j \in J^{T2}_t} a^J_j y^J_j - a^{\text{paper}}_t y^{\text{paper}} \right)
 $$
 
-5. profit of fuel wood selling: $ g^{\text{fuel}}_m = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_{m, i} $
+5. profit of fuel wood selling: $ g^{\text{fuel}}_1 = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_i $
 
-6. profit of wood selling: $ g^{\text{wood}}_{m} = \sum_{i \in I} \sum_{k \in K} (\omega^{I}_i)^{m-1} z^I_{m, i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{m, i, k}) $
+6. profit of wood selling: $ g^{\text{wood}}_1 = \sum_{i \in I} \sum_{k \in K} z^I_{i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{i, k}) $
 
-7. profit of pulp selling: $ g^{\text{pulp}}_{m} = \sum_{j \in J} \sum_{k \in K} (\omega^{J}_j)^{m-1} z^J_{m, j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{m, j, k}) $
+7. profit of pulp selling: $ g^{\text{pulp}}_1 = \sum_{j \in J} \sum_{k \in K} z^J_{j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{j, k}) $
 
-8. profit of paper selling: $ g^{\text{paper}}_{m} = \sum_{k \in K} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{m, k} (\gamma^{\text{paper}}_{k} - \delta^{\text{paper}}_{k} z^{\text{paper}}_{m, k}) $
+8. profit of paper selling: $ g^{\text{paper}}_1 = \sum_{k \in K} z^{\text{paper}}_k (\gamma^{\text{paper}}_k - \delta^{\text{paper}}_k z^{\text{paper}}_k) $
 
 - When m = 2 or 3, the variables are wait-and-see decisions variables:
 
@@ -172,9 +181,11 @@ $$
 \end{align}
 $$
 
+where variables regarding capacities in the first year, like $x^{\text{saw}}_1$, are fixed value variables, those in the second year are here-and-now decision variables, and those in the third year are wait-and-see variables. Those here-and-now decision variables are forced to be equal for different scenarios by constraints 7-10 in the following section.  
+
 ## 4, Constraints
 
-When $m = 1$, the constraints are the same as those in dynamic model. When $m = 2 \text{ or } 3$, besides the constraints that all variables are non-negative, there many ten sets of constraints:
+When $m = 1$, the constraints are the same as those in dynamic model, which are neglected here. When $m = 2 \text{ or } 3$, besides the constraints that all variables are non-negative, there many ten sets of constraints:
 
 1. limit of timber amount in wood production:
 
@@ -258,3 +269,7 @@ $$
     & x_{m} \leq \nu r \quad \forall x, m \in M \\
 \end{align}
 $$
+
+## 4, Results
+
+obj = $\underline{\underline{2.9696e6}}$
