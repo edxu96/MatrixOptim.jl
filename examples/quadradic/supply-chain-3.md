@@ -103,7 +103,7 @@ When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?inve
 
 8. limit of capacity in plywood mill:
 
-<p align="center"><img src="/examples/quadradic/tex/9e5f28e6917906bcdbfb9a1474edfd97.svg?invert_in_darkmode&sanitize=true" align=middle width=329.16755355pt height=69.63788865pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/d0153c1c0720e53c21047d8b994cc07f.svg?invert_in_darkmode&sanitize=true" align=middle width=329.16755355pt height=69.63788865pt/></p>
 
 9. limit of capacity in pulp production:
 
@@ -119,4 +119,4 @@ When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?inve
 
 ## 4, Results
 
-obj = <img src="/examples/quadradic/tex/2697d667ebe19821eed939af7ae65c89.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+obj = <img src="/examples/quadradic/tex/fe9fcf586935720253e426ca85de2696.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
