@@ -9,7 +9,7 @@
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/quadradic/tex/fa46f76aee0405b23779f0beec19c1d4.svg?invert_in_darkmode&sanitize=true" align=middle width=834.864393pt height=327.36799755pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/cf61a5bb7805cac098934981614a7b21.svg?invert_in_darkmode&sanitize=true" align=middle width=855.4807404pt height=469.3945311pt/></p>
 
 _Table 2, summary of decision variables_
 
@@ -23,25 +23,25 @@ The Objective function composes of many parts:
 
 <p align="center"><img src="/examples/quadradic/tex/f510bdb99fec8650c01a20e8bbec9304.svg?invert_in_darkmode&sanitize=true" align=middle width=686.5706594999999pt height=78.5391552pt/></p>
 
-- When m = 1, the variables are here-and-now decisions variables:
+- When m = 1, the variables are here-and-now decisions variables, and this part of the objective function is the same as those in the static model:
 
-1. cost of timber procurement: <img src="/examples/quadradic/tex/9ef2df73999b9e34cebc98b451a23586.svg?invert_in_darkmode&sanitize=true" align=middle width=256.1740203pt height=27.91243950000002pt/>
+1. cost of timber procurement: <img src="/examples/quadradic/tex/75523156026f00a6d598b4ba9ac9fbc1.svg?invert_in_darkmode&sanitize=true" align=middle width=225.03610634999995pt height=27.91243950000002pt/>
 
-2. cost of wood production: <img src="/examples/quadradic/tex/a0f688b49aee6538fa36879fc524c813.svg?invert_in_darkmode&sanitize=true" align=middle width=162.26319779999997pt height=27.91243950000002pt/>
+2. cost of wood production: <img src="/examples/quadradic/tex/59f0c6e89f79532a2e60684c71947bd5.svg?invert_in_darkmode&sanitize=true" align=middle width=149.35345919999997pt height=27.91243950000002pt/>
 
-3. cost of pulp and paper production: <img src="/examples/quadradic/tex/a530cd9609956ba8e65a443c56475442.svg?invert_in_darkmode&sanitize=true" align=middle width=310.38598469999994pt height=27.6567522pt/>
+3. cost of pulp and paper production: <img src="/examples/quadradic/tex/eb41c7351a74af51cbb40949a8a4fcac.svg?invert_in_darkmode&sanitize=true" align=middle width=242.45478509999998pt height=27.6567522pt/>
 
 4. profit of left timbers selling:
 
-<p align="center"><img src="/examples/quadradic/tex/29e061fbccb1cdb13491df5948921c0e.svg?invert_in_darkmode&sanitize=true" align=middle width=721.82700315pt height=59.1786591pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/35099bea2233d526f210f053f46a6fe0.svg?invert_in_darkmode&sanitize=true" align=middle width=659.45019525pt height=59.1786591pt/></p>
 
-5. profit of fuel wood selling: <img src="/examples/quadradic/tex/f624dba7a12f224efaaec04a32aad3fa.svg?invert_in_darkmode&sanitize=true" align=middle width=166.68490904999996pt height=27.91243950000002pt/>
+5. profit of fuel wood selling: <img src="/examples/quadradic/tex/b477f842f851b9a0d69dd7dcf12b6ca5.svg?invert_in_darkmode&sanitize=true" align=middle width=153.77517044999996pt height=27.91243950000002pt/>
 
-6. profit of wood selling: <img src="/examples/quadradic/tex/26f35d6a98bdca787973077c5089e582.svg?invert_in_darkmode&sanitize=true" align=middle width=370.7204588999999pt height=27.91243950000002pt/>
+6. profit of wood selling: <img src="/examples/quadradic/tex/fe9d9ea09e3891a788b8bde8f0805149.svg?invert_in_darkmode&sanitize=true" align=middle width=281.8592964pt height=27.91243950000002pt/>
 
-7. profit of pulp selling: <img src="/examples/quadradic/tex/e3272f324243d0aa3c2cae3ab2b66041.svg?invert_in_darkmode&sanitize=true" align=middle width=373.83317565pt height=27.91243950000002pt/>
+7. profit of pulp selling: <img src="/examples/quadradic/tex/ab9091bad3b8c3d3fe015769854eee38.svg?invert_in_darkmode&sanitize=true" align=middle width=283.33392285pt height=31.780732499999996pt/>
 
-8. profit of paper selling: <img src="/examples/quadradic/tex/54fe0a5949407f1eec60b94da643fab3.svg?invert_in_darkmode&sanitize=true" align=middle width=395.76655304999997pt height=26.76175259999998pt/>
+8. profit of paper selling: <img src="/examples/quadradic/tex/35a3eb5f73102153a87eb2d050d6a8e4.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
 
 - When m = 2 or 3, the variables are wait-and-see decisions variables:
 
@@ -67,9 +67,11 @@ The Objective function composes of many parts:
 
 <p align="center"><img src="/examples/quadradic/tex/aa5777dad7fc4a20b461c70e45b75ec2.svg?invert_in_darkmode&sanitize=true" align=middle width=744.4544002499999pt height=86.50267889999999pt/></p>
 
+where variables regarding capacities in the first year, like <img src="/examples/quadradic/tex/38083a80fd93637bf89cc3440ee4a046.svg?invert_in_darkmode&sanitize=true" align=middle width=30.36197504999999pt height=21.839370299999988pt/>, are fixed value variables, those in the second year are here-and-now decision variables, and those in the third year are wait-and-see variables. Those here-and-now decision variables are forced to be equal for different scenarios by constraints 7-10 in the following section.  
+
 ## 4, Constraints
 
-When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?invert_in_darkmode&sanitize=true" align=middle width=44.56994024999999pt height=21.18721440000001pt/>, the constraints are the same as those in dynamic model. When <img src="/examples/quadradic/tex/de8eee40443fcbaf76ac873e40ccc291.svg?invert_in_darkmode&sanitize=true" align=middle width=78.40560584999999pt height=21.18721440000001pt/>, besides the constraints that all variables are non-negative, there many ten sets of constraints:
+When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?invert_in_darkmode&sanitize=true" align=middle width=44.56994024999999pt height=21.18721440000001pt/>, the constraints are the same as those in dynamic model, which are neglected here. When <img src="/examples/quadradic/tex/de8eee40443fcbaf76ac873e40ccc291.svg?invert_in_darkmode&sanitize=true" align=middle width=78.40560584999999pt height=21.18721440000001pt/>, besides the constraints that all variables are non-negative, there many ten sets of constraints:
 
 1. limit of timber amount in wood production:
 
@@ -114,3 +116,7 @@ When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?inve
 11. relation between capacity expansion factors
 
 <p align="center"><img src="/examples/quadradic/tex/093c5077d93657dcfaddcfd524d62a28.svg?invert_in_darkmode&sanitize=true" align=middle width=155.37469695pt height=88.58448225pt/></p>
+
+## 4, Results
+
+obj = <img src="/examples/quadradic/tex/18ef1120427042c432dcf9d4fc5617b3.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>

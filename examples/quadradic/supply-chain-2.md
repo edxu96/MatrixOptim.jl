@@ -95,4 +95,4 @@ Besides the constraints that all variables are non-negative, there are ten sets 
 
 ## 4, Result
 
-obj = <img src="/examples/quadradic/tex/802a3775f25032ef62fd5fcc44769405.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+obj = <img src="/examples/quadradic/tex/2189081c08ea8c2f5e78942c32592c1c.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
