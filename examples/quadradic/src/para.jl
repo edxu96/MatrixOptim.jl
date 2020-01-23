@@ -45,7 +45,7 @@ function get_para()
 
   i_t1 = [[1], [2, 4], [3, 5]]
   i_t2 = [[1], [2, 4], [3, 5]]
-  j_t2 = [[1], [], [2]]
+  j_t2 = [[1], [NULL], [2]]
 
   ## Extra parameters in model 2
   sigma = 0.95
