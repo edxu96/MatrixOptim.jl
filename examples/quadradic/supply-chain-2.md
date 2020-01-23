@@ -3,6 +3,8 @@
 
 ## 1, Introduction
 
+It is assumed that all the products produced are sold in the current year. For example, wood products produced in the first year are sold in the first year only.
+
 ## 2, Definition of Mathematical Expressions
 
 <p align="center"><img src="/examples/quadradic/tex/563cda82815e6e35d5d6d9c125bc476d.svg?invert_in_darkmode&sanitize=true" align=middle width=679.5676040999999pt height=377.24512319999997pt/></p>
@@ -13,7 +15,7 @@ _Table 1, summary of sets_
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/d77ff47ff87bdc176ed4dfcb29ecfe87.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=704.2273705499999pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/8d312b8cee0d06f6ccb8e359ea8bf77e.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=704.8848939pt/></p>
 
 _Table 3, summary of constants_
 

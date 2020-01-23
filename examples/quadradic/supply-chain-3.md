@@ -13,7 +13,7 @@ _Table 1, summary of sets_
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/d92dcfaed95fdc9c0b01b9862ca774da.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=743.67942495pt/></p>
+<p align="center"><img src="/examples/quadradic/tex/5b397e525492622299d4993f12ad5f59.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=744.9944733pt/></p>
 
 _Table 3, summary of constants_
 
