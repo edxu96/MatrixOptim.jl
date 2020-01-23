@@ -3,6 +3,8 @@
 
 ## 1, Introduction
 
+It is assumed that all the products produced are sold in the current year. For example, wood products produced in the first year are sold in the first year only.
+
 ## 2, Definition of Mathematical Expressions
 
 $$
@@ -62,10 +64,6 @@ $$
 		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
 		\hline
 		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
-    \sigma & \text{annual discounting factor} & - & - \\
-		\omega^I_i & \text{demand growth coefficient of wood $i$} & - & I \\
-		\omega^J_j & \text{demand growth coefficient of pulp $j$} & - & J \\
-		\omega^{\text{paper}} & \text{demand growth coefficient of paper} & - & - \\
 		\alpha_t & \text{fixed cost factor of purchasing timber $t$} & \text{euro} / (1000 m^3) & T \\
 		\beta_t & \text{unit cost factor of purchasing timber $t$} & \text{euro} / (1000 m^6) & T \\
 		a^I_i & \text{relation of timber input and output in wood production $i$} & - & I\\
@@ -74,27 +72,32 @@ $$
 		c^I_i & \text{cost of wood production $i$} & \text{euro} / (1000 m^3) & I \\
 		r^{\text{saw}} & \text{original capacity of saw mill} & 1000 m^3 / \text{year} & - \\
 		r^{\text{plywood}} & \text{original capacity of plywood mill} & 1000 m^3 / \text{year} & - \\
-    o^{\text{saw}} & \text{capacity expansion cost of saw mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
-    o^{\text{plywood}} & \text{capacity expansion cost of plywood mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
-    \nu^{\text{saw}} & \text{max capacity expansion factor of saw mill} & - & - \\
-    \nu^{\text{plywood}} & \text{max capacity expansion factor of saw mill} & - & - \\
 		a^J_j & \text{input and output relation of pulp production $j$} & - & J \\
 		c^J_j & \text{cost of pulp production $j$} & \text{euro} / (1000 \text{ton}) & J \\
 		r^J_j & \text{original capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
-    o^J_j & \text{capacity expansion cost of pulp production $j$} & \text{euro} / (1000 m^3 / \text{year}) & - \\
-    \nu^J_j & \text{max capacity expansion factor of pulp production $j$} & - & J \\
 		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
 		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
 		c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
 		r^{\text{paper}} & \text{original capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
-    o^{\text{paper}} & \text{capacity expansion cost of paper production} & \text{euro} / (1000 m^3 / \text{year}) & - \\
-    \nu^{\text{paper}} & \text{max capacity expansion factor of paper production} & - & - \\
+		\hline
 		\gamma^{I}_{m, i, k} & \text{fixed price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (1000 m^3) & M, I, K \\
 		\delta^{I}_{m, i, k} & \text{unit price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (10^6 m^6) & M, I, K \\
 		\gamma^{J}_{m, j, k} & \text{fixed price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, J, K \\
 		\delta^{J}_{m, j, k} & \text{unit price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (10^6 \text{ton}^2) & M, J, K \\
 		\gamma^{\text{paper}}_{m, k} & \text{fixed price factor of paper in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, K \\
 		\delta^{\text{paper}}_{m, k} & \text{unit price factor of paper in the region $k$ in the year $m$} & \text{euro} / (10^6 \text{ton}^2) & M, K \\
+    \sigma & \text{annual discounting factor} & - & - \\
+		\omega^I_i & \text{demand growth coefficient of wood $i$} & - & I \\
+		\omega^J_j & \text{demand growth coefficient of pulp $j$} & - & J \\
+		\omega^{\text{paper}} & \text{demand growth coefficient of paper} & - & - \\
+    o^{\text{saw}} & \text{capacity expansion cost of saw mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    o^{\text{plywood}} & \text{capacity expansion cost of plywood mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    o^J_j & \text{capacity expansion cost of pulp production $j$} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    o^{\text{paper}} & \text{capacity expansion cost of paper production} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+    \nu^{\text{saw}} & \text{max capacity expansion factor of saw mill} & - & - \\
+    \nu^{\text{plywood}} & \text{max capacity expansion factor of saw mill} & - & - \\
+    \nu^J_j & \text{max capacity expansion factor of pulp production $j$} & - & J \\
+    \nu^{\text{paper}} & \text{max capacity expansion factor of paper production} & - & - \\
 		\hline
 \end{array}
 $$
