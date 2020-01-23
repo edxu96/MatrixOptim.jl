@@ -9,6 +9,7 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
     omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
     o_j, o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm)
 
+  println("Optimize model 3.")
   mod = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0))
 
   ## Here-and-now decision variables in the first year.
@@ -20,6 +21,18 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
   @variable(mod, z_jk[1:2, 1:4]>=0)
   @variable(mod, z_paper_k[1:4]>=0)
 
+  ## Capacities for the second year are here-and-now decision variables.
+  @variable(mod, 0 <= x_saw_nm[1:4, 2:3] <= r_saw * nu_saw)
+  @variable(mod, 0 <= x_plywood_nm[1:4, 2:3] <= r_plywood * nu_plywood)
+  @variable(mod, x_nmj[1:4, 2:3, 1:2] >= 0)
+  @constraint(mod, [n=1:4, m=2:3, j=1:2], x_nmj[n, m, j] <= r_j[j] * nu_j[j])
+  @variable(mod, 0 <= x_paper_nm[1:4, 2:3] <= r_paper * nu_paper)
+
+  @constraint(mod, [n=2:4], x_saw_nm[1, 2] == x_saw_nm[n, 2])
+  @constraint(mod, [n=2:4], x_plywood_nm[1, 2] == x_plywood_nm[n, 2])
+  @constraint(mod, [n=2:4, j=1:2], x_nmj[1, 2, j] == x_nmj[n, 2, j])
+  @constraint(mod, [n=2:4], x_paper_nm[1, 2] == x_paper_nm[n, 2])
+
   ## Wait-and-see decisions variables in the second and third year.
   @variable(mod, h_nmt[1:4, 2:3, 1:6]>=0, integer=true)
   @variable(mod, y_nmi[1:4, 2:3, 1:5]>=0)
@@ -28,11 +41,6 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
   @variable(mod, z_nmik[1:4, 2:3, 1:5, 1:4]>=0)
   @variable(mod, z_nmjk[1:4, 2:3, 1:2, 1:4]>=0)
   @variable(mod, z_paper_nmk[1:4, 2:3, 1:4]>=0)
-
-  @variable(mod, 0 <= x_saw_nm[1:4, 2:3] <= r_saw * nu_saw)
-  @variable(mod, 0 <= x_plywood_nm[1:4, 2:3] <= r_plywood * nu_plywood)
-  @variable(mod, x_nmj[1:4, 2:3, 1:2] >= 0)
-  @variable(mod, 0 <= x_paper_nm[1:4, 2:3] <= r_paper * nu_paper)
 
   @objective(mod, Max,
     ## Objective fucntions regarding here-and-now decision variables.
@@ -139,48 +147,27 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
     y_nmj[n, m, j] >= b_paper_j[j] * y_paper_nm[n, m])
   @constraint(mod, [n=1:4, i=1:5, m=2:3],
     y_nmi[n, m, i] >= sum(z_nmik[n, m, i, k] for k=1:4))
-  @constraint(mod, [n=1:4, j=1:2, m=2:3],
-    y_nmj[n, m, j] - b_paper_j[j] * y_paper_nm[n, m] >=
-    sum(z_nmjk[n, m, j, k] for k=1:4))
+  @constraint(mod, [n=1:4, j=1:2, m=2:3], y_nmj[n, m, j] -
+    b_paper_j[j] * y_paper_nm[n, m] >= sum(z_nmjk[n, m, j, k] for k=1:4))
   @constraint(mod, [n=1:4, m=2:3],
     y_paper_nm[n, m] >= sum(z_paper_nmk[n, m, k] for k=1:4))
   @constraint(mod, [n=1:4, m=2:3],
     sum(y_nmi[n, m, i] for i=1:3) <= x_saw_nm[n, m])
   @constraint(mod, [n=1:4, m=2:3],
     sum(y_nmi[n, m, i] for i=4:5) <= x_plywood_nm[n, m])
-  @constraint(mod, [n=1:4, j=1:2, m=2:3],
-    y_nmj[n, m, j] <= x_nmj[n, m, j])
-  @constraint(mod, [n=1:4, m=2:3],
-    y_paper_nm[n, m] <= x_paper_nm[n, m])
+  @constraint(mod, [n=1:4, j=1:2, m=2:3], y_nmj[n, m, j] <= x_nmj[n, m, j])
+  @constraint(mod, [n=1:4, m=2:3], y_paper_nm[n, m] <= x_paper_nm[n, m])
 
   ## relation between capacities
-  @constraint(mod, [n=1:4],
-    x_saw_nm[n, 2] <= x_saw_nm[n, 3])
-  @constraint(mod, [n=1:4],
-    x_plywood_nm[n, 2] <= x_plywood_nm[n, 3])
-  @constraint(mod, [n=1:4, j=1:2],
-    x_nmj[n, 2, j] <= x_nmj[n, 3, j])
-  @constraint(mod, [n=1:4],
-    x_paper_nm[n, 2] <= x_paper_nm[n, 3])
+  @constraint(mod, [n=1:4], x_saw_nm[n, 2] <= x_saw_nm[n, 3])
+  @constraint(mod, [n=1:4], x_plywood_nm[n, 2] <= x_plywood_nm[n, 3])
+  @constraint(mod, [n=1:4, j=1:2], x_nmj[n, 2, j] <= x_nmj[n, 3, j])
+  @constraint(mod, [n=1:4], x_paper_nm[n, 2] <= x_paper_nm[n, 3])
 
   @constraint(mod, r_saw <= x_saw_nm[1, 2])
   @constraint(mod, r_plywood <= x_plywood_nm[1, 2])
-  @constraint(mod, vec_cons_16[j=1:2], r_j[j] <= x_nmj[1, 2, j])
+  @constraint(mod, [j=1:2], r_j[j] <= x_nmj[1, 2, j])
   @constraint(mod, r_paper <= x_paper_nm[1, 2])
-
-  ## Make sure that the capacities in the second year are here-and-now variables
-  @constraint(mod, [n=2:4],
-    x_saw_nm[1, 2] == x_saw_nm[n, 2])
-  @constraint(mod, [n=2:4],
-    x_plywood_nm[1, 2] <= x_plywood_nm[n, 2])
-  @constraint(mod, [n=2:4, j=1:2],
-    x_nmj[1, 2, j] <= x_nmj[n, 2, j])
-  @constraint(mod, [n=2:4],
-    x_paper_nm[1, 2] <= x_paper_nm[n, 2])
-
-  ## the result of max constraints are set when defining the variables.
-  @constraint(mod, [n=1:4, m=2:3, j=1:2],
-    x_nmj[n, m, j] <= r_j[j] * nu_j[j])
 
   optimize!(mod)
 

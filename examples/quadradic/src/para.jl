@@ -62,7 +62,7 @@ function get_para()
   o_paper = 700
 
   ## Extra parameters in model 3
-  pi_n = [0.5, 0.5, 0.5, 0.5]
+  pi_n = [0.25, 0.25, 0.25, 0.25]
   rho_nm = [
     1 1.05 1.07;
     1 1.05 0.95;

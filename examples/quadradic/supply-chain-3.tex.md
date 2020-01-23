@@ -238,7 +238,7 @@ $$
 
 $$
 \begin{align}
-    & \sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{m} \quad \forall m \in \{2, 3\}, n \in N \\
+    & \sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{n, m} \quad \forall m \in \{2, 3\}, n \in N \\
 		& x^{\text{plywood}}_{1, 2} = x^{\text{plywood}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
 \end{align}
 $$
@@ -274,4 +274,4 @@ $$
 
 ## 4, Results
 
-obj = $\underline{\underline{2.9765e6}}$
+obj = $\underline{\underline{1.7291e6}}$
