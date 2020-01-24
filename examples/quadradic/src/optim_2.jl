@@ -1,6 +1,6 @@
 ## Metsa-Oy Forest Products Supply Chain
 ## Edward J. Xu <edxu96@outlook.com>
-## Jan 23rd, 2020
+## Jan 24th, 2020
 
 
 function optim_2(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,

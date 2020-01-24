@@ -1,6 +1,6 @@
 ## Metsa-Oy Forest Products Supply Chain
 ## Edward J. Xu <edxu96@outlook.com>
-## Jan 23rd, 2020
+## Jan 24th, 2020
 
 
 "Get the optimized value of decision vector."
@@ -48,7 +48,7 @@ function value_mat_extra1(mat_x)
   m, n = size(mat_x)
   mat_value = zeros(m, n+1)
   for i=1:m, j=2:(n+1)
-    mat_value = value(mat_x[i, j])
+    mat_value[i, j] = value(mat_x[i, j])
   end
 
   return mat_value

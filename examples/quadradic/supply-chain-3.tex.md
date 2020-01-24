@@ -3,6 +3,8 @@
 
 ## 1, Introduction
 
+It is assumed that all the products produced are sold in the current year. For example, wood products produced in the first year are sold in the first year only.
+
 ## 2, Definition of Mathematical Expressions
 
 $$
@@ -275,3 +277,7 @@ $$
 ## 4, Results
 
 obj = $\underline{\underline{1.3801e6}}$
+
+profit in the first year = $\underline{\underline{325372.4171}}$ ;
+discounted average profit in the second year = $\underline{\underline{517107.8649}}$ ;
+discounted average profit in the third year = $\underline{\underline{537152.0540}}$ ;

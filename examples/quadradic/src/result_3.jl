@@ -1,3 +1,7 @@
+## Metsa-Oy Forest Products Supply Chain
+## Edward J. Xu <edxu96@outlook.com>
+## Jan 24th, 2020
+
 
 function print_result_3(
     result_h_t, result_y_i, result_y_j, result_y_paper, result_z_ik,
@@ -103,6 +107,8 @@ function cal_dis_profit_3_first_year(h_t, y_i, y_j, y_paper, z_ik,
       o_plywood * (x_plywood_nm[1, 2] - r_plywood) +
       sum(o_j[j] * (x_nmj[1, 2, j] - r_j[j]) for j=1:2) +
       o_paper * (x_paper_nm[1, 2] - r_paper))
+
+  println("dis_profit in the first year = $(dis_profit) ;")
 end
 
 
@@ -158,6 +164,8 @@ function cal_dis_profit_3_second_year(h_t, y_i, y_j, y_paper, z_ik,
       sum(o_j[j] * (x_nmj[1, 3, j] - x_nmj[1, 2, j]) for j=1:2) +
       o_paper * (x_paper_nm[1, 3] - x_paper_nm[1, 2]))
     ) for n=1:4)
+
+  println("dis_profit in the second year = $(dis_profit) ;")
 end
 
 function cal_dis_profit_3_third_year(h_t, y_i, y_j, y_paper, z_ik,
@@ -169,10 +177,11 @@ function cal_dis_profit_3_third_year(h_t, y_i, y_j, y_paper, z_ik,
     omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
     o_j, o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm, x_saw_nm,
     x_plywood_nm, x_nmj, x_paper_nm)
+
   m = 3
 
   ## Objective fucntions regarding wait-and-see decision variables.
-  sum(
+  dis_profit = sum(
     pi_n[n] * (
       sigma^(m-1) * (
         ## 1, cost of timber procurement
@@ -209,4 +218,6 @@ function cal_dis_profit_3_third_year(h_t, y_i, y_j, y_paper, z_ik,
         )
       ) for n=1:4
     )
+
+  println("dis_profit in the third year = $(dis_profit) ;")
 end

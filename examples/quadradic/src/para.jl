@@ -1,3 +1,6 @@
+## Metsa-Oy Forest Products Supply Chain
+## Edward J. Xu <edxu96@outlook.com>
+## Jan 24th, 2020
 
 
 "Get parameters for model 3."

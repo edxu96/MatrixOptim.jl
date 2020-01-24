@@ -1,3 +1,6 @@
+## Metsa-Oy Forest Products Supply Chain
+## Edward J. Xu <edxu96@outlook.com>
+## Jan 24th, 2020
 
 
 function cal_dis_profit_2(h_mt, y_mi, y_mj, y_paper_m, z_mik, z_mjk, z_paper_mk,
@@ -90,5 +93,11 @@ function print_result_2(result_h_mt, result_y_mi, result_y_mj, result_y_paper_m,
       delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i, omega_j,
       omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood, o_j,
       o_paper, i_t1, i_t2, j_t2, x_saw_m, x_plywood_m, x_mj, x_paper_m, m=m)
+
+    ## capacities
+    println(round.(x_saw_m[m]; digits=2))
+    println(round.(x_plywood_m[m]; digits=2))
+    println(round.(x_mj[m, :]; digits=2))
+    println(round.(x_paper_m[m]; digits=2))
   end
 end

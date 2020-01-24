@@ -1,8 +1,9 @@
 ## Metsa-Oy Forest Products Supply Chain
 ## Edward J. Xu <edxu96@outlook.com>
-## Jan 23rd, 2020
+## Jan 24th, 2020
 
-using JuMP, Gurobi, CSV, PrettyTables
+
+using JuMP, Gurobi
 
 include("func.jl")
 include("para.jl")
@@ -14,7 +15,6 @@ include("result_3.jl")
 
 
 function main()
-  ##
   alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j, c_j,
     r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik, gamma_jk,
     delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i, omega_j,

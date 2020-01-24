@@ -1,6 +1,6 @@
 ## Metsa-Oy Forest Products Supply Chain
 ## Edward J. Xu <edxu96@outlook.com>
-## Jan 23rd, 2020
+## Jan 24th, 2020
 
 
 function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
@@ -196,8 +196,18 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
   result_obj = objective_value(mod)
   println(result_obj)
 
-  # print_result_3(
-  #   result_h_t, result_y_i, result_y_j, result_y_paper, result_z_ik,
+  print_result_3(
+    result_h_t, result_y_i, result_y_j, result_y_paper, result_z_ik,
+    result_z_jk, result_z_paper_k, result_h_nmt, result_y_nmi, result_y_nmj,
+    result_y_paper_nm, result_z_nmik, result_z_nmjk, result_z_paper_nmk,
+    alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
+    c_j, r_j, a_paper_t, b_paper_j, c_paper, r_paper, gamma_ik, delta_ik,
+    gamma_jk, delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i,
+    omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
+    o_j, o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm, result_x_saw_nm,
+    result_x_plywood_nm, result_x_nmj, result_x_paper_nm)
+
+  # return result_h_t, result_y_i, result_y_j, result_y_paper, result_z_ik,
   #   result_z_jk, result_z_paper_k, result_h_nmt, result_y_nmi, result_y_nmj,
   #   result_y_paper_nm, result_z_nmik, result_z_nmjk, result_z_paper_nmk,
   #   alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
@@ -205,5 +215,5 @@ function optim_3(alpha_t, beta_t, a_i, b_i, e_i, c_i, r_saw, r_plywood, a_j,
   #   gamma_jk, delta_jk, gamma_paper_k, delta_paper_k, p_fuel, sigma, omega_i,
   #   omega_j, omega_paper, nu_saw, nu_plywood, nu_j, nu_paper, o_saw, o_plywood,
   #   o_j, o_paper, i_t1, i_t2, j_t2, pi_n, rho_nm, result_x_saw_nm,
-  #   result_x_plywood_nm, result_x_nmj, result_x_paper_nm)
+  #   result_x_plywood_nm, result_x_nmj, result_x_paper_nm
 end
