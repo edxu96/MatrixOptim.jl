@@ -3,6 +3,8 @@
 
 ## 1, Introduction
 
+It is assumed that all the products produced are sold in the current year. For example, wood products produced in the first year are sold in the first year only.
+
 ## 2, Definition of Mathematical Expressions
 
 <p align="center"><img src="/examples/quadradic/tex/50220e9df8aa71e1f6400321ad0b7c20.svg?invert_in_darkmode&sanitize=true" align=middle width=679.5676040999999pt height=396.97115204999994pt/></p>
@@ -120,3 +122,7 @@ When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?inve
 ## 4, Results
 
 obj = <img src="/examples/quadradic/tex/6d97a4427606463465aaa42cce843fd7.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+
+profit in the first year = <img src="/examples/quadradic/tex/578c7b26a80e4191c8bc4fbaf24ddc53.svg?invert_in_darkmode&sanitize=true" align=middle width=86.75831834999998pt height=21.18721440000001pt/> ;
+discounted average profit in the second year = <img src="/examples/quadradic/tex/4794fc1ceaab8475bdafb5a367c83d1c.svg?invert_in_darkmode&sanitize=true" align=middle width=86.75831834999998pt height=21.18721440000001pt/> ;
+discounted average profit in the third year = <img src="/examples/quadradic/tex/d0a9b6ec7fea06620d8749fb0ae5b4fc.svg?invert_in_darkmode&sanitize=true" align=middle width=86.75831834999998pt height=21.18721440000001pt/> ;
