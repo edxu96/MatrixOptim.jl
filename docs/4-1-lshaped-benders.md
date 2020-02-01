@@ -1,0 +1,36 @@
+---
+author: Edward J. Xu <edxu96@outlook.com>
+date: Feb 1st, 2020
+---
+
+# L-Shaped Benders Decomposition for Stochastic Programming
+
+The standard form for two stage stochastic programming with no integer variables in second stage can be expressed as:
+
+<p align="center"><img src="/docs/tex/43ff2292af7cfa6814b9c7096527fa66.svg?invert_in_darkmode&sanitize=true" align=middle width=230.0680107pt height=111.58323989999998pt/></p>
+
+where <img src="/docs/tex/1da18d2de6d16a18e780cd6c435a2936.svg?invert_in_darkmode&sanitize=true" align=middle width=10.239687149999991pt height=14.611878600000017pt/> is the vector of here-and-now decision variables, some of which are integer variables.
+
+Master Problem:
+
+<p align="center"><img src="/docs/tex/b2565a24be73f8329cba5340fdb03df7.svg?invert_in_darkmode&sanitize=true" align=middle width=210.41361494999998pt height=113.862111pt/></p>
+
+Sub-problem for each scenario:
+
+<p align="center"><img src="/docs/tex/d1c4c05d67bc982a33b576be45cea1d5.svg?invert_in_darkmode&sanitize=true" align=middle width=165.67316699999998pt height=73.6639068pt/></p>
+
+Dual problem of the sub-problem is used, which can be expressed as:
+
+<p align="center"><img src="/docs/tex/cc7c9d126710fb3fe65f1df6e8fd309d.svg?invert_in_darkmode&sanitize=true" align=middle width=154.59625334999998pt height=75.98365335pt/></p>
+
+Then, when the sub-problem cannot be solved optimally because the feasible set is unbounded, ray-problem should be used instead, which can be expressed as:
+
+<p align="center"><img src="/docs/tex/7b14ff65650568a2681c15adc7585530.svg?invert_in_darkmode&sanitize=true" align=middle width=173.0494161pt height=97.59286019999999pt/></p>
+
+The aggregation of <img src="/docs/tex/bfe13f2f7dcc488820c86e0d595d5a24.svg?invert_in_darkmode&sanitize=true" align=middle width=10.502226899999991pt height=19.871860799999983pt/> and <img src="/docs/tex/bb71884848c3a713b712ba5e85004689.svg?invert_in_darkmode&sanitize=true" align=middle width=43.016151749999985pt height=22.831056599999986pt/> from all scenarios are:
+
+<p align="center"><img src="/docs/tex/96ba482171ad58c4231a7189f9c883b8.svg?invert_in_darkmode&sanitize=true" align=middle width=162.46302434999998pt height=83.7693714pt/></p>
+
+## Example: News Boy problem
+
+<p align="center"><img src="/docs/tex/d2c6a892dca097649d156a66b23d80d0.svg?invert_in_darkmode&sanitize=true" align=middle width=280.7744808pt height=138.85339545pt/></p>
