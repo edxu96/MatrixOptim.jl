@@ -1,0 +1,125 @@
+
+# Mixed Integer Linear Programming
+
+\section{Benders Decomposition for Standard MILP}
+
+For standard MILP, get rid of <img src="/docs/tex/b0ea07dc5c00127344a1cad40467b8de.svg?invert_in_darkmode&sanitize=true" align=middle width=9.97711604999999pt height=14.611878600000017pt/>, we get:
+
+<p align="center"><img src="/docs/tex/69bb9404345829df2fc84155e0055e6b.svg?invert_in_darkmode&sanitize=true" align=middle width=121.95561675pt height=42.5041782pt/></p>
+
+and
+
+<p align="center"><img src="/docs/tex/779311627aa7691c78ff092c32ed4e68.svg?invert_in_darkmode&sanitize=true" align=middle width=196.0857657pt height=66.20050305pt/></p>
+
+The dual function of <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/>:
+
+<p align="center"><img src="/docs/tex/dc6955a3f9e8645058fa2942b484e6ae.svg?invert_in_darkmode&sanitize=true" align=middle width=193.8136926pt height=68.6864739pt/></p>
+
+where the constraints of the dual <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/> does not contain any <img src="/docs/tex/1da18d2de6d16a18e780cd6c435a2936.svg?invert_in_darkmode&sanitize=true" align=middle width=10.239687149999991pt height=14.611878600000017pt/> values. Hence we can now analyze the feasibility of the model without considering the value of <img src="/docs/tex/1da18d2de6d16a18e780cd6c435a2936.svg?invert_in_darkmode&sanitize=true" align=middle width=10.239687149999991pt height=14.611878600000017pt/>.
+
+Given the Minkovsky Fication theorem, we can hence reformulate the dual <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/> LP program as extreme points <img src="/docs/tex/b60263229a1dc1b16e50a2128f8e1cb3.svg?invert_in_darkmode&sanitize=true" align=middle width=16.18675079999999pt height=21.839370299999988pt/> and extreme rays <img src="/docs/tex/b2649fc16607ed5ed0c2aa56c8ac516e.svg?invert_in_darkmode&sanitize=true" align=middle width=15.867721649999991pt height=21.839370299999988pt/>. Assume that we enumerate all the extreme points and extreme rays, we can reformulate:
+<p align="center"><img src="/docs/tex/1ef4f52b67c64c6a2a080daf52402353.svg?invert_in_darkmode&sanitize=true" align=middle width=232.6867125pt height=112.09605825pt/></p>
+
+<img src="/docs/tex/605981cbe82b49319819f45ff181b181.svg?invert_in_darkmode&sanitize=true" align=middle width=36.94021814999999pt height=24.65753399999998pt/> can be expressed to:
+<p align="center"><img src="/docs/tex/fe0043ddb35b09725fc9fdfaf7264d2f.svg?invert_in_darkmode&sanitize=true" align=middle width=318.90476309999997pt height=161.85816075pt/></p>
+
+Substitute the <img src="/docs/tex/6dbb78540bd76da3f1625782d42d6d16.svg?invert_in_darkmode&sanitize=true" align=middle width=9.41027339999999pt height=14.15524440000002pt/> variables with the extreme points and extreme rays (and multiply <img src="/docs/tex/1c2efe8b45cd6f764641d03bed79d5b7.svg?invert_in_darkmode&sanitize=true" align=middle width=41.78283944999999pt height=24.65753399999998pt/> into the sum’s):
+<p align="center"><img src="/docs/tex/5dfa6ce2796b9fa29faaa23acba1533e.svg?invert_in_darkmode&sanitize=true" align=middle width=472.2184764pt height=112.09605825pt/></p>
+
+If we select a <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> such that just one term <img src="/docs/tex/0753c9ec830fb19753e9bfaf9c8d750a.svg?invert_in_darkmode&sanitize=true" align=middle width=88.09733789999999pt height=27.6567522pt/> becomes positive, i.e. <img src="/docs/tex/861b7f1abcde8a4795bb6e4857c5721c.svg?invert_in_darkmode&sanitize=true" align=middle width=119.05605029999998pt height=27.6567522pt/> then the LP is unbounded because there are no limits on the <img src="/docs/tex/973e7e8412be6ca9a296e5d38e8df2de.svg?invert_in_darkmode&sanitize=true" align=middle width=16.046530499999992pt height=22.831056599999986pt/>. Hence in order not to get an unbounded dual <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/> function corresponding to not getting an infeasible <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/> we have to ensure that this does not happen for any extreme ray.
+
+If an optimal solution exists (i.e. the polyhedron is not un-bounded or infeasible), at least one optimal solution to the dual <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/> function is a corner point <img src="/docs/tex/f06c588ece44b2d3403a2e2f66e12081.svg?invert_in_darkmode&sanitize=true" align=middle width=16.18675079999999pt height=25.70766330000001pt/>. Hence the dual <img src="/docs/tex/f79ecca602ecb25fb5785f02b60616ee.svg?invert_in_darkmode&sanitize=true" align=middle width=29.864996699999992pt height=24.65753399999998pt/> function has the value of the maximal point. We need to find the corner point
+
+Let’s ensure feasibility and add the value of the maximal point:
+<p align="center"><img src="/docs/tex/88d8e93b02baef8a254dbb4173c56c6a.svg?invert_in_darkmode&sanitize=true" align=middle width=197.68941224999998pt height=94.76564295pt/></p>
+
+The above problem becomes the so-called __Benders Master Problem (BMP)__:
+<p align="center"><img src="/docs/tex/47d021dda3da7dc8db670c0d478bbaa2.svg?invert_in_darkmode&sanitize=true" align=middle width=191.79457605pt height=123.79129289999999pt/></p>
+
+## Cutting Planes
+
+We can consider the Bender’s algorithm as a cutting plane algorithm: We know there is an exponential amount of cuts, but we only generate them when needed ... by solving the Benders Sub Problem (BSP):
+<p align="center"><img src="/docs/tex/440b2d55e8994f43474e40324fe32214.svg?invert_in_darkmode&sanitize=true" align=middle width=134.9558694pt height=68.6864739pt/></p>
+We use the BSP problem to find the extreme points <img src="/docs/tex/697ac4535cce7cfc2ad8ca0868454f85.svg?invert_in_darkmode&sanitize=true" align=middle width=17.00864219999999pt height=30.967648800000017pt/>. These we use to generate the so-called optimality cuts.
+
+To generate the so-called feasibility cuts, we need to be able to find extreme rays, i.e. if the BSP is un-bounded when we try to solve it, we need to find one extreme ray of that problem. This we will deal with next week. For now (in the exercises) we will assume that the BSP is NOT un-bounded.
+
+## Benders Algorithm
+
+Write up the MASTER-PROBLEM, without any constraints:
+<p align="center"><img src="/docs/tex/eeb386387d05ed4edc4cbc4107ce8e3e.svg?invert_in_darkmode&sanitize=true" align=middle width=163.4177028pt height=67.1617122pt/></p>
+Actually, if there are constraints in the original problem with only <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> variables, then these constraints can and should stay.
+
+Assume the <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> variables are fixed. Move the (now) <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> constants to the right hand side and dualize the problem. This is the SUB-PROBLEM:
+<p align="center"><img src="/docs/tex/df08b7043b73f559e26b22cad64dcd11.svg?invert_in_darkmode&sanitize=true" align=middle width=188.4385437pt height=93.57459539999999pt/></p>
+
+The BSP is the dual of the following model:
+<p align="center"><img src="/docs/tex/8b93264380df2a489a5ee8ad57a85bc7.svg?invert_in_darkmode&sanitize=true" align=middle width=136.5657579pt height=66.20050305pt/></p>
+But this model is the original problem and if we add <img src="/docs/tex/d1026229aa360b0966189c67ed9b3140.svg?invert_in_darkmode&sanitize=true" align=middle width=28.82223134999999pt height=27.6567522pt/> to the value, then it is a feasible solution to the original problem, hence a legal upper bound.
+
+The <img src="/docs/tex/4f05816a4a21991016ae50bfd0be481f.svg?invert_in_darkmode&sanitize=true" align=middle width=41.14798544999999pt height=14.15524440000002pt/> bound is the optimal value of the BMP:
+<p align="center"><img src="/docs/tex/4694be18856c241d07553478b81c3eb7.svg?invert_in_darkmode&sanitize=true" align=middle width=227.30516325pt height=98.43743085pt/></p>
+Notice that during the Benders algorithm the relaxed problem is solved (not all constraints are there). Hence a feasible lower bound.
+
+If the Benders sub-problem is un-bounded, then the original problem, changed by the chosen y variables, is in-feasible. Hence we add a constraint to the Benders master problem, the feasibility constraint, which makes such a choice of y variable values impossible.
+
+To find the extreme rays, we first insert 0 on the right-hand side.
+
+Benders' Sub Problem
+
+<p align="center"><img src="/docs/tex/dc6955a3f9e8645058fa2942b484e6ae.svg?invert_in_darkmode&sanitize=true" align=middle width=193.8136926pt height=68.6864739pt/></p>
+
+Then, we set dummy:
+
+<p align="center"><img src="/docs/tex/36b908e03808e0094bf82fbfd3d53ee8.svg?invert_in_darkmode&sanitize=true" align=middle width=223.95053339999998pt height=118.16598584999998pt/></p>
+
+## Simple Illustration
+
+<p align="center"><img src="/docs/tex/a81387324f39dd532a3b86f327cb157a.svg?invert_in_darkmode&sanitize=true" align=middle width=165.72662534999998pt height=138.37576499999997pt/></p>
+
+In standard form:
+
+<p align="center"><img src="/docs/tex/2cfac8c9b14607f3982b58deb313e200.svg?invert_in_darkmode&sanitize=true" align=middle width=144.303159pt height=90.85803705pt/></p>
+
+where
+
+<p align="center"><img src="/docs/tex/bdf12436a35a956cc03ee40f626bb476.svg?invert_in_darkmode&sanitize=true" align=middle width=118.8029799pt height=260.65013865000003pt/></p>
+
+Move the <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> constants to the right hand side of the constraints.
+<p align="center"><img src="/docs/tex/c9b8337534112ddd0a715512c2c5db41.svg?invert_in_darkmode&sanitize=true" align=middle width=128.54636355pt height=111.84378315pt/></p>
+
+Dualize the model (we need to find the u values, keeping the <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/> constants in the in the objective. This is the Benders Sub Problem:
+<p align="center"><img src="/docs/tex/8b0684f9e4100dc77c55e42f4c1136c4.svg?invert_in_darkmode&sanitize=true" align=middle width=357.06965249999996pt height=64.84018695pt/></p>
+
+<p align="center"><img src="/docs/tex/43be07d7b5dcac3a35f0ee4b536287b2.svg?invert_in_darkmode&sanitize=true" align=middle width=227.33263574999998pt height=16.438356pt/></p>
+
+<p align="center"><img src="/docs/tex/927d10b52383d42f6e30a10895e50893.svg?invert_in_darkmode&sanitize=true" align=middle width=421.35621825pt height=88.4018157pt/></p>
+
+<p align="center"><img src="/docs/tex/c365d170f7929db426ef76fb46e3def7.svg?invert_in_darkmode&sanitize=true" align=middle width=190.14626235pt height=16.438356pt/></p>
+
+Now we are ready to execute the algorithm:
+
+- Assign initial bounds <img src="/docs/tex/5639691c11d567fe9d57b9da8216023a.svg?invert_in_darkmode&sanitize=true" align=middle width=77.45081024999999pt height=22.465723500000017pt/>, <img src="/docs/tex/b3cc215ee898aaae42c00fdda9cc9765.svg?invert_in_darkmode&sanitize=true" align=middle width=75.62211359999998pt height=22.465723500000017pt/> and <img src="/docs/tex/6c12aba5162b972bb0766afbf6115836.svg?invert_in_darkmode&sanitize=true" align=middle width=37.279175999999985pt height=14.15524440000002pt/> small number
+- Assign inital <img src="/docs/tex/79cc8450be99a6eaf2aef6103f97a865.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=19.415200200000008pt/> value (possibly randomly)
+- Set in the fixed <img src="/docs/tex/79cc8450be99a6eaf2aef6103f97a865.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=19.415200200000008pt/> into the Benders sub-problem and solve the Benders sub-problem to get the extreme point <img src="/docs/tex/1550b5ae988dfe6c62d1423808d41fda.svg?invert_in_darkmode&sanitize=true" align=middle width=9.41027339999999pt height=19.415200200000008pt/> and <img src="/docs/tex/f8bb5fd4beb72954335b866c9a5ae263.svg?invert_in_darkmode&sanitize=true" align=middle width=64.7865339pt height=22.465723500000017pt/>.
+- Calculate the upper-bound: <img src="/docs/tex/c976063fc575e5a5ce5502a811a4612c.svg?invert_in_darkmode&sanitize=true" align=middle width=193.71740849999998pt height=24.65753399999998pt/>
+- Add new constraint <img src="/docs/tex/02921bcd5e26a3a346464f3f961390d7.svg?invert_in_darkmode&sanitize=true" align=middle width=197.47508054999997pt height=27.94539330000001pt/> to the Benders master-problem.
+- Solve the Benders master-problem to get new y values.
+- Calculate the lower-bound: <img src="/docs/tex/1a4812b7d70e6b45c70f892f4e3c6b8d.svg?invert_in_darkmode&sanitize=true" align=middle width=114.15870014999999pt height=22.465723500000017pt/>.
+- Terminate if <img src="/docs/tex/6649299377af806492fc2cf255e4e3ec.svg?invert_in_darkmode&sanitize=true" align=middle width=99.47120204999997pt height=22.465723500000017pt/>
+- Go to 3 (with the new value for <img src="/docs/tex/deceeaf6940a8c7a5a02373728002b0f.svg?invert_in_darkmode&sanitize=true" align=middle width=8.649225749999989pt height=14.15524440000002pt/>)
+
+## Simple Illustration 2
+
+<p align="center"><img src="/docs/tex/611e20c667098e719493b68e4767d2a4.svg?invert_in_darkmode&sanitize=true" align=middle width=236.09587815pt height=138.37576499999997pt/></p>
+
+which can be transformed into standard form:
+
+<p align="center"><img src="/docs/tex/6644176f64c39abbc541a3778646d86b.svg?invert_in_darkmode&sanitize=true" align=middle width=118.8029799pt height=379.007508pt/></p>
+
+## Benders Algorithm for Problems with Extreme Rays
+
+<p align="center"><img src="/docs/tex/d423ef097e31c26f27b63575255908fb.svg?invert_in_darkmode&sanitize=true" align=middle width=235.1824266pt height=113.718231pt/></p>
+which can be transformed into standard form:
+
+<p align="center"><img src="/docs/tex/0844a82c57c2c9ee02569df3c123dd62.svg?invert_in_darkmode&sanitize=true" align=middle width=102.4199715pt height=300.10259564999996pt/></p>
