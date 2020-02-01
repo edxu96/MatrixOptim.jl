@@ -12,7 +12,10 @@
 - [intro], introduction
 - [lp], linear programming
 - [milp], mixed integer linear programming
-- [decomp], decomposition algorithms for milp
+- [decomp], decomposition algorithms
+  * [decomp-benders-milp], benders decomposition for mixed integer linear programming
+  * [decomp-benders-lshaped], l-shaped benders decomposition for stochastic programming without integer variables in the second stage
+  * [decomp-benders-lshaped-integer], l-shaped benders decomposition for stochastic programming with integer variables in the second stage
 - [robust], robust programming
 - [sto], stochastic programming
 - [mdp], Markov decision process
@@ -25,6 +28,9 @@
 [lp]: ./2-lp.md
 [milp]: ./3-milp.md
 [decomp]: ./4-decomp.md
+[decomp-benders-milp]: ./4-1.md
+[decomp-benders-lshaped]: ./4-2.md
+[decomp-benders-lshaped-integer]: ./4-3.md
 [robust]: ./5-robust.md
 [sto]: ./6-sto.md
 [mdp]: ./7-mdp.md
