@@ -35,14 +35,14 @@ end
 
 
 "First two variables are updated."
-function solve_master!(obj_mas, model_mas, mat_e1, e2, opt_cut::Bool)
+function solve_master!(obj_mas, model_mas, e1_mat, e2, opt_cut::Bool)
   if opt_cut
-    @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
+    @constraint(model_mas, (e1_mat * vec_y)[1] + q >= e2)
   else
     ## Add feasible cut Constraints
-    @constraint(model_mas, (mat_e1 * vec_y)[1] >= e2)
+    @constraint(model_mas, (e1_mat * vec_y)[1] >= e2)
+    @constraint(model_mas, (e1_mat * vec_y)[1] + q >= e2)
   end
-  @constraint(model_mas, (mat_e1 * vec_y)[1] >= - q + e2)
 
   optimize!(model_mas)
   obj_mas = objective_value(model_mas)
@@ -154,11 +154,12 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
       ub = min(ub, obj_sub + (transpose(vec_f) * vec_ybar)[1])
 
       ## 2. Add optimal cut to master problem
-      mat_e1 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat3_t[s, :, :])[1]
+      e1_mat = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat3_t[s, :, :])[1]
         for s = 1: num_s)
       e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat_h[s, :])[1] for
         s = 1: num_s)
-      solve_master!(obj_mas, mat_e1, e2, bool_sub_s[1])
+
+      solve_master!(obj_mas, e1_mat, e2, bool_sub_s[1])
       vec_ybar = value.(vec_y)
 
       ## 3. Compare the bounds and decide whether to stop
