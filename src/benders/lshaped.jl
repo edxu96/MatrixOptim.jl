@@ -61,16 +61,16 @@ function solve_sub!(vec_ubar, obj_sub, vec_ybar, n_constraint, vec_h , mat_t,
 
   print("  Sub Problem")
   vec_ubar = value.(vec_u)
-  if sol == :Optimal
+  if sol == :OPTIMAL
     bool_sub = true
     obj_sub = objective_value(model_sub)
     vec_result_x = dual(cons_dual)
-  elseif sol == :Unbounded
+  elseif sol == :DUAL_INFEASIBLE # ???
     print("Not solved optimally because the feasible set is unbounded.\n")
     bool_sub = false
     obj_sub = objective_value(model_sub)
     vec_result_x = repeat([NaN], length(vec_c))
-  elseif sol == :Infeasible
+  elseif sol == :INFEASIBLE
     print("Not solved optimally because of infeasibility. Something is ",
       "wrong.\n")
     bool_sub = false
