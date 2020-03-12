@@ -1,6 +1,8 @@
 
 # Markov Decision Process
 
+Markov chain is a special kind of stochastic processes, which can be used to model lots of phenomena. Usually, to describe the system is not enough, because the managers or engineers may want to optimize the system performance. So Markov decision processes can be used to include the decisions to be made and formulate the optimization problem.
+
 ## 1, Markov Chain
 
 > A Markov process is a stochastic process with the property that, the probability of any particular future behavior of the process, when its current state is known exactly, is not altered by additional knowledge concerning its past behavior. [1]
@@ -16,11 +18,11 @@ The stationary transition probability matrix (STPM) or Markov matrix (MM) can be
 ### 1.1, Features
 
 * `MarkovChainFamily`
-	- `markov_chain` 
+	- `markov_chain`
 	- `stpm`
 	- `n`-step `stpm`
 	- `limiting_prob_dist`
 
-## 2, References
+## 2, Reference
 
-1. Pinsky, M. and Karlin, S., 2010. An introduction to stochastic modeling. Academic press.
+Pinsky, M. and Karlin, S., 2010. An introduction to stochastic modeling. Academic press.
