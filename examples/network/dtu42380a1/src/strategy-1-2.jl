@@ -22,8 +22,8 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 ## DEMAND NOT MET VARIABLES
 @variable(model, delta[1:L,1:P,1:T] >= 0);
 
-@variable(model, s_b >= 1)
-@variable(model, s_p >= 1)
+@variable(model, s_b[1:L] >= 1)
+@variable(model, s_p[1:L] >= 1)
 
 ## New decision variables regarding promotion or not
 @variable(model, whe_pro[1:L, 1:2], Bin);
@@ -38,7 +38,7 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 =#         + I[i,p,t]*h[p]                       #= inventory cost
 =#         + PI*delta[i,p,t]                     #= unsatisfied demand penalty
 =#         for i = 1:L, p = 1:P, t = 1:T)
-           + (s_b + s_p) * 1000000
+           + sum(s_b[i] + s_p[i] for i = 1:L) * 1000000
 );
 
 ## PROCESS CONSTRAINTS - material and machine inflow must match (according to
@@ -57,9 +57,11 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 
 ## Constraints regarding promotion
 @constraint(model, [i = 1:L, p = 3, t = 1],
-  x[i,p,t] + I0[i,p] == I[i,p,t] + D[i,p,t] + 0.3 * whe_pro[i, 1] * D[i,p,t] - delta[i,p,t]);
+  x[i,p,t] + I0[i,p] == I[i,p,t] + D[i,p,t] +
+  0.3 * whe_pro[i, 1] * D[i,p,t] - delta[i,p,t]);
 @constraint(model, [i = 1:L, p = 3, t = 2],
-  x[i,p,t] + I[i,p,t-1] == I[i,p,t] + D[i,p,t] + 0.3 * whe_pro[i, 2] * D[i,p,t] - delta[i,p,t]);
+  x[i,p,t] + I[i,p,t-1] == I[i,p,t] + D[i,p,t] +
+  0.3 * whe_pro[i, 2] * D[i,p,t] - delta[i,p,t]);
 @constraint(model, [i = 1:L], whe_pro[i, 1] + whe_pro[i, 2] >= 1)
 
 @constraint(model, [i = 1:L, p = 1:2, t = 1],
@@ -75,13 +77,13 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 ## Modifications
 ## CAPACITY CONSTRAINTS
 @constraint(model, [i = 1:L, t = 1:T],
-  sum(mBR[i,p,t] for p = 1:P) <= 24*5*60*60 * s_b);
+  sum(mBR[i,p,t] for p = 1:P) <= 24*5*60*60 * s_b[i]);
 @constraint(model, [i = 1:L, t = 1:T],
-  sum(mPR[i,p,t] for p = 1:P) <= 24*5*60*60 * s_p);
+  sum(mPR[i,p,t] for p = 1:P) <= 24*5*60*60 * s_p[i]);
 @constraint(model, [i = 1:L, t = 1:T],
-  sum(mBO[i,p,t] for p = 1:P) <= 24*1*60*60 * s_b);
+  sum(mBO[i,p,t] for p = 1:P) <= 24*1*60*60 * s_b[i]);
 @constraint(model, [i = 1:L, t = 1:T],
-  sum(mPO[i,p,t] for p = 1:P) <= 24*1*60*60 * s_p);
+  sum(mPO[i,p,t] for p = 1:P) <= 24*1*60*60 * s_p[i]);
 @constraint(model, [i = 1:L, p = 1:P, t = 1:T], delta[i,p,t] <= 0.00001);
 
 optimize!(model)
@@ -92,7 +94,9 @@ println(value(whe_pro[2, 2]))
 println(value(whe_pro[3, 1]))
 println(value(whe_pro[3, 2]))
 
-println(value(s_b))
-println(value(s_p))
+for i = 1:L
+  println(value(s_b[i]))
+  println(value(s_p[i]))
+end
 
 include("./export_result.jl")

@@ -51,9 +51,9 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 @constraint(model, [i = 1:L, t = 1:T],
   sum(mPR[i,p,t] for p = 1:P) <= 24*5*60*60);
 @constraint(model, [i = 1:L, t = 1:T],
-  sum(mBO[i,p,t] for p = 1:P) <= 30*60*60);
+  sum(mBO[i,p,t] for p = 1:P) <= 28*60*60);
 @constraint(model, [i = 1:L, t = 1:T],
-  sum(mPO[i,p,t] for p = 1:P) <= 30*60*60);
+  sum(mPO[i,p,t] for p = 1:P) <= 28*60*60);
 ## STORAGE CONSTRAINTS - inflow (production and start-of-period inventory) must
 ##   equal outflow (demand and end-of-period inventory) at each DC
 
@@ -81,5 +81,6 @@ println(value(whe_pro[2, 1]))
 println(value(whe_pro[2, 2]))
 println(value(whe_pro[3, 1]))
 println(value(whe_pro[3, 2]))
+println(objective_value(model))
 
 include("./export_result.jl")

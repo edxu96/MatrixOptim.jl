@@ -61,7 +61,7 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
   x[i,p,t] + I0[i,p] == I[i,p,t] + D[i,p,t] + 0.3 * whe_pro[i, 1] * D[i,p,t] - delta[i,p,t]);
 @constraint(model, [i = 1:L, p = 3, t = 2],
   x[i,p,t] + I[i,p,t-1] == I[i,p,t] + D[i,p,t] + 0.3 * whe_pro[i, 2] * D[i,p,t] - delta[i,p,t]);
-@constraint(model, [i = 1:L], whe_pro[i, 1] + whe_pro[i, 2] >= 1)
+@constraint(model, [i = 1:L], whe_pro[i, 1] + whe_pro[i, 2] == 1)
 
 @constraint(model, [i = 1:L, p = 1:2, t = 1],
   x[i,p,t] + I0[i,p] == I[i,p,t] + D[i,p,t] - delta[i,p,t]);
@@ -70,6 +70,7 @@ model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 @constraint(model, [i = 1:L, p = 1:P, t = 3:4],
   x[i,p,t] + I[i,p,t-1] == I[i,p,t] + D[i,p,t] - delta[i,p,t]);
 
+## Make sure there is a promotion in every region
 @constraint(model, [i = 1:L, p = 1:P, t = 1:T],
   I[i,p,t] >= ss[i,p,t]);
 
