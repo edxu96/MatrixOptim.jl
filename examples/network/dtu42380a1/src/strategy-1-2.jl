@@ -98,5 +98,9 @@ for i = 1:L
   println(value(s_b[i]))
   println(value(s_p[i]))
 end
+extra = value(s_b[1]) + value(s_p[1]) + value(s_b[2]) +
+  value(s_p[2]) + value(s_b[3]) + value(s_p[3])
+
+println(objective_value(model) - extra * 1000000)
 
 include("./export_result.jl")
