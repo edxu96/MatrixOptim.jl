@@ -26,12 +26,12 @@ _Table 4. symbols and definitions of constants_
 
 ## 2. the Model
 
-<p align="center"><img src="/examples/network/dtu42380a2/tex/12bf6d777e80a8b6c7717dc97a66ef5c.svg?invert_in_darkmode&sanitize=true" align=middle width=648.33550815pt height=290.38941195pt/></p>
+<p align="center"><img src="/examples/network/dtu42380a2/tex/064c60b18fbd20544577b8931205977a.svg?invert_in_darkmode&sanitize=true" align=middle width=734.63708505pt height=290.38941195pt/></p>
 
 ## 3. Results
 
 ```
-objective_value(model) = 2.42556845e7
+objective_value(model) = -1.034e7
 3×5 Array{Float64,2}:
  0.0  0.0  0.0  0.0  0.0
  0.0  0.0  0.0  0.0  0.0
