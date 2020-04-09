@@ -6,6 +6,8 @@ date: April 9, 2020
 
 # DTU42380a2: Supply Networks and Inventory
 
+## 1. Tables
+
 <p align="center"><img src="/examples/network/dtu42380a2/tex/a3158c98a89c87e55d5211ccb6b0168a.svg?invert_in_darkmode&sanitize=true" align=middle width=358.31081385pt height=120.32873654999999pt/></p>
 
 _Table 1. symbols and definitions of sets._
@@ -22,4 +24,34 @@ _Table 3. symbols and definitions of decision variables._
 
 _Table 4. symbols and definitions of constants_
 
+## 2. the Model
+
 <p align="center"><img src="/examples/network/dtu42380a2/tex/12bf6d777e80a8b6c7717dc97a66ef5c.svg?invert_in_darkmode&sanitize=true" align=middle width=648.33550815pt height=290.38941195pt/></p>
+
+## 3. Results
+
+```
+objective_value(model) = 2.42556845e7
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  1.0
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  1.0
+x = 2.85e6 when s = 1 and l = 4.
+x = 1.976e6 when s = 2 and l = 1.
+x = 3.439e6 when s = 2 and l = 4.
+x = 3.7544e6 when s = 3 and l = 1.
+x = 4.0e6 when s = 3 and l = 4.
+x = 2.5341e6 when s = 3 and l = 5.
+```
