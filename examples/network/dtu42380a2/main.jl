@@ -34,21 +34,50 @@ function solve_mod_1()
   @constraint(model, [l = 1:num_l, w = 1:num_w, s = 1:num_s],
     z[s, l, w] <= sum(e[p, s] * y[p, l, w] for p = 1:num_p))
   @constraint(model, [s = 1:num_s, v = 1:num_v],
-    sum(x[s, l, v] for l = 1:num_l) >= demands[s, v])
+    sum(x[s, l, v] for l = 1:num_l) == demands[s, v])
 
   optimize!(model)
 
-
-  y_raw = value_mat3(y)
-  y_opt = zeros(num_s, num_l, num_w)
-  for s = 1:num_s, l = 1:num_l, w= 1:num_w
-    y_opt[s, l, w] = sum(e[p, s] * y_raw[p, l, w] for p = 1:num_p)
-  end
-
-  @show x_opt = value_mat3(x)
-  @show z_opt = value_mat3(z)
-  @show y_opt
+  return model, x, y, z, e
 end
 
 
-solve_mod_1()
+function analyze(model, x, y, z, e)
+  num_s = 3
+  num_l = 5
+  num_v = 6
+  num_p = 5
+  num_w = 2
+
+  y_raw = value_mat3(y)
+  y_raw[abs.(y_raw) .< 0.001] .= 0
+  y_opt_small = zeros(num_s, num_l)
+  y_opt_large = zeros(num_s, num_l)
+  for s = 1:num_s, l = 1:num_l
+    y_opt_small[s, l] = sum(e[p, s] * y_raw[p, l, 1] for p = 1:num_p)
+    y_opt_large[s, l] = sum(e[p, s] * y_raw[p, l, 2] for p = 1:num_p)
+  end
+
+  z_raw = value_mat3(z)
+  z_raw[abs.(z_raw) .< 0.001] .= 0
+  z_opt_small = z_raw[:, :, 1]
+  z_opt_large = z_raw[:, :, 2]
+
+  @show objective_value(model)
+  display(y_opt_small)
+  display(y_opt_large)
+  display(z_opt_small)
+  display(z_opt_large)
+
+  x_opt = value_mat3(x)
+  for s = 1:num_s, l = 1:num_l
+    through = sum(x_opt[s, l, v] for v = 1:num_v)
+    if through >= 0.01
+      println("x = $(round(through, digits=3)) when s = $(s) and l = $(l).")
+    end
+  end
+end
+
+
+model, x, y, z, e = solve_mod_1()
+analyze(model, x, y, z, e)

@@ -6,6 +6,8 @@ date: April 9, 2020
 
 # DTU42380a2: Supply Networks and Inventory
 
+## 1. Tables
+
 $$
 \begin{array}{cll}
 \hline
@@ -70,6 +72,8 @@ $$
 
 _Table 4. symbols and definitions of constants_
 
+## 2. the Model
+
 $$
 \begin{align}
 \min \quad & \sum_{S, L, W} c^{\text{fix}}_{l, w} \left(\sum_P e^s_p y^p_{l, w} \right) + 475000 \sum_{S, L, W} z^s_{l, w} + (0.165 + c^{\text{var}}) \sum_{S, L, V} x^s_{l, v} + \sum_{S, L, V} c^{\text{ship}}_{l, v} x^s_{l, v} \\
@@ -81,3 +85,31 @@ $$
 & x^s_{l, v} \in \mathbb{Z}^{+}
 \end{align}
 $$
+
+## 3. Results
+
+```
+objective_value(model) = 2.42556845e7
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  1.0
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0  0.0
+3×5 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  0.0
+ 1.0  0.0  0.0  1.0  1.0
+x = 2.85e6 when s = 1 and l = 4.
+x = 1.976e6 when s = 2 and l = 1.
+x = 3.439e6 when s = 2 and l = 4.
+x = 3.7544e6 when s = 3 and l = 1.
+x = 4.0e6 when s = 3 and l = 4.
+x = 2.5341e6 when s = 3 and l = 5.
+```
