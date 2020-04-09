@@ -1,41 +1,54 @@
+using JuMP, Gurobi, CSV
+include("./func.jl")
 
-function get_data()
-  demands = [
-    640000.00	400000.00	320000.00	440000.00	700000.00	350000.00;
-    1152000.00	720000.00	576000.00	792000.00	1260000.00	630000.00;
-    2073600.00	1296000.00	1036800.00	1425600.00	2268000.00	1134000.00
-    ]
 
-  costs_ship = [
-    0.50	0.63	0.88	1.00	1.25	1.38;
-    0.63	0.63	0.63	0.75	1.00	1.13;
-    0.88	0.88	0.63	0.63	0.75	0.88;
-    1.00	1.00	0.75	0.63	0.75	0.63;
-    1.13	1.25	0.75	0.88	0.63	1.00
-    ]
+function solve_mod_1()
+  demands, costs_ship, costs_fix, cost_var, q, e = get_data()
 
-  costs_fix = [
-    300000.00
-    250000.00
-    220000.00
-    220000.00
-    240000.00
-    500000.00
-    420000.00
-    375000.00
-    375000.00
-    400000.00
-    ]
+  num_s = 3
+  num_l = 5
+  num_v = 6
+  num_p = 5
+  num_w = 2
 
-  cost_var = 0.2
+  model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
 
-  caps = [2 4] * 1000000
+  @variable(model, x[1:num_s, 1:num_l, 1:num_v] >= 0, Int)
+  @variable(model, y[1:num_p, 1:num_l, 1:num_w], Bin)
+  @variable(model, z[1:num_s, 1:num_l, 1:num_w], Bin)
 
-  plans = [
-    1 1 0;
-    0 1 1;
-    1 1 1;
-    0 0 1;
-    0 0 0
-    ]
+  @objective(model, Min,
+    sum(costs_fix[l, w] *  sum(e[p, s] * y[p, l, w] for p = 1:num_p) for
+      l = 1:num_l, s = 1:num_s, w = 1:num_w) +
+    475000 * sum(z[s, l, w] for s = 1:num_s, l = 1:num_l, w = 1:num_w) +
+    (0.165 + cost_var) * sum(x[s, l, v] for s = 1:num_s, l = 1:num_l,
+      v = 1:num_v) +
+    sum(costs_ship[l, v] * x[s, l, v] for s = 1:num_s, l = 1:num_l,
+      v = 1:num_v)
+    )
+
+  @constraint(model, [l = 1:num_l, s = 1:num_s], sum(x[s, l, v] for
+    v = 1:num_v) <= sum(q[w] * z[s, l, w] for w = 1:num_w))
+  @constraint(model, [l = 1:num_l, w = 1:num_w], sum(y[p, l, w] for
+    p = 1:num_p) == 1)
+  @constraint(model, [l = 1:num_l, w = 1:num_w, s = 1:num_s],
+    z[s, l, w] <= sum(e[p, s] * y[p, l, w] for p = 1:num_p))
+  @constraint(model, [s = 1:num_s, v = 1:num_v],
+    sum(x[s, l, v] for l = 1:num_l) >= demands[s, v])
+
+  optimize!(model)
+
+
+  y_raw = value_mat3(y)
+  y_opt = zeros(num_s, num_l, num_w)
+  for s = 1:num_s, l = 1:num_l, w= 1:num_w
+    y_opt[s, l, w] = sum(e[p, s] * y_raw[p, l, w] for p = 1:num_p)
+  end
+
+  @show x_opt = value_mat3(x)
+  @show z_opt = value_mat3(z)
+  @show y_opt
 end
+
+
+solve_mod_1()
