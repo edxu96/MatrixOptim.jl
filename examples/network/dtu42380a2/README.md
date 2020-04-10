@@ -30,6 +30,18 @@ _Table 4. symbols and definitions of constants_
 
 ## 3. Results
 
+<p align="center"><img src="/examples/network/dtu42380a2/tex/83392464efb5527966438a929263f534.svg?invert_in_darkmode&sanitize=true" align=middle width=441.46196819999994pt height=80.87668215pt/></p>
+
+_Table 5. optimized leasing decisions for small warehouses._
+
+<p align="center"><img src="/examples/network/dtu42380a2/tex/81fa81213308fbece09bd7ee30250db8.svg?invert_in_darkmode&sanitize=true" align=middle width=441.46196819999994pt height=80.87668215pt/></p>
+
+_Table 6. optimized leasing decisions for large warehouses_
+
+<p align="center"><img src="/examples/network/dtu42380a2/tex/0eb1d72224447312935f052564e7e22c.svg?invert_in_darkmode&sanitize=true" align=middle width=463.51677075000003pt height=80.87668215pt/></p>
+
+_Table 7. optimized inventory decisions for large warehouses_
+
 ```
 objective_value(model) = -1.034e7
 3×5 Array{Float64,2}:
