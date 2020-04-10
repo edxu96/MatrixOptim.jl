@@ -88,6 +88,48 @@ $$
 
 ## 3. Results
 
+$$
+\begin{array}{cccccc}
+\hline
+\text{year} & \text{Seattle} & \text{Denver} & \text{St. Louis} & \text{Atlanta} & \text{Philadelphia} \\
+\hline
+2007 & - & - & - & - & - \\
+2008 & - & - & - & - & - \\
+2009 & - & - & - & - & - \\
+\hline
+\end{array}
+$$
+
+_Table 5. optimized leasing decisions for small warehouses._
+
+$$
+\begin{array}{cccccc}
+\hline
+\text{year} & \text{Seattle} & \text{Denver} & \text{St. Louis} & \text{Atlanta} & \text{Philadelphia} \\
+\hline
+2007 & - & - & - & \checkmark & - \\
+2008 & \checkmark & - & - & \checkmark & - \\
+2009 & \checkmark & - & - & \checkmark & \checkmark \\
+\hline
+\end{array}
+$$
+
+_Table 6. optimized leasing decisions for large warehouses_
+
+$$
+\begin{array}{cccccc}
+\hline
+\text{year} & \text{Seattle} & \text{Denver} & \text{St. Louis} & \text{Atlanta} & \text{Philadelphia} \\
+\hline
+2007 & - & - & - & 2.85E6 & - \\
+2008 & 1.976E6 & - & - & 3.439E6 & - \\
+2009 & 3.7544E6 & - & - & 4.0E6 & 2.5341E6 \\
+\hline
+\end{array}
+$$
+
+_Table 7. optimized inventory decisions for large warehouses_
+
 ```
 objective_value(model) = -1.034e7
 3×5 Array{Float64,2}:

@@ -1,4 +1,7 @@
-
+## DTU42380a2: Supply Networks and Inventory
+## Edward J. Xu
+## April 10, 2020
+## Data and Functions
 
 function get_data()
   # demands = [

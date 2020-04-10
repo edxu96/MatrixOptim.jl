@@ -1,3 +1,8 @@
+## DTU42380a2: Supply Networks and Inventory
+## Edward J. Xu
+## April 10, 2020
+## cd ~/GitHub/MatrixOptim.jl/examples/network/dtu42380a2
+
 using JuMP, Gurobi, CSV
 include("./func.jl")
 
