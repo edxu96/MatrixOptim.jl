@@ -25,10 +25,10 @@ function solve_mod_1()
   @objective(model, Max,
     - sum(costs_fix[l, w] *  sum(e[p, s] * y[p, l, w] for p = 1:num_p) for
       l = 1:num_l, s = 1:num_s, w = 1:num_w) +
-    -475000 * sum(z[s, l, w] for s = 1:num_s, l = 1:num_l, w = 1:num_w) +
-    -(0.165 + cost_var) * sum(x[s, l, v] for s = 1:num_s, l = 1:num_l,
+    - 475000 * sum(z[s, l, w] for s = 1:num_s, l = 1:num_l, w = 1:num_w) +
+    - (0.165 + cost_var) * sum(x[s, l, v] for s = 1:num_s, l = 1:num_l,
       v = 1:num_v) +
-    -sum(costs_ship[l, v] * x[s, l, v] for s = 1:num_s, l = 1:num_l,
+    - sum(costs_ship[l, v] * x[s, l, v] for s = 1:num_s, l = 1:num_l,
       v = 1:num_v) +
     13915125  # customer fee income
     )
