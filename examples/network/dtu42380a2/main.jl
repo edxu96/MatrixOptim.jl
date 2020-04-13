@@ -7,13 +7,10 @@ using JuMP, Gurobi, CSV
 include("./func.jl")
 
 
-function solve_mod_1()
-  demands, costs_ship, costs_fix, cost_var, q, e = get_data()
-
+function solve_mod(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
   num_s = 3
   num_l = 5
   num_v = 6
-  num_p = 5
   num_w = 2
 
   model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
@@ -44,11 +41,11 @@ function solve_mod_1()
 
   optimize!(model)
 
-  return model, x, y, z, e
+  return model, x, y, z, e, q
 end
 
 
-function analyze(model, x, y, z, e)
+function analyze(model, x, y, z, e, q)
   num_s = 3
   num_l = 5
   num_v = 6
@@ -76,14 +73,47 @@ function analyze(model, x, y, z, e)
   display(z_opt_large)
 
   x_opt = value_mat3(x)
+  ths = zeros(3, 5) # matrix for throughs
+  exs = zeros(3, 5) # matrix for excess capacities
   for s = 1:num_s, l = 1:num_l
     through = sum(x_opt[s, l, v] for v = 1:num_v)
     if through >= 0.01
-      println("x = $(round(through, digits=3)) when s = $(s) and l = $(l).")
+      # println("x = $(round(through, digits=3)) when s = $(s) and l = $(l).")
+      excess = sum(z_raw[s, l, w] * q[w] for w = 1:2) - through
+      # println("Excess capacity equals $(round(excess, digits = 3)).")
+      ths[s, l] = round(through, digits = 3)
+      exs[s, l] = round(excess, digits = 3)
     end
   end
+
+  println("\nThroughs and excess capacities.")
+  display(ths)
+  display(exs)
 end
 
 
-model, x, y, z, e = solve_mod_1()
-analyze(model, x, y, z, e)
+function main()
+  demands, costs_ship, costs_fix, cost_var, q, e = get_data()
+
+  ## Model 2 for Task 1
+  # num_p = 5
+  # solve_mod(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
+
+  ## Model 2 for Task 3
+  e = [
+    1 1 0;
+    0 1 1;
+    1 1 1;
+    0 0 1;
+    0 0 0;
+    1 0 0;
+    0 1 0
+    ]  # e[p, s]
+  num_p = 7
+  solve_mod(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
+
+  analyze(model, x, y, z, e, q)
+end
+
+
+main()
