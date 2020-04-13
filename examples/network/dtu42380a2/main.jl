@@ -30,7 +30,7 @@ function solve_mod_1()
       v = 1:num_v) +
     - sum(costs_ship[l, v] * x[s, l, v] for s = 1:num_s, l = 1:num_l,
       v = 1:num_v) +
-    13915125  # customer fee income
+    sum(demands) * 0.75  # customer fee income
     )
 
   @constraint(model, [l = 1:num_l, s = 1:num_s], sum(x[s, l, v] for
