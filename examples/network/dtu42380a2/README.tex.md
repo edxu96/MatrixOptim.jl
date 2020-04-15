@@ -125,3 +125,17 @@ $$ \begin{array}{cccccc}
 \end{array} $$
 
 _Table 8. optimized inventory decisions for large warehouses_
+
+## Task 3
+
+$$ \begin{align}
+\max \quad & - \sum_{S, L, W} c^{\text{fix}}_{l, w} t^s_{l, w} - 475000 \sum_{S, L, W} z^s_{l, w} - (0.165 + c^{\text{var}}) \sum_{S, L, V} x^s_{l, v} - \sum_{S, L, V} c^{\text{ship}}_{l, v} x^s_{l, v} \\
+\text{s.t.} \quad & \sum_{v \in V} x^s_{l, v} \leq \sum_W q_w z^s_{l, w} \quad l \in L, s \in S \\
+& \sum_{p \in P} y^p_{l, w} = 1 \quad \forall l \in L, w \in W \\
+& z^s_{l, w} \leq t^s_{l, w} \quad \forall s \in S, l \in L, w \in W \\
+& t^s_{l, w} \leq 100 \sum_P e^s_p y^p_{l, w} \quad \forall s \in S, l \in L, w \in W \\
+& t^s_{l, w} \geq \sum_P e^s_p y^p_{l, w} \quad \forall s \in S, l \in L, w \in W \\
+& y^p_{l, w} \in \{0, 1\} \quad \forall s \in S, l \in L, w \in W, p \in P \\
+& \sum_l x^s_{l, v} = d^s_v \quad \forall v \in V, s \in S \\
+& x^s_{l, v}, z^s_{l, w}, t^s_{l, w} \in \mathbb{Z}^{+}
+\end{align} $$

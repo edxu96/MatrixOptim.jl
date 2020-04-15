@@ -45,11 +45,92 @@ function solve_mod(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
 end
 
 
-function analyze(model, x, y, z, e, q)
+function solve_mod_flex(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
   num_s = 3
   num_l = 5
   num_v = 6
-  num_p = 5
+  num_w = 2
+
+  model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
+
+  @variable(model, x[1:num_s, 1:num_l, 1:num_v] >= 0, Int)
+  @variable(model, y[1:num_p, 1:num_l, 1:num_w], Bin)
+  @variable(model, z[1:num_s, 1:num_l, 1:num_w] >= 0, Int)
+  @variable(model, t[1:num_s, 1:num_l, 1:num_w] >= 0, Int)
+
+  @objective(model, Max,
+    - sum(costs_fix[l, w] * t[s, l, w] * sum(e[p, s] * y[p, l, w] for p = 1:num_p) for
+      l = 1:num_l, s = 1:num_s, w = 1:num_w) +
+    - 475000 * sum(z[s, l, w] for s = 1:num_s, l = 1:num_l, w = 1:num_w) +
+    - (0.165 + cost_var) * sum(x[s, l, v] for s = 1:num_s, l = 1:num_l,
+      v = 1:num_v) +
+    - sum(costs_ship[l, v] * x[s, l, v] for s = 1:num_s, l = 1:num_l,
+      v = 1:num_v) +
+    sum(demands) * 0.75  # customer fee income
+    )
+
+  @constraint(model, [l = 1:num_l, s = 1:num_s], sum(x[s, l, v] for
+    v = 1:num_v) <= sum(q[w] * z[s, l, w] for w = 1:num_w))
+  @constraint(model, [l = 1:num_l, w = 1:num_w], sum(y[p, l, w] for
+    p = 1:num_p) == 1)
+  @constraint(model, [l = 1:num_l, w = 1:num_w, s = 1:num_s],
+    z[s, l, w] <= t[s, l, w] * sum(e[p, s] * y[p, l, w] for p = 1:num_p))
+  @constraint(model, [s = 1:num_s, v = 1:num_v],
+    sum(x[s, l, v] for l = 1:num_l) == demands[s, v])
+
+  optimize!(model)
+
+  return model, x, y, z, e, q
+end
+
+
+function solve_mod_flex_milp(demands, costs_ship, costs_fix, cost_var, q,
+    e, num_p)
+
+  num_s = 3
+  num_l = 5
+  num_v = 6
+  num_w = 2
+
+  model = Model(with_optimizer(Gurobi.Optimizer, Presolve=0, OutputFlag=0));
+
+  @variable(model, x[1:num_s, 1:num_l, 1:num_v] >= 0, Int)
+  @variable(model, y[1:num_p, 1:num_l, 1:num_w], Bin)
+  @variable(model, z[1:num_s, 1:num_l, 1:num_w] >= 0, Int)
+  @variable(model, t[1:num_s, 1:num_l, 1:num_w] >= 0, Int)
+
+  @objective(model, Max,
+    - sum(costs_fix[l, w] * t[s, l, w] for l = 1:num_l, s = 1:num_s,
+      w = 1:num_w) - 475000 * sum(z[s, l, w] for s = 1:num_s, l = 1:num_l,
+      w = 1:num_w) - (0.165 + cost_var) * sum(x[s, l, v] for s = 1:num_s,
+      l = 1:num_l, v = 1:num_v) - sum(costs_ship[l, v] * x[s, l, v] for
+      s = 1:num_s, l = 1:num_l, v = 1:num_v) +
+    sum(demands) * 0.75  # customer fee income
+    )
+
+  @constraint(model, [l = 1:num_l, s = 1:num_s], sum(x[s, l, v] for
+    v = 1:num_v) <= sum(q[w] * z[s, l, w] for w = 1:num_w))
+  @constraint(model, [l = 1:num_l, w = 1:num_w], sum(y[p, l, w] for
+    p = 1:num_p) == 1)
+  @constraint(model, [l = 1:num_l, w = 1:num_w, s = 1:num_s],
+    z[s, l, w] <= t[s, l, w])
+  @constraint(model, [l = 1:num_l, w = 1:num_w, s = 1:num_s],
+    t[s, l, w] <= 100 * sum(e[p, s] * y[p, l, w] for p = 1:num_p))
+  @constraint(model, [l = 1:num_l, w = 1:num_w, s = 1:num_s],
+    t[s, l, w] >= sum(e[p, s] * y[p, l, w] for p = 1:num_p))
+  @constraint(model, [s = 1:num_s, v = 1:num_v],
+    sum(x[s, l, v] for l = 1:num_l) == demands[s, v])
+
+  optimize!(model)
+
+  return model, x, y, z, e, q, t
+end
+
+
+function analyze(model, x, y, z, e, q, num_p)
+  num_s = 3
+  num_l = 5
+  num_v = 6
   num_w = 2
 
   y_raw = value_mat3(y)
@@ -92,12 +173,35 @@ function analyze(model, x, y, z, e, q)
 end
 
 
+function analyze_flex(t)
+  t_raw = value_mat3(t)
+  t_raw[abs.(t_raw) .< 0.001] .= 0
+  t_opt_small = t_raw[:, :, 1]
+  t_opt_large = t_raw[:, :, 2]
+
+  display(t_opt_small)
+  display(t_opt_large)
+end
+
+
 function main()
   demands, costs_ship, costs_fix, cost_var, q, e = get_data()
 
-  ## Model 2 for Task 1
+  ## Model for Task 1
   # num_p = 5
-  # solve_mod(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
+  # model, x, y, z, e, q = solve_mod(demands, costs_ship, costs_fix,
+  #   cost_var, q, e, num_p)
+
+  ## Model 3 for Task 3
+  # num_p = 5
+  # model, x, y, z, e, q = solve_mod_flex(demands, costs_ship, costs_fix,
+  #   cost_var, q, e, num_p)
+
+  ## Model 4 for Task 3
+  # num_p = 5
+  # model, x, y, z, e, q, t = solve_mod_flex_milp(demands, costs_ship, costs_fix,
+  #   cost_var, q, e, num_p)
+  # analyze_flex(t)
 
   ## Model 2 for Task 3
   e = [
@@ -110,9 +214,10 @@ function main()
     0 1 0
     ]  # e[p, s]
   num_p = 7
-  solve_mod(demands, costs_ship, costs_fix, cost_var, q, e, num_p)
+  model, x, y, z, e, q = solve_mod(demands, costs_ship, costs_fix, cost_var,
+    q, e, num_p)
 
-  analyze(model, x, y, z, e, q)
+  analyze(model, x, y, z, e, q, num_p)
 end
 
 
