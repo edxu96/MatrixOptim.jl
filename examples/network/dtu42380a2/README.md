@@ -45,3 +45,7 @@ _Table 7. optimized inventory decisions for small warehouses_
 <p align="center"><img src="/examples/network/dtu42380a2/tex/6fdd3c3279ded33c59db6258994753a8.svg?invert_in_darkmode&sanitize=true" align=middle width=471.78157454999996pt height=80.87668215pt/></p>
 
 _Table 8. optimized inventory decisions for large warehouses_
+
+## Task 3
+
+<p align="center"><img src="/examples/network/dtu42380a2/tex/8a236e04d2e14ee0d4f52db05993a706.svg?invert_in_darkmode&sanitize=true" align=middle width=596.25644925pt height=350.69068649999997pt/></p>
