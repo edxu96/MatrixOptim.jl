@@ -1,28 +1,36 @@
 ---
 editor_options:
   chunk_output_type: console
+output: bookdown::gitbook
+bibliography: "../web/book.bib"
 ---
 
 ## Mechanism Design
 
 ### Desired Properties
 
-According to [@mitridati2019design], following four desired properties are defined:
+According to section 2.2 in [@mitridati2019design], following four desired properties are defined. A major design challenge is to identify the links and the trade-off between these properties.
 
 ```{definition}
 **Efficiency** The social welfare of the agents participating in the mechanism, with respect to the revealed preferences, is maximized, and no agent desires to deviate unilaterally from its dis- patch. In other words, the outcomes of social welfare maximization align with profit-maximization of agents. 
 ```
 
+> The efficiency property can be interpreted as the existence of a Nash equilibrium that coincides with the maximum social welfare, i.e., a Pareto efficient Nash equilibrium. [@mitridati2019design]
+
 ```{definition}
-**Incentive compatibility** Every agent can maximize its utility by acting according to its true preferences. 
+**Incentive Compatibility** Every agent can maximize its utility by acting according to its true preferences. 
 ```
 
-> As the agents hold private information, they might have incentives to misreport their true preferences in order to manipulate the outcomes of the community management problem and increase their profits, or for privacy concerns. Thus, designing a mechanism that motivates the agents to be truthful is a major challenge for the community manager. Such a property is referred to as incentive compatibility. [@mitridati2019design]
+> As the agents hold private information, they might have incentives to misreport their true preferences in order to manipulate the outcomes of the community management problem and increase their profits, or for privacy concerns. Thus, designing a mechanism that motivates the agents to be truthful is a major challenge for the community manager. [@mitridati2019design]
+
+> The incentive compatibility property, also called dominant-strategy incentive compatibility, requires that there exists a truth-revealing dominant-strategy equilibrium, i.e., each agent can achieve its optimal objective, regardless of what the others do, by revealing its true preferences. [@mitridati2019design]
 
 ```{definition}
-**Budget balance (allocation efficiency)** The community manager has neither financial deficit nor financial excess.
+**Budget Balance (Allocation Efficiency)** The community manager has neither financial deficit nor financial excess.
 ```
 
+> It guarantees that the community manager is non-profit. [@mitridati2019design]
+
 ```{definition}
-**Group rationality** No group of agents can benefit by splitting from the community.
+**Group Rationality** No group of agents can benefit by splitting from the community.
 ```
