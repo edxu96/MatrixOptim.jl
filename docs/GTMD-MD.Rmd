@@ -1,8 +1,8 @@
 ---
 editor_options:
   chunk_output_type: console
-output: bookdown::gitbook
-bibliography: "../web/book.bib"
+# output: bookdown::gitbook
+# bibliography: "../web/book.bib"
 ---
 
 ## Mechanism Design
