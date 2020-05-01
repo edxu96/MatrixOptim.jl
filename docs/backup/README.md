@@ -5,7 +5,7 @@
 
 ## Data Driven Decision Making under Uncertainty
 
-> Many important problems involve decision making under uncertainty, including aircraft collision avoidance, wildfire management, and disaster response. When one is designing automated decision support systems, it is important to account for the various sources of uncertainty when making or recommending decisions. Accounting for these sources of uncertainty and carefully balancing the multiple objectives of the system can be very challenging. [1]
+
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@
 
 ## References
 
-1. Kochenderfer, M.J., 2015. Decision making under uncertainty: theory and application. MIT press.
+1.
 
 [intro]: ./1-intro.md
 [lp]: ./2-lp.md

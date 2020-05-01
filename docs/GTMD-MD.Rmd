@@ -1,0 +1,28 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+## Mechanism Design
+
+### Desired Properties
+
+According to [@mitridati2019design], following four desired properties are defined:
+
+```{definition}
+**Efficiency** The social welfare of the agents participating in the mechanism, with respect to the revealed preferences, is maximized, and no agent desires to deviate unilaterally from its dis- patch. In other words, the outcomes of social welfare maximization align with profit-maximization of agents. 
+```
+
+```{definition}
+**Incentive compatibility** Every agent can maximize its utility by acting according to its true preferences. 
+```
+
+> As the agents hold private information, they might have incentives to misreport their true preferences in order to manipulate the outcomes of the community management problem and increase their profits, or for privacy concerns. Thus, designing a mechanism that motivates the agents to be truthful is a major challenge for the community manager. Such a property is referred to as incentive compatibility. [@mitridati2019design]
+
+```{definition}
+**Budget balance (allocation efficiency)** The community manager has neither financial deficit nor financial excess.
+```
+
+```{definition}
+**Group rationality** No group of agents can benefit by splitting from the community.
+```

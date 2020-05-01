@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction | MatrixOptim</title>
+  <title>2.4 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim</title>
   <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Introduction | MatrixOptim" />
+  <meta property="og:title" content="2.4 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction | MatrixOptim" />
+  <meta name="twitter:title" content="2.4 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim" />
   
   <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="MILP.html"/>
+<link rel="prev" href="De-benders-l.html"/>
+<link rel="next" href="Sto.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -70,8 +70,7 @@
 <li><a href="./">MatrixOptim</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
-<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="1" data-path="MILP.html"><a href="MILP.html"><i class="fa fa-check"></i><b>1</b> Mixed Integer Linear Programming</a></li>
 <li class="chapter" data-level="2" data-path="De.html"><a href="De.html"><i class="fa fa-check"></i><b>2</b> Decomposition Algorithms</a>
 <ul>
@@ -106,26 +105,60 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1 unnumbered" number="">
-<h1>Introduction</h1>
-<blockquote>
-<p>Many important problems involve decision making under uncertainty, including aircraft collision avoidance, wildfire management, and disaster response. When one is designing automated decision support systems, it is important to account for the various sources of uncertainty when making or recommending decisions. Accounting for these sources of uncertainty and carefully balancing the multiple objectives of the system can be very challenging. <span class="citation">(Kochenderfer <a href="#ref-kochenderfer2015decision" role="doc-biblioref">2015</a>)</span></p>
-</blockquote>
+<div id="De-benders-l-int" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> L-Shaped Benders Decomposition with Integer Variables in Second Stage</h2>
+<p>The standard form for two stage stochastic programming with integer variables in second stage:</p>
+<p><span class="math display">\[ \begin{align}
+\min_{\mathbf{y}, \mathbf{x}_s, \mathbf{z}_s} \quad&amp; \mathbf{f} ^ { T } \mathbf{y} + \sum_{s \in \Omega} \pi_s \left(\mathbf{c}_s^T \mathbf{x}_s + \mathbf{d}_s^T \mathbf{z}_s \right) \\
+\text{s.t.} \quad&amp; \mathbf{T}_s \mathbf{y} + \mathbf{w}_s \mathbf{x}_s + \mathbf{g}_s \mathbf{z}_s \geq \mathbf{h}_s \quad \forall s \\
+&amp; \mathbf{y} \in \mathbf{Y} \\
+&amp; \mathbf{x}_s \geq 0 \quad \forall s \\
+&amp; \mathbf{z}_s \in \mathbf{Z} \quad \forall s
+\end{align} \]</span></p>
+<p>where the <span class="math inline">\(\mathbf{y}\)</span> is vector of integer variables.</p>
+<p>Master Problem:</p>
+<p><span class="math display">\[ \begin{align}
+\min \quad&amp; \mathbf{f}^{T} \mathbf{y} + \sum_{s \in \Omega} \pi_s q_s(\mathbf{y}) \\
+\text{s.t.} \quad&amp; \overline{\mathbf{u}_j^r}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq 0 \quad \forall j \\
+&amp; \overline{\mathbf{u}_i^p}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq q_s(\mathbf{y}) \quad \forall i \\
+&amp; \mathbf{y} \in \mathbf{Y}
+\end{align} \]</span></p>
+<p>Sub-problem for each scenario:</p>
+<p><span class="math display">\[ \begin{align}
+q_s(\mathbf{y}) = \min \quad &amp; \mathbf{d}^{T}_s \mathbf{z}_s + \mathbf{c}_s^T \mathbf{x}_s \\
+\text{s.t.} \quad &amp; \mathbf{g}_s \mathbf{z}_s + \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
+&amp; \mathbf{x}_s \geq 0
+\end{align} \]</span></p>
+<p>which is a standard MILP problem.</p>
+<p>So we use the benders algorithm again. The Sub-Mas problem is:</p>
+<p><span class="math display">\[ \begin{align}
+q_s(\mathbf{y}) = \min \quad &amp; \mathbf{d}^{T}_s \mathbf{z}_s + p_s(\mathbf{z}_s) \\
+\text{s.t.} \quad &amp; \overline{\mathbf{v}_m^p}^T \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right] \leq p_s(\mathbf{z}_s) \quad \forall m \\
+&amp; \overline{\mathbf{v}_n^r}^T \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right] \leq 0 \quad \forall n \\
+&amp; \mathbf{x}_s \geq 0
+\end{align} \]</span></p>
+<p>Sub-Sub-problem for each scenario:</p>
+<p><span class="math display">\[ \begin{align}
+p_s(\mathbf{y}) = \min \quad &amp; \mathbf{c}_s^T \mathbf{x}_s \\
+\text{s.t.} \quad &amp; \mathbf{w}_s \mathbf{x}_s \geq \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s}  \\
+&amp; \mathbf{x}_s \geq 0
+\end{align} \]</span></p>
+<p>The dual function of <span class="math inline">\(p_s(\mathbf{y})\)</span> is:</p>
+<p><span class="math display">\[ \begin{align}
+p_s^d(\mathbf{y}) = \max \quad &amp; \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right]^{T} \mathbf{v} \\
+\text{s.t.} \quad &amp; \mathbf{w}_s^{T} \mathbf{v} \leq \mathbf{c}_s \\
+&amp; \mathbf{v} \geq 0
+\end{align} \]</span></p>
 
 </div>
-<h3>References</h3>
-<div id="refs" class="references">
-<div id="ref-kochenderfer2015decision">
-<p>Kochenderfer, Mykel J. 2015. <em>Decision Making Under Uncertainty: Theory and Application</em>. MIT press.</p>
-</div>
-</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="MILP.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="De-benders-l.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Sto.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -156,7 +189,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/00-Intro.Rmd",
+"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/02-De.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -175,6 +208,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

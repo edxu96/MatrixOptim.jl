@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>MatrixOptim</title>
+  <title>Chapter 4 Robust Programming | MatrixOptim</title>
   <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="MatrixOptim" />
+  <meta property="og:title" content="Chapter 4 Robust Programming | MatrixOptim" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="MatrixOptim" />
+  <meta name="twitter:title" content="Chapter 4 Robust Programming | MatrixOptim" />
   
   <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="MILP.html"/>
+<link rel="prev" href="Sto.html"/>
+<link rel="next" href="MDP.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -70,13 +70,15 @@
 <li><a href="./">MatrixOptim</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
 <li class="chapter" data-level="1" data-path="MILP.html"><a href="MILP.html"><i class="fa fa-check"></i><b>1</b> Mixed Integer Linear Programming</a></li>
 <li class="chapter" data-level="2" data-path="De.html"><a href="De.html"><i class="fa fa-check"></i><b>2</b> Decomposition Algorithms</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="benders-decomposition-for-standard-milp.html"><a href="benders-decomposition-for-standard-milp.html"><i class="fa fa-check"></i><b>2.1</b> Benders Decomposition for Standard MILP</a></li>
-<li class="chapter" data-level="2.2" data-path="De-benders-l.html"><a href="De-benders-l.html"><i class="fa fa-check"></i><b>2.2</b> L-Shaped Benders Decomposition for Stochastic Programming</a></li>
-<li class="chapter" data-level="2.3" data-path="De-benders-l-int.html"><a href="De-benders-l-int.html"><i class="fa fa-check"></i><b>2.3</b> L-Shaped Benders Decomposition with Integer Variables in Second Stage</a></li>
+<li class="chapter" data-level="2.1" data-path="benders-decomposition-matrixoptim.html"><a href="benders-decomposition-matrixoptim.html"><i class="fa fa-check"></i><b>2.1</b> 1, Benders Decomposition, MatrixOptim</a></li>
+<li class="chapter" data-level="2.2" data-path="benders-decomposition-for-standard-milp.html"><a href="benders-decomposition-for-standard-milp.html"><i class="fa fa-check"></i><b>2.2</b> Benders Decomposition for Standard MILP</a></li>
+<li class="chapter" data-level="2.3" data-path="De-benders-l.html"><a href="De-benders-l.html"><i class="fa fa-check"></i><b>2.3</b> L-Shaped Benders Decomposition for Stochastic Programming</a></li>
+<li class="chapter" data-level="2.4" data-path="De-benders-l-int.html"><a href="De-benders-l-int.html"><i class="fa fa-check"></i><b>2.4</b> L-Shaped Benders Decomposition with Integer Variables in Second Stage</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="Sto.html"><a href="Sto.html"><i class="fa fa-check"></i><b>3</b> Stochastic Programming</a></li>
 <li class="chapter" data-level="4" data-path="robust.html"><a href="robust.html"><i class="fa fa-check"></i><b>4</b> Robust Programming</a></li>
@@ -84,12 +86,6 @@
 <ul>
 <li class="chapter" data-level="5.1" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>5.1</b> 1, Markov Chain</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="game-theory-and-mechanism-design.html"><a href="game-theory-and-mechanism-design.html"><i class="fa fa-check"></i><b>6</b> Game Theory and Mechanism design</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="mechanism-design.html"><a href="mechanism-design.html"><i class="fa fa-check"></i><b>6.1</b> Mechanism Design</a></li>
-</ul></li>
-<li class="part"><span><b>I App in Retailing Energy Markets</b></span></li>
-<li class="chapter" data-level="7" data-path="section.html"><a href="section.html"><i class="fa fa-check"></i><b>7</b> </a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -110,32 +106,17 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">MatrixOptim</h1>
-<p class="author"><em>Edward J. Xu</em></p>
-<p class="date"><em>2020-05-01</em></p>
-</div>
-<div id="introduction" class="section level1 unnumbered" number="">
-<h1>Introduction</h1>
-<p>Hi, there. I’m Edward J. Xu. This website covers all my readings and writings about operations research and it’s application in energy systems.</p>
-<blockquote>
-<p>Many important problems involve decision making under uncertainty, including aircraft collision avoidance, wildfire management, and disaster response. When one is designing automated decision support systems, it is important to account for the various sources of uncertainty when making or recommending decisions. Accounting for these sources of uncertainty and carefully balancing the multiple objectives of the system can be very challenging. <span class="citation">(Kochenderfer <a href="#ref-kochenderfer2015decision" role="doc-biblioref">2015</a>)</span></p>
-</blockquote>
+<div id="robust" class="section level1" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Robust Programming</h1>
 
-</div>
-<h3> </h3>
-<div id="refs" class="references">
-<div id="ref-kochenderfer2015decision">
-<p>Kochenderfer, Mykel J. 2015. <em>Decision Making Under Uncertainty: Theory and Application</em>. MIT press.</p>
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="MILP.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="Sto.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="MDP.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -166,7 +147,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/index.Rmd",
+"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/04-Robust.Rmd",
 "text": "Edit"
 },
 "history": {
