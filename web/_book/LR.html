@@ -1,0 +1,4168 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Linear Regression | A Minimal Book Example</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Linear Regression | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Linear Regression | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Yihui Xie" />
+
+
+<meta name="date" content="2020-04-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="references.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Prerequisites</a></li>
+<li class="chapter" data-level="2" data-path="LR.html"><a href="LR.html"><i class="fa fa-check"></i><b>2</b> Linear Regression</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="LR.html"><a href="LR.html#data-visualization"><i class="fa fa-check"></i><b>2.1</b> 1. Data Visualization</a></li>
+<li class="chapter" data-level="2.2" data-path="LR.html"><a href="LR.html#regress-y-on-x2-assumptions-and-orthogonalization"><i class="fa fa-check"></i><b>2.2</b> 2. Regress <code>y</code> on <code>x2</code>, Assumptions and Orthogonalization</a></li>
+<li class="chapter" data-level="2.3" data-path="LR.html"><a href="LR.html#normality-and-jarque-bera-test-of-mods1"><i class="fa fa-check"></i><b>2.3</b> 3. Normality and Jarque-Bera Test of <code>mods[[1]]</code></a></li>
+<li class="chapter" data-level="2.4" data-path="LR.html"><a href="LR.html#homoskedasticity-and-whites-test-of-mods1"><i class="fa fa-check"></i><b>2.4</b> 4. Homoskedasticity and White’s Test of <code>mods[[1]]</code></a></li>
+<li class="chapter" data-level="2.5" data-path="LR.html"><a href="LR.html#functional-form-and-reset-test-of-mods1"><i class="fa fa-check"></i><b>2.5</b> 5. Functional Form and RESET Test of <code>mods[[1]]</code></a></li>
+<li class="chapter" data-level="2.6" data-path="LR.html"><a href="LR.html#regress-y-on-x2-with-36-data-point-excluded"><i class="fa fa-check"></i><b>2.6</b> 6. Regress <code>y</code> on <code>x2</code> with <code>36</code> Data Point Excluded</a></li>
+<li class="chapter" data-level="2.7" data-path="LR.html"><a href="LR.html#models-with-more-regressors"><i class="fa fa-check"></i><b>2.7</b> 7. Models with More Regressors</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="LR.html"><a href="LR.html#benchmark-model"><i class="fa fa-check"></i><b>2.7.1</b> 7-1. Benchmark Model</a></li>
+<li class="chapter" data-level="2.7.2" data-path="LR.html"><a href="LR.html#model-with-all-regressors"><i class="fa fa-check"></i><b>2.7.2</b> 7-2. Model with All Regressors</a></li>
+<li class="chapter" data-level="2.7.3" data-path="LR.html"><a href="LR.html#likelihood-ratio-test"><i class="fa fa-check"></i><b>2.7.3</b> 7-3. Likelihood Ratio Test</a></li>
+<li class="chapter" data-level="2.7.4" data-path="LR.html"><a href="LR.html#automated-model-selection"><i class="fa fa-check"></i><b>2.7.4</b> 7-4. Automated Model Selection</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="LR.html"><a href="LR.html#causality-and-mediation"><i class="fa fa-check"></i><b>2.8</b> 8. Causality and Mediation</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="LR.html"><a href="LR.html#causality-of-x2-x6"><i class="fa fa-check"></i><b>2.8.1</b> 8-1. Causality of <code>x2</code>-<code>x6</code></a></li>
+<li class="chapter" data-level="2.8.2" data-path="LR.html"><a href="LR.html#causality-of-x3-x4"><i class="fa fa-check"></i><b>2.8.2</b> 8-2. Causality of <code>x3</code>-<code>x4</code></a></li>
+<li class="chapter" data-level="2.8.3" data-path="LR.html"><a href="LR.html#causality-of-x4-x8"><i class="fa fa-check"></i><b>2.8.3</b> 8-3. Causality of <code>x4</code>-<code>x8</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="LR.html"><a href="LR.html#mods3-with-extra-terms"><i class="fa fa-check"></i><b>2.9</b> 9. <code>mods[[3]]</code> with extra terms</a></li>
+<li class="chapter" data-level="2.10" data-path="LR.html"><a href="LR.html#interpretation-of-mods7"><i class="fa fa-check"></i><b>2.10</b> 10. Interpretation of <code>mods[[7]]</code></a>
+<ul>
+<li class="chapter" data-level="2.10.1" data-path="LR.html"><a href="LR.html#model-structure"><i class="fa fa-check"></i><b>2.10.1</b> 10-1. Model Structure</a></li>
+<li class="chapter" data-level="2.10.2" data-path="LR.html"><a href="LR.html#regressors"><i class="fa fa-check"></i><b>2.10.2</b> 10-2. Regressors</a></li>
+<li class="chapter" data-level="2.10.3" data-path="LR.html"><a href="LR.html#orthogonalization-of-multiple-regressors"><i class="fa fa-check"></i><b>2.10.3</b> 10-3. Orthogonalization of Multiple Regressors</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="LR" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Linear Regression</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="LR.html#cb1-1"></a><span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())</span></code></pre></div>
+<p>Following packages and functions are used in this project.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="LR.html#cb2-1"></a><span class="co">## basic packages</span></span>
+<span id="cb2-2"><a href="LR.html#cb2-2"></a><span class="kw">library</span>(knitr)</span>
+<span id="cb2-3"><a href="LR.html#cb2-3"></a><span class="kw">library</span>(kableExtra)</span>
+<span id="cb2-4"><a href="LR.html#cb2-4"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb2-5"><a href="LR.html#cb2-5"></a><span class="kw">library</span>(conflicted)</span>
+<span id="cb2-6"><a href="LR.html#cb2-6"></a><span class="kw">library</span>(magrittr)</span>
+<span id="cb2-7"><a href="LR.html#cb2-7"></a><span class="kw">library</span>(broom)</span>
+<span id="cb2-8"><a href="LR.html#cb2-8"></a><span class="co">## paticular packages for this project</span></span>
+<span id="cb2-9"><a href="LR.html#cb2-9"></a><span class="kw">library</span>(lmtest)</span>
+<span id="cb2-10"><a href="LR.html#cb2-10"></a><span class="kw">library</span>(corrr)</span>
+<span id="cb2-11"><a href="LR.html#cb2-11"></a><span class="kw">library</span>(tseries)</span>
+<span id="cb2-12"><a href="LR.html#cb2-12"></a><span class="kw">library</span>(corrplot)</span>
+<span id="cb2-13"><a href="LR.html#cb2-13"></a><span class="kw">source</span>(<span class="st">&quot;../src/funcs.R&quot;</span>)</span>
+<span id="cb2-14"><a href="LR.html#cb2-14"></a><span class="kw">source</span>(<span class="st">&quot;../src/tests.R&quot;</span>)</span></code></pre></div>
+<p>The data set is defined as follows based on file <code>recs.csv</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="LR.html#cb3-1"></a><span class="kw">set.seed</span>(<span class="dv">6</span>)</span>
+<span id="cb3-2"><a href="LR.html#cb3-2"></a>dat &lt;-</span>
+<span id="cb3-3"><a href="LR.html#cb3-3"></a><span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;../data/recs.csv&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb3-4"><a href="LR.html#cb3-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">slice</span>(<span class="kw">sample</span>(<span class="kw">nrow</span>(.), <span class="dv">300</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb3-5"><a href="LR.html#cb3-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">y =</span> <span class="kw">log</span>(KWH <span class="op">/</span><span class="st"> </span>NHSLDMEM)) <span class="op">%&gt;%</span></span>
+<span id="cb3-6"><a href="LR.html#cb3-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x8 =</span> TOTROOMS <span class="op">+</span><span class="st"> </span>NCOMBATH <span class="op">+</span><span class="st"> </span>NHAFBATH) <span class="op">%&gt;%</span></span>
+<span id="cb3-7"><a href="LR.html#cb3-7"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(y, <span class="dt">x2 =</span> NHSLDMEM, <span class="dt">x3 =</span> EDUCATION, <span class="dt">x4 =</span> MONEYPY, <span class="dt">x5 =</span> HHSEX,</span>
+<span id="cb3-8"><a href="LR.html#cb3-8"></a>    <span class="dt">x6 =</span> HHAGE, <span class="dt">x7 =</span> ATHOME, x8) <span class="op">%&gt;%</span></span>
+<span id="cb3-9"><a href="LR.html#cb3-9"></a><span class="st">  </span><span class="kw">mutate_at</span>(<span class="kw">seq</span>(<span class="dv">2</span>, <span class="dv">8</span>), as.integer) <span class="op">%&gt;%</span><span class="st">  </span><span class="co"># make continuous variables discrete</span></span>
+<span id="cb3-10"><a href="LR.html#cb3-10"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x5 =</span> <span class="op">-</span><span class="st"> </span>x5 <span class="op">+</span><span class="st"> </span><span class="dv">2</span>)</span></code></pre></div>
+<p>Different variables are summarized in the following table. <code>y</code>, the logarithm of averaged electricity consumption, is the variable that we are interested in. Specifically, The electricity consumption refers to the electricity usage of the house/studio where the respondent lives in 2015, measured in kilowatthours. The quantity is average by the number of household members in the house/studio. That way, it roughly represent the level of electricity consumption of the respondent. Other variables are discussion in the following table.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Sym</th>
+<th>Abbr</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>z</td>
+<td>KWH</td>
+<td>electricity consumption</td>
+</tr>
+<tr class="even">
+<td>y</td>
+<td>LKWH.pers</td>
+<td>logarithm of KWH/NHSLDMEM</td>
+</tr>
+<tr class="odd">
+<td>x2</td>
+<td>NHSLDMEM</td>
+<td>number of household members</td>
+</tr>
+<tr class="even">
+<td>x3</td>
+<td>EDUCATION</td>
+<td>highest education completed</td>
+</tr>
+<tr class="odd">
+<td>x4</td>
+<td>MONEYPY</td>
+<td>annual gross household income last year</td>
+</tr>
+<tr class="even">
+<td>x5</td>
+<td>HHSEX</td>
+<td>gender</td>
+</tr>
+<tr class="odd">
+<td>x6</td>
+<td>HHAGE</td>
+<td>age</td>
+</tr>
+<tr class="even">
+<td>x7</td>
+<td>ATHOME</td>
+<td>number of weekdays someone is at home</td>
+</tr>
+<tr class="odd">
+<td>x8</td>
+<td>TOTROOMS +</td>
+<td>number of rooms (including bathrooms)</td>
+</tr>
+</tbody>
+</table>
+<p>Note that <code>x8</code> is a variable indicating the number of rooms of the house/studio of the respondent. It equals the summation of <code>TOTROOMS</code>, <code>NCOMBATH</code> and <code>NHAFBATH</code> in the original data set. <code>x8</code> is not included in the initial analysis (sections 1 to 7).</p>
+<p><code>x3</code>, the education level of the respondent, is considered as a continuous variable in this project for simplicity. The detailed definition of different levels is shown in the following table.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Less than high school diploma or GED</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>High school diploma or GED</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Some college or Associate’s degree</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Bachelor’s degree (for example: BA, BS)</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Master’s, Professional, or Doctorate degree</td>
+</tr>
+</tbody>
+</table>
+<p>The first 5 rows of the data set used can be visualized:</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+y
+</th>
+<th style="text-align:left;">
+x2
+</th>
+<th style="text-align:left;">
+x3
+</th>
+<th style="text-align:left;">
+x4
+</th>
+<th style="text-align:left;">
+x5
+</th>
+<th style="text-align:left;">
+x6
+</th>
+<th style="text-align:left;">
+x7
+</th>
+<th style="text-align:left;">
+x8
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+7.540
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+39
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8.193
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+85
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+8.678
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+71
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7.846
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+39
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+9.755
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+10
+</td>
+</tr>
+</tbody>
+</table>
+<p>In this project, we want to develop a model associating the continuous variable, average electricity consumption, with other variables. We will start by visualizing correlations between variables. In particular, the two variables <code>x2</code> and <code>x6</code>, which highly correlate with <code>y</code> will be explored. The model regressing <code>y</code> on <code>x2</code> will be discussed in section 2. Four assumptions will be made, three of which will be tested in section 3-5 by Jarque-Bera test (normality), White’s test (homoskedasticity) and RESET test (functional form) respectively. According the test results and discussion in section 6, data point <code>36</code> is excluded. Then, in section 7, more regressors are introduced and three new models are established. The detail regarding how regressors interact with each other, namely causality, is discussed in section 8. Based on the understanding of the underlying mechanism, a nonlinear term and <code>x8</code> are included as new regressors. Two new models are estimated, based on the only model passing all tests in section 7. Finally, the model called <code>mods[[7]]</code> is chosen as the final for presentation and it is interpreted in section 10.</p>
+<div id="data-visualization" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> 1. Data Visualization</h2>
+<p>It can be seen that <code>y</code> is highly correlated to <code>x2</code> and <code>x6</code> according to the following table.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+x
+</th>
+<th style="text-align:left;">
+y
+</th>
+<th style="text-align:left;">
+r
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+-0.51098
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x3
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+0.03410
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x4
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+0.04098
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x5
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+-0.04260
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+0.35346
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x7
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+0.03966
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8
+</td>
+<td style="text-align:left;">
+y
+</td>
+<td style="text-align:left;">
+0.21329
+</td>
+</tr>
+</tbody>
+</table>
+<p>It can be seen from the following covariance matrix that <code>y</code> is highly correlated to <code>x2</code>, <code>x6</code> and <code>x8</code>. Besides, <code>x3</code>-<code>x4</code>, <code>x2</code>-<code>x6</code>, <code>x4</code>-<code>x8</code> are high correlated, which will be discussed in section 9.</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>For each level of <code>x2</code> a box indicating three quantiles (25%, 50%, 75%) of <code>y</code> is given. It shows that there is a tendency for <code>y</code> to decrease with <code>x2</code> by looking at the median. The sizes of different boxes seem to vary with different values of <code>x2</code>. Besides, there are many observations when <code>x2</code> is small. But it is assumed for now that the conditional variance is constant, which will be tested section 4. Three data points with extreme values <code>36</code>, <code>241</code> and <code>163</code> is discussed in sections 3 and 5.</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The box plot of <code>y</code> by <code>x6</code> is given. It can be seen that the tendency is not strictly linear and the condition variance is not stable. So we will regress <code>y</code> on <code>x2</code> first and use <code>x6</code> as the second regressor in section 6.</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="regress-y-on-x2-assumptions-and-orthogonalization" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> 2. Regress <code>y</code> on <code>x2</code>, Assumptions and Orthogonalization</h2>
+<p><code>mods[[1]]</code> is obtained by regressing <code>y</code> on <code>x2</code>.</p>
+<pre><code>#&gt; lm(formula = y ~ x2, data = dat)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+9.036
+</td>
+<td style="text-align:left;">
+0.07526
+</td>
+<td style="text-align:left;">
+120.06
+</td>
+<td style="text-align:left;">
+2.214e-254
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.270
+</td>
+<td style="text-align:left;">
+0.02631
+</td>
+<td style="text-align:left;">
+-10.26
+</td>
+<td style="text-align:left;">
+2.352e-21
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.2611
+</td>
+<td style="text-align:left;">
+0.2586
+</td>
+<td style="text-align:left;">
+0.6309
+</td>
+<td style="text-align:left;">
+105.3
+</td>
+<td style="text-align:left;">
+2.352e-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-286.5
+</td>
+<td style="text-align:left;">
+579
+</td>
+<td style="text-align:left;">
+590.1
+</td>
+<td style="text-align:left;">
+118.6
+</td>
+<td style="text-align:left;">
+298
+</td>
+</tr>
+</tbody>
+</table>
+<p>By orthogonalizing <code>x2</code> with respect to constant 1. the following reparameterized model can be obtained.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="LR.html#cb5-1"></a>mods[[<span class="dv">2</span>]] &lt;-<span class="st"> </span></span>
+<span id="cb5-2"><a href="LR.html#cb5-2"></a><span class="st">  </span>dat <span class="op">%&gt;%</span></span>
+<span id="cb5-3"><a href="LR.html#cb5-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x1 =</span> <span class="dv">1</span>, <span class="dt">x21 =</span> x2 <span class="op">-</span><span class="st"> </span><span class="kw">mean</span>(.<span class="op">$</span>x2)) <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="LR.html#cb5-4"></a><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(y, x1, x21) <span class="op">%&gt;%</span></span>
+<span id="cb5-5"><a href="LR.html#cb5-5"></a><span class="st">  </span>{<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>x1 <span class="op">+</span><span class="st"> </span>x21, <span class="dt">data =</span> .)}</span></code></pre></div>
+<pre><code>#&gt; lm(formula = y ~ x1 + x21, data = .)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.36
+</td>
+<td style="text-align:left;">
+0.03642
+</td>
+<td style="text-align:left;">
+229.52
+</td>
+<td style="text-align:left;">
+0.000e+00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x21
+</td>
+<td style="text-align:left;">
+-0.27
+</td>
+<td style="text-align:left;">
+0.02631
+</td>
+<td style="text-align:left;">
+-10.26
+</td>
+<td style="text-align:left;">
+2.352e-21
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.2611
+</td>
+<td style="text-align:left;">
+0.2586
+</td>
+<td style="text-align:left;">
+0.6309
+</td>
+<td style="text-align:left;">
+105.3
+</td>
+<td style="text-align:left;">
+2.352e-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-286.5
+</td>
+<td style="text-align:left;">
+579
+</td>
+<td style="text-align:left;">
+590.1
+</td>
+<td style="text-align:left;">
+118.6
+</td>
+<td style="text-align:left;">
+298
+</td>
+</tr>
+</tbody>
+</table>
+<p>The estimated regression coefficient for <code>x2</code> in <code>mods[[1]]</code> equals that for <code>x21</code> in <code>mods[[2]]</code>. That is, slopes in these two models are the same. The standard error of the intercept is reduced by 51.60 %.</p>
+</div>
+<div id="normality-and-jarque-bera-test-of-mods1" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> 3. Normality and Jarque-Bera Test of <code>mods[[1]]</code></h2>
+<p>The following four plots can be used to check the plausibility of normality assumptions:</p>
+<ul>
+<li>The upper left plot shows residuals against fitted values of <code>mods[[1]]</code>. It is hard to trust indication the flat trending line because there are few data points with low fitted values. The variance seems to be stable when fitted values are high. The assumption of homoskedasticity is tested formally in section 4.</li>
+<li>Data points <code>36</code>, <code>241</code> and <code>163</code> are mentioned in all but the lower right plots. They are examined in section 6.</li>
+<li>The assumption of conditional normality looks reasonable according to the upper right Q-Q plot. A formal Jarque-Bera test is performed later this section to examine this assumption in a quantitative manner.</li>
+</ul>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The assumption of conditional normality is justified by JB test.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="homoskedasticity-and-whites-test-of-mods1" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> 4. Homoskedasticity and White’s Test of <code>mods[[1]]</code></h2>
+<p><code>mods[[1]]</code> cannot pass the White’s test, which means the variances of residuals do vary with different values of <code>y</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="LR.html#cb7-1"></a>mods[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">test_white</span>(dat, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>), <span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_ti</span>(F)</span></code></pre></div>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+6.028
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.04909
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="functional-form-and-reset-test-of-mods1" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> 5. Functional Form and RESET Test of <code>mods[[1]]</code></h2>
+<p><code>mods[[1]]</code> can pass RESET test.</p>
+<pre><code>#&gt; Registered S3 methods overwritten by &#39;lme4&#39;:
+#&gt;   method                          from
+#&gt;   cooks.distance.influence.merMod car 
+#&gt;   influence.merMod                car 
+#&gt;   dfbeta.influence.merMod         car 
+#&gt;   dfbetas.influence.merMod        car</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+1.128
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+299
+</td>
+<td style="text-align:left;">
+0.2883
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="regress-y-on-x2-with-36-data-point-excluded" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span> 6. Regress <code>y</code> on <code>x2</code> with <code>36</code> Data Point Excluded</h2>
+<p><code>36</code>, <code>241</code> and <code>163</code> data points are mentioned in three plots regrading the analysis of residuals of <code>mods[[1]]</code> in section 3. According to the scatter plot in section 1, their values of <code>y</code> are too small compared to those with same values of <code>x2</code>. They seems to be well defined.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+index
+</th>
+<th style="text-align:left;">
+y
+</th>
+<th style="text-align:left;">
+x2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+36
+</td>
+<td style="text-align:left;">
+5.312
+</td>
+<td style="text-align:left;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+163
+</td>
+<td style="text-align:left;">
+7.054
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+241
+</td>
+<td style="text-align:left;">
+6.680
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+</tbody>
+</table>
+<p>However, with just 8 other points when <code>x2</code> equals 6, data point <code>36</code> will have a huge impact on the model, so it is excluded in the following model <code>mods[[2]]</code>. That is, a new model is estimated with the same formula as <code>mods[[1]]</code> but the data set excluding data point <code>36</code>.</p>
+<pre><code>#&gt; lm(formula = y ~ x2, data = .)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+9.0101
+</td>
+<td style="text-align:left;">
+0.07431
+</td>
+<td style="text-align:left;">
+121.254
+</td>
+<td style="text-align:left;">
+5.324e-255
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.2569
+</td>
+<td style="text-align:left;">
+0.02612
+</td>
+<td style="text-align:left;">
+-9.832
+</td>
+<td style="text-align:left;">
+6.208e-20
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.2456
+</td>
+<td style="text-align:left;">
+0.243
+</td>
+<td style="text-align:left;">
+0.6197
+</td>
+<td style="text-align:left;">
+96.67
+</td>
+<td style="text-align:left;">
+6.208e-20
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-280.2
+</td>
+<td style="text-align:left;">
+566.4
+</td>
+<td style="text-align:left;">
+577.5
+</td>
+<td style="text-align:left;">
+114.1
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+<p>Compared with <code>mods[[1]]</code>, <code>mods[[2]]</code> has more accurate estimation. Besides, <code>mods[[2]]</code> passes all of the hypothesis tests. So data point <code>36</code> is exluded in the following models, and the corresponding new data set <code>dat_2</code> is used.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+1.686
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+297
+</td>
+<td style="text-align:left;">
+0.4304
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+1.986
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.1588
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="models-with-more-regressors" class="section level2" number="2.7">
+<h2><span class="header-section-number">2.7</span> 7. Models with More Regressors</h2>
+<div id="benchmark-model" class="section level3" number="2.7.1">
+<h3><span class="header-section-number">2.7.1</span> 7-1. Benchmark Model</h3>
+<p><code>mods[[3]]</code> with <code>x2</code> and <code>x6</code> being regressors is a good model already and pass every test. It is chosen as the benchmark model after the discussion in subsection 7-4.</p>
+<pre><code>#&gt; lm(formula = y ~ x2 + x6, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.522218
+</td>
+<td style="text-align:left;">
+0.167008
+</td>
+<td style="text-align:left;">
+51.029
+</td>
+<td style="text-align:left;">
+1.015e-148
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.220207
+</td>
+<td style="text-align:left;">
+0.028079
+</td>
+<td style="text-align:left;">
+-7.842
+</td>
+<td style="text-align:left;">
+8.080e-14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+0.007576
+</td>
+<td style="text-align:left;">
+0.002331
+</td>
+<td style="text-align:left;">
+3.249
+</td>
+<td style="text-align:left;">
+1.290e-03
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.2715
+</td>
+<td style="text-align:left;">
+0.2666
+</td>
+<td style="text-align:left;">
+0.61
+</td>
+<td style="text-align:left;">
+55.17
+</td>
+<td style="text-align:left;">
+4.32e-21
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+-275
+</td>
+<td style="text-align:left;">
+557.9
+</td>
+<td style="text-align:left;">
+572.7
+</td>
+<td style="text-align:left;">
+110.1
+</td>
+<td style="text-align:left;">
+296
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="LR.html#cb11-1"></a>results_test &lt;-<span class="st"> </span>mods[[<span class="dv">3</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">test_jb</span>(dat_<span class="dv">2</span>)</span>
+<span id="cb11-2"><a href="LR.html#cb11-2"></a></span>
+<span id="cb11-3"><a href="LR.html#cb11-3"></a>results_test <span class="op">%&lt;&gt;%</span></span>
+<span id="cb11-4"><a href="LR.html#cb11-4"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_white</span>(mods[[<span class="dv">3</span>]], dat_<span class="dv">2</span>, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x6 <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6<span class="op">^</span><span class="dv">2</span>),</span>
+<span id="cb11-5"><a href="LR.html#cb11-5"></a>    <span class="dv">3</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb11-6"><a href="LR.html#cb11-6"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_white</span>(mods[[<span class="dv">3</span>]], dat_<span class="dv">2</span>, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x6 <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb11-7"><a href="LR.html#cb11-7"></a><span class="st">    </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x6), <span class="dv">6</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb11-8"><a href="LR.html#cb11-8"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_reset</span>(mods[[<span class="dv">3</span>]], dat_<span class="dv">2</span>))</span>
+<span id="cb11-9"><a href="LR.html#cb11-9"></a></span>
+<span id="cb11-10"><a href="LR.html#cb11-10"></a>results_test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_ti</span>(F)</span></code></pre></div>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+1.32474
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+296
+</td>
+<td style="text-align:left;">
+0.7233
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+3.24389
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+293
+</td>
+<td style="text-align:left;">
+0.7777
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+0.04314
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.8355
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="model-with-all-regressors" class="section level3" number="2.7.2">
+<h3><span class="header-section-number">2.7.2</span> 7-2. Model with All Regressors</h3>
+<p>To construct <code>mods[[4]]</code>, all of the variables (excluding <code>x8</code>) are included. <code>mods[[4]]</code> can pass Jarque-Bera test and two White’s tests, but cannot pass RESET test.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="LR.html#cb12-1"></a>results_test &lt;-<span class="st"> </span>mods[[<span class="dv">4</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">test_jb</span>(dat_<span class="dv">2</span>)</span>
+<span id="cb12-2"><a href="LR.html#cb12-2"></a></span>
+<span id="cb12-3"><a href="LR.html#cb12-3"></a>results_test <span class="op">%&lt;&gt;%</span></span>
+<span id="cb12-4"><a href="LR.html#cb12-4"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_white</span>(mods[[<span class="dv">4</span>]], dat_<span class="dv">2</span>, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4 <span class="op">+</span><span class="st"> </span>x5 <span class="op">+</span><span class="st"> </span>x6 <span class="op">+</span><span class="st"> </span>x7 <span class="op">+</span><span class="st"> </span></span>
+<span id="cb12-5"><a href="LR.html#cb12-5"></a><span class="st">    </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x3<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x5<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x7<span class="op">^</span><span class="dv">2</span>), <span class="dv">7</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb12-6"><a href="LR.html#cb12-6"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_white</span>(mods[[<span class="dv">4</span>]], dat_<span class="dv">2</span>, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4 <span class="op">+</span><span class="st"> </span>x5 <span class="op">+</span><span class="st"> </span>x6 <span class="op">+</span><span class="st"> </span>x7 <span class="op">+</span><span class="st"> </span></span>
+<span id="cb12-7"><a href="LR.html#cb12-7"></a><span class="st">    </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x3<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x5<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x7<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span></span>
+<span id="cb12-8"><a href="LR.html#cb12-8"></a><span class="st">    </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x4) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x5) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x6) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x7) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb12-9"><a href="LR.html#cb12-9"></a><span class="st">    </span><span class="kw">I</span>(x5 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x3 <span class="op">*</span><span class="st"> </span>x7) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4 <span class="op">*</span><span class="st"> </span>x5) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4 <span class="op">*</span><span class="st"> </span>x6) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb12-10"><a href="LR.html#cb12-10"></a><span class="st">    </span><span class="kw">I</span>(x4 <span class="op">*</span><span class="st"> </span>x7) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x5 <span class="op">*</span><span class="st"> </span>x6) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x5 <span class="op">*</span><span class="st"> </span>x7) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6 <span class="op">*</span><span class="st"> </span>x7), <span class="dv">28</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb12-11"><a href="LR.html#cb12-11"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_reset</span>(mods[[<span class="dv">4</span>]], dat_<span class="dv">2</span>))</span>
+<span id="cb12-12"><a href="LR.html#cb12-12"></a></span>
+<span id="cb12-13"><a href="LR.html#cb12-13"></a>results_test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_ti</span>(F)</span></code></pre></div>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+12.334
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+292
+</td>
+<td style="text-align:left;">
+0.09011
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+31.025
+</td>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+271
+</td>
+<td style="text-align:left;">
+0.31598
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+4.103
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.04280
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="likelihood-ratio-test" class="section level3" number="2.7.3">
+<h3><span class="header-section-number">2.7.3</span> 7-3. Likelihood Ratio Test</h3>
+<p>Likelihood ratio tests for restricting one parameter can be performed by using partial correlations. For example, to test the hypothesis that coefficient for <code>x5</code> is 0 in <code>mods[[4]]</code>, following calculation can be conducted. With <code>p_value</code> being 0.7581638, we cannot reject the hypothesis.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="LR.html#cb13-1"></a>lr_x5 &lt;-<span class="st"> </span><span class="op">-</span><span class="st"> </span><span class="dv">299</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.0003170</span>) </span>
+<span id="cb13-2"><a href="LR.html#cb13-2"></a>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(lr_x5, <span class="dv">1</span>))</span></code></pre></div>
+<pre><code>#&gt; [1] 0.7581638</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik
+</td>
+<td style="text-align:left;">
+0.09479
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+299
+</td>
+<td style="text-align:left;">
+0.7582
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>Likelihood tests for restricting more than one parameter can be only performed by using values of log likelihood in the original and restricted models. For example, to test the hypothesis that coefficients for <code>x5</code> and <code>x7</code> are both 0 in <code>mods[[4]]</code>, following calculation can be conducted. We cannot reject the hypothesis according the function output.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik
+</td>
+<td style="text-align:left;">
+0.9188
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.3378
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik
+</td>
+<td style="text-align:left;">
+0.824
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+299
+</td>
+<td style="text-align:left;">
+0.364
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>The above three test statistics are related in an additive manner, so models with multiple regressors can be reduced in a step-wise procedure. During every step, partial correlations for regressors can be used as the indication of the next term to be reduced.</p>
+<pre><code>#&gt; [1] TRUE</code></pre>
+</div>
+<div id="automated-model-selection" class="section level3" number="2.7.4">
+<h3><span class="header-section-number">2.7.4</span> 7-4. Automated Model Selection</h3>
+<p>Thus, <code>mods[[5]]</code> is determined by automated model selection using <code>mods[[4]]</code> with <code>stats::step</code> function. <code>mods[[5]]</code> can pass Jarque-Bera test and two White’s tests, but cannot pass RESET test.</p>
+<pre><code>#&gt; lm(formula = y ~ x2 + x3 + x4 + x6, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.602282
+</td>
+<td style="text-align:left;">
+0.191431
+</td>
+<td style="text-align:left;">
+44.937
+</td>
+<td style="text-align:left;">
+1.003e-133
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.244215
+</td>
+<td style="text-align:left;">
+0.028598
+</td>
+<td style="text-align:left;">
+-8.540
+</td>
+<td style="text-align:left;">
+7.356e-16
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x3
+</td>
+<td style="text-align:left;">
+-0.079886
+</td>
+<td style="text-align:left;">
+0.036673
+</td>
+<td style="text-align:left;">
+-2.178
+</td>
+<td style="text-align:left;">
+3.018e-02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x4
+</td>
+<td style="text-align:left;">
+0.060276
+</td>
+<td style="text-align:left;">
+0.018291
+</td>
+<td style="text-align:left;">
+3.295
+</td>
+<td style="text-align:left;">
+1.103e-03
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+0.007589
+</td>
+<td style="text-align:left;">
+0.002297
+</td>
+<td style="text-align:left;">
+3.304
+</td>
+<td style="text-align:left;">
+1.070e-03
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.298
+</td>
+<td style="text-align:left;">
+0.2885
+</td>
+<td style="text-align:left;">
+0.6008
+</td>
+<td style="text-align:left;">
+31.2
+</td>
+<td style="text-align:left;">
+1.155e-21
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+-269.4
+</td>
+<td style="text-align:left;">
+550.8
+</td>
+<td style="text-align:left;">
+573
+</td>
+<td style="text-align:left;">
+106.1
+</td>
+<td style="text-align:left;">
+294
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="LR.html#cb17-1"></a>results_test &lt;-<span class="st"> </span>mods[[<span class="dv">5</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">test_jb</span>(dat_<span class="dv">2</span>)</span>
+<span id="cb17-2"><a href="LR.html#cb17-2"></a></span>
+<span id="cb17-3"><a href="LR.html#cb17-3"></a>results_test <span class="op">%&lt;&gt;%</span></span>
+<span id="cb17-4"><a href="LR.html#cb17-4"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_white</span>(mods[[<span class="dv">5</span>]], dat_<span class="dv">2</span>, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4 <span class="op">+</span><span class="st"> </span>x6 <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span></span>
+<span id="cb17-5"><a href="LR.html#cb17-5"></a><span class="st">    </span><span class="kw">I</span>(x3<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6<span class="op">^</span><span class="dv">2</span>), <span class="dv">5</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb17-6"><a href="LR.html#cb17-6"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_white</span>(mods[[<span class="dv">5</span>]], dat_<span class="dv">2</span>, resi2 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x3 <span class="op">+</span><span class="st"> </span>x4 <span class="op">+</span><span class="st"> </span>x6 <span class="op">+</span><span class="st"> </span></span>
+<span id="cb17-7"><a href="LR.html#cb17-7"></a><span class="st">    </span><span class="kw">I</span>(x2<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x3<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6<span class="op">^</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x4) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb17-8"><a href="LR.html#cb17-8"></a><span class="st">    </span><span class="kw">I</span>(x2 <span class="op">*</span><span class="st"> </span>x6) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x4 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span><span class="st"> </span><span class="kw">I</span>(x6 <span class="op">*</span><span class="st"> </span>x3) <span class="op">+</span><span class="kw">I</span>(x4 <span class="op">*</span><span class="st"> </span>x6), <span class="dv">15</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb17-9"><a href="LR.html#cb17-9"></a><span class="st">  </span><span class="kw">bind_rows</span>(<span class="kw">test_reset</span>(mods[[<span class="dv">5</span>]], dat_<span class="dv">2</span>))</span>
+<span id="cb17-10"><a href="LR.html#cb17-10"></a></span>
+<span id="cb17-11"><a href="LR.html#cb17-11"></a>results_test <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_ti</span>(F)</span></code></pre></div>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+10.051
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+294
+</td>
+<td style="text-align:left;">
+0.07380
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+19.371
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+284
+</td>
+<td style="text-align:left;">
+0.19742
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+3.898
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.04836
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+<p>According to results of five models, though <code>mods[[4]]</code> and <code>mods[[5]]</code> have lower AIC, <code>mods[[3]]</code> is the one with all tests passed and lowst AIC. It is discussed intensively in subsection 8-1, and acts as the benchmark model in section 9. Besides, <code>mods[[3]]</code> has the lowest BIC.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+index
+</th>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+0.2611
+</td>
+<td style="text-align:left;">
+0.2586
+</td>
+<td style="text-align:left;">
+0.6309
+</td>
+<td style="text-align:left;">
+105.30
+</td>
+<td style="text-align:left;">
+2.352e-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-286.5
+</td>
+<td style="text-align:left;">
+579.0
+</td>
+<td style="text-align:left;">
+590.1
+</td>
+<td style="text-align:left;">
+118.6
+</td>
+<td style="text-align:left;">
+298
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+0.2611
+</td>
+<td style="text-align:left;">
+0.2586
+</td>
+<td style="text-align:left;">
+0.6309
+</td>
+<td style="text-align:left;">
+105.30
+</td>
+<td style="text-align:left;">
+2.352e-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-286.5
+</td>
+<td style="text-align:left;">
+579.0
+</td>
+<td style="text-align:left;">
+590.1
+</td>
+<td style="text-align:left;">
+118.6
+</td>
+<td style="text-align:left;">
+298
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+0.2715
+</td>
+<td style="text-align:left;">
+0.2666
+</td>
+<td style="text-align:left;">
+0.6100
+</td>
+<td style="text-align:left;">
+55.17
+</td>
+<td style="text-align:left;">
+4.320e-21
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+-275.0
+</td>
+<td style="text-align:left;">
+557.9
+</td>
+<td style="text-align:left;">
+572.7
+</td>
+<td style="text-align:left;">
+110.1
+</td>
+<td style="text-align:left;">
+296
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+0.3002
+</td>
+<td style="text-align:left;">
+0.2858
+</td>
+<td style="text-align:left;">
+0.6020
+</td>
+<td style="text-align:left;">
+20.87
+</td>
+<td style="text-align:left;">
+2.372e-20
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+-269.0
+</td>
+<td style="text-align:left;">
+553.9
+</td>
+<td style="text-align:left;">
+583.5
+</td>
+<td style="text-align:left;">
+105.8
+</td>
+<td style="text-align:left;">
+292
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+0.2980
+</td>
+<td style="text-align:left;">
+0.2885
+</td>
+<td style="text-align:left;">
+0.6008
+</td>
+<td style="text-align:left;">
+31.20
+</td>
+<td style="text-align:left;">
+1.155e-21
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+-269.4
+</td>
+<td style="text-align:left;">
+550.8
+</td>
+<td style="text-align:left;">
+573.0
+</td>
+<td style="text-align:left;">
+106.1
+</td>
+<td style="text-align:left;">
+294
+</td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, <code>mods[[4]]</code> has the highest <code>r.squared</code> for including more regressors, but its <code>adj.r.squared</code> is penalized for that. The AIC and BIC are not low as well compared to those of <code>mods[[3]]</code> and <code>mods[[5]]</code>.</p>
+</div>
+</div>
+<div id="causality-and-mediation" class="section level2" number="2.8">
+<h2><span class="header-section-number">2.8</span> 8. Causality and Mediation</h2>
+<div id="causality-of-x2-x6" class="section level3" number="2.8.1">
+<h3><span class="header-section-number">2.8.1</span> 8-1. Causality of <code>x2</code>-<code>x6</code></h3>
+<p>It can be seen from the following two models that <code>y</code> is highly correlated to <code>x2</code> and <code>x6</code> separately. Besides, according to <code>mods[[3]]</code>, <code>y</code> is highly correlated to <code>x2</code> and <code>x6</code> at the same time.</p>
+<pre><code>#&gt; lm(formula = y ~ x2, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+9.0101
+</td>
+<td style="text-align:left;">
+0.07431
+</td>
+<td style="text-align:left;">
+121.254
+</td>
+<td style="text-align:left;">
+5.324e-255
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.2569
+</td>
+<td style="text-align:left;">
+0.02612
+</td>
+<td style="text-align:left;">
+-9.832
+</td>
+<td style="text-align:left;">
+6.208e-20
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.2456
+</td>
+<td style="text-align:left;">
+0.243
+</td>
+<td style="text-align:left;">
+0.6197
+</td>
+<td style="text-align:left;">
+96.67
+</td>
+<td style="text-align:left;">
+6.208e-20
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-280.2
+</td>
+<td style="text-align:left;">
+566.4
+</td>
+<td style="text-align:left;">
+577.5
+</td>
+<td style="text-align:left;">
+114.1
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>#&gt; lm(formula = y ~ x6, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+7.58909
+</td>
+<td style="text-align:left;">
+0.128574
+</td>
+<td style="text-align:left;">
+59.02
+</td>
+<td style="text-align:left;">
+4.109e-166
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+0.01492
+</td>
+<td style="text-align:left;">
+0.002342
+</td>
+<td style="text-align:left;">
+6.37
+</td>
+<td style="text-align:left;">
+7.192e-10
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.1202
+</td>
+<td style="text-align:left;">
+0.1172
+</td>
+<td style="text-align:left;">
+0.6692
+</td>
+<td style="text-align:left;">
+40.57
+</td>
+<td style="text-align:left;">
+7.192e-10
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-303.2
+</td>
+<td style="text-align:left;">
+612.4
+</td>
+<td style="text-align:left;">
+623.5
+</td>
+<td style="text-align:left;">
+133
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+<p>It is reasonable to assume that people tend to have more accompanies as age increases after 18. Also, the following model proves the relationship between <code>x2</code> and <code>x6</code>. We can say that the effect of <code>x6</code> on <code>y</code> is mediated by <code>x2</code>. With <code>x6</code> affecting <code>y</code> as well, <code>x2</code> does not mediate <code>x6</code> completely. So <code>x2</code> and <code>x6</code> are both supposed to appear in the model for <code>y</code>. The mediation factor <code>x2</code> may affect <code>y</code> though other ways, which will be explored in section 10. Besides, we find that <code>x6</code> does not affect <code>y</code> in other ways in section 10.</p>
+<pre><code>#&gt; lm(formula = x2 ~ x6, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+4.23752
+</td>
+<td style="text-align:left;">
+0.242174
+</td>
+<td style="text-align:left;">
+17.50
+</td>
+<td style="text-align:left;">
+1.318e-47
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+-0.03335
+</td>
+<td style="text-align:left;">
+0.004412
+</td>
+<td style="text-align:left;">
+-7.56
+</td>
+<td style="text-align:left;">
+5.057e-13
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.1614
+</td>
+<td style="text-align:left;">
+0.1586
+</td>
+<td style="text-align:left;">
+1.261
+</td>
+<td style="text-align:left;">
+57.15
+</td>
+<td style="text-align:left;">
+5.057e-13
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-492.5
+</td>
+<td style="text-align:left;">
+991
+</td>
+<td style="text-align:left;">
+1002
+</td>
+<td style="text-align:left;">
+471.9
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="causality-of-x3-x4" class="section level3" number="2.8.2">
+<h3><span class="header-section-number">2.8.2</span> 8-2. Causality of <code>x3</code>-<code>x4</code></h3>
+<p>When taking <code>x3</code> and <code>x4</code> into consideration, the models assocating <code>y</code> with <code>x3</code> or <code>x4</code> both show no significance, though <code>x3</code> and <code>x4</code> are highly correlated. So neither <code>x3</code> nor <code>x4</code> should be included in the model.</p>
+<pre><code>#&gt; lm(formula = x4 ~ x3, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+0.5103
+</td>
+<td style="text-align:left;">
+0.3311
+</td>
+<td style="text-align:left;">
+1.541
+</td>
+<td style="text-align:left;">
+1.244e-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x3
+</td>
+<td style="text-align:left;">
+1.0462
+</td>
+<td style="text-align:left;">
+0.1011
+</td>
+<td style="text-align:left;">
+10.347
+</td>
+<td style="text-align:left;">
+1.251e-21
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.265
+</td>
+<td style="text-align:left;">
+0.2625
+</td>
+<td style="text-align:left;">
+1.977
+</td>
+<td style="text-align:left;">
+107.1
+</td>
+<td style="text-align:left;">
+1.251e-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-627.1
+</td>
+<td style="text-align:left;">
+1260
+</td>
+<td style="text-align:left;">
+1271
+</td>
+<td style="text-align:left;">
+1161
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+<pre><code>#&gt; lm(formula = y ~ x3 + x4, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.324004
+</td>
+<td style="text-align:left;">
+0.12011
+</td>
+<td style="text-align:left;">
+69.3012
+</td>
+<td style="text-align:left;">
+5.327e-185
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x3
+</td>
+<td style="text-align:left;">
+0.004589
+</td>
+<td style="text-align:left;">
+0.04261
+</td>
+<td style="text-align:left;">
+0.1077
+</td>
+<td style="text-align:left;">
+9.143e-01
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x4
+</td>
+<td style="text-align:left;">
+0.008583
+</td>
+<td style="text-align:left;">
+0.02096
+</td>
+<td style="text-align:left;">
+0.4094
+</td>
+<td style="text-align:left;">
+6.825e-01
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.001031
+</td>
+<td style="text-align:left;">
+-0.005719
+</td>
+<td style="text-align:left;">
+0.7143
+</td>
+<td style="text-align:left;">
+0.1528
+</td>
+<td style="text-align:left;">
+0.8584
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+-322.2
+</td>
+<td style="text-align:left;">
+652.3
+</td>
+<td style="text-align:left;">
+667.1
+</td>
+<td style="text-align:left;">
+151
+</td>
+<td style="text-align:left;">
+296
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="causality-of-x4-x8" class="section level3" number="2.8.3">
+<h3><span class="header-section-number">2.8.3</span> 8-3. Causality of <code>x4</code>-<code>x8</code></h3>
+<p>It can be seen that <code>y</code> is highly correlated to <code>x8</code>.</p>
+<pre><code>#&gt; lm(formula = y ~ x8, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+7.99316
+</td>
+<td style="text-align:left;">
+0.11394
+</td>
+<td style="text-align:left;">
+70.152
+</td>
+<td style="text-align:left;">
+6.738e-187
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8
+</td>
+<td style="text-align:left;">
+0.04606
+</td>
+<td style="text-align:left;">
+0.01302
+</td>
+<td style="text-align:left;">
+3.538
+</td>
+<td style="text-align:left;">
+4.674e-04
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.04045
+</td>
+<td style="text-align:left;">
+0.03722
+</td>
+<td style="text-align:left;">
+0.6989
+</td>
+<td style="text-align:left;">
+12.52
+</td>
+<td style="text-align:left;">
+0.0004674
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-316.1
+</td>
+<td style="text-align:left;">
+638.3
+</td>
+<td style="text-align:left;">
+649.4
+</td>
+<td style="text-align:left;">
+145.1
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+<p>Also, <code>x8</code> is highly related to <code>x4</code>, which makes sense, because people with more income tend to buy houses with more rooms.</p>
+<pre><code>#&gt; lm(formula = x8 ~ x4, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+5.6150
+</td>
+<td style="text-align:left;">
+0.29511
+</td>
+<td style="text-align:left;">
+19.03
+</td>
+<td style="text-align:left;">
+2.472e-53
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x4
+</td>
+<td style="text-align:left;">
+0.6895
+</td>
+<td style="text-align:left;">
+0.06741
+</td>
+<td style="text-align:left;">
+10.23
+</td>
+<td style="text-align:left;">
+3.108e-21
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.2605
+</td>
+<td style="text-align:left;">
+0.258
+</td>
+<td style="text-align:left;">
+2.679
+</td>
+<td style="text-align:left;">
+104.6
+</td>
+<td style="text-align:left;">
+3.108e-21
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+-717.9
+</td>
+<td style="text-align:left;">
+1442
+</td>
+<td style="text-align:left;">
+1453
+</td>
+<td style="text-align:left;">
+2132
+</td>
+<td style="text-align:left;">
+297
+</td>
+</tr>
+</tbody>
+</table>
+<p>However, from subsection 9.2 we already know that <code>y</code> is not highly correlated with <code>x4</code>, which is illustrated again by the following model. So we say that the effect of <code>x4</code> on <code>y</code> is completely mediated by <code>x8</code>. Though it makes sense that people with more income tend to consume more energy on average, the direct effect is completely mediated through <code>x8</code> and possibly other factors.</p>
+<pre><code>#&gt; lm(formula = y ~ x8 + x4, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.01203
+</td>
+<td style="text-align:left;">
+0.11446
+</td>
+<td style="text-align:left;">
+69.999
+</td>
+<td style="text-align:left;">
+3.249e-186
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8
+</td>
+<td style="text-align:left;">
+0.05730
+</td>
+<td style="text-align:left;">
+0.01511
+</td>
+<td style="text-align:left;">
+3.793
+</td>
+<td style="text-align:left;">
+1.807e-04
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x4
+</td>
+<td style="text-align:left;">
+-0.02976
+</td>
+<td style="text-align:left;">
+0.02041
+</td>
+<td style="text-align:left;">
+-1.458
+</td>
+<td style="text-align:left;">
+1.458e-01
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.04729
+</td>
+<td style="text-align:left;">
+0.04085
+</td>
+<td style="text-align:left;">
+0.6976
+</td>
+<td style="text-align:left;">
+7.346
+</td>
+<td style="text-align:left;">
+0.0007694
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+-315.1
+</td>
+<td style="text-align:left;">
+638.2
+</td>
+<td style="text-align:left;">
+653
+</td>
+<td style="text-align:left;">
+144
+</td>
+<td style="text-align:left;">
+296
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="mods3-with-extra-terms" class="section level2" number="2.9">
+<h2><span class="header-section-number">2.9</span> 9. <code>mods[[3]]</code> with extra terms</h2>
+<p>In <code>mods[[6]]</code>, <code>x2</code>, <code>x6</code> and <code>x8</code> are kept at the same time.</p>
+<pre><code>#&gt; lm(formula = y ~ x2 + x6 + x8, data = dat_2)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.305297
+</td>
+<td style="text-align:left;">
+0.165172
+</td>
+<td style="text-align:left;">
+50.283
+</td>
+<td style="text-align:left;">
+1.003e-146
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.259198
+</td>
+<td style="text-align:left;">
+0.027894
+</td>
+<td style="text-align:left;">
+-9.292
+</td>
+<td style="text-align:left;">
+3.456e-18
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+0.004116
+</td>
+<td style="text-align:left;">
+0.002328
+</td>
+<td style="text-align:left;">
+1.768
+</td>
+<td style="text-align:left;">
+7.804e-02
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x8
+</td>
+<td style="text-align:left;">
+0.060505
+</td>
+<td style="text-align:left;">
+0.011495
+</td>
+<td style="text-align:left;">
+5.264
+</td>
+<td style="text-align:left;">
+2.724e-07
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.3341
+</td>
+<td style="text-align:left;">
+0.3273
+</td>
+<td style="text-align:left;">
+0.5842
+</td>
+<td style="text-align:left;">
+49.33
+</td>
+<td style="text-align:left;">
+7.192e-26
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+-261.5
+</td>
+<td style="text-align:left;">
+533.1
+</td>
+<td style="text-align:left;">
+551.6
+</td>
+<td style="text-align:left;">
+100.7
+</td>
+<td style="text-align:left;">
+295
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+3.922
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+295
+</td>
+<td style="text-align:left;">
+0.4167
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+9.740
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+289
+</td>
+<td style="text-align:left;">
+0.4636
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+2.120
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.1454
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>With the idea of diminishing effects of the number of household members in mind, it is natural to include the square of the household numbers. In addition, <code>x8</code> is included according to the discussion in subsection 8-3. Thus, <code>mods[[7]]</code> is estimated. Being insignificant, <code>x6</code> is excluded, beccause the effect of <code>x6</code> on <code>y</code> seems to be mediated compeletely by <code>x2</code> and <code>x2^2</code>.</p>
+<p>With number of observations being 299, the model is sensitive to exlusion of some term only if the partial correlation of that term is smaller than 0.01276551. That is, if <code>p.r.squared</code> of some term displayed above is smaller than 0.01276551, the hypothesis regaring the coefficient for that term in the likelihood ratio test would not be rejected. The value <code>0.01276551</code> is obtained according to the discussion in subsection 7-3. Besides, small <code>p.value</code>s indicate that terms cannot be excluded as well.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+2.28866
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+296
+</td>
+<td style="text-align:left;">
+0.5147
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+White
+</td>
+<td style="text-align:left;">
+2.36415
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+293
+</td>
+<td style="text-align:left;">
+0.8834
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+RESET
+</td>
+<td style="text-align:left;">
+0.06767
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.7948
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p><code>mods[[7]]</code> has a lower AIC than <code>mods[[6]]</code> and <code>mods[[3]]</code>, so it is choosen as the final model for presentation and conclusion.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+527.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+533.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+557.9
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="interpretation-of-mods7" class="section level2" number="2.10">
+<h2><span class="header-section-number">2.10</span> 10. Interpretation of <code>mods[[7]]</code></h2>
+<div id="model-structure" class="section level3" number="2.10.1">
+<h3><span class="header-section-number">2.10.1</span> 10-1. Model Structure</h3>
+<p>The overall structure can be illustrated in the following figure. The income is correlated to the number of household memebers, which is probably caused by the correlation between numbers of people and rooms. Because those relations don’t contribute to the interpretation of consumptions directly, they are omitted.</p>
+<div class="figure">
+<img src="./images/1.png" alt="" />
+<p class="caption">Illustration of the model structure.</p>
+</div>
+</div>
+<div id="regressors" class="section level3" number="2.10.2">
+<h3><span class="header-section-number">2.10.2</span> 10-2. Regressors</h3>
+<p>Electricity consumption is highly correlated to the number of household members of the respondent. When there are not too many household members, with more members, the quantity of consumption decreases, probably due to the fact that people tend to share the kitchen. However, the effect diminishes gradually when there are many household members (around 5-8).</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-48-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Because <code>y</code> is the log of average electricity consumptions, the final relationship between electricity consumptions and numbers of household members and numbers of rooms are:</p>
+<p>As for the effect of number of rooms on electricity consumptions,</p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-49-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="orthogonalization-of-multiple-regressors" class="section level3" number="2.10.3">
+<h3><span class="header-section-number">2.10.3</span> 10-3. Orthogonalization of Multiple Regressors</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="LR.html#cb27-1"></a>mods[[<span class="dv">8</span>]] &lt;-</span>
+<span id="cb27-2"><a href="LR.html#cb27-2"></a><span class="st">  </span>dat_<span class="dv">2</span> <span class="op">%&gt;%</span></span>
+<span id="cb27-3"><a href="LR.html#cb27-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z1 =</span> <span class="kw">lm</span>(x2 <span class="op">~</span><span class="st"> </span><span class="dv">1</span>)<span class="op">$</span>residuals) <span class="op">%&gt;%</span></span>
+<span id="cb27-4"><a href="LR.html#cb27-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z2 =</span> <span class="kw">lm</span>(x8 <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)<span class="op">$</span>residuals) <span class="op">%&gt;%</span></span>
+<span id="cb27-5"><a href="LR.html#cb27-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">x2.2 =</span> x2<span class="op">^</span><span class="dv">2</span>) <span class="op">%&gt;%</span></span>
+<span id="cb27-6"><a href="LR.html#cb27-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">z3 =</span> <span class="kw">lm</span>(x2<span class="fl">.2</span> <span class="op">~</span><span class="st"> </span>x2 <span class="op">+</span><span class="st"> </span>x8 <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)<span class="op">$</span>residuals) <span class="op">%&gt;%</span></span>
+<span id="cb27-7"><a href="LR.html#cb27-7"></a><span class="st">  </span>{<span class="kw">lm</span>(y <span class="op">~</span><span class="st"> </span>z1 <span class="op">+</span><span class="st"> </span>z2 <span class="op">+</span><span class="st"> </span>z3, <span class="dt">data =</span> .)}</span></code></pre></div>
+<pre><code>#&gt; lm(formula = y ~ z1 + z2 + z3, data = .)</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.37009
+</td>
+<td style="text-align:left;">
+0.03349
+</td>
+<td style="text-align:left;">
+249.911
+</td>
+<td style="text-align:left;">
+0.000e+00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z1
+</td>
+<td style="text-align:left;">
+-0.25686
+</td>
+<td style="text-align:left;">
+0.02441
+</td>
+<td style="text-align:left;">
+-10.521
+</td>
+<td style="text-align:left;">
+3.420e-22
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z2
+</td>
+<td style="text-align:left;">
+0.06625
+</td>
+<td style="text-align:left;">
+0.01093
+</td>
+<td style="text-align:left;">
+6.060
+</td>
+<td style="text-align:left;">
+4.145e-09
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+z3
+</td>
+<td style="text-align:left;">
+0.03563
+</td>
+<td style="text-align:left;">
+0.01232
+</td>
+<td style="text-align:left;">
+2.893
+</td>
+<td style="text-align:left;">
+4.104e-03
+</td>
+</tr>
+</tbody>
+</table>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.3456
+</td>
+<td style="text-align:left;">
+0.3389
+</td>
+<td style="text-align:left;">
+0.5791
+</td>
+<td style="text-align:left;">
+51.93
+</td>
+<td style="text-align:left;">
+5.594e-27
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+-258.9
+</td>
+<td style="text-align:left;">
+527.9
+</td>
+<td style="text-align:left;">
+546.4
+</td>
+<td style="text-align:left;">
+98.94
+</td>
+<td style="text-align:left;">
+295
+</td>
+</tr>
+</tbody>
+</table>
+<p>The intercept in <code>mods[[8]]</code> (8.37009) can be interpreted as the exptected value for an individual with average values of <code>x2</code>, <code>x8</code> and <code>I(x2^2)</code>, which can be verified by the prediction using <code>mods[[7]]</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="LR.html#cb29-1"></a>( <span class="fl">8.77946</span> <span class="op">-</span><span class="st"> </span><span class="fl">0.52071</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(dat_<span class="dv">2</span><span class="op">$</span>x2) <span class="op">+</span><span class="st"> </span><span class="fl">0.07329</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(dat_<span class="dv">2</span><span class="op">$</span>x8) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb29-2"><a href="LR.html#cb29-2"></a><span class="st">  </span><span class="fl">0.03563</span> <span class="op">*</span><span class="st"> </span><span class="kw">mean</span>(dat_<span class="dv">2</span><span class="op">$</span>x2<span class="op">^</span><span class="dv">2</span>) ) <span class="op">-</span><span class="st"> </span><span class="fl">8.37009</span> <span class="op">&lt;=</span><span class="st"> </span><span class="fl">1e-4</span></span></code></pre></div>
+<pre><code>#&gt; [1] TRUE</code></pre>
+<p>Since the standard errors in <code>mods[[8]]</code> are smaller than those in <code>mods[[7]]</code>, <code>mods[[8]]</code> is used to conduct inference. Particularly, <code>se</code> for <code>Intercept</code> is reduced by 75.48%, and <code>se</code>s for first two regressors are reduced by 71.75% and 2.41%. The estimations for the last term are exactly the same, which is expected.</p>
+<pre><code>#&gt;                   2.5 %      97.5 %
+#&gt; (Intercept)  8.30417224  8.43600027
+#&gt; z1          -0.30490653 -0.20881311
+#&gt; z2           0.04473184  0.08775875
+#&gt; z3           0.01138835  0.05986556</code></pre>
+<p>To reduce average electricity consumptions, people are encouraged to live together in houses with fewer rooms.</p>
+<!-- ## 11. One-Sided t-Test of `mods[[1]]` -->
+<!-- ```{r, echo=T} -->
+<!-- mods[[1]] %>% -->
+<!--   summary() %>% -->
+<!--   {pt(coef(.)[2, 3], mods[[1]]$df, lower = FALSE)} %>% -->
+<!--   {. <= qchisq(0.95, 1, lower.tail = TRUE, log.p = FALSE)} -->
+<!-- ``` -->
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-linear-regression.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

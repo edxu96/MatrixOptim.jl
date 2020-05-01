@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1.2 Statistical Inference | TidySimStat</title>
+  <meta name="description" content="Stochastic Simulation and Statistics in Tidyverse." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1.2 Statistical Inference | TidySimStat" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Stochastic Simulation and Statistics in Tidyverse." />
+  <meta name="github-repo" content="edxu96/TidySimStat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1.2 Statistical Inference | TidySimStat" />
+  
+  <meta name="twitter:description" content="Stochastic Simulation and Statistics in Tidyverse." />
+  
+
+<meta name="author" content="Edward J. Xu" />
+
+
+<meta name="date" content="2020-04-29" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="summary-of-data-and-models.html"/>
+<link rel="next" href="GAM.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">TidySimStat</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="chapter" data-level="" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="part"><span><b>I Statistics</b></span></li>
+<li class="chapter" data-level="1" data-path="LRA.html"><a href="LRA.html"><i class="fa fa-check"></i><b>1</b> Linear Regression Analysis (LRA)</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="summary-of-data-and-models.html"><a href="summary-of-data-and-models.html"><i class="fa fa-check"></i><b>1.1</b> Summary of Data and Models</a></li>
+<li class="chapter" data-level="1.2" data-path="statistical-inference.html"><a href="statistical-inference.html"><i class="fa fa-check"></i><b>1.2</b> Statistical Inference</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="GAM.html"><a href="GAM.html"><i class="fa fa-check"></i><b>2</b> Generalized Additive Model</a></li>
+<li class="chapter" data-level="3" data-path="TSA.html"><a href="TSA.html"><i class="fa fa-check"></i><b>3</b> Time Series Analysis (TSA)</a></li>
+<li class="part"><span><b>II Simulation</b></span></li>
+<li class="chapter" data-level="4" data-path="generator.html"><a href="generator.html"><i class="fa fa-check"></i><b>4</b> Simulation Generator</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">TidySimStat</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="statistical-inference" class="section level2" number="1.2">
+<h2><span class="header-section-number">1.2</span> Statistical Inference</h2>
+<div id="hypothesis-tests" class="section level3" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Hypothesis Tests</h3>
+<blockquote>
+<p>The <strong>null hypothesis</strong>, denoted by <span class="math inline">\(\mathrm{H}_{0}\)</span>, is a statement about a population parameter. The <strong>alternative hypothesis</strong> is denoted by <span class="math inline">\(\mathrm{H}_{1}\)</span>. The null hypothesis will be rejected if it appears to be inconsistent with the sample data and will not be rejected otherwise. The rejection of the null hypothesis <span class="math inline">\(\mathrm{H}_{0}\)</span> is a strong statement that <span class="math inline">\(\mathrm{H}_{0}\)</span> does not appear to be consistent with the observed data. The result that <span class="math inline">\(\mathrm{H}_{0}\)</span> is not rejected is a weak statement that should be interpreted to mean that <span class="math inline">\(\mathrm{H}_{0}\)</span> is consistent with the data. <span class="citation">(Ross <a href="#ref-ross2017introductory" role="doc-biblioref">2017</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>A <strong>test statistic</strong> is a statistic whose value is determined from the sample data. Depending on the value of this test statistic, the null hypothesis will be rejected or not. The <strong>critical region</strong>, also called the <strong>rejection region</strong>, is that set of values of the test statistic for which the null hypothesis is rejected. <span class="citation">(Ross <a href="#ref-ross2017introductory" role="doc-biblioref">2017</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>The classical procedure for testing a null hypothesis is to fix a small <strong>level of significance</strong> <span class="math inline">\(\alpha\)</span> and then require that the probability of rejecting <span class="math inline">\(\mathrm{H}_{0}\)</span> when <span class="math inline">\(\mathrm{H}_{0}\)</span> is true is less than or equal to <span class="math inline">\(\alpha\)</span>. <span class="citation">(Ross <a href="#ref-ross2017introductory" role="doc-biblioref">2017</a>)</span></p>
+</blockquote>
+<p>Critical values are calculated by:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="statistical-inference.html#cb10-1"></a>c &lt;-<span class="st"> </span><span class="kw">qchisq</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>alpha, df, <span class="dt">lower.tail =</span> <span class="ot">TRUE</span>, <span class="dt">log.p =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<p>The hypothesis should be rejected if <code>stat &gt;= c</code> is true.</p>
+<p>Alternatively, <code>p_value</code> can be computed first:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="statistical-inference.html#cb11-1"></a><span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(stat, df1)</span></code></pre></div>
+<p>and compared to <code>alpha</code>. The hypothesis should be rejected if <code>p_value &gt;= alpha</code> is true.</p>
+<div id="a-design-of-hypothesis-tests" class="section level4 unnumbered" number="">
+<h4>(a) Design of Hypothesis Tests</h4>
+<blockquote>
+<p>If you are trying to establish a certain hypothesis, then that hypothesis should be designated as the alternative hypothesis. Similarly, if you are trying to discredit a hypothesis, that hypothesis should be designated the null hypothesis. <span class="citation">(Ross <a href="#ref-ross2017introductory" role="doc-biblioref">2017</a>)</span></p>
+</blockquote>
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-8" class="example"><strong>Example 1.1  </strong></span>Thus, for instance, if the tobacco company is running the experiment to prove that the mean nicotine level of its cigarettes is less than <span class="math inline">\(1.5,\)</span> then it should choose for the null hypothesis</p>
+<p><span class="math display">\[ \mathrm{H}_{0}: \mu \geq 1.5 \]</span></p>
+<p>and for the alternative hypothesis</p>
+<p><span class="math display">\[ \mathrm{H}_{1}: \mu&lt;1.5 \]</span></p>
+Then the company could use a rejection of the null hypothesis as “proof” of its claim that the mean nicotine content was less than 1.5 milligrams.
+</div>
+</div>
+<div id="b-interpretation-of-test-result" class="section level4 unnumbered" number="">
+<h4>(b) Interpretation of Test Result</h4>
+<blockquote>
+<p>When conducting a statistical test, the thought experiment is that our sample is drawn from some hypothetical population distribution that could have generated the data. Our sample is then compared with hypothetical samples drawn from that hypothetical population distribution. <span class="citation">(<span class="citeproc-not-found" data-reference-id="hendry2007econometrics"><strong>???</strong></span> Interpreting the Test Result)</span></p>
+</blockquote>
+</div>
+</div>
+<div id="test-t" class="section level3" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Student’s t-Test (test-t)</h3>
+<ul>
+<li><a href="https://stackoverflow.com/questions/13811472/one-sided-hypothesis-test-with-t-statistic-in-r">One-Sided Hypothesis Test with T-Statistic in R?, Stack Overflow</a></li>
+<li><a href="https://www.statmethods.net/stats/ttest.html">t-tests, Quick-R</a></li>
+<li><a href="https://stackoverflow.com/questions/8089797/inference-about-slope-coefficient-in-r">Inference about Slope coefficient in R</a></li>
+</ul>
+</div>
+<div id="test-LLR" class="section level3" number="1.2.3">
+<h3><span class="header-section-number">1.2.3</span> Likelihood Ratio Test (test-LLR)</h3>
+<blockquote>
+<p>Likelihood ratio tests are well suited for making inferences about restrictions on a well-specified model, where we are able, and willing, to maximize the likelihood function in the unrestricted model as well as the restricted model. <span class="citation">(Hendry and Nielsen <a href="#ref-hendry2007econometric" role="doc-biblioref">2007</a>)</span></p>
+</blockquote>
+<p>From section 1-3-4, 2-3-2 in <span class="citation">(Hendry and Nielsen <a href="#ref-hendry2007econometric" role="doc-biblioref">2007</a>)</span>:</p>
+<p><span class="math display">\[ \mathrm{Q} = \frac{\max _{\theta \in \Theta_{R}} \mathrm{L}_{Y_{1}, \ldots, Y_{n}}(\theta)}{\max _{\theta \in \Theta_{U}} \mathrm{L}_{Y_{1}, \ldots, Y_{n}}(\theta)} \]</span></p>
+<p><span class="math display">\[ \mathrm{LR} = -2 \log \mathrm{Q} = 2 \left\{\max _{\theta \in \Theta_{U}} \ell_{Y_{1}, \ldots, Y_{n}}(\theta)-\max _{\theta \in \Theta_{R}} \ell_{Y_{1}, \ldots, Y_{n}}(\theta)\right\} \]</span></p>
+<p>where the closer <span class="math inline">\(\mathrm{LR}\)</span> is to zero, the more likely it is that <span class="math inline">\(\theta\)</span> could satisfy the restriction.</p>
+<p>A statistical test can now be constructed as a decision rule. If <span class="math inline">\(\mathrm{Q}\)</span> is (close to) unity, and correspondingly <span class="math inline">\(\mathrm{LR}\)</span> is small, the restricted maximum likelihood estimate would be (nearly) as likely as the unrestricted estimate, so in that case, we would fail to reject the hypothesis.</p>
+<div id="LLR-Test-Sign" class="section level4 unnumbered" number="">
+<h4>(a) Signed LLR-Test</h4>
+<ul>
+<li><a href="https://stats.stackexchange.com/questions/325354/if-and-how-to-use-one-tailed-testing-in-multiple-regression">If and how to use one-tailed testing in multiple regression</a></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="statistical-inference.html#cb12-1"></a><span class="kw">test_llr</span>(mods_part[[<span class="dv">1</span>]], mods_part[[<span class="dv">2</span>]]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_ti</span>()</span></code></pre></div>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik
+</td>
+<td style="text-align:left;">
+309.8
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+7183
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="statistical-inference.html#cb13-1"></a><span class="kw">test_llr_sign</span>(mods_part[[<span class="dv">1</span>]], mods_part[[<span class="dv">2</span>]], T) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_ti</span>()</span></code></pre></div>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik-sign
+</td>
+<td style="text-align:left;">
+17.6
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+7183
+</td>
+<td style="text-align:left;">
+2.724e-05
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="LLR-Test-1" class="section level4 unnumbered" number="">
+<h4>(b) LLR-Test for One Parameter</h4>
+<p>Likelihood ratio tests for restricting one parameter can be performed by using partial correlations.</p>
+<pre><code>#&gt; Registered S3 methods overwritten by &#39;lme4&#39;:
+#&gt;   method                          from
+#&gt;   cooks.distance.influence.merMod car 
+#&gt;   influence.merMod                car 
+#&gt;   dfbeta.influence.merMod         car 
+#&gt;   dfbetas.influence.merMod        car</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+estimate
+</th>
+<th style="text-align:left;">
+std.error
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+p.r.squared
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:left;">
+8.615613
+</td>
+<td style="text-align:left;">
+0.200829
+</td>
+<td style="text-align:left;">
+42.9002
+</td>
+<td style="text-align:left;">
+2.434e-128
+</td>
+<td style="text-align:left;">
+0.8626622
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x2
+</td>
+<td style="text-align:left;">
+-0.259971
+</td>
+<td style="text-align:left;">
+0.029144
+</td>
+<td style="text-align:left;">
+-8.9203
+</td>
+<td style="text-align:left;">
+5.153e-17
+</td>
+<td style="text-align:left;">
+0.2135731
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x3
+</td>
+<td style="text-align:left;">
+-0.081468
+</td>
+<td style="text-align:left;">
+0.037994
+</td>
+<td style="text-align:left;">
+-2.1442
+</td>
+<td style="text-align:left;">
+3.284e-02
+</td>
+<td style="text-align:left;">
+0.0154493
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x4
+</td>
+<td style="text-align:left;">
+0.064473
+</td>
+<td style="text-align:left;">
+0.019196
+</td>
+<td style="text-align:left;">
+3.3586
+</td>
+<td style="text-align:left;">
+8.869e-04
+</td>
+<td style="text-align:left;">
+0.0370726
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x5
+</td>
+<td style="text-align:left;">
+-0.034200
+</td>
+<td style="text-align:left;">
+0.072129
+</td>
+<td style="text-align:left;">
+-0.4742
+</td>
+<td style="text-align:left;">
+6.357e-01
+</td>
+<td style="text-align:left;">
+0.0007667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x6
+</td>
+<td style="text-align:left;">
+0.007251
+</td>
+<td style="text-align:left;">
+0.002403
+</td>
+<td style="text-align:left;">
+3.0173
+</td>
+<td style="text-align:left;">
+2.774e-03
+</td>
+<td style="text-align:left;">
+0.0301358
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+x7
+</td>
+<td style="text-align:left;">
+0.013147
+</td>
+<td style="text-align:left;">
+0.017798
+</td>
+<td style="text-align:left;">
+0.7387
+</td>
+<td style="text-align:left;">
+4.607e-01
+</td>
+<td style="text-align:left;">
+0.0018588
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="statistical-inference.html#cb15-1"></a>mods_recs[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">tab_tidy</span>(T) <span class="op">%&gt;%</span></span>
+<span id="cb15-2"><a href="statistical-inference.html#cb15-2"></a><span class="st">  </span>{.[<span class="dv">5</span>, <span class="dv">6</span>]} <span class="op">%&gt;%</span></span>
+<span id="cb15-3"><a href="statistical-inference.html#cb15-3"></a><span class="st">  </span><span class="kw">as.numeric</span>() <span class="op">%&gt;%</span></span>
+<span id="cb15-4"><a href="statistical-inference.html#cb15-4"></a><span class="st">  </span>{<span class="op">-</span><span class="st"> </span><span class="dv">299</span> <span class="op">*</span><span class="st"> </span><span class="kw">log</span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>.)} <span class="op">%&gt;%</span></span>
+<span id="cb15-5"><a href="statistical-inference.html#cb15-5"></a><span class="st">  </span>{<span class="dv">1</span> <span class="op">-</span><span class="st"> </span><span class="kw">pchisq</span>(., <span class="dv">1</span>)}</span></code></pre></div>
+<pre><code>#&gt; [1] 0.6320156</code></pre>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik
+</td>
+<td style="text-align:left;">
+0.2301
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+299
+</td>
+<td style="text-align:left;">
+0.6314
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>deviance</code> is the residual sum of square:</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+r.squared
+</th>
+<th style="text-align:left;">
+adj.r.squared
+</th>
+<th style="text-align:left;">
+sigma
+</th>
+<th style="text-align:left;">
+statistic
+</th>
+<th style="text-align:left;">
+p.value
+</th>
+<th style="text-align:left;">
+df
+</th>
+<th style="text-align:left;">
+logLik
+</th>
+<th style="text-align:left;">
+AIC
+</th>
+<th style="text-align:left;">
+BIC
+</th>
+<th style="text-align:left;">
+deviance
+</th>
+<th style="text-align:left;">
+df.residual
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0.3159
+</td>
+<td style="text-align:left;">
+0.3018
+</td>
+<td style="text-align:left;">
+0.6122
+</td>
+<td style="text-align:left;">
+22.54
+</td>
+<td style="text-align:left;">
+7.957e-22
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+-274.9
+</td>
+<td style="text-align:left;">
+565.9
+</td>
+<td style="text-align:left;">
+595.5
+</td>
+<td style="text-align:left;">
+109.8
+</td>
+<td style="text-align:left;">
+293
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="LLR-Test-N" class="section level4 unnumbered" number="">
+<h4>(c) LLR-Test for More Parameters</h4>
+<p>Likelihood tests for restricting more than one parameter can be only performed by using values of log likelihood in the original and restricted models. For example, to test the hypothesis that coefficients for <code>x5</code> and <code>x7</code> are both 0 in <code>mods_recs[[1]]</code>, following calculation can be conducted. We cannot reject the hypothesis according the function output.</p>
+<table class="table table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+whi
+</th>
+<th style="text-align:left;">
+stat
+</th>
+<th style="text-align:left;">
+df1
+</th>
+<th style="text-align:left;">
+df2
+</th>
+<th style="text-align:left;">
+p_value
+</th>
+<th style="text-align:left;">
+prob
+</th>
+<th style="text-align:left;">
+if_reject
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+logLik
+</td>
+<td style="text-align:left;">
+5.178
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+298
+</td>
+<td style="text-align:left;">
+0.07509
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+</table>
+<p>The above three test statistics are related in an additive manner, so models with multiple regressors can be reduced in a step-wise procedure. During every step, partial correlations for regressors can be used as the indication of the next term to be reduced.</p>
+<pre><code>#&gt; [1] TRUE</code></pre>
+</div>
+</div>
+<div id="confidence-interval" class="section level3" number="1.2.4">
+<h3><span class="header-section-number">1.2.4</span> Confidence Interval</h3>
+<blockquote>
+<p>By choosing a 95% coverage, we accept that with 5% confidence we reach the false conclusion that the true parameter is not in the confidence interval. <span class="citation">(<span class="citeproc-not-found" data-reference-id="hendry2007econometrics"><strong>???</strong></span> Confidence Intervals)</span></p>
+</blockquote>
+<pre><code>#&gt;                    2.5 %      97.5 %
+#&gt; (Intercept)  8.220362250  9.01086394
+#&gt; x2          -0.317328785 -0.20261313
+#&gt; x3          -0.156243666 -0.00669182
+#&gt; x4           0.026693277  0.10225333
+#&gt; x5          -0.176156322  0.10775608
+#&gt; x6           0.002521419  0.01198065
+#&gt; x7          -0.021881524  0.04817554</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
+<h3> Simulation Generator</h3>
+<div id="refs" class="references">
+<div id="ref-hendry2007econometric">
+<p>Hendry, David F, and Bent Nielsen. 2007. <em>Econometric Modeling: A Likelihood Approach</em>. Princeton University Press.</p>
+</div>
+<div id="ref-ross2017introductory">
+<p>Ross, Sheldon M. 2017. <em>Introductory Statistics</em>. Academic Press.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="summary-of-data-and-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="GAM.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/edxu96/TidySimStat/edit/master/01-LRA.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["TidySimStat.pdf", "TidySimStat.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
