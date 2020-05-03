@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim</title>
+  <title>3.3 L-Shaped Benders with Second Stage Int-Var | MatrixOptim</title>
   <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim" />
+  <meta property="og:title" content="3.3 L-Shaped Benders with Second Stage Int-Var | MatrixOptim" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim" />
+  <meta name="twitter:title" content="3.3 L-Shaped Benders with Second Stage Int-Var | MatrixOptim" />
   
   <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="De-benders-l.html"/>
-<link rel="next" href="Sto.html"/>
+<link rel="next" href="network-optimization.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -71,30 +71,58 @@
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
-<li class="part"><span><b>I Optimization</b></span></li>
-<li class="chapter" data-level="1" data-path="MILP.html"><a href="MILP.html"><i class="fa fa-check"></i><b>1</b> Mixed Integer Linear Programming</a></li>
-<li class="chapter" data-level="2" data-path="De.html"><a href="De.html"><i class="fa fa-check"></i><b>2</b> Decomposition Algorithms</a>
+<li class="part"><span><b>I Algorithms</b></span></li>
+<li class="chapter" data-level="1" data-path="linear-programming-lp.html"><a href="linear-programming-lp.html"><i class="fa fa-check"></i><b>1</b> Linear Programming (LP)</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="benders-decomposition-for-standard-milp.html"><a href="benders-decomposition-for-standard-milp.html"><i class="fa fa-check"></i><b>2.1</b> Benders Decomposition for Standard MILP</a></li>
-<li class="chapter" data-level="2.2" data-path="De-benders-l.html"><a href="De-benders-l.html"><i class="fa fa-check"></i><b>2.2</b> L-Shaped Benders Decomposition for Stochastic Programming</a></li>
-<li class="chapter" data-level="2.3" data-path="De-benders-l-int.html"><a href="De-benders-l-int.html"><i class="fa fa-check"></i><b>2.3</b> L-Shaped Benders Decomposition with Integer Variables in Second Stage</a></li>
+<li class="chapter" data-level="1.1" data-path="simplex-method.html"><a href="simplex-method.html"><i class="fa fa-check"></i><b>1.1</b> Simplex Method</a></li>
+<li class="chapter" data-level="1.2" data-path="duality-theory.html"><a href="duality-theory.html"><i class="fa fa-check"></i><b>1.2</b> Duality Theory</a></li>
 </ul></li>
-<li class="part"><span><b>II Operations Research</b></span></li>
-<li class="chapter" data-level="3" data-path="Sto.html"><a href="Sto.html"><i class="fa fa-check"></i><b>3</b> Stochastic Programming</a></li>
-<li class="chapter" data-level="4" data-path="robust.html"><a href="robust.html"><i class="fa fa-check"></i><b>4</b> Robust Programming</a></li>
-<li class="chapter" data-level="5" data-path="MDP.html"><a href="MDP.html"><i class="fa fa-check"></i><b>5</b> Markov Decision Process (MDP)</a></li>
-<li class="chapter" data-level="6" data-path="game-theory-and-mechanism-design.html"><a href="game-theory-and-mechanism-design.html"><i class="fa fa-check"></i><b>6</b> Game Theory and Mechanism design</a>
+<li class="chapter" data-level="2" data-path="MILP.html"><a href="MILP.html"><i class="fa fa-check"></i><b>2</b> Mixed Integer Linear Programming</a></li>
+<li class="chapter" data-level="3" data-path="De.html"><a href="De.html"><i class="fa fa-check"></i><b>3</b> Decomposition Algorithms</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="mechanism-design.html"><a href="mechanism-design.html"><i class="fa fa-check"></i><b>6.1</b> Mechanism Design</a></li>
+<li class="chapter" data-level="3.1" data-path="benders-for-standard-milp.html"><a href="benders-for-standard-milp.html"><i class="fa fa-check"></i><b>3.1</b> Benders for Standard MILP</a></li>
+<li class="chapter" data-level="3.2" data-path="De-benders-l.html"><a href="De-benders-l.html"><i class="fa fa-check"></i><b>3.2</b> L-Shaped Benders for Sto-Prog</a></li>
+<li class="chapter" data-level="3.3" data-path="De-benders-l-int.html"><a href="De-benders-l-int.html"><i class="fa fa-check"></i><b>3.3</b> L-Shaped Benders with Second Stage Int-Var</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="network-optimization.html"><a href="network-optimization.html"><i class="fa fa-check"></i><b>4</b> Network Optimization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="MCF.html"><a href="MCF.html"><i class="fa fa-check"></i><b>4.1</b> Minimum Cost Flow (MCF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="convex-optimization.html"><a href="convex-optimization.html"><i class="fa fa-check"></i><b>5</b> Convex Optimization</a></li>
+<li class="part"><span><b>II Operations Research</b></span></li>
+<li class="chapter" data-level="6" data-path="Sto.html"><a href="Sto.html"><i class="fa fa-check"></i><b>6</b> Stochastic Programming</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="newsvendor-problem.html"><a href="newsvendor-problem.html"><i class="fa fa-check"></i><b>6.1</b> Newsvendor Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="robust.html"><a href="robust.html"><i class="fa fa-check"></i><b>7</b> Robust Programming</a></li>
+<li class="chapter" data-level="8" data-path="MDP.html"><a href="MDP.html"><i class="fa fa-check"></i><b>8</b> Markov Decision Process (MDP)</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>8.1</b> Markov Chain</a></li>
+<li class="chapter" data-level="8.2" data-path="queueing-theory.html"><a href="queueing-theory.html"><i class="fa fa-check"></i><b>8.2</b> Queueing Theory</a></li>
+<li class="chapter" data-level="8.3" data-path="inventory-management.html"><a href="inventory-management.html"><i class="fa fa-check"></i><b>8.3</b> Inventory Management</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="game-theory-and-mechanism-design.html"><a href="game-theory-and-mechanism-design.html"><i class="fa fa-check"></i><b>9</b> Game Theory and Mechanism design</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="mechanism-design.html"><a href="mechanism-design.html"><i class="fa fa-check"></i><b>9.1</b> Mechanism Design</a></li>
 </ul></li>
 <li class="part"><span><b>III Applications</b></span></li>
-<li class="chapter" data-level="7" data-path="intermediation-below-commodity-markets.html"><a href="intermediation-below-commodity-markets.html"><i class="fa fa-check"></i><b>7</b> Intermediation below Commodity Markets</a>
+<li class="chapter" data-level="10" data-path="intermediation.html"><a href="intermediation.html"><i class="fa fa-check"></i><b>10</b> Intermediation</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="virtual-power-plant-vpp.html"><a href="virtual-power-plant-vpp.html"><i class="fa fa-check"></i><b>7.1</b> Virtual Power Plant (VPP)</a></li>
-<li class="chapter" data-level="7.2" data-path="dynamic-pricing-and-demand-response.html"><a href="dynamic-pricing-and-demand-response.html"><i class="fa fa-check"></i><b>7.2</b> Dynamic Pricing and Demand Response</a></li>
-<li class="chapter" data-level="7.3" data-path="dynamic-procurement-pricing-dpp.html"><a href="dynamic-procurement-pricing-dpp.html"><i class="fa fa-check"></i><b>7.3</b> Dynamic Procurement &amp; Pricing (DPP)</a></li>
-<li class="chapter" data-level="7.4" data-path="reference.html"><a href="reference.html"><i class="fa fa-check"></i><b>7.4</b> Reference</a></li>
+<li class="chapter" data-level="10.1" data-path="VPP.html"><a href="VPP.html"><i class="fa fa-check"></i><b>10.1</b> Virtual Power Plant (VPP)</a></li>
+<li class="chapter" data-level="10.2" data-path="dynamic-procurement-pricing-dpp.html"><a href="dynamic-procurement-pricing-dpp.html"><i class="fa fa-check"></i><b>10.2</b> Dynamic Procurement &amp; Pricing (DPP)</a></li>
+<li class="chapter" data-level="10.3" data-path="principal-agent-problem-pa.html"><a href="principal-agent-problem-pa.html"><i class="fa fa-check"></i><b>10.3</b> Principal-Agent Problem (PA)</a></li>
 </ul></li>
+<li class="chapter" data-level="11" data-path="PSB.html"><a href="PSB.html"><i class="fa fa-check"></i><b>11</b> Power System Balancing (PSB)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="ED.html"><a href="ED.html"><i class="fa fa-check"></i><b>11.1</b> Economic Dispatch (ED)</a></li>
+<li class="chapter" data-level="11.2" data-path="UC.html"><a href="UC.html"><i class="fa fa-check"></i><b>11.2</b> Unit Commitment (UC)</a></li>
+<li class="chapter" data-level="11.3" data-path="UCC.html"><a href="UCC.html"><i class="fa fa-check"></i><b>11.3</b> Unit Construction &amp; Commitment (UCC)</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="MPC.html"><a href="MPC.html"><i class="fa fa-check"></i><b>12</b> Model Predictive Control (MPC)</a></li>
+<li class="chapter" data-level="13" data-path="RM.html"><a href="RM.html"><i class="fa fa-check"></i><b>13</b> Revenue Management (RM)</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="linear-algebra.html"><a href="linear-algebra.html"><i class="fa fa-check"></i><b>A</b> Linear Algebra</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -115,8 +143,8 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="De-benders-l-int" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> L-Shaped Benders Decomposition with Integer Variables in Second Stage</h2>
+<div id="De-benders-l-int" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> L-Shaped Benders with Second Stage Int-Var</h2>
 <p>The standard form for two stage stochastic programming with integer variables in second stage:</p>
 <p><span class="math display">\[ \begin{align}
 \min_{\mathbf{y}, \mathbf{x}_s, \mathbf{z}_s} \quad&amp; \mathbf{f} ^ { T } \mathbf{y} + \sum_{s \in \Omega} \pi_s \left(\mathbf{c}_s^T \mathbf{x}_s + \mathbf{d}_s^T \mathbf{z}_s \right) \\
@@ -162,16 +190,13 @@ p_s^d(\mathbf{y}) = \max \quad &amp; \left[\left(\mathbf{h}_s - \mathbf{T}_s \ov
 
 </div>
 <!-- </div> -->
-
-
-
             </section>
 
           </div>
         </div>
       </div>
 <a href="De-benders-l.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Sto.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="network-optimization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -202,7 +227,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/02-De.Rmd",
+"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/03-De.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -213,7 +238,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["_index.pdf", "_index.epub"],
+"download": ["_main.pdf", "_main.epub"],
 "toc": {
 "collapse": "subsection"
 }

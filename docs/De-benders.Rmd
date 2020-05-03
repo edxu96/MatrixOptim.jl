@@ -3,7 +3,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-## Benders Decomposition for Standard MILP
+## Benders for Standard MILP
 
 According to wikipedia:
 

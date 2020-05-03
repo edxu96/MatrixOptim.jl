@@ -1,0 +1,10 @@
+---
+editor_options:
+  chunk_output_type: console
+# output: bookdown::gitbook
+# bibliography: "../web/book.bib"
+---
+
+## Duality Theory
+
+- [Dualization.jl](https://github.com/JuliaOpt/Dualization.jl)

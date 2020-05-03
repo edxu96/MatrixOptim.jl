@@ -1,0 +1,16 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# (PART) Algorithms {-}
+
+# Linear Programming (LP)
+
+Sensitivity Analysis
+
+```{r child = '../docs/LP-simplex.Rmd'}
+```
+
+```{r child = '../docs/LP-dual.Rmd'}
+```

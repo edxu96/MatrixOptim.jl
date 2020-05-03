@@ -12,3 +12,7 @@ editor_options:
 > Stochastic dynamic programming deals with problems in which the current period reward and/or the next period state are random, i.e. with multi-stage stochastic systems. The decision maker's goal is to maximize expected (discounted) reward over a given planning horizon.
 
 > Decision outcomes need to be characterized not only by their expected values but also by their variability levels, thus risk control of outcome volatility is needed and can be achieved using appropriate risk measures. [@conejo2010decision]
+
+
+```{r child = '../docs/Sto-newsvendor.Rmd'}
+```

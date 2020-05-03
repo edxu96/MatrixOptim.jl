@@ -5,8 +5,8 @@ account: edxu96
 server: bookdown.org
 hostUrl: https://bookdown.org/__api__
 appId: 4391
-bundleId: 21828
+bundleId: 21844
 url: https://bookdown.org/edxu96/matrixoptim/
-when: 1588493707.71309
+when: 1588520924.08071
 asMultiple: FALSE
 asStatic: TRUE

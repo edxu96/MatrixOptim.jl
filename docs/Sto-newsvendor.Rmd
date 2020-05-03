@@ -1,0 +1,15 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+## Newsvendor Problem
+
+
+### Fixed-Lead One-Time Procurement
+
+
+### Optimal Stopping Procurement
+
+
+### Dynamic Procurement
