@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim</title>
+  <title>7.2 Dynamic Pricing and Demand Response | MatrixOptim</title>
   <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim" />
+  <meta property="og:title" content="7.2 Dynamic Pricing and Demand Response | MatrixOptim" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 L-Shaped Benders Decomposition with Integer Variables in Second Stage | MatrixOptim" />
+  <meta name="twitter:title" content="7.2 Dynamic Pricing and Demand Response | MatrixOptim" />
   
   <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="De-benders-l.html"/>
-<link rel="next" href="Sto.html"/>
+<link rel="prev" href="virtual-power-plant-vpp.html"/>
+<link rel="next" href="dynamic-procurement-pricing-dpp.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -115,63 +115,50 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="De-benders-l-int" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> L-Shaped Benders Decomposition with Integer Variables in Second Stage</h2>
-<p>The standard form for two stage stochastic programming with integer variables in second stage:</p>
-<p><span class="math display">\[ \begin{align}
-\min_{\mathbf{y}, \mathbf{x}_s, \mathbf{z}_s} \quad&amp; \mathbf{f} ^ { T } \mathbf{y} + \sum_{s \in \Omega} \pi_s \left(\mathbf{c}_s^T \mathbf{x}_s + \mathbf{d}_s^T \mathbf{z}_s \right) \\
-\text{s.t.} \quad&amp; \mathbf{T}_s \mathbf{y} + \mathbf{w}_s \mathbf{x}_s + \mathbf{g}_s \mathbf{z}_s \geq \mathbf{h}_s \quad \forall s \\
-&amp; \mathbf{y} \in \mathbf{Y} \\
-&amp; \mathbf{x}_s \geq 0 \quad \forall s \\
-&amp; \mathbf{z}_s \in \mathbf{Z} \quad \forall s
-\end{align} \]</span></p>
-<p>where the <span class="math inline">\(\mathbf{y}\)</span> is vector of integer variables.</p>
-<p>Master Problem:</p>
-<p><span class="math display">\[ \begin{align}
-\min \quad&amp; \mathbf{f}^{T} \mathbf{y} + \sum_{s \in \Omega} \pi_s q_s(\mathbf{y}) \\
-\text{s.t.} \quad&amp; \overline{\mathbf{u}_j^r}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq 0 \quad \forall j \\
-&amp; \overline{\mathbf{u}_i^p}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq q_s(\mathbf{y}) \quad \forall i \\
-&amp; \mathbf{y} \in \mathbf{Y}
-\end{align} \]</span></p>
-<p>Sub-problem for each scenario:</p>
-<p><span class="math display">\[ \begin{align}
-q_s(\mathbf{y}) = \min \quad &amp; \mathbf{d}^{T}_s \mathbf{z}_s + \mathbf{c}_s^T \mathbf{x}_s \\
-\text{s.t.} \quad &amp; \mathbf{g}_s \mathbf{z}_s + \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
-&amp; \mathbf{x}_s \geq 0
-\end{align} \]</span></p>
-<p>which is a standard MILP problem.</p>
-<p>So we use the benders algorithm again. The Sub-Mas problem is:</p>
-<p><span class="math display">\[ \begin{align}
-q_s(\mathbf{y}) = \min \quad &amp; \mathbf{d}^{T}_s \mathbf{z}_s + p_s(\mathbf{z}_s) \\
-\text{s.t.} \quad &amp; \overline{\mathbf{v}_m^p}^T \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right] \leq p_s(\mathbf{z}_s) \quad \forall m \\
-&amp; \overline{\mathbf{v}_n^r}^T \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right] \leq 0 \quad \forall n \\
-&amp; \mathbf{x}_s \geq 0
-\end{align} \]</span></p>
-<p>Sub-Sub-problem for each scenario:</p>
-<p><span class="math display">\[ \begin{align}
-p_s(\mathbf{y}) = \min \quad &amp; \mathbf{c}_s^T \mathbf{x}_s \\
-\text{s.t.} \quad &amp; \mathbf{w}_s \mathbf{x}_s \geq \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s}  \\
-&amp; \mathbf{x}_s \geq 0
-\end{align} \]</span></p>
-<p>The dual function of <span class="math inline">\(p_s(\mathbf{y})\)</span> is:</p>
-<p><span class="math display">\[ \begin{align}
-p_s^d(\mathbf{y}) = \max \quad &amp; \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right]^{T} \mathbf{v} \\
-\text{s.t.} \quad &amp; \mathbf{w}_s^{T} \mathbf{v} \leq \mathbf{c}_s \\
-&amp; \mathbf{v} \geq 0
-\end{align} \]</span></p>
-
+<div id="dynamic-pricing-and-demand-response" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Dynamic Pricing and Demand Response</h2>
+<blockquote>
+<p>Each retailer is deemed to have sold to its customers the amount of energy that went through their meters. If for any period the aggregate amount over all its customers exceeds the amount that it has contracted to buy, the retailer has to purchase the difference on the spot market at whatever value the spot price reached for that period. Similarly, if the amount contracted exceeds the amount consumed by its customers, the retailer is deemed to have sold the difference on the spot market. <span class="citation">(Kirschen and Strbac <a href="#ref-kirschen2018fundamentals" role="doc-biblioref">2018</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>To reduce its exposure to the risk associated with the unpredictability of the spot market prices, a retailer therefore tries to forecast as accurately as possible the demand of its customers. <span class="citation">(Kirschen and Strbac <a href="#ref-kirschen2018fundamentals" role="doc-biblioref">2018</a>)</span></p>
+</blockquote>
+<blockquote>
+<p>The decision on energy consumption is ultimately left to the individual consumers, who must weigh cost savings against a potential loss of comfort. <span class="citation">(Morales et al. <a href="#ref-morales2013integrating" role="doc-biblioref">2013</a>)</span></p>
+</blockquote>
+<div id="necessary-infrastructure" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Necessary Infrastructure</h3>
+<blockquote>
+<p>In order to evolve from a setup where supply follows demand to one where demand follows supply, power systems must undergo drastic structural and operational changes. <span class="citation">(Morales et al. <a href="#ref-morales2013integrating" role="doc-biblioref">2013</a>)</span></p>
+</blockquote>
 </div>
-<!-- </div> -->
-
-
-
+<div id="time-of-use-tariff" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Time-of-Use Tariff</h3>
+<blockquote>
+<p>However, their relevance is challenged as the penetration of renewables into power systems grows sufficiently large to be able to influence prices in the wholesale electricity markets. Time-of-use tariffs are static, i.e., they are fixed long time in advance, and therefore unable to adapt to the rapid fluctuations of renewables. <span class="citation">(Morales et al. <a href="#ref-morales2013integrating" role="doc-biblioref">2013</a>)</span></p>
+</blockquote>
+</div>
+<div id="real-time-dynamic-pricing" class="section level3" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> Real-Time Dynamic Pricing</h3>
+<p>Prices are able to adapt dynamically according to the latest forecast of renewable outputs and consumptions.</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-kirschen2018fundamentals">
+<p>Kirschen, Daniel S, and Goran Strbac. 2018. <em>Fundamentals of Power System Economics</em>. John Wiley &amp; Sons.</p>
+</div>
+<div id="ref-morales2013integrating">
+<p>Morales, Juan M, Antonio J Conejo, Henrik Madsen, Pierre Pinson, and Marco Zugno. 2013. <em>Integrating Renewables in Electricity Markets: Operational Problems</em>. Vol. 205. Springer Science &amp; Business Media.</p>
+</div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="De-benders-l.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Sto.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="virtual-power-plant-vpp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dynamic-procurement-pricing-dpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -202,7 +189,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/02-De.Rmd",
+"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/07-Inter.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -221,20 +208,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

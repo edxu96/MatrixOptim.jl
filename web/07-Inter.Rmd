@@ -1,0 +1,11 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# (PART) Applications {-}
+
+# Intermediation below Commodity Markets
+
+```{r child = '../docs/Inter-Elec.Rmd'}
+```

@@ -1,4 +1,5 @@
-book_filename: "MatrixOptim"
+# book_filename: "MatrixOptim"
+book_filename: _index.md
 language:
   ui:
     chapter_name: "Chapter "
