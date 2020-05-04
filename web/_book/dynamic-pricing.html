@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 15 Revenue Management (RM) | MatrixOptim</title>
+  <title>15.1 Dynamic Pricing | MatrixOptim</title>
   <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 15 Revenue Management (RM) | MatrixOptim" />
+  <meta property="og:title" content="15.1 Dynamic Pricing | MatrixOptim" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 15 Revenue Management (RM) | MatrixOptim" />
+  <meta name="twitter:title" content="15.1 Dynamic Pricing | MatrixOptim" />
   
   <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="MPC.html"/>
-<link rel="next" href="dynamic-pricing.html"/>
+<link rel="prev" href="RM.html"/>
+<link rel="next" href="scalper.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,45 +168,74 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="RM" class="section level1" number="15">
-<h1><span class="header-section-number">Chapter 15</span> Revenue Management (RM)</h1>
-<p>Usually, advance selling is the background.</p>
+<div id="dynamic-pricing" class="section level2" number="15.1">
+<h2><span class="header-section-number">15.1</span> Dynamic Pricing</h2>
 <blockquote>
-<p>Advance selling is the sale of a product to customers in advance of delivery. It is often implemented in the manufacturing and retailing sectors by firms facing newsvendor problems. A newsvendor problem arises when a retailer needs to purchase its inventory before a short selling period with uncertain demand. In such cases, advance selling is a recommended method to reduce the inventory risk, because the advance orders are precommitted. <span class="citation">(<span class="citeproc-not-found" data-reference-id="prasad2011advance"><strong>???</strong></span>)</span></p>
+<p>Dynamic posted prices are also take-it-or-leave-it prices, where the seller dynamically changes prices over time (intertemporal prices) based on factors such as time of sale, demand information, and supply availability. <span class="citation">(<span class="citeproc-not-found" data-reference-id="elmaghraby2003dynamic"><strong>???</strong></span>)</span></p>
+</blockquote>
+<div id="initial-endowment" class="section level3" number="15.1.1">
+<h3><span class="header-section-number">15.1.1</span> Initial Endowment</h3>
+<p>The procurement problem is not considered. For a target unit, the seller is endowed initially with an inventory. There is no way to replenish the inventory.</p>
+<p>By the end of the selling season, leftover units have lowest values.</p>
+<blockquote>
+<p>Our consideration of limited inventory is motivated, in part, by the operational conditions in which supply chains of seasonal products function. For example, distant supplier locations, long production lead times, tight capacity constraints, and relatively short sales seasons may greatly limit the ability of retailers to replenish their inventory during a sales season. <span class="citation">(<span class="citeproc-not-found" data-reference-id="aviv2008optimal"><strong>???</strong></span>)</span></p>
 </blockquote>
 <blockquote>
-<p>The basic problem of yield management is how to sell a finite inventory over a finite horizon to maximize the total revenue. <span class="citation">(<span class="citeproc-not-found" data-reference-id="monahan2004dynamic"><strong>???</strong></span>)</span></p>
+<p>This model is applicable to different industries, including travel (airplane seats and hotel rooms), retailing (fashion apparel and seasonal goods), and entertainment (concert and football tickets). <span class="citation">(<span class="citeproc-not-found" data-reference-id="su2007intertemporal"><strong>???</strong></span>)</span></p>
 </blockquote>
-<p><strong>There are several reasons to conduct revenue management:</strong></p>
+</div>
+<div id="market-segmentation" class="section level3" number="15.1.2">
+<h3><span class="header-section-number">15.1.2</span> Market Segmentation</h3>
+<blockquote>
+<p>The key to profit-enhancing pricing plans is the ability to engage in price discrimination via what economists call market segmentation. <span class="citation">(<span class="citeproc-not-found" data-reference-id="shy2008how"><strong>???</strong></span>)</span></p>
+</blockquote>
+</div>
+<div id="as-a-marketing-strategy" class="section level3" number="15.1.3">
+<h3><span class="header-section-number">15.1.3</span> as a Marketing Strategy</h3>
+<blockquote>
+<p>Scarcity of goods could also originate from deliberate market- ing strategies. For example, Zara, a large Spanish producer and retailer of fashion goods, limits the number of clothing items in their stores to create a sense of urgency among consumers. <span class="citation">(<span class="citeproc-not-found" data-reference-id="aviv2008optimal"><strong>???</strong></span>)</span></p>
+</blockquote>
+</div>
+<div id="sellers-commitment" class="section level3" number="15.1.4">
+<h3><span class="header-section-number">15.1.4</span> Sellers’ Commitment</h3>
+<p>Two reasons:</p>
+<blockquote>
+<p>If consumers observe that a certain service provider sells discounted tickets at the last minute, they may be deterred from making early reservations. Thus, service providers may suffer from a bad reputation if they often practice last-minute discounts. This is known as the sellers’ commitment problem. That is, in the short run, service providers may find it profitable to sell last-minute unbooked capacity at a lower price just to fill up the entire capacity. However, long-run considerations, such as reputation effect, prevent such practices. <span class="citation">(<span class="citeproc-not-found" data-reference-id="shy2008how"><strong>???</strong></span>)</span></p>
+</blockquote>
+<blockquote>
+<p>Reservations match supply with demand and permit 100% utilization, while service queues require slack capacity operating at less than 100%. Because of such inefficiency in queues, the firm should not allocate any capacity to serve walk-ins unless the walk-in customers pay higher price than reservation customers do. <span class="citation">(<span class="citeproc-not-found" data-reference-id="oh2018reservation"><strong>???</strong></span>)</span></p>
+</blockquote>
+</div>
+<div id="new-information" class="section level3" number="15.1.5">
+<h3><span class="header-section-number">15.1.5</span> New Information</h3>
+<blockquote>
+<p>Between the two time points, random demand is realized and publicly observed. Alternatively, we may assume that a market demand signal is publicly observed and that the signal is sufficiently informative for all parties to perfectly infer demand. <span class="citation">(<span class="citeproc-not-found" data-reference-id="su2010optimal"><strong>???</strong></span>)</span></p>
+</blockquote>
+</div>
+<div id="for-binary-purchase" class="section level3" number="15.1.6">
+<h3><span class="header-section-number">15.1.6</span> for Binary Purchase</h3>
+<p>In every decision epoch, customers have only two possible states: buy or not buy.</p>
 <ul>
-<li>[1] Profit Enhancement through Price Discrimination</li>
-</ul>
-<blockquote>
-<p>In some markets, earlier buyers are more price sensitive than buyers who purchase closer to the time of consumption. The separation of purchase and consumption creates the opportunity to price discriminate over time when arrival is correlated with price sensitivity and arbitrage is costly. <span class="citation">(<span class="citeproc-not-found" data-reference-id="shugan2000advance"><strong>???</strong></span>)</span></p>
-</blockquote>
+<li><span class="citation">(<span class="citeproc-not-found" data-reference-id="zhao2010pre"><strong>???</strong></span>)</span> Zhao, X., &amp; Stecke, K. E. (2010). Pre‐orders for new to‐be‐released products considering consumer loss aversion. Production and Operations Management, 19(2), 198-215.
 <ul>
-<li>[2] Asymmetric Information</li>
-</ul>
-<blockquote>
-<p>Based on past experience, sellers could know much more about what to expect than buyers do. <span class="citation">(<span class="citeproc-not-found" data-reference-id="shugan2000advance"><strong>???</strong></span>)</span></p>
-</blockquote>
-<blockquote>
-<p>Consumer valuation of the fireworks on July 4 is negatively affected by rain but lacking weather information in advance they would still have bought them. <span class="citation">(<span class="citeproc-not-found" data-reference-id="prasad2011advance"><strong>???</strong></span>)</span></p>
-</blockquote>
-<blockquote>
-<p>Early purchase discount may have to be offered to consumers to compensate them against the risks of realizing negative surplus in the future. <span class="citation">(<span class="citeproc-not-found" data-reference-id="prasad2011advance"><strong>???</strong></span>)</span></p>
-</blockquote>
+<li>Two-period setting: advance selling and spot selling. So the price is not dynamic.</li>
+<li>Initial procurement is considered.</li>
+<li>Customers are not certain about their valuation in the advance selling season.</li>
+</ul></li>
+<li><span class="citation">(<span class="citeproc-not-found" data-reference-id="prasad2011advance"><strong>???</strong></span>)</span> Prasad, A., Stecke, K. E., &amp; Zhao, X. (2011). Advance selling by a newsvendor retailer. Production and Operations Management, 20(1), 129-142.
 <ul>
-<li>[3] Load Shifting</li>
+<li>Two-period setting</li>
+</ul></li>
 </ul>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="MPC.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="dynamic-pricing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="RM.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="scalper.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

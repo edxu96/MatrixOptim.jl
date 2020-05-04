@@ -3,7 +3,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-# (PART) Applications {-}
+# (PART) Application {-}
 
 # Double Auction
 

@@ -58,6 +58,58 @@ The costs and profits must be distributed in a fair way.
 
 ## Dynamic Procurement & Pricing (DPP)
 
+- [monahan2004dynamic](https://pubsonline.informs.org/doi/abs/10.1287/msom.1030.0026) Monahan, G. E., Petruzzi, N. C., & Zhao, W. (2004). The dynamic pricing problem from a newsvendor's perspective. Manufacturing & Service Operations Management, 6(1), 73-91.
+  * the fundamental question that must be answered each time a demand occurs is whether to accept the demand or to reserve the unit of inventory for possible sale later to a potentially higher-paying customer.
+  * Yield management models differ from the dynamic pricing model in their assumption that price is exogenous; thus, their primary focus, in effect, is on inventory control.
+
+### Continuous DPP
+
+- [chan2004coordination](https://link.springer.com/chapter/10.1007/978-1-4020-7953-5_9) Chan, L. M., Shen, Z. M., Simchi-Levi, D., & Swann, J. L. (2004). Coordination of pricing and inventory decisions: A survey and classification. In Handbook of quantitative supply chain analysis (pp. 335-392). Springer, Boston, MA.
+- [yano2005coordinated](https://link.springer.com/chapter/10.1007/0-387-25002-6_3) Yano, C. A., & Gilbert, S. M. (2005). Coordinated pricing and production/procurement decisions: A review. In Managing Business Interfaces (pp. 65-103). Springer, Boston, MA.
+
+#### of Perishable Goods {-}
+
+- [chen2014coordinating](https://pubsonline.informs.org/doi/abs/10.1287/opre.2014.1261?casa_token=f1fPl3Q4Uz4AAAAA:6VIIyjCgEovgrVqSoVBOT649okKiLI8i4XSmwm3j4Q6cw6TRxT8W-82O4NaUIFmVz2aU4xSPVQ) Chen, X., Pang, Z., & Pan, L. (2014). Coordinating inventory control and pricing strategies for perishable products. Operations Research, 62(2), 284-300.
+- [li2015joint](https://www.tandfonline.com/doi/abs/10.1080/00207543.2014.961206?casa_token=bGyM9znzTw4AAAAA:0MJVwI8N4L2bWAgCJdmeRmbFcH_vwPV2di26d_Vi-XmQxyReDpQh58YW0BkPQIFXOYQdn50leZ9I) Li, S., Zhang, J., & Tang, W. (2015). Joint dynamic pricing and inventory control policy for a stochastic inventory system with perishable products. International Journal of Production Research, 53(10), 2937-2950.
+
+#### of Durable Goods {-}
+
+> The manager indicated to us that the most significant factor leading to increased inventory levels and decreased efficiency in his plant is the unpredictability of demand due to promotional and pricing decisions made by the marketing group [ahn2007pricing](#reference)
+
+- [ahn2007pricing](https://pubsonline.informs.org/doi/abs/10.1287/opre.1070.0411?casa_token=8c1RxdVZ07AAAAAA:ZZNvBOLFtzoVb6a8pw_AT0Nk49U62BbX51ZbK0HRFXkxmvEArGJ3ojyyK7Xw609kGZCfqBv0CQ) Ahn, H. S., Gümüş, M., & Kaminsky, P. (2007). Pricing and manufacturing decisions when demand is a function of prices in multiple periods. Operations Research, 55(6), 1039-1057.
+  * Some of the customers entering the system in a given period who cannot afford the product in that period have the patience to wait until the price drops to a level they can afford.
+  * Customers do tend to buy it as soon as their budget constraint (i.e., reservation price) is met.
+- [elmaghraby2003dynamic](https://pubsonline.informs.org/doi/abs/10.1287/mnsc.49.10.1287.17315?casa_token=luc4f-sEei4AAAAA:XajqTL6fS4bxICkL7diK8kbZw1Xvmu6vGjhwSZYoOOCTH-RpubH-UFH2nXQRpysCvH6xfPovs_M) Elmaghraby, W., & Keskinocak, P. (2003). Dynamic pricing in the presence of inventory considerations: Research overview, current practices, and future directions. Management science, 49(10), 1287-1309.
+
+### Forward DPP of Time-Dependent Products (FDPP)
+
+TDP: Customers are uncertain about their consumption utilities during forward purchase.
+
+
+
+### The Process over Time
+
+- __alwan2016dynamic__ The Dynamic Newsvendor Model with Correlated Demand
+
+> Hospitals and blood banks aim to accurately forecast the blood demand each day and then plan and manage their blood inventory.
+
+Demand in different target units need to be satisfied continuously.
+
+### Dynamic Procurement and Cancellation
+
+> The newsvendor can spread her orders over the planning horizon to take advantage of lower ordering costs with early orders and more accurate demand forecasts with late orders. [wang2012multiordering](#reference)
+
+> Resources for balancing, e.g. thermal power plants and flexible demand, become scarce due to finite availability and long ramp-up times. Average marginal costs of available resources are high. Thus, the market tightens up considerably. [garnier2015balancing](#reference)
+
+#### in Intraday Electricity Market {-}
+
+> In an efficient market design, as much as possible of these adjustments would however be done in the intraday market to avoid the use of more expensive flexible resources in real-time balancing. [weber2010adequate](#reference)
+
+> Given that they earn a capacity revenue, power plant operators may then offer lower energy prices on the reserve markets than on the intraday market. If the TSOs use those prices for pricing balancing energy, situations may occur, where the balancing energy price is lower than the intraday market price. [weber2010adequate](#reference)
+
+- __garnier2015balancing__ Balancing forecast errors in continuous-trade intraday markets
+- __aid2016optimal__ An optimal trading problem in intraday electricity markets
+
 ### Demand Response
 
 > Each retailer is deemed to have sold to its customers the amount of energy that went through their meters. If for any period the aggregate amount over all its customers exceeds the amount that it has contracted to buy, the retailer has to purchase the difference on the spot market at whatever value the spot price reached for that period. Similarly, if the amount contracted exceeds the amount consumed by its customers, the retailer is deemed to have sold the difference on the spot market. [@kirschen2018fundamentals]

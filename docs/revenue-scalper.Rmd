@@ -1,0 +1,10 @@
+---
+editor_options:
+  chunk_output_type: console
+# output: bookdown::gitbook
+# bibliography: "../web/book.bib"
+---
+
+## Scalper
+
+> This paper studies a monopolist firm selling a fixed capacity. The firm sets a price before demand uncertainty is resolved. Speculators may enter the market purely with the intention of resale, which can be profitable if demand turns out to be high. Consumers may strategically choose when to purchase, and they may also choose to purchase from the firm or from the speculators. [@su2010optimal]

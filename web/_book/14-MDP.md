@@ -28,3 +28,9 @@ The stationary transition probability matrix (STPM) or Markov matrix (MM) can be
 
 
 ## Inventory Management
+
+> In industries like retail, where short-term supply is more flexible (e.g., through inventory replenishment) or where price changes are costly, the focus has been on improving inventory management practices. [@elmaghraby2003dynamic]
+
+> In the newsvendor problem, a decision maker facing random demand for a perishable product decides how much of it to stock for a single selling period. [@petruzzi1999pricing]
+
+The primary concern is on the quantity of initial procurement.

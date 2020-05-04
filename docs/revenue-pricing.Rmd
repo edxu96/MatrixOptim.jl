@@ -1,35 +1,3 @@
----
-editor_options:
-  chunk_output_type: console
----
-
-# Revenue Management (RM) {#RM}
-
-Usually, advance selling is the background.
-
-> Advance selling is the sale of a product to customers in advance of delivery. It is often implemented in the manufacturing and retailing sectors by firms facing newsvendor problems. A newsvendor problem arises when a retailer needs to purchase its inventory before a short selling period with uncertain demand. In such cases, advance selling is a recommended method to reduce the inventory risk, because the advance orders are precommitted. [@prasad2011advance]
-
-> The basic problem of yield management is how to sell a finite inventory over a finite horizon to maximize the total revenue. [@monahan2004dynamic]
-
-**There are several reasons to conduct revenue management:**
-
-- [1] Profit Enhancement through Price Discrimination
-
-> In some markets, earlier buyers are more price sensitive than buyers who purchase closer to the time of consumption. The separation of purchase and consumption creates the opportunity to price discriminate over time when arrival is correlated with price sensitivity and arbitrage is costly. [@shugan2000advance]
-
-- [2] Asymmetric Information
-
-> Based on past experience, sellers could know much more about what to expect than buyers do. [@shugan2000advance]
-
-> Consumer valuation of the fireworks on July 4 is negatively affected by rain but lacking weather information in advance they would still have bought them. [@prasad2011advance]
-
-> Early purchase discount may have to be offered to consumers to compensate them against the risks of realizing negative surplus in the future. [@prasad2011advance]
-
-- [3] Load Shifting
-
-
-
-
 
 ## Dynamic Pricing
 
@@ -78,17 +46,3 @@ In every decision epoch, customers have only two possible states: buy or not buy
 
 - [@prasad2011advance] Prasad, A., Stecke, K. E., & Zhao, X. (2011). Advance selling by a newsvendor retailer. Production and Operations Management, 20(1), 129-142.
   * Two-period setting
-
-
-
-## Scalper
-
-> This paper studies a monopolist firm selling a fixed capacity. The firm sets a price before demand uncertainty is resolved. Speculators may enter the market purely with the intention of resale, which can be profitable if demand turns out to be high. Consumers may strategically choose when to purchase, and they may also choose to purchase from the firm or from the speculators. [@su2010optimal]
-
-
-
-## with Strategic Customers
-
-> The zero-sum nature of pricing makes this inevitable. Firms are constantly improving their pricing strategies to collect as much revenue as possible, and customers are constantly modifying their purchase plans to pay as little as possible. [@su2007intertempora]
-
-> When study the optimal pricing of a finite quantity of a fashion-like seasonal good in the presence of forward-looking (strategic) customers. We distinguish between two classes of pricing strategies: contingent and announced fixed-discount. In both cases, the seller acts as a Stackelberg leader announcing his pricing strategy, while consumers act as followers taking the seller's strategy as given and determining their purchasing behavior. [@aviv2008optimal]

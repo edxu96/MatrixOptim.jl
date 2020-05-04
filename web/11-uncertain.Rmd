@@ -1,0 +1,19 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# (PART) Operations Research {-}
+
+# Decision Making Under Uncertainty
+
+> Decision outcomes need to be characterized not only by their expected values but also by their variability levels, thus risk control of outcome volatility is needed and can be achieved using appropriate risk measures. [@conejo2010decision]
+
+```{r child = '../docs/uncertain-Sto.Rmd'}
+```
+
+```{r child = '../docs/uncertain-robust.Rmd'}
+```
+
+```{r child = '../docs/uncertain-newsvendor.Rmd'}
+```

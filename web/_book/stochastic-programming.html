@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>8.3 Newsvendor Problem | MatrixOptim</title>
+  <title>8.1 Stochastic Programming | MatrixOptim</title>
   <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="8.3 Newsvendor Problem | MatrixOptim" />
+  <meta property="og:title" content="8.1 Stochastic Programming | MatrixOptim" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="8.3 Newsvendor Problem | MatrixOptim" />
+  <meta name="twitter:title" content="8.1 Stochastic Programming | MatrixOptim" />
   
   <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="robust-programming.html"/>
-<link rel="next" href="game-theory.html"/>
+<link rel="prev" href="decision-making-under-uncertainty.html"/>
+<link rel="next" href="robust-programming.html"/>
 <script src="libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,57 +169,22 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="newsvendor-problem" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Newsvendor Problem</h2>
-<div id="stochastic-unresponsive-demand" class="section level3" number="8.3.1">
-<h3><span class="header-section-number">8.3.1</span> Stochastic Unresponsive Demand</h3>
-<p>The demand is assumed to be unresponsive, so the pricing problem is not considered.</p>
-<p>The selling season of the product is assumed to be very short.</p>
-<div id="underage-cost-and-salvage-cost" class="section level4 unnumbered" number="">
-<h4>Underage Cost and Salvage Cost</h4>
+<div id="stochastic-programming" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Stochastic Programming</h2>
 <blockquote>
-<p>On the one hand, if realized demand exceeds the supply, then the newsvendor will sell its entire stock, but at the expense of having excess demand go unsatisfied; on the other hand, if the supply exceeds the realized demand, then the newsvendor will satisfy demand completely, but at the expense of having leftovers. <span class="citation">(<span class="citeproc-not-found" data-reference-id="dada2007newsvendor"><strong>???</strong></span>)</span></p>
-</blockquote>
-<p>Any unsatisfied demand will be lost and incur an underage cost, and any leftover inventory will be disposed (or salvaged) with an overage cost. Suppose the cost of overage is <span class="math inline">\(c_o\)</span> and the cost of underage is <span class="math inline">\(c_u\)</span>.</p>
-<p><span class="math display">\[
-C(Q_{t+1}) = c_{o} \max \left\{Q_{t+1} - d_{t+1}, 0\right\} + c_{u} \max \left\{d_{t+1} - Q_{t+1}, 0\right\}
-\]</span></p>
-<p>Currently, the cost of underage is <span class="math inline">\(c_u\)</span> in electricity supply, which can be called value of lost load (VoLL), is super high compared to market prices of electricity. VoLL is the estimated amount that customers receiving electricity with firm contracts would be willing to pay to avoid a disruption in their electricity service. <span class="citation">(<span class="citeproc-not-found" data-reference-id="VoLL"><strong>???</strong></span>, Wikipedia)</span> So retailers tend to procure extra electricity in order to satisfy customers’ demand, and generation companies build more backup generators.</p>
-</div>
-</div>
-<div id="fixed-lead-one-time-procurement" class="section level3" number="8.3.2">
-<h3><span class="header-section-number">8.3.2</span> Fixed-Lead One-Time Procurement</h3>
-</div>
-<div id="optimal-stopping-procurement" class="section level3" number="8.3.3">
-<h3><span class="header-section-number">8.3.3</span> Optimal Stopping Procurement</h3>
-<p>For procurements of goods, companies may not have the ability to make decisions regard target units only, and the demand in target units may be uncertain. The delivery of goods procured takes time, and it may be uncertain. That is, the lead time of procurements may be uncertain. For goods instead of services, they are storable. So it’s better for companies to receive the goods early when the lead time varies.</p>
-<blockquote>
-<p>Moreover, the procurement lead times are often uncertain. Delays can occur for many reasons, including transportation-infrastructure issues in rapidly-developing economies, congestion in foreign and domestic ports, customs inspections, and logistical issues involving export quotas. <span class="citation">(<span class="citeproc-not-found" data-reference-id="wang2009wait"><strong>???</strong></span>)</span></p>
+<p>Stochastic programming is a framework for modeling optimization problems that involve uncertainty, if the probability distributions governing the data are known or can be estimated. The goal here is to find some policy that is feasible for all (or almost all) the possible data instances and maximizes the expectation of some function of the decisions and the random variables.</p>
 </blockquote>
 <blockquote>
-<p>Ordering earlier reduces the “lateness” risk associated with uncertain lead times but it also increases the firms’ demand risk, i.e., the potential mismatch between the quantity procured and the realized demand. <span class="citation">(<span class="citeproc-not-found" data-reference-id="wang2009wait"><strong>???</strong></span>)</span></p>
+<p>Stochastic dynamic programming deals with problems in which the current period reward and/or the next period state are random, i.e. with multi-stage stochastic systems. The decision maker’s goal is to maximize expected (discounted) reward over a given planning horizon.</p>
 </blockquote>
 </div>
-<div id="cases" class="section level3" number="8.3.4">
-<h3><span class="header-section-number">8.3.4</span> Cases</h3>
-<ul>
-<li><span class="citation">(<span class="citeproc-not-found" data-reference-id="bucher2015quantification"><strong>???</strong></span>)</span> TSOs procure control reserve resources.
-<ul>
-<li>Transmission system operators are responsible for power system balancing.</li>
-<li>two-stage adaptive robust optimization model</li>
-</ul></li>
-</ul>
-
-</div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="robust-programming.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="game-theory.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="decision-making-under-uncertainty.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="robust-programming.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
