@@ -11,7 +11,7 @@ editor_options:
 
 VPP operators have direct control over all units.
 
-### (a) Components of VPP
+### (a) Components of VPP {-}
 
 - dispatchable generators
 - responsive loads

@@ -3,4 +3,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Convex Optimization
+# Revenue Management (RM) {#RM}

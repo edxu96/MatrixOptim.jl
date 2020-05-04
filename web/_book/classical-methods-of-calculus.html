@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.1 Classical Methods of Calculus | MatrixOptim</title>
+  <meta name="description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
+  <meta name="generator" content="bookdown 0.18 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.1 Classical Methods of Calculus | MatrixOptim" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
+  <meta name="github-repo" content="edxu96/MatrixOptim.jl" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.1 Classical Methods of Calculus | MatrixOptim" />
+  
+  <meta name="twitter:description" content="Data-Driven Decision Making under Uncertainty in Matrix." />
+  
+
+<meta name="author" content="Edward J. Xu" />
+
+
+<meta name="date" content="2020-05-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="non-linear-programming-nlp.html"/>
+<link rel="next" href="kkt-conditions.html"/>
+<script src="libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">MatrixOptim</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="part"><span><b>I Algorithms</b></span></li>
+<li class="chapter" data-level="1" data-path="linear-programming-lp.html"><a href="linear-programming-lp.html"><i class="fa fa-check"></i><b>1</b> Linear Programming (LP)</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="simplex-method.html"><a href="simplex-method.html"><i class="fa fa-check"></i><b>1.1</b> Simplex Method</a></li>
+<li class="chapter" data-level="1.2" data-path="duality-theory.html"><a href="duality-theory.html"><i class="fa fa-check"></i><b>1.2</b> Duality Theory</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="MILP.html"><a href="MILP.html"><i class="fa fa-check"></i><b>2</b> Mixed Integer Linear Programming</a></li>
+<li class="chapter" data-level="3" data-path="De.html"><a href="De.html"><i class="fa fa-check"></i><b>3</b> Decomposition Algorithms</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="benders-for-standard-milp.html"><a href="benders-for-standard-milp.html"><i class="fa fa-check"></i><b>3.1</b> Benders for Standard MILP</a></li>
+<li class="chapter" data-level="3.2" data-path="De-benders-l.html"><a href="De-benders-l.html"><i class="fa fa-check"></i><b>3.2</b> L-Benders for Sto-Prog</a></li>
+<li class="chapter" data-level="3.3" data-path="De-benders-l-int.html"><a href="De-benders-l-int.html"><i class="fa fa-check"></i><b>3.3</b> L-Benders with Second Stage Int-Var</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="network-optimization.html"><a href="network-optimization.html"><i class="fa fa-check"></i><b>4</b> Network Optimization</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="MCF.html"><a href="MCF.html"><i class="fa fa-check"></i><b>4.1</b> Minimum Cost Flow (MCF)</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="non-linear-programming-nlp.html"><a href="non-linear-programming-nlp.html"><i class="fa fa-check"></i><b>5</b> Non-Linear Programming (NLP)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="classical-methods-of-calculus.html"><a href="classical-methods-of-calculus.html"><i class="fa fa-check"></i><b>5.1</b> Classical Methods of Calculus</a></li>
+<li class="chapter" data-level="5.2" data-path="kkt-conditions.html"><a href="kkt-conditions.html"><i class="fa fa-check"></i><b>5.2</b> KKT Conditions</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Decen.html"><a href="Decen.html"><i class="fa fa-check"></i><b>6</b> Decentralized Optimization</a></li>
+<li class="chapter" data-level="7" data-path="relaxation-approximation.html"><a href="relaxation-approximation.html"><i class="fa fa-check"></i><b>7</b> Relaxation (Approximation)</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="of-integer-programming.html"><a href="of-integer-programming.html"><i class="fa fa-check"></i><b>7.1</b> of Integer Programming</a></li>
+<li class="chapter" data-level="7.2" data-path="lagrangian-relaxation.html"><a href="lagrangian-relaxation.html"><i class="fa fa-check"></i><b>7.2</b> Lagrangian Relaxation</a></li>
+</ul></li>
+<li class="part"><span><b>II Operations Research</b></span></li>
+<li class="chapter" data-level="8" data-path="Sto.html"><a href="Sto.html"><i class="fa fa-check"></i><b>8</b> Stochastic Programming</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="newsvendor-problem.html"><a href="newsvendor-problem.html"><i class="fa fa-check"></i><b>8.1</b> Newsvendor Problem</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="robust.html"><a href="robust.html"><i class="fa fa-check"></i><b>9</b> Robust Programming</a></li>
+<li class="chapter" data-level="10" data-path="game-theory.html"><a href="game-theory.html"><i class="fa fa-check"></i><b>10</b> Game Theory</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="mechanism-design.html"><a href="mechanism-design.html"><i class="fa fa-check"></i><b>10.1</b> Mechanism Design</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="MDP.html"><a href="MDP.html"><i class="fa fa-check"></i><b>11</b> Markov Decision Process (MDP)</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="markov-chain.html"><a href="markov-chain.html"><i class="fa fa-check"></i><b>11.1</b> Markov Chain</a></li>
+<li class="chapter" data-level="11.2" data-path="queueing-theory.html"><a href="queueing-theory.html"><i class="fa fa-check"></i><b>11.2</b> Queueing Theory</a></li>
+<li class="chapter" data-level="11.3" data-path="inventory-management.html"><a href="inventory-management.html"><i class="fa fa-check"></i><b>11.3</b> Inventory Management</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="double-auction.html"><a href="double-auction.html"><i class="fa fa-check"></i><b>12</b> Double Auction</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="DA-P.html"><a href="DA-P.html"><i class="fa fa-check"></i><b>12.1</b> Periodic DA</a></li>
+<li class="chapter" data-level="12.2" data-path="DA-C.html"><a href="DA-C.html"><i class="fa fa-check"></i><b>12.2</b> Continuous DA</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="PSB.html"><a href="PSB.html"><i class="fa fa-check"></i><b>13</b> Power System Balancing (PSB)</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="UC.html"><a href="UC.html"><i class="fa fa-check"></i><b>13.1</b> Unit Commitment (UC)</a></li>
+<li class="chapter" data-level="13.2" data-path="UCC.html"><a href="UCC.html"><i class="fa fa-check"></i><b>13.2</b> Construction &amp; UC (UCC)</a></li>
+<li class="chapter" data-level="13.3" data-path="transmission-network.html"><a href="transmission-network.html"><i class="fa fa-check"></i><b>13.3</b> Transmission Network</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="MPC.html"><a href="MPC.html"><i class="fa fa-check"></i><b>14</b> Model Predictive Control (MPC)</a></li>
+<li class="chapter" data-level="15" data-path="RM.html"><a href="RM.html"><i class="fa fa-check"></i><b>15</b> Revenue Management (RM)</a></li>
+<li class="chapter" data-level="16" data-path="MAS.html"><a href="MAS.html"><i class="fa fa-check"></i><b>16</b> Multi-Agent System (MAS)</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="MAS-Co.html"><a href="MAS-Co.html"><i class="fa fa-check"></i><b>16.1</b> Cooperative MAS</a></li>
+<li class="chapter" data-level="16.2" data-path="MAS-Nonco.html"><a href="MAS-Nonco.html"><i class="fa fa-check"></i><b>16.2</b> Noncooperative MAS</a></li>
+</ul></li>
+<li class="part"><span><b>III Applications</b></span></li>
+<li class="chapter" data-level="17" data-path="intermediation.html"><a href="intermediation.html"><i class="fa fa-check"></i><b>17</b> Intermediation</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="VPP.html"><a href="VPP.html"><i class="fa fa-check"></i><b>17.1</b> Virtual Power Plant (VPP)</a></li>
+<li class="chapter" data-level="17.2" data-path="dynamic-procurement-pricing-dpp.html"><a href="dynamic-procurement-pricing-dpp.html"><i class="fa fa-check"></i><b>17.2</b> Dynamic Procurement &amp; Pricing (DPP)</a></li>
+<li class="chapter" data-level="17.3" data-path="principal-agent-problem-pa.html"><a href="principal-agent-problem-pa.html"><i class="fa fa-check"></i><b>17.3</b> Principal-Agent Problem (PA)</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="appendix"><span><b>Appendix</b></span></li>
+<li class="chapter" data-level="A" data-path="linear-algebra.html"><a href="linear-algebra.html"><i class="fa fa-check"></i><b>A</b> Linear Algebra</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">MatrixOptim</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="classical-methods-of-calculus" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Classical Methods of Calculus</h2>
+<div id="unconstrained-optimization" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Unconstrained Optimization</h3>
+<p>According to appendix 3 in <span class="citation">(Hillier <a href="#ref-hillier2012introduction" role="doc-biblioref">2012</a>)</span>, the analysis for an unconstrained function of several variables <span class="math inline">\(f(\mathbf{x}),\)</span> where <span class="math inline">\(\mathbf{x}=\left(x_{1}, x_{2}, \ldots, x_{n}\right),\)</span> is similar. Thus, a necessary condition for a solution <span class="math inline">\(\mathbf{x}=\mathbf{x}^{*}\)</span> to be either a minimum or a maximum is that:</p>
+<p><span class="math display">\[ \frac{\partial f(\boldsymbol{x})}{\partial x_{j}}=0 \quad \text { at } \mathbf{x}=\mathbf{x}^{*}, \quad \text { for } j=1,2, \dots, n\]</span></p>
+<p>After the critical points that satisfy this condition are identified, each such point is then classified as a local minimum or maximum if the function is strictly convex or strictly concave, respectively, within a neighborhood of the point. (Additional analysis is required if the function is neither.) The global minimum and maximum would be found by comparing the local minima and maxima and then checking the value of the function as some of the variables approach <span class="math inline">\(-\infty\)</span> or <span class="math inline">\(+\infty\)</span>. However, if the function is known to be convex or concave, then a critical point must be a global minimum or a global maximum, respectively.</p>
+</div>
+<div id="constrained-optimization-with-equality-constraints" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> Constrained Optimization with Equality Constraints</h3>
+<blockquote>
+<p>From a practical computational viewpoint, the method of Lagrange multipliers is not a particularly powerful procedure. <span class="citation">(Hillier <a href="#ref-hillier2012introduction" role="doc-biblioref">2012</a>)</span></p>
+</blockquote>
+<div id="method-of-lagrange-multipliers" class="section level4 unnumbered" number="">
+<h4>Method of Lagrange Multipliers</h4>
+<p>According to appendix 3 in <span class="citation">(Hillier <a href="#ref-hillier2012introduction" role="doc-biblioref">2012</a>)</span>, the procedure begins by formulating the Lagrangian function:</p>
+<p><span class="math display">\[ h(\mathbf{x}, \boldsymbol{\lambda})=f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i}\left[g_{i}(\mathbf{x})-b_{i}\right] \]</span></p>
+<p>where the new variables <span class="math inline">\(\boldsymbol{\lambda}=\left(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{m}\right)\)</span> are called Lagrange multipliers. Notice the key fact that for the feasible values of <span class="math inline">\(\mathbf{x}\)</span>:</p>
+<p><span class="math display">\[ g_{i}(\mathbf{x})-b_{i}=0, \quad \text { for all } i \]</span></p>
+<p>so <span class="math inline">\(h(\mathbf{x}, \mathbf{\lambda})=f(\boldsymbol{x}) .\)</span> Therefore, it can be shown that if <span class="math inline">\((\mathbf{x}, \mathbf{\lambda}) = \left(\mathbf{x}^{*}, \mathbf{\lambda}^{*}\right)\)</span> is a local or global minimum or maximum for the unconstrained function <span class="math inline">\(h(\mathbf{x}, \boldsymbol{\lambda}),\)</span> then <span class="math inline">\(\mathbf{x}^{*}\)</span> is a corresponding critical point for the original problem. As a result, the method now reduces to analyzing <span class="math inline">\(h(\mathbf{x}, \mathbf{\lambda})\)</span> by the procedure just described for unconstrained optimization. Thus, the <span class="math inline">\(n+m\)</span> partial derivatives would be set equal to zero:</p>
+<p><span class="math display">\[ \begin{align}
+\frac{\partial h}{\partial x_{j}} &amp;= \frac{\partial f}{\partial x_{j}} - \sum_{i=1}^{m} \lambda_{i} \frac{\partial g_{i}}{\partial x_{j}} = 0 \quad \text{for  } j = 1, 2, \ldots, n \\
+\frac{\partial h}{\partial \lambda_{i}} &amp;= -g_{i}(\mathbf{x})+b_{i} = 0 \quad \text{for  } i = 1, 2, \ldots, m
+\end{align} \]</span></p>
+<p>and then the critical points would be obtained by solving these equations for <span class="math inline">\((\mathbf{x}, \boldsymbol{\lambda})\)</span>. Notice that the last <span class="math inline">\(m\)</span> equations are equivalent to the constraints in the original problem, so only feasible solutions are considered. After further analysis to identify the global minimum or maximum of <span class="math inline">\(h(\cdot),\)</span> the resulting value of <span class="math inline">\(\mathbf{x}\)</span> is then the desired solution to the original problem.</p>
+</div>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-hillier2012introduction">
+<p>Hillier, Frederick S. 2012. <em>Introduction to Operations Research</em>. Tata McGraw-Hill Education.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="non-linear-programming-nlp.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="kkt-conditions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/edxu96/MatrixOptim.jl/edit/master/05-NLP.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+
+## of Integer Programming
+
+linear programming relaxation of an integer programming problem

@@ -1,6 +1,3 @@
 [
-["PSB.html", "Chapter 11 Power System Balancing (PSB) ", " Chapter 11 Power System Balancing (PSB) "],
-["ED.html", "11.1 Economic Dispatch (ED)", " 11.1 Economic Dispatch (ED) "],
-["UC.html", "11.2 Unit Commitment (UC)", " 11.2 Unit Commitment (UC) "],
-["UCC.html", "11.3 Unit Construction &amp; Commitment (UCC)", " 11.3 Unit Construction &amp; Commitment (UCC) UCC is a method to determine the set of generating units that provides optimally the flexibility required to accommodate a given wind penetration, by bridging the gap between the long-term investment decisions about the plants to be built and the short-term operational decisions of how these plants are scheduled. (Ma et al. 2013) References "]
+["index.html", "MatrixOptim About", " MatrixOptim Edward J. Xu 2020-05-04 About Hi, there. I’m Edward J. Xu. "]
 ]

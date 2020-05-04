@@ -1,0 +1,12 @@
+
+## KKT Conditions
+
+KKT conditions is the necessary conditions for optimality in general constrained problem. See section 13.6 in [@hillier2012introduction] for details.
+
+```{corollary}
+Assume that $f(\mathbf{x})$ is a concave function and that $g_{1}(\mathbf{x}), g_{2}(\mathbf{x}), \ldots, g_{m}(\mathbf{x})$ are convex functions (i.e., this problem is a convex programming problem), where all these functions satisfy the regularity conditions. Then $\mathbf{x}^{*}=\left(x_{1}^{*}, x_{2}^{*}, \ldots, x_{n}^{*}\right)$ is an optimal solution if and only if all the conditions of the theorem are satisfied.
+```
+
+> For complicated problems, it may be difficult, if not essentially impossible, to derive an optimal solution directly from the KKT conditions. Nevertheless, these conditions still provide valuable clues as to the identity of an optimal solution, and they also permit us to check whether a proposed solution may be optimal. [@hillier2012introduction]
+
+> There also are many valuable indirect applications of the KKT conditions. One of these applications arises in the duality theory that has been developed for nonlinear programming to parallel the duality theory for linear programming. [@hillier2012introduction]

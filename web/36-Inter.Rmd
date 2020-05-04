@@ -3,8 +3,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-# (PART) Applications {-}
-
 # Intermediation 
 
 > The central role of firms as intermediaries in establishing and operating markets: "Firms create and manage markets by acting as intermediaries between buyers and sellers." [@spulber1996market]

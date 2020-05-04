@@ -1,0 +1,14 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# Relaxation (Approximation)
+
+> Relaxation techniques complement or supplement branch and bound algorithms of combinatorial optimization; linear programming and Lagrangian relaxations are used to obtain bounds in branch-and-bound algorithms for integer programming.
+
+```{r child = '../docs/relax-Int.Rmd'}
+```
+
+```{r child = '../docs/relax-Lag.Rmd'}
+```

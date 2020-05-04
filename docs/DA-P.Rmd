@@ -5,4 +5,4 @@ editor_options:
 # bibliography: "../web/book.bib"
 ---
 
-## Economic Dispatch (ED) {#ED}
+## Periodic DA (PDA) {#DA-P}

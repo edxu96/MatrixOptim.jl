@@ -5,11 +5,11 @@ editor_options:
 
 # Power System Balancing (PSB) {#PSB}
 
-```{r child = '../docs/PSB-ED.Rmd'}
-```
-
 ```{r child = '../docs/PSB-UC.Rmd'}
 ```
 
 ```{r child = '../docs/PSB-UCC.Rmd'}
+```
+
+```{r child = '../docs/PSB-Net.Rmd'}
 ```

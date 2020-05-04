@@ -1,0 +1,4 @@
+
+## Lagrangian Relaxation
+
+> In the field of mathematical optimization, Lagrangian relaxation is a relaxation method which approximates a difficult problem of constrained optimization by a simpler problem. A solution to the relaxed problem is an approximate solution to the original problem, and provides useful information.

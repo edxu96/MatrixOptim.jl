@@ -1,0 +1,14 @@
+---
+editor_options:
+  chunk_output_type: console
+# output: bookdown::gitbook
+# bibliography: "../web/book.bib"
+---
+
+## Noncooperative MAS {#MAS-Nonco}
+
+> What does it mean to say that agents are self-interested? It does not necessarily mean that they want to cause harm to each other, or even that they care only about themselves. Instead, it means that each agent has his own description of which states of the world he likes—which can include good things happening to other agents—and that he acts in an attempt to bring about these states of the world. [@shoham2008multiagent]
+
+### Mechanism Design {#MAS-Nonco-MD}
+
+foodbank

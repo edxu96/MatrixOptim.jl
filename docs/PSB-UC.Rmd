@@ -6,3 +6,5 @@ editor_options:
 ---
 
 ## Unit Commitment (UC) {#UC}
+
+### Economic Dispatch (ED)
