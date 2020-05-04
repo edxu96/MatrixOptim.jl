@@ -5,8 +5,9 @@ editor_options:
 
 ## Newsvendor Problem
 
+The most prototypical decision making under uncertainty problem is the newsvendor problem.
 
-### Stochastic Unresponsive Demand
+### Uncertainty: Unresponsive Demand
 
 The demand is assumed to be unresponsive, so the pricing problem is not considered.
 
@@ -28,7 +29,7 @@ Currently, the cost of underage is $c_u$ in electricity supply, which can be cal
 
 standard newsvendor problem
 
-### Optimal Stopping Procurement
+### Optimal Stopping One-Time Procurement
 
 For procurements of goods, companies may not have the ability to make decisions regard target units only, and the demand in target units may be uncertain. The delivery of goods procured takes time, and it may be uncertain. That is, the lead time of procurements may be uncertain. For goods instead of services, they are storable. So it's better for companies to receive the goods early when the lead time varies.
 
@@ -41,3 +42,9 @@ For procurements of goods, companies may not have the ability to make decisions 
 - [@bucher2015quantification] TSOs procure control reserve resources.
   * Transmission system operators are responsible for power system balancing.
   * two-stage adaptive robust optimization model
+
+- [@pandvzic2013offering] VPPs participate in day-ahead market and manage assets.
+  * Networks are not considered.
+
+- chapter 8 in [@morales2013integrating] VPPs participate in day-ahead market and manage assets.
+  * Networks are not considered.

@@ -11,14 +11,14 @@ editor_options:
 
 VPP operators have direct control over all units.
 
-### (a) Components of VPP {-}
+### Components of VPP {-}
 
 - dispatchable generators
 - responsive loads
 - storage
 - stochastic generators
 
-### (b) Operation of VPP: Profit-Maximization Problem {-}
+### Operation of VPP: Profit-Maximization Problem {-}
 
 When point forecasts are used, the problem becomes:
 
@@ -34,11 +34,11 @@ $$ \begin{align} \max_{\Xi} \quad & \rho = \sum_{t=1}^{T} \left[ \lambda^{\mathr
 
 while the problem needs stochastic programming or robust programming when scenarios or interval forecasts are used respectively.
 
-### (c) Cost Allocation Problem {-}
+### Cost Allocation Problem {-}
 
 The costs and profits must be distributed in a fair way.
 
-### (d) Spatial Models {-}
+### Spatial Models {-}
 
 
 > Due to the dispersed nature of these resources, there is only one infrastructure “branched” enough to reach all of them: the distribution grid. Consequently, the management of VPPs will also call, among other things, for: [@morales2013integrating]
@@ -46,6 +46,12 @@ The costs and profits must be distributed in a fair way.
 > 2. The modeling, design and test of advanced components acting actively in the grid such as generators, transformers, smart meters, cables, breakers, insulators, power electronics, and converters.
 > 3. The development of procedures to identify weaknesses in the distribution grid and propose guidelines for its reinforcement and expansion.
 
-### (e) Franchise Agreements and Cooperative Games {-}
+### Franchise Agreements and Cooperative Games {-}
 
 > Cooperative games are often analyzed through the framework of cooperative game theory, which focuses on predicting which coalitions will form, the joint actions that groups take and the resulting collective payoffs. [@wiki:cooperative]
+
+### Research Projects
+
+- [@mashhour2011bidding, @mashhour2011bidding2]
+  * The optimization problem is a nonlinear mixed-integer programming with inter-temporal constraints.
+  * GA is used to solve the optimization problem.
