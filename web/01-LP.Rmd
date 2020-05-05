@@ -7,10 +7,13 @@ editor_options:
 
 # Linear Programming (LP)
 
-Sensitivity Analysis
+> When a utility function for money is incorporated into a decision analysis approach to a problem, this utility function must be constructed to fit the preferences and values of the decision maker involved. (The decision maker can be either a single individual or a group of people.) [@hillier2012introduction]
 
 ```{r child = '../docs/LP-simplex.Rmd'}
 ```
 
 ```{r child = '../docs/LP-dual.Rmd'}
+```
+
+```{r child = '../docs/LP-Sense.Rmd'}
 ```

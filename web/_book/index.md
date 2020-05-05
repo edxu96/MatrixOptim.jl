@@ -1,11 +1,12 @@
 ---
 title: "MatrixOptim"
 author: "Edward J. Xu"
-date: "2020-05-04"
+date: "2020-05-05"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
-bibliography: [../bib/OR.bib, packages.bib, ../bib/PSB.bib, ../bib/MAS.bib]
+bibliography: [../bib/OR.bib, packages.bib, ../bib/PSB.bib, ../bib/MAS.bib, 
+  ../bib/uncertain.bib, ../bib/PSE.bib]
 biblio-style: apalike
 link-citations: yes
 colorlinks: yes

@@ -1,0 +1,29 @@
+---
+editor_options:
+  chunk_output_type: console
+# output: bookdown::gitbook
+# bibliography: "../web/book.bib"
+---
+
+## Bayesian Decision Analysis
+
+Decision analysis is designed to address the kinds of decision making in the face of great uncertainty that ordinary sensitivity analysis in subsection \@ref{LP-Sense} is not sufficient.
+
+```{definition, name='decision analysis framework'}
+1. The decision maker needs to choose one of the decision alternatives.  
+2. Nature then would choose one of the possible states of nature.  
+3. Each combination of a decision alternative and state of nature would result in a payoff, which is given as one of the entries in a payoff table.  
+4. This payoff table should be used to find an optimal alternative for the decision maker according to an appropriate criterion.
+```
+
+```{definition, name='Bayesian decision rule'}
+Using the best available estimates of the probabilities of the respective states of nature (currently the prior probabilities), calculate the expected value of the payoff for each of the possible decision alternatives. Choose the decision alternative with the maximum expected payoff.
+```
+
+> In some scenarios, data is sparse and often observational and not from designed experiments. Furthermore direct data-based information about many important features of the problem is simply not available. So expert judgements have to be elicited for at least some components of the problem. [@smith2010bayesian]
+
+> Applications of decision analysis commonly involve a partnership between the managerial decision maker (whether an individual or a group) and an analyst (whether an individual or a team) with training in OR. Some companies do not have a staff member who is qualified to serve as the analyst. Therefore, a considerable number of management consulting firms specializing in decision analysis have been formed to fill this role. [@hillier2012introduction]
+
+### Bayesian Statistics
+
+> When looking for a subjective methodology which can systematically incorporate expert judgements and preferences the obvious prime candidate to try out first is currently the Bayesian framework. [@smith2010bayesian]

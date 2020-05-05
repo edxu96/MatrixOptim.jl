@@ -1,0 +1,12 @@
+---
+editor_options:
+  chunk_output_type: console
+# output: bookdown::gitbook
+# bibliography: "../web/book.bib"
+---
+
+## Sensitivity Analysis {#LP-Sense}
+
+> Sensitivity analysis commonly is used with various applications of operations research to study the effect if some of the numbers included in the mathematical model are not correct. [@hillier2012introduction]
+
+> The main purpose of sensitivity analysis is to identify the sensitive parameters, namely, those parameters that cannot be changed without changing the optimal solution. This is valuable information since these are the parameters that need to be estimated with special care to minimize the risk of obtaining an erroneous optimal solution. [@hillier2012introduction]

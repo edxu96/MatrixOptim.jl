@@ -15,14 +15,14 @@ editor_options:
 
 VPP operators have direct control over all units.
 
-### (a) Components of VPP {-}
+### Components of VPP {-}
 
 - dispatchable generators
 - responsive loads
 - storage
 - stochastic generators
 
-### (b) Operation of VPP: Profit-Maximization Problem {-}
+### Operation of VPP: Profit-Maximization Problem {-}
 
 When point forecasts are used, the problem becomes:
 
@@ -38,21 +38,39 @@ $$ \begin{align} \max_{\Xi} \quad & \rho = \sum_{t=1}^{T} \left[ \lambda^{\mathr
 
 while the problem needs stochastic programming or robust programming when scenarios or interval forecasts are used respectively.
 
-### (c) Cost Allocation Problem {-}
+### Cost Allocation Problem {-}
 
 The costs and profits must be distributed in a fair way.
 
-### (d) Spatial Models {-}
+### Spatial Models {-}
 
+- [@molzahn2017survey] Molzahn, D. K., Dörfler, F., Sandberg, H., Low, S. H., Chakrabarti, S., Baldick, R., & Lavaei, J. (2017). A survey of distributed optimization and control algorithms for electric power systems. IEEE Transactions on Smart Grid, 8(6), 2941-2962.
+  * independent system operators (ISOs) seek a minimum cost generation dispatch for large-scale transmission systems by solving an optimal power flow (OPF) problem
+  * Network models are discussed in part 2.
 
 > Due to the dispersed nature of these resources, there is only one infrastructure “branched” enough to reach all of them: the distribution grid. Consequently, the management of VPPs will also call, among other things, for: [@morales2013integrating]
 > 1. The enhancement of the control and monitoring of the distribution network to guarantee the performance, reliability, and security of the electricity supply.
 > 2. The modeling, design and test of advanced components acting actively in the grid such as generators, transformers, smart meters, cables, breakers, insulators, power electronics, and converters.
 > 3. The development of procedures to identify weaknesses in the distribution grid and propose guidelines for its reinforcement and expansion.
 
-### (e) Franchise Agreements and Cooperative Games {-}
+### Franchise Agreements and Cooperative Games {-}
 
 > Cooperative games are often analyzed through the framework of cooperative game theory, which focuses on predicting which coalitions will form, the joint actions that groups take and the resulting collective payoffs. [@wiki:cooperative]
+
+### Cases
+
+- Dominguez, R., Baringo, L., & Conejo, A. J. (2012). Optimal offering strategy for a concentrating solar power plant. Applied Energy, 98, 316-325.
+  * Mix stochastic programming and robust programming.
+  * The uncertainty of the thermal production of the solar field is represented by a set of uncertain but bounded coefficients
+  * ARIMA model to generate scenarios of prices
+
+- Pandžić, H., Morales, J. M., Conejo, A. J., & Kuzle, I. (2013). Offering model for a virtual power plant based on stochastic programming. Applied Energy, 105, 282-292.
+  * Since the WPP power output is stochastic, it is modeled using historical scenarios.
+  * Historical data is also used to build stochastic trees modeling prices in the day-ahead and balancing markets.
+
+- [@mashhour2011bidding, @mashhour2011bidding2] Mashhour, E., & Moghaddas-Tafreshi, S. M. (2010). Bidding strategy of virtual power plant for participating in energy and spinning reserve markets. IEEE Transactions on Power Systems, 26(2), 949-964.
+  * The optimization problem is a nonlinear mixed-integer programming with inter-temporal constraints.
+  * GA is used to solve the optimization problem.
 
 
 

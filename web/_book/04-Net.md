@@ -15,3 +15,10 @@ editor_options:
 
 
 ### Assignment Problem
+
+
+
+### Optimal Power Flow (OPF)
+
+- [@molzahn2017survey] ISOs seek a minimum cost generation dispatch for large-scale transmission systems by solving an optimal power flow (OPF) problem
+   * distributed algorithms with applications to power system optimization and control

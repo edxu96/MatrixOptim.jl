@@ -5,9 +5,30 @@ editor_options:
 
 # (PART) Operations Research {-}
 
-# Decision Making Under Uncertainty
+# Decision Making under Uncertainty
 
 > Decision outcomes need to be characterized not only by their expected values but also by their variability levels, thus risk control of outcome volatility is needed and can be achieved using appropriate risk measures. [@conejo2010decision]
+
+
+
+## Bayesian Decision Analysis
+
+Decision analysis is designed to address the kinds of decision making in the face of great uncertainty that ordinary sensitivity analysis in subsection \@ref{LP-Sense} is not sufficient.
+
+\BeginKnitrBlock{definition}\iffalse{-91-100-101-99-105-115-105-111-110-32-97-110-97-108-121-115-105-115-32-102-114-97-109-101-119-111-114-107-93-}\fi{}<div class="definition"><span class="definition" id="def:unnamed-chunk-5"><strong>(\#def:unnamed-chunk-5)  \iffalse (decision analysis framework) \fi{} </strong></span>1. The decision maker needs to choose one of the decision alternatives.  
+2. Nature then would choose one of the possible states of nature.  
+3. Each combination of a decision alternative and state of nature would result in a payoff, which is given as one of the entries in a payoff table.  
+4. This payoff table should be used to find an optimal alternative for the decision maker according to an appropriate criterion.</div>\EndKnitrBlock{definition}
+
+\BeginKnitrBlock{definition}\iffalse{-91-66-97-121-101-115-105-97-110-32-100-101-99-105-115-105-111-110-32-114-117-108-101-93-}\fi{}<div class="definition"><span class="definition" id="def:unnamed-chunk-6"><strong>(\#def:unnamed-chunk-6)  \iffalse (Bayesian decision rule) \fi{} </strong></span>Using the best available estimates of the probabilities of the respective states of nature (currently the prior probabilities), calculate the expected value of the payoff for each of the possible decision alternatives. Choose the decision alternative with the maximum expected payoff.</div>\EndKnitrBlock{definition}
+
+> In some scenarios, data is sparse and often observational and not from designed experiments. Furthermore direct data-based information about many important features of the problem is simply not available. So expert judgements have to be elicited for at least some components of the problem. [@smith2010bayesian]
+
+> Applications of decision analysis commonly involve a partnership between the managerial decision maker (whether an individual or a group) and an analyst (whether an individual or a team) with training in OR. Some companies do not have a staff member who is qualified to serve as the analyst. Therefore, a considerable number of management consulting firms specializing in decision analysis have been formed to fill this role. [@hillier2012introduction]
+
+### Bayesian Statistics
+
+> When looking for a subjective methodology which can systematically incorporate expert judgements and preferences the obvious prime candidate to try out first is currently the Bayesian framework. [@smith2010bayesian]
 
 
 
@@ -17,16 +38,31 @@ editor_options:
 
 > Stochastic dynamic programming deals with problems in which the current period reward and/or the next period state are random, i.e. with multi-stage stochastic systems. The decision maker's goal is to maximize expected (discounted) reward over a given planning horizon.
 
+> It assumes that probability distributions can be estimated for the random variables in the problem and then these distributions are heavily used in the analysis. [@hillier2012introduction]
+
+### with Chance Constraints
+
+> It might not be possible to accurately identify an upper and lower bound for an uncertain parameter. In fact, it might not even have an upper and lower bound. This is the case, for example, when the underlying probability distribution for a parameter is a normal distribution, which has long tails with no bounds. Chance constraints are designed largely to deal with parameters whose distribution has long tails with no bounds. [@hillier2012introduction]
+
 
 
 ## Robust Programming
+
+> The seriousness of these unfortunate consequences depends somewhat on whether there is any latitude in the functional constraints in the model. It is useful to make the following distinction between these constraints.  
+> - A soft constraint is a constraint that actually can be violated a little bit without very serious complications.  
+> - A hard constraint is a constraint that must be satisfied.  
+>
+> Robust optimization is especially designed for dealing with problems with hard constraints. [@hillier2012introduction]
+
+> The goal of robust optimization is to find a solution for the model that is virtually guaranteed to remain feasible and near optimal for all plausible combinations of the actual values for the parameters. [@hillier2012introduction]
 
 
 
 ## Newsvendor Problem
 
+The most prototypical decision making under uncertainty problem is the newsvendor problem.
 
-### Stochastic Unresponsive Demand
+### Uncertainty: Unresponsive Demand
 
 The demand is assumed to be unresponsive, so the pricing problem is not considered.
 
@@ -46,8 +82,9 @@ Currently, the cost of underage is $c_u$ in electricity supply, which can be cal
 
 ### Fixed-Lead One-Time Procurement
 
+standard newsvendor problem
 
-### Optimal Stopping Procurement
+### Optimal Stopping One-Time Procurement
 
 For procurements of goods, companies may not have the ability to make decisions regard target units only, and the demand in target units may be uncertain. The delivery of goods procured takes time, and it may be uncertain. That is, the lead time of procurements may be uncertain. For goods instead of services, they are storable. So it's better for companies to receive the goods early when the lead time varies.
 
@@ -60,3 +97,9 @@ For procurements of goods, companies may not have the ability to make decisions 
 - [@bucher2015quantification] TSOs procure control reserve resources.
   * Transmission system operators are responsible for power system balancing.
   * two-stage adaptive robust optimization model
+
+- [@pandvzic2013offering] VPPs participate in day-ahead market and manage assets.
+  * Networks are not considered.
+
+- chapter 8 in [@morales2013integrating] VPPs participate in day-ahead market and manage assets.
+  * Networks are not considered.

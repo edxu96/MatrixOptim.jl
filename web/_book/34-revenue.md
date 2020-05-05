@@ -79,6 +79,10 @@ In every decision epoch, customers have only two possible states: buy or not buy
 - [@prasad2011advance] Prasad, A., Stecke, K. E., & Zhao, X. (2011). Advance selling by a newsvendor retailer. Production and Operations Management, 20(1), 129-142.
   * Two-period setting
 
+### Bi-Level Programming
+
+- [@zugno2013bilevel] A bilevel model for electricity retailers' participation in a demand response market environment
+
 
 
 ## Scalper

@@ -4,3 +4,9 @@
 > Stochastic programming is a framework for modeling optimization problems that involve uncertainty, if the probability distributions governing the data are known or can be estimated. The goal here is to find some policy that is feasible for all (or almost all) the possible data instances and maximizes the expectation of some function of the decisions and the random variables.
 
 > Stochastic dynamic programming deals with problems in which the current period reward and/or the next period state are random, i.e. with multi-stage stochastic systems. The decision maker's goal is to maximize expected (discounted) reward over a given planning horizon.
+
+> It assumes that probability distributions can be estimated for the random variables in the problem and then these distributions are heavily used in the analysis. [@hillier2012introduction]
+
+### with Chance Constraints
+
+> It might not be possible to accurately identify an upper and lower bound for an uncertain parameter. In fact, it might not even have an upper and lower bound. This is the case, for example, when the underlying probability distribution for a parameter is a normal distribution, which has long tails with no bounds. Chance constraints are designed largely to deal with parameters whose distribution has long tails with no bounds. [@hillier2012introduction]
