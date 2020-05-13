@@ -66,7 +66,8 @@ function [z_t, y_t, lambda_z_t, lambda_y_t] = cal_chain_2d(...
 end
 
 
-function [u_i, v_i] = optim_2d_solve(z_i, y_i, lambda_z_i1, lambda_y_i1, m, g, l)
+function [u_i, v_i] = optim_2d_solve(z_i, y_i, lambda_z_i1, lambda_y_i1, ...
+	m, g, l)
 % Trigonometric	functions cannot be used in `solve`
 
 	x = optimvar('x', 2, 1, 'LowerBound', [-l; -l], 'UpperBound', [l; l]);
@@ -86,7 +87,7 @@ end
 
 
 function [u_i, v_i] = optim_2d_fmincon(z_i, y_i, lambda_z_i1, lambda_y_i1, ...
-		m, g, l)
+	m, g, l)
 % Two Dimension Method using Pontryagins Maximum Principle
 % Trigonometric	functions can be used in `fmincon`
 

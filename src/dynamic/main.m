@@ -16,13 +16,14 @@ function main()
 
 	%% Continuous Wire
 	solve_project_conti(z_t_1, y_t_1)
-  
+
 	%% Trajectory of a Suspended Chain using Two Symmetric Half Chains
 	[z_t_1, y_t_1] = solve_project_discrete(true);
 end
 
 
 function [z_t_1, y_t_1] = solve_project_discrete(whe_sym)
+% whe_sym: whether to use symmetric method
 
 	s_data_1 = get_data_chain(6);  % When the number of sections is 6
 	s_data_2 = get_data_chain(100);  % When the number of sections is 100
@@ -58,7 +59,7 @@ function plot_chain_discrete(x1, y1, x2, y2, name_fig)
 	ylabel('y')
 	legend('when N = 6','when N = 100')
   hold off
-  
+
 %   saveas(h, name_fig, 'png');
 end
 
@@ -85,7 +86,7 @@ function plot_chain_conti(vec_x, vec_y, x1, y1)
 	ylabel('y')
 	legend('Suspended Wire','Suspended Chain with N = 6')
   hold off
-  
+
 %   saveas(h1, 'conti', 'png');
 end
 
