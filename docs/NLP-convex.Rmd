@@ -1,0 +1,36 @@
+
+## Convex Optimisation
+
+
+
+### Convex or Concave Functions
+
+```{definition}
+$f\left(x_{1}, x_{2}, \ldots, x_{n}\right)$ is a convex function if, for each pair of points on the graph of $f\left(x_{1},\right.$ $\left.x_{2}, \ldots, x_{n}\right),$ the line segment joining these two points lies entirely above or on the graph of $f\left(x_{1},\right.$ $\left.x_{2}, \ldots, x_{n}\right) .$ It is a strictly convex function if this line segment actually lies entirely above this graph except at the endpoints of the line segment. Concave functions and strictly concave functions are defined in exactly the same way, except that above is replaced by below. [@hillier2012introduction]
+```
+
+```{r, out.width='55%', echo=F, fig.align='center', fig.cap='A strictly convex function.'}
+knitr::include_graphics('images/NLP-2.png')
+```
+
+> The sum of convex functions is a convex function, and the sum of concave functions is a concave function. [@hillier2012introduction]
+
+#### Convexity Test for Multi-Variate Function {-}
+
+> In mathematical terminology, $f\left(x_{1}, x_{2}, \ldots, x_{n}\right)$ is convex if and only if its $n \times n$ Hessian matrix is positive semidefinite for all possible values of $\left(x_{1}, x_{2}, \ldots, x_{n}\right)$. [@hillier2012introduction]
+
+$$ \begin{array}{ccccc}
+\hline
+& \text { Strictly } & & \text { Strictly } \\
+\text { Quantity } & \text { Convex } & \text { Convex } & \text { Concave } & \text { Concave } \\
+\hline \frac{\partial^{2} f\left(x_{1}, x_{2}\right)}{\partial x_{1}^{2}} \frac{\partial^{2} f\left(x_{1}, x_{2}\right)}{\partial x_{2}^{2}}-\left[\frac{\partial^{2} f\left(x_{1}, x_{2}\right)}{\partial x_{1} \partial x_{2}}\right]^{2} & \geq 0 & >0 & \geq 0 & >0 \\
+\frac{\partial^{2} f\left(x_{1}, x_{2}\right)}{\partial x_{1}^{2}} & \geq 0 & >0 & \leq 0 & <0 \\
+\frac{\partial^{2} f\left(x_{1}, x_{2}\right)}{\partial x_{2}^{2}} & \geq 0 & >0 & \leq 0 & <0 \\
+\hline
+\end{array} $$
+
+### Convex Set
+
+```{definition}
+A convex set is a collection of points such that, for each pair of points in the collection, the entire line segment joining these two points is also in the collection. [@hillier2012introduction]
+```

@@ -3,9 +3,17 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Relaxation (Approximation)
+# Approximation via Relaxation
+
+approximate nonconvex problems with convex relaxations
+
+> Relaxations are superior to general approximations because they provide bounds on true optima. [@taylor2015convex]
 
 > Relaxation techniques complement or supplement branch and bound algorithms of combinatorial optimization; linear programming and Lagrangian relaxations are used to obtain bounds in branch-and-bound algorithms for integer programming.
+
+> Why then is an infeasible relaxed solution better than a locally optimal but feasible solution? The answer is heavily context dependent. [@taylor2015convex]
+
+> They are reliable because they are consistent: whereas locally optimal solutions of nonconvex formulations may depend on an algorithm's starting point, convex relaxations only have global optima. [@taylor2015convex]
 
 ```{r child = '../docs/relax-Int.Rmd'}
 ```

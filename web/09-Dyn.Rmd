@@ -1,0 +1,12 @@
+---
+editor_options:
+  chunk_output_type: console
+---
+
+# Dynamic Programming
+
+```{r child = '../docs/Dyn-free.Rmd'}
+```
+
+```{r child = '../docs/Dyn-chain.Rmd'}
+```

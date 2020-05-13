@@ -9,8 +9,16 @@ In one general form, the nonlinear programming problem is to find $\mathbf{x}=\l
 
 > Nonlinear programming problems come in many different shapes and forms. Unlike the simplex method for linear programming, no single algorithm can solve all these different types of problems. Instead, algorithms have been developed for various individual classes (special types) of nonlinear programming problems. [@hillier2012introduction]
 
-```{r child = '../docs/NLP-calculus.Rmd'}
+> Non-linear programming can be divided usefully into convex programming and non-convex programming. [@williams2013model]
+
+```{r child = '../docs/NLP-Calculus.Rmd'}
+```
+
+```{r child = '../docs/NLP-separable.Rmd'}
 ```
 
 ```{r child = '../docs/NLP-KKT.Rmd'}
+```
+
+```{r child = '../docs/NLP-convex.Rmd'}
 ```

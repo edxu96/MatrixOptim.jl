@@ -3,7 +3,12 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Heuristics
+# Metaheuristics
+
+
+Why not metaheuristics in power industries?
+
+> Many optimization problems in power systems pos- sess rich and elegant structure, making them highly amenable to rigorous and powerful classical optimization algorithms. [@taylor2015convex]
 
 ```{r child = '../docs/heuristics-bayesian.Rmd'}
 ```

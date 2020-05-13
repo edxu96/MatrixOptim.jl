@@ -1,33 +1,83 @@
 
 ## Classical Methods of Calculus
 
+
 ### Unconstrained Optimization
 
 According to appendix 3 in [@hillier2012introduction], the analysis for an unconstrained function of several variables $f(\mathbf{x}),$ where $\mathbf{x}=\left(x_{1}, x_{2}, \ldots, x_{n}\right),$ is similar. Thus, a necessary condition for a solution $\mathbf{x}=\mathbf{x}^{*}$ to be either a minimum or a maximum is that:
 
 $$ \frac{\partial f(\boldsymbol{x})}{\partial x_{j}}=0 \quad \text { at } \mathbf{x}=\mathbf{x}^{*}, \quad \text { for } j=1,2, \dots, n$$
 
-After the critical points that satisfy this condition are identified, each such point is then classified as a local minimum or maximum if the function is strictly convex or strictly concave, respectively, within a neighborhood of the point. (Additional analysis is required if the function is neither.) The global minimum and maximum would be found by comparing the local minima and maxima and then checking the value of the function as some of the variables approach $-\infty$ or $+\infty$. However, if the function is known to be convex or concave, then a critical point must be a global minimum or a global maximum, respectively.
+After the critical points that satisfy this condition are identified, each such point is then classified as a local minimum or maximum if the function is strictly convex or strictly concave, respectively, within a neighborhood of the point. (Additional analysis is required if the function is neither.)
+
+The global minimum and maximum would be found by comparing the local minima and maxima and then checking the value of the function as some of the variables approach $-\infty$ or $+\infty$. However, if the function is known to be convex or concave, then a critical point must be a global minimum or a global maximum, respectively.
 
 ### Constrained Optimization with Equality Constraints
 
-> From a practical computational viewpoint, the method of Lagrange multipliers is not a particularly powerful procedure. [@hillier2012introduction]
+Consider the problem of finding the minimum or maximum of the function f(x), subject to the restriction that x must satisfy all the equations:
+$$ \begin{align}
+g_{1}(\mathbf{x}) &= b_{1} \\
+g_{2}(\mathbf{x}) &= b_{2} \\
+& \vdots \\
+g_{m}(\mathbf{x}) &= b_{m}
+\end{align} $$
 
-#### Method of Lagrange Multipliers {-}
+#### Method of Lagrange Multipliers (MLM) {-}
+
+> From a practical computational viewpoint, the method of Lagrange multipliers is not a particularly powerful procedure. It is often essentially impossible to solve the equations to obtain the critical points. Furthermore, even when the points can be obtained, the number of critical points may be so large (often infinite) that it is impractical to attempt to identify a global minimum or maximum. However, for certain types of small problems, this method can sometimes be used successfully. [@hillier2012introduction]
 
 According to appendix 3 in [@hillier2012introduction], the procedure begins by formulating the Lagrangian function:
-
 $$ h(\mathbf{x}, \boldsymbol{\lambda})=f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i}\left[g_{i}(\mathbf{x})-b_{i}\right] $$
 
 where the new variables $\boldsymbol{\lambda}=\left(\lambda_{1}, \lambda_{2}, \ldots, \lambda_{m}\right)$ are called Lagrange multipliers. Notice the key fact that for the feasible values of $\mathbf{x}$:
-
 $$ g_{i}(\mathbf{x})-b_{i}=0, \quad \text { for all } i $$
 
-so $h(\mathbf{x}, \mathbf{\lambda})=f(\boldsymbol{x}) .$ Therefore, it can be shown that if $(\mathbf{x}, \mathbf{\lambda}) = \left(\mathbf{x}^{*}, \mathbf{\lambda}^{*}\right)$ is a local or global minimum or maximum for the unconstrained function $h(\mathbf{x}, \boldsymbol{\lambda}),$ then $\mathbf{x}^{*}$ is a corresponding critical point for the original problem. As a result, the method now reduces to analyzing $h(\mathbf{x}, \mathbf{\lambda})$ by the procedure just described for unconstrained optimization. Thus, the $n+m$ partial derivatives would be set equal to zero:
+so $h(\mathbf{x}, \mathbf{\lambda})=f(\boldsymbol{x}) .$
 
+Therefore, it can be shown that if $(\mathbf{x}, \mathbf{\lambda}) = \left(\mathbf{x}^{*}, \mathbf{\lambda}^{*}\right)$ is a local or global minimum or maximum for the unconstrained function $h(\mathbf{x}, \boldsymbol{\lambda}),$ then $\mathbf{x}^{*}$ is a corresponding critical point for the original problem. As a result, the method now reduces to analyzing $h(\mathbf{x}, \mathbf{\lambda})$ by the procedure just described for unconstrained optimization. Thus, the $n+m$ partial derivatives would be set equal to zero:
 $$ \begin{align}
 \frac{\partial h}{\partial x_{j}} &= \frac{\partial f}{\partial x_{j}} - \sum_{i=1}^{m} \lambda_{i} \frac{\partial g_{i}}{\partial x_{j}} = 0 \quad \text{for  } j = 1, 2, \ldots, n \\
 \frac{\partial h}{\partial \lambda_{i}} &= -g_{i}(\mathbf{x})+b_{i} = 0 \quad \text{for  } i = 1, 2, \ldots, m
 \end{align} $$
-
 and then the critical points would be obtained by solving these equations for $(\mathbf{x}, \boldsymbol{\lambda})$. Notice that the last $m$ equations are equivalent to the constraints in the original problem, so only feasible solutions are considered. After further analysis to identify the global minimum or maximum of $h(\cdot),$ the resulting value of $\mathbf{x}$ is then the desired solution to the original problem.
+
+#### MLM Example 1: Utility Maximization {-}
+
+The decision variables in the problem are summarized in the following table.
+$$ \begin{array}{cc}
+\hline \text { Variables } & \text { Definition } \\
+\hline \mathrm{x}_{1} & \text { num of dinners } \\
+\mathrm{x}_{2} & \text { num of drinks } \\
+\hline
+\end{array} $$
+
+The problem can be formulated as:
+$$ \begin{align} \begin{split}
+    \max \quad & 8 \ln{x_{1}} + \ln{x_{2}} \\
+    \text{s.t.} \quad & 35 x_{1} + 5 x_{2} \leq 315 \\
+    & x_{1}, x_{2} > 0 \\
+    & x_{1}, x_{2} \in \mathbb{Z}^{+} \\
+\end{split} \end{align} $$
+
+There exists an optimal solution according to Weierstrass theorem, because The function is continuous, and coercive for maximization (check that objective function increases monotonically when $x_{1}$ or $x_{2}$ increase and there are constraints). Besides, the less equation sign can be replaced by equal sign.
+
+According to the method of Lagrange multipliers, the Lagrangian function of the above problem is:
+$$ \begin{align} \begin{split}
+    L(x_{1}, x_{2}, \lambda) = 8 \ln{x_{1}} + \ln{x_{2}} - \lambda (35 x_{1} + 5 x_{2} - 315)
+\end{split} \end{align} $$
+which can be maximized by critical points from the following equations:
+
+$$ \begin{align} \begin{split}
+    \frac{\partial L}{\partial x_{1}} &= 8 / x_{1} - 35 \lambda = 0 \\
+    \frac{\partial L}{\partial x_{2}} &= 1 / x_{2} - 5 \lambda = 0 \\
+    \frac{\partial L}{\partial \lambda} &= 35 x_{1} + 5 x_{2} - 315 = 0
+\end{split} \end{align} $$
+
+By eliminating $\lambda$, we get:
+$$ \begin{align} \begin{split}
+    x_{1} &= 8 \\
+    x_{2} &= 7 \\
+    \lambda &= - 1 / 35
+\end{split} \end{align} $$
+
+So, to have 8 dinners and 7 drinks using 315 euros can maximize the utility.

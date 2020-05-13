@@ -7,4 +7,6 @@ editor_options:
 
 ## Unit Commitment (UC) {#UC}
 
-### Economic Dispatch (ED)
+copperplate network
+
+### Economic Dispatch (ED) {#PSB-UC-ED}

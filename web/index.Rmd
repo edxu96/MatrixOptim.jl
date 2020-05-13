@@ -16,4 +16,6 @@ description: "Data-Driven Decision Making under Uncertainty in Matrix."
 
 # About {-}
 
-Hi, there. I'm Edward J. Xu. 
+> Mathematical programmes are among the most widely used models in operational research and management science. [@williams2013model]
+
+

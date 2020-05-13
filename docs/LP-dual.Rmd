@@ -10,15 +10,15 @@ editor_options:
 - [Dualization.jl](https://github.com/JuliaOpt/Dualization.jl)
 
 ```{r, out.width='55%', echo=F, fig.align='center'}
-knitr::include_graphics("../images/LP-1.png")
+knitr::include_graphics("images/LP-1.png")
 ```
 
-### Primal-Dual Table 
+### Primal-Dual Table
 
 > The primal-dual table for linear programming (Table 6.2 ) also helps to highlight the correspondence between the two problems. It shows all the linear programming parameters (the $a_{i j}, b_{i}$ and $c_{j}$) and how they are used to construct the two problems. All the headings for the primal problem are horizontal, whereas the headings for the dual problem are read by turning the book sideways. For the primal problem, each column (except the right-side column) gives the coefficients of a single variable in the respective constraints and then in the objective function, whereas each row (except the bottom one) gives the parameters for a single contraint. For the dual problem, each row (except the right-side row) gives the coefficients of a single variable in the respective constraints and then in the objective function, whereas each column (except the rightmost one) gives the parameters for a single constraint. In addition, the right-side column gives the right-hand sides for the primal problem and the objective function coefficients for the dual problem, whereas the bottom row gives the objective function coefficients for the primal problem and the right-hand sides for the dual problem.
 
 ```{r, out.width='60%', echo=F, fig.align='center', fig.cap='Primal-Dual Table '}
-knitr::include_graphics("../images/LP-2.png")
+knitr::include_graphics("images/LP-2.png")
 ```
 
 > Consequently, we now have the following general relationships between the primal and dual problems:  
@@ -44,4 +44,3 @@ The following are the only possible relationships between the primal and dual pr
 2. If one problem has feasible solutions and an unbounded objective function (and so no optimal solution), then the other problem has no feasible solutions.  
 3. If one problem has no feasible solutions, then the other problem has either no feasible solutions or an unbounded objective function.
 ```
-
