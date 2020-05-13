@@ -11,7 +11,7 @@ In one general form, the nonlinear programming problem is to find $\mathbf{x}=\l
 
 > Non-linear programming can be divided usefully into convex programming and non-convex programming. [@williams2013model]
 
-```{r child = '../docs/NLP-Calculus.Rmd'}
+```{r child = '../docs/NLP-calculus.Rmd'}
 ```
 
 ```{r child = '../docs/NLP-separable.Rmd'}

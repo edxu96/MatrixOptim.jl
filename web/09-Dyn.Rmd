@@ -5,8 +5,15 @@ editor_options:
 
 # Dynamic Programming
 
+> Dynamic programming is a useful mathematical technique for making a sequence of interrelated decisions. It provides a systematic procedure for determining the optimal combination of decisions. [@hillier2012introduction]
+
+> Dynamic programming is a general type of approach to problem solving, and the particular equations used must be developed to fit each situation. Therefore, a certain degree of ingenuity and insight into the general structure of dynamic programming problems is required to recognize when and how a problem can be solved by dynamic programming procedures. [@hillier2012introduction]
+
 ```{r child = '../docs/Dyn-free.Rmd'}
 ```
 
-```{r child = '../docs/Dyn-chain.Rmd'}
+```{r child = '../docs/Dyn-end.Rmd'}
+```
+
+```{r child = '../docs/Dyn-Deter.Rmd'}
 ```

@@ -12,13 +12,13 @@ function main()
 	% solve_exer_3()
 
 	%% Trajectory of a Suspended Chain
-	[z_t_1, y_t_1] = solve_project_discrete(false)
-
-	%% Trajectory of a Suspended Chain using Two Symmetric Half Chains
-	[z_t_1, y_t_1] = solve_project_discrete(true)
+	[z_t_1, y_t_1] = solve_project_discrete(false);
 
 	%% Continuous Wire
 	solve_project_conti(z_t_1, y_t_1)
+  
+	%% Trajectory of a Suspended Chain using Two Symmetric Half Chains
+	[z_t_1, y_t_1] = solve_project_discrete(true);
 end
 
 
@@ -36,19 +36,19 @@ function [z_t_1, y_t_1] = solve_project_discrete(whe_sym)
 		%% One Dimension Method when N = 6
 		[~, z_t_1, y_t_1] = solve_chain(s_data_1, false, 1);
 		%% Two Dimension Method using Pontryagins Maximum Principle when N = 6
-		[~, z_t_1, y_t_1] = solve_chain(s_data_1, false, 2);
+% 		[~, z_t_1, y_t_1] = solve_chain(s_data_1, false, 2);
 		%% One Dimension Method when N = 100
 		[~, z_t_2, y_t_2] = solve_chain(s_data_2, false, 1);
 	end
 
-	% plot_chain_discrete(z_t_1, y_t_1, z_t_2, y_t_2)
+	plot_chain_discrete(z_t_1, y_t_1, z_t_2, y_t_2, string(whe_sym))
 end
 
 
-function plot_chain_discrete(x1, y1, x2, y2)
-	figure
-
-	plot(x1, y1, 'b', x2, y2, 'r-.', 'LineWidth', 2)
+function plot_chain_discrete(x1, y1, x2, y2, name_fig)
+	figure()
+  h = plot(x1, y1, 'b', x2, y2, 'r-.', 'LineWidth', 2);
+  hold on
 	grid on
 	% Set the axis limits
 	% axis([0 2*pi -1.5 1.5])
@@ -56,7 +56,10 @@ function plot_chain_discrete(x1, y1, x2, y2)
 	title('Trajectories of Suspended Chains')
 	xlabel('z')
 	ylabel('y')
-	legend('when N = 6','when N = 6')
+	legend('when N = 6','when N = 100')
+  hold off
+  
+%   saveas(h, name_fig, 'png');
 end
 
 
@@ -70,18 +73,20 @@ end
 
 
 function plot_chain_conti(vec_x, vec_y, x1, y1)
-	figure
-
-	plot(vec_x, vec_y, 'blue', x1, y1, 'r-.', 'LineWidth', 2)
-	grid on
+	figure()
+  h1 = plot(vec_x, vec_y, 'blue', x1, y1, 'r-.', 'LineWidth', 2);
+	hold on
+  grid on
 	% Set the axis limits
 	% axis([0 2*pi -1.5 1.5])
 	% Add title and axis labels
 	title('Trajectories of Suspended a Chain and a Wire')
 	xlabel('z')
 	ylabel('y')
-	legend('Suspended Wire','Suspended Chain with N = 100')
-
+	legend('Suspended Wire','Suspended Chain with N = 6')
+  hold off
+  
+%   saveas(h1, 'conti', 'png');
 end
 
 %%%% Exercises %%%%

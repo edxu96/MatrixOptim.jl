@@ -1,52 +1,81 @@
 
-## Example: Trajectory
+## Free DynProg with EPCs
 
-Find the Trajectory using Dynamic Optimization
+EPCs: End Point Constraints
 
-In the report, it is important to give the results and an interpretation of those, but certainly also to describe the chosen method, its background and assumptions.
+The problem can be interpreted to convert the system from its initial state to a given terminal state and minise the performance index at the same time.
 
-### Trajectory of a Suspended Chain
+> The terminal contribution to the performance index could be omitted, since it has not effect on the solution (except a constant additive term to the performance index). [@poulsen2012dynamic]
 
-The shape of a suspended chain can be described and solved using dynamic programming. The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For $i=0,1, \ldots N-1$, we have:
+For a given free dynamic programming with end point constraints:
+$$ \begin{align}
+	\min \quad & J = \phi \left(\mathbf{x}_{N}\right) + \sum_{i=0}^{N-1} L_{i}\left(\mathbf{x}_{i}, \mathbf{u}_{i}\right) \\
+	\text{s.t.} \quad & \mathbf{x}_{i+1} = \mathbf{f}_{i} \left(\mathbf{x}_{i}, \mathbf{u}_{i}\right) \quad \\
+	& \mathbf{x}_{0} = \underline{\mathbf{x}}_{0} \\
+	& \mathbf{x}_{N} = \underline{\mathbf{x}}_{N}
+\end{align} $$
+where $\mathbf{x}_i = [x_{i, 1}, x_{i, 2}, ..., x_{i, M}]^T$. Its $i$-th Hamiltonian function is:
+$$ H_{i}\left(\mathbf{x}_{i}, \mathbf{u}_{i}, \lambda_{i+1}\right) = L_{i} \left(\mathbf{x}_{i}, \mathbf{u}_{i} \right) + \sum_j^M \lambda_{i+1}^{T} f_{i} \left(x_{i, j}, y_{i, j} \right) $$
 
-$$
-\begin{align}
+The necessary condition for $\hat{\mathbf{u}}_0, \hat{\mathbf{u}}_1, ..., \hat{\mathbf{u}}_{N-1}$ being critical points is given by the Euler-Lagrange equations:
+$$ \begin{align}
+	x_{i+1, j} &= f_{i} \left(x_{i, j}, u_{i, j} \right) \quad \text{for } j = 1, 2, ..., M \text{ and  } i = 0, 1, 2, ..., N \quad \text{(state equations)} \\
+	\lambda_{i, j} &=\frac{\partial H_{i}}{\partial x_{i, j}} \quad \text{for } j = 1, 2, ..., M \text{ and  } i = 0, 1, 2, ..., N \quad \text{(costate equations)} \\
+	0 &=\frac{\partial H_{i}}{\partial u_{i, j}} \quad \text{for } j = 1, 2, ..., M \text{ and  } i = 0, 1, 2, ..., N \quad \text{(stationarity conditions)} \\
+\end{align} $$
+where the boundary conditions are:
+$$ \begin{align}
+	\mathbf{x}_{0} &= \underline{\mathbf{x}}_{0} \\
+	\mathbf{x}_{N} &=\underline{\mathbf{x}}_{N} \\
+	\lambda_{N, j} &= \nu + \frac{\partial \phi \left(\mathbf{x}_{N}\right)}{\partial x_{N, j}} \quad \text{for } j = 1, 2, ..., M
+\end{align} $$
+
+```{example, chain, name='Suspended Chain'}
+The shape of a suspended chain can be described and solved using dynamic programming. The chain is composed of $N$ identical segments, the length of which is $l$. The position of the end of some segment $i$ can be described by a vector $[z, y]_{i}^{T}$.
+```
+
+#### Formulation of Exm \@ref(exm:chain) {-}
+
+The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For $i=0,1, \ldots N-1$, we have:
+$$ \begin{align}
 	\left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \\
 	= f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right]
-\end{align}
-$$
+\end{align} $$
 
-where the end points are:
-
-$$
-\begin{align}
+where two end points of the chain are:
+$$ \begin{align}
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
 	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
-\end{align}
-$$
+\end{align} $$
 
-So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$. With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
+So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$.
 
-$$
-\begin{align}
+With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
+$$ \begin{align}
 	J &= \sum_{i=0}^{N-1} \frac{1}{2} m g \left( y_{i} + y_{i+1} \right) \\
-	&= \sum_{i=0}^{N-1} \left( m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right)
-\end{align}
-$$
-
-where the scalar $\phi$, $L$ can be expressed by the following equations with $N$ fixed:
-
-$$
-\begin{align}
+	&= \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right]
+\end{align} $$
+where the scalar $\phi$, $L$ in the standard form of the cost function can be expressed by the following equations with $N$ fixed:
+$$ \begin{align}
 	\phi \left( \left[ \begin{array}{l}{z} \\ {y} \end{array} \right]_{N} \right) &= 0 \\
 	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_i \right) &= m g y_{i} + \frac{1}{2} m g l sin(\theta_i)
-\end{align}
-$$
+\end{align} $$
 
-The Hamiltonian function of the cost function can be expressed as:
+The deterministic dynamic programming can be summarised as:
+$$ \begin{align}
+\min_{\theta_0, \theta_1, ..., \theta_{N-1}} \quad & J = \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right] \\
+\text{s.t.} \quad & \left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right] \quad \text{for } i = 0, 1, ..., N-1 \\
+& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} = \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} = \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+\end{align} $$
+where $z_1, z_2, ..., z_{N-1}$ and $y_1, y_2, ..., y_{N-1}$ are decision variables as well, but they are determined once $\theta_0, \theta_1, ..., \theta_{N-1}$ are chosen.
+
+#### Solution of Exm \@ref(exm:chain) {-}
+
+The	$i$-th Hamiltonian function of can be expressed as:
 
 $$
-H_i = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + l \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + l \sin \left(\theta_{i} \right)  \right]
+H_i \left(z_i, y_i, \theta_i, \lambda^z_{i+1}, \lambda^y_{i+1} \right) = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + l \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + l \sin \left(\theta_{i} \right)  \right]
 $$
 
 Hence the set of Euler-Lagrange equations can be expressed by the following five equations:
@@ -87,9 +116,9 @@ When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\lef
 
 When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
 
-The two results can be visualized by the figure 1:
+The two results can be visualised by the figure 1:
 
-```{r, out.width='55%', echo=F, fig.align='center'}
+```{r, out.width='95%', echo=F, fig.align='center', fig.cap='Result.'}
 knitr::include_graphics('images/Dyn-1.png')
 ```
 
@@ -107,29 +136,9 @@ $$
 
 So we can get $f_3 = 50.2457$, so the value of horizontal force is $44.7289$, which is two times of the value of $\lambda^{z}_{0}$. When $N = 100$, $f_{50} = 44.8394$, and the value of horizontal force is $44.8183$. So we can say that the vertical force at the left end equals $\lambda^{y}_{0}$, the horizontal force at the left end is two times of $\lambda^{z}_{0}$.
 
-#### Pontryagins Maximum principle {-}
+### Free DynProg with Partial End Point Constraints
 
-If the original two-dimensional expressions are to be used, we can write the corresponding Hamiltonian function as:
-
-$$
-H_i = m g y_{i} + \frac{1}{2} m g v_{i} + \lambda^z_{i+1} \left( z_{i} + u_{i} \right) + \lambda^y_{i+1} \left( y_{i} + v_{i} \right)
-$$
-
-according to Pontryagins Maximum principle, if we consider :
-
-$$
-\begin{align}
-	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
-	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
-	\left[u_i, v_i \right]^T &= \arg \min_{u_i^2 + v_i^2 = l^2} \left\{ m g y_{i} + \frac{1}{2} m g v_i + \lambda^z_{i+1} \left( z_{i} + u_i \right) + \lambda^y_{i+1} \left( y_{i} + v_i \right) \right\} \\
-	z_{i+1} &= z_{i} + u_i \\
-	y_{i+1} &= y_{i} + v_i \\
-\end{align}
-$$
-
-The optimization algorithms and the inputed original values have large influence on the final result. If the correct values are inputed as the original values, we can get the correct values.
-
-#### Two Symmetric Half Chains {-}
+#### Variant of Exm \@ref(exm:chain): Two Symmetric Half Chains {-}
 
 For $i=0,1, \ldots N-1$, we have:
 
@@ -163,13 +172,19 @@ $$
 
 The two results when $N = 6$ and $N = 100$ respectively can be visualized by the figure 2, which is the same as figure 1:
 
-```{r, out.width='55%', echo=F, fig.align='center'}
+```{r, out.width='95%', echo=F, fig.align='center', fig.cap='Result.'}
 knitr::include_graphics('images/Dyn-2.png')
 ```
 
-### Trajectory of a Suspended Wire
+### Continuous Free-DynProg-EPCs
 
-Now, the chain is substituted by a wire and the problem becomes a continuous problem. Let $s$ the distance along the wire. The positions along the wire obey
+```{example, wire, name='Trajectory of a Suspended Wire'}
+Now, the chain is substituted by a wire and the problem becomes a continuous problem.
+```
+
+#### Exm \@ref(exm:chain) {-}
+
+Let $s$ the distance along the wire. The positions along the wire obey
 
 $$
 \frac{d}{d s} \left[ \begin{array}{l}{z_{s}} \\ {y_{s}}\end{array} \right] = f(\theta_s) = \left[ \begin{array}{c}{\cos \left( \theta_{s}\right)} \\ {\sin \left( \theta_{s} \right)}\end{array} \right]
@@ -231,7 +246,7 @@ $$
 
 The results are compared with results when the number of sections of a chain is 6:
 
-```{r, out.width='55%', echo=F, fig.align='center'}
+```{r, out.width='95%', echo=F, fig.align='center', fig.cap='Result.'}
 knitr::include_graphics('images/Dyn-3.png')
 ```
 

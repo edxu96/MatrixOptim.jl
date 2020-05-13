@@ -3,6 +3,28 @@
 
 KKT conditions is the necessary conditions for optimality in general constrained problem.
 
+For a given nonlinear programming problem:
+$$ \begin{align}
+  \max \quad & f(\mathbf{x}) \\
+  \text{s.t.} \quad & g_{i}(\mathbf{x}) \leq b_{i} \quad  \text{for } i = 1, 2, ..., m \\
+  & \mathbf{x} \geq \mathbf{0}
+\end{align} $$
+where $\mathbf{x} = \left(x_{1}, x_{2}, \ldots, x_{n}\right)$, The necessary condition for $\mathbf{x}^{*}$ being its critical point is that $\mathbf{x}^{*}$ satisfy all the following KKT conditions:
+$$ \begin{align}
+  \frac{\partial h}{\partial x_{j}} &\leq 0 \quad \text{for } j = 1, 2, \ldots, n \\
+  x^* \frac{\partial h}{\partial x_{j}} &= 0 \quad \text{for } j = 1, 2, \ldots, n \\
+  \frac{\partial h}{\partial \lambda_{i}} &\leq 0 \quad \text{for  } i = 1, 2, \ldots, m \\
+  \lambda_{i} \frac{\partial h}{\partial \lambda_{i}} &= 0 \quad \text{for  } i = 1, 2, \ldots, m \\
+  \mathbf{x}^{*} &\geq 0 \\
+  \boldsymbol{\lambda} &\geq 0
+\end{align} $$
+where the Lagrangian function $h(\mathbf{x}, \boldsymbol{\lambda})$ and its derivatives are:
+$$ \begin{align}
+  h(\mathbf{x}, \boldsymbol{\lambda}) &= f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i}\left[g_{i}(\mathbf{x})-b_{i}\right] \\
+  \frac{\partial h}{\partial x_{j}} &= \frac{\partial f}{\partial x_{j}} - \sum_{i=1}^{m} \lambda_{i} \frac{\partial g_{i}}{\partial x_{j}} \quad \text{for } j = 1, 2, \ldots, n \\
+  \frac{\partial h}{\partial \lambda_{i}} &= -g_{i}(\mathbf{x})+b_{i} \quad \text{for  } i = 1, 2, \ldots, m
+\end{align} $$
+
 ### for Constrained Optimization with Inequality Constraints
 
 > Satisfying these conditions does not guarantee that the solution is optimal. Certain additional convexity assumptions are needed to obtain this guarantee. [@hillier2012introduction]
