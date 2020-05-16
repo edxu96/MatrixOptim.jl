@@ -218,6 +218,8 @@ $$ \begin{array}{clc}
 
 ---
 
+## Problem Formulation
+
 The problem can be formualted as follows:
 $$ \begin{align}
 \max \quad & 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 x_{4} \\
@@ -239,6 +241,8 @@ $$ \begin{align}
 I will relax the problem to a linear programming problem first. If I get a solution with all variable outcomes being integer, then it is the solution to the original integer programming problem. If not, branch-and-cut algorithm has to be used to solve the original integer programming problem iteratively.
 
 ---
+
+## Simplification
 
 $$ \begin{array}{clc}
 \hline \text { Variables } & \text { Definition } & \text { is.integer } \\
@@ -358,9 +362,11 @@ $$ \begin{array}{ccccccccccccccccccc}
 11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
 \hline
 \end{array} $$
-Then, the standard simple algorithm can be used until all coefficients for decision variables in row `0` become 0.
+Then, minimum ratio tests and Gaussian elimination has to be used to convert all coefficients for decision variables in row `0` to 0.
 
 ---
+
+## Minimum Ratio Test
 
 The entering column can be the one with $x_{1, 1}$, because absolute values of coefficients in columns $x_{1, 1}$, $x_{2, 1}$, $x_{2, 2}$ are the same.
 
@@ -423,6 +429,15 @@ $$ \begin{align}
 & x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
 & y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
 \end{align} $$
+
+---
+
+From the final tableau in the first phase, following preliminary transformation needs to be done:
+
+- Drop the columns with $\bar{y}_8$, $\bar{y}_{10}$, $\bar{y}_{11}$.
+- Replace row `0` with the objective function from the problem in the second phase.
+- Use Gaussian elimination to transform coefficients for decision variables to 0
+- Apply standard simplex algorithm.
 
 ---
 

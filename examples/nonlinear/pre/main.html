@@ -672,7 +672,7 @@ Result.
 <div class="slide section level1">
 
 <h2 id="the-first-phase">the First Phase</h2>
-<p>The first phase is to maximise the following problem until <span class="math inline">\(\bar{y}_{8}\)</span>, <span class="math inline">\(\bar{y}_{10}\)</span>, <span class="math inline">\(\bar{y}_{11}\)</span> equals 0. <span class="math display">\[ \begin{align}
+<p>The first phase is to maximise the following problem: <span class="math display">\[ \begin{align}
 \max \quad &amp; Z = \bar{y}_{8} + \bar{y}_{10} + \bar{y}_{11} \\
 \text{s.t.} \quad &amp; x_{1,1} + x_{1,2} + 2 x_{1,3} + y_1 = 40 \\
 &amp; x_{2,1} + x_{2,2} + 2 x_{2,3} + y_2 = 50 \\
@@ -730,7 +730,64 @@ Result.
 10 &amp; \bar{y}_{11} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 0 &amp; 20 \\
 11 &amp; y_{13} &amp; 0 &amp; 0 &amp; 0 &amp; 3 &amp; 0 &amp; 0 &amp; 3 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
 \hline
+\end{array} \]</span> Then, the standard simple algorithm can be used until all coefficients for decision variables in row <code>0</code> become 0.</p>
+</div>
+<div class="slide section level1">
+
+<p>The entering column can be the one with <span class="math inline">\(x_{1, 1}\)</span>, because absolute values of coefficients in columns <span class="math inline">\(x_{1, 1}\)</span>, <span class="math inline">\(x_{2, 1}\)</span>, <span class="math inline">\(x_{2, 2}\)</span> are the same.</p>
+<p>Then the row with minimum ratio of <span class="math inline">\(b / x_{1, 1}\)</span> is chosen: <span class="math display">\[ \begin{array}{ccc}
+\hline
+i &amp; \mathrm{BV} &amp; x_{1, 1} &amp; \mathrm{ratio} \\
+\hline
+1 &amp; y_{1} &amp; 1 &amp; 40 \\
+5 &amp; y_5 &amp; 1 &amp; 80 \\
+8 &amp; \bar{y}_8 &amp; 1 &amp; 20 \\
+\hline
+\end{array} \]</span> Then Gausian elimination is used to create a new tableau.</p>
+</div>
+<div class="slide section level1">
+
+<h2 id="gausian-elimination">Gausian Elimination</h2>
+<p>Row <code>0</code>, row <code>1</code>, and row <code>5</code> are all minus the coefficients in row <code>8</code>: <span class="math display">\[ \begin{array}{ccc|c|ccccccccccccccc}
+\hline
+\mathrm{i} &amp; \mathrm{BV} &amp; \mathrm{Z} &amp; {x}_{1,1} &amp; {x}_{1,2} &amp; {x}_{1,3} &amp; {x}_{2,1} &amp; {x}_{2,2} &amp; {x}_{2,3} &amp; {x}_{3,1} &amp; {x}_{3,2} &amp; {x}_{3,3} &amp; {y}_{1} &amp; {y}_{2} &amp; {y}_{3} &amp; {y}_{4} &amp; {y}_{5} &amp; {y}_{6} &amp; {y}_{7} &amp; \bar{y}_{8} &amp; {y}_{9} &amp; \bar{y}_{10} &amp; \bar{y}_{11} &amp; {y}_{12} &amp; {y}_{13} &amp; \mathrm{b} \\
+\hline
+0 &amp; \mathrm{Z} &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 20 \\
+1 &amp; y_{1} &amp; 0 &amp; 0 &amp; 1 &amp; 2 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 20 \\
+2 &amp; y_{2} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 2 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 50 \\
+3 &amp; y_{3} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 1 &amp; 2 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 60 \\
+4 &amp; y_{4} &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 30 \\
+5 &amp; y_{5} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; -1 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 60 \\
+6 &amp; y_{6} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 50/3 \\
+7 &amp; y_{7} &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 20 \\
+\hline
+8 &amp; \bar{y}_{8} &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 20 \\
+\hline
+9 &amp; \bar{y}_{10} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+10 &amp; \bar{y}_{11} &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; -1 &amp; 0 &amp; 20 \\
+11 &amp; y_{13} &amp; 0 &amp; 0 &amp; 0 &amp; 3 &amp; 0 &amp; 0 &amp; 3 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 1 &amp; 0 \\
+\hline
 \end{array} \]</span></p>
+</div>
+<div class="slide section level1">
+
+<h2 id="the-second-phase">the Second Phase</h2>
+<p>The second phase is to maximise the following problem: <span class="math display">\[ \begin{align}
+\max \quad &amp; 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 (x_{1,3} + x_{2,3} + x_{3,3}) \\
+\text{s.t.} \quad &amp; x_{1,1} + x_{1,2} + 2 x_{1,3} + y_1 = 40 \\
+&amp; x_{2,1} + x_{2,2} + 2 x_{2,3} + y_2 = 50 \\
+&amp; x_{3,1} + x_{3,2} + 2 x_{3,3} + y_3 = 60 \\
+&amp; x_{1,2} + x_{2,2} + x_{3,2} + y_4 = 30 \\
+&amp; x_{1, 1} + x_{2, 1} + x_{3, 1} + y_5 = 80 \\
+&amp; x_{2,3} + y_6 = 50 / 3 \\
+&amp; x_{1,3} + x_{2,3} + x_{3,3} + y_7 = 20 \\
+&amp; x_{1,1} + \bar{y}_8 - y_9 = 20 \\
+&amp; x_{2,1} + \bar{y}_{10} = 0 \\
+&amp; x_{2,2} + \bar{y}_{11} - y_{12} = 20 \\
+&amp; - x_{3,3} + 3 x_{1,3} + 3 x_{2,3} + y_{13} = 0 \\
+&amp; x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
+&amp; y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
+\end{align} \]</span></p>
 </div>
 <div class="slide section level1">
 
