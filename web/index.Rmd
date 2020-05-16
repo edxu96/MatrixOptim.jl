@@ -3,7 +3,10 @@ title: "MatrixOptim"
 author: "Edward J. Xu"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: 
+  bookdown::gitbook:
+    includes:
+      after_body: disqus.html
 documentclass: book
 bibliography: [../bib/OR.bib, packages.bib, ../bib/PSB.bib, ../bib/MAS.bib, 
   ../bib/uncertain.bib, ../bib/PSE.bib]

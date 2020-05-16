@@ -1,7 +1,16 @@
 
 ## Convex Optimisation
 
+```{definition, convex, name='convex optimization problem'}
+According to [@boyd2004convex], the general form is:
+$$ \begin{array}{ll}
+\operatorname{minimize} & f_{0}(x) \\
+\text { subject to } & f_{i}(x) \leq b_{i}, \quad i=1, \ldots, m
+\end{array} $$
+where the functions $f_{0}, \ldots, f_{m}: \mathbf{R}^{n} \rightarrow \mathbf{R}$ are convex.
+```
 
+> Recognizing convex optimization problems, or those that can be transformed to convex optimization problems, can therefore be challenging. [@boyd2004convex]
 
 ### Convex or Concave Functions
 
@@ -14,6 +23,16 @@ knitr::include_graphics('images/NLP-2.png')
 ```
 
 > The sum of convex functions is a convex function, and the sum of concave functions is a concave function. [@hillier2012introduction]
+
+```{definition, hessian, name='Hessian Matrix'}
+[@morgan2015explanation] The Hessian matrix of a twice-differentiable function is a matrix array of all of the function’s second-order derivatives. Specifically, if $f\left(x_{1}, \ldots, x_{n}\right)$ is a function that is differentiable to order 2, then the function’s Hessian matrix is the array of functions:
+$$ H_{f}(x)=\left(\begin{array}{cccc}
+\frac{\partial^{2} f}{\partial x_{1}^{2}} & \frac{\partial^{2} f}{\partial x_{1} \partial x_{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{1} \partial x_{n}} \\
+\frac{\partial^{2} f}{\partial x_{2} \partial x_{1}} & \frac{\partial^{2} f}{\partial x_{2}^{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{2} \partial x_{n}} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial^{2} f}{\partial x_{n} \partial x_{1}} & \frac{\partial^{2} f}{\partial x_{n} \partial x_{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{n}^{2}}
+\end{array}\right) $$
+```
 
 #### Convexity Test for Multi-Variate Function {-}
 
@@ -34,3 +53,11 @@ $$ \begin{array}{ccccc}
 ```{definition}
 A convex set is a collection of points such that, for each pair of points in the collection, the entire line segment joining these two points is also in the collection. [@hillier2012introduction]
 ```
+
+### Regularity Conditions (Constraint Qualifications)
+
+> There are many results that establish conditions on the problem, beyond convexity, under which strong duality holds. These conditions are called constraint qualifications. [@boyd2004convex]
+
+> In mathematics, Slater's condition (or Slater condition) is a sufficient condition for strong duality to hold for a convex optimisation problem.
+
+> If a convex optimization problem with differentiable objective and constraint functions satisfies Slater’s condition, then the KKT conditions provide necessary and sufficient conditions for optimality. [@boyd2004convex]

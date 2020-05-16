@@ -1,6 +1,7 @@
 
 ## Classical Methods of Calculus
 
+Weierstrass (continuous function on closed interval) ?
 
 ### Unconstrained Optimization
 

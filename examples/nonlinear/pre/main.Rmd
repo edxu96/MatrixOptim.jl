@@ -1,0 +1,367 @@
+---
+title: Nonlinear, Dynamic, and Linear Programming
+author: Jie Xu (s181238)
+date: \today
+# institute: Centre for Modern Beamer Themes
+# output: binb::metropolis
+output: slidy_presentation
+---
+
+# Nonlinear Programming using Convexity Analysis and KKT
+
+The decision variables are defined as follows:
+$$ \begin{array}{clc}
+\hline
+\text { Variables } & \text { Definition } & \text{ Type } \\
+\hline
+\mathrm{x}_{1} & \text { hours spent producing IPA } & \text{continuous} \\
+\mathrm{x}_{2} & \text { hours spent producing Lager } & \text{continuous} \\
+\hline
+\end{array} $$
+
+The problem can be formulated as:
+$$ \begin{align} \begin{split}
+    \max \quad & 15 \sqrt{x_{1}} + 16 \sqrt{x_{2}} \\
+    \text{s.t.} \quad & x_{1} + x_{2} \leq 120 \\
+    & x_{1}, x_{2} \in \mathbb{R}^+
+\end{split} \end{align} $$
+
+---
+
+Two parts in the function $L(x_{1}, x_{2}, \lambda)$ are monotonically increasing, so the function is strictly convex. (Its Hessian matrix is positive semidefinite for all possible values.) It is obvious that the decision variables belong to a convex set.
+
+Point (1, 1) is a slater point, so the problem satisfies Slater's condition. The strong duality holds.
+
+---
+
+The Lagrangian function is:
+$$ \begin{align} \begin{split}
+  L(x_{1}, x_{2}, \lambda) = 15 \sqrt{x_{1}} + 16 \sqrt{x_{2}} - \lambda (x_{1} + x_{2} - 120)
+\end{split} \end{align} $$
+whose derivatives are:
+$$ \begin{align} \begin{split}
+  \frac{\partial L}{\partial x_{1}} &= \frac{15}{2 \sqrt{x_{1}}} - \lambda \\
+  \frac{\partial L}{\partial x_{2}} &= 8 / \sqrt{x_{2}} - \lambda \\
+  \frac{\partial L}{\partial \lambda} &= x_{1} + x_{2} - 120
+\end{split} \end{align} $$
+
+Also:
+$$ \begin{align}
+  x_1, x_2 \geq 0 \\
+  \lambda \geq 0
+\end{align} $$
+
+---
+
+For a given nonlinear programming problem:
+$$ \begin{align}
+  \max \quad & f(\mathbf{x}) \\
+  \text{s.t.} \quad & g_{i}(\mathbf{x}) \leq b_{i} \quad  \text{for } i = 1, 2, ..., m \\
+  & \mathbf{x} \geq \mathbf{0}
+\end{align} $$
+where $\mathbf{x} = \left(x_{1}, x_{2}, \ldots, x_{n}\right)$, The necessary condition for $\mathbf{x}^{*}$ being its critical point is that $\mathbf{x}^{*}$ satisfy all the following KKT conditions:
+$$ \begin{align}
+  \frac{\partial h}{\partial x_{j}} &\leq 0 \quad \text{for } j = 1, 2, \ldots, n \\
+  x^*_j \frac{\partial h}{\partial x_{j}} &= 0 \quad \text{for } j = 1, 2, \ldots, n \\
+  \frac{\partial h}{\partial \lambda_{i}} &\leq 0 \quad \text{for  } i = 1, 2, \ldots, m \\
+  \lambda_{i} \frac{\partial h}{\partial \lambda_{i}} &= 0 \quad \text{for  } i = 1, 2, \ldots, m \\
+  \mathbf{x}^{*} &\geq 0 \\
+  \boldsymbol{\lambda} &\geq 0
+\end{align} $$
+where the Lagrangian function $h(\mathbf{x}, \boldsymbol{\lambda})$ and its derivatives are:
+$$ \begin{align}
+  h(\mathbf{x}, \boldsymbol{\lambda}) &= f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i}\left[g_{i}(\mathbf{x})-b_{i}\right]
+\end{align} $$
+
+---
+
+Critical points can be calculated by the symbolic math toolbox in MATLAB:
+
+```matlab
+syms x1 x2 lbd
+eq(1) = lbd * (x1 + x2 - 120) == 0;
+eq(2) = x1 * (15/2/sqrt(x1) - lbd) == 0;
+eq(3) = x2 * (8/sqrt(x2) - lbd) == 0;
+sol = solve(eq)
+```
+
+Results are (0, 0, 0), (120, 0, 0.6847), (0, 120, 0.7303), and (56.133, 63.867, 1.0010), and corresponding values of the objective function are 0, 164.3168, 175.2712, and 240.2499. So the point (56.133, 63.867, 1.0010) is chosen as the optimal solution.
+$$ \begin{align}
+    x_{1} &= 56.133 \quad \text{so that  } 3 \sqrt{x_{1}} \approx 22.5 \\
+    x_{2} &= 63.867 \quad \text{so that  } 4 \sqrt{x_{2}} \approx 32 \\
+    \lambda &\approx 1 \\
+    15 \sqrt{x_{1}} + 16 \sqrt{x_{2}} &= 240.250 \\
+\end{align} $$
+
+So I would allocate 56.133 hours in total to produce 22 and half bottles of IPA, and 63.867 hours in total to produce 32 bottles of Lager. The obtained maximum revenue is 240.250.
+
+# Dynamic Programming
+
+The shape of a suspended chain can be described and solved using dynamic programming. The chain is composed of $N$ identical segments, the length of which is $l$. The position of the end of some segment $i$ can be described by a vector $[z, y]_{i}^{T}$.
+
+---
+
+## Formulation
+
+The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For $i=0,1, \ldots N-1$, we have:
+$$ \begin{align}
+	\left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \\
+	= f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right]
+\end{align} $$
+
+where two end points of the chain are:
+$$ \begin{align}
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+\end{align} $$
+
+So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$.
+
+---
+
+With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
+$$ \begin{align}
+	J &= \sum_{i=0}^{N-1} \frac{1}{2} m g \left( y_{i} + y_{i+1} \right) \\
+	&= \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right]
+\end{align} $$
+where the scalar $\phi$, $L$ in the standard form of the cost function can be expressed by the following equations with $N$ fixed:
+$$ \begin{align}
+	\phi \left( \left[ \begin{array}{l}{z} \\ {y} \end{array} \right]_{N} \right) &= 0 \\
+	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_i \right) &= m g y_{i} + \frac{1}{2} m g l sin(\theta_i)
+\end{align} $$
+
+---
+
+The deterministic dynamic programming can be summarised as:
+$$ \begin{align}
+\min_{\theta_0, \theta_1, ..., \theta_{N-1}} \quad & J = \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right] \\
+\text{s.t.} \quad & \left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right] \quad \text{for } i = 0, 1, ..., N-1 \\
+& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} = \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} = \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+\end{align} $$
+where $z_1, z_2, ..., z_{N-1}$ and $y_1, y_2, ..., y_{N-1}$ are decision variables as well, but they are determined once $\theta_0, \theta_1, ..., \theta_{N-1}$ are chosen.
+
+---
+## Solution
+
+The	$i$-th Hamiltonian function of can be expressed as:
+
+$$
+H_i \left(z_i, y_i, \theta_i, \lambda^z_{i+1}, \lambda^y_{i+1} \right) = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + l \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + l \sin \left(\theta_{i} \right)  \right]
+$$
+
+Hence the set of Euler-Lagrange equations can be expressed by the following five equations:
+
+$$
+\begin{align}
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
+	\lambda^{z}_{i} &= \lambda^z_{i+1} \\
+	\lambda^{y}_{i} &= m g + \lambda^y_{i+1} \\
+	0 &= \left[ \frac{1}{2} m g + \lambda^y_{i+1} \right] \cos(\theta_i) - \lambda^z_{i+1} \sin(\theta_i)
+\end{align}
+$$
+
+where the boundary conditions are:
+
+$$
+\begin{align}
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{\lambda_z} \\ {\lambda_y} \\ {\theta} \end{array} \right]_{N} &= \left[ \begin{array}{l}{\nu_z} \\ {\nu_y} \\ {1} \end{array} \right] \\
+\end{align}
+$$
+
+---
+
+Numerical method can be used to find the optimal values. The calculate procedure for iterations can be expressed by the following five equations:
+
+$$
+\begin{align}
+	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
+	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
+	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g \right) / \lambda^z_{i+1} \right] \\
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
+\end{align}
+$$
+
+---
+
+When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
+
+When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
+
+The two results can be visualised by the figure 1:
+
+```{r, out.width='55%', echo=F, fig.align='center', fig.cap='Result.'}
+knitr::include_graphics('Dyn-1.png')
+```
+
+# Linear Programming
+
+A integer variable $x_4$ indicating the number of cabin events per year is introduced. All variables are defined as integer variables, though it seems that it is not necessary:
+$$ \begin{array}{clc}
+\hline \text { Variables } & \text { Definition } & \text { is.integer } \\
+\hline \mathrm{x}_{1,1} & \text { how many days I spend on trees per year } & \mathrm{Y} \\
+\mathrm{x}_{1,2} & \text { how many days I spend on hunting per year } & \mathrm{Y} \\
+\mathrm{x}_{1,3} & \text { how many days I spend on managing cabin events per year } & \mathrm{Y} \\
+\mathrm{x}_{2,1} & \text { how many days uncle spend on tree per year } & \mathrm{Y} \\
+\mathrm{x}_{2,2} & \text { how many days uncle spend on hunting per year } & \mathrm{Y} \\
+\mathrm{x}_{2,3} & \text { how many days uncle spend on managing cabin events per year } & \mathrm{Y} \\
+\mathrm{x}_{3,1} & \text { how many days cousin spend on tree per year } & \mathrm{Y} \\
+\mathrm{x}_{3,2} & \text { how many days cousin spend on hunting per year } & \mathrm{Y} \\
+\mathrm{x}_{3,3} & \text { how many days cousin spend on managing cabin events per year } & \mathrm{Y} \\
+\mathrm{x}_{4} & \text { Num of cabin events per year } & \mathrm{Y} \\
+\hline
+\end{array} $$
+
+---
+
+The problem can be formualted as follows:
+$$ \begin{align}
+\max \quad & 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 x_{4} \\
+\text{s.t.} \quad & x_{1,1} + x_{1,2} + x_{1,3} \leq 40 \qquad \text{(available days of me)} \\
+& x_{2,1} + x_{2,2} + x_{2,3} \leq 50 \qquad \text{(available days of uncle)} \\
+& x_{3,1} + x_{3,2} + x_{3,3} \leq 60 \qquad \text{(available days of cousin)} \\
+& x_{1,1} \geq 20 \qquad \text{(I like harvesting trees)} \\
+& x_{2,1} = 0 \qquad \text{(uncle cannot do because of his back issues)} \\
+& x_{2,2} \geq 20 \qquad \text{(uncle likes hunting)} \\
+& x_{2,3} \leq 50 / 3 \qquad \text{(uncle doesn't likes managing cabin)} \\
+& x_{3,3} \geq 3\left(x_{1,3}+x_{2,3}\right) \qquad \text{(cousin likes managing cabin)} \\
+& x_{1,2} + x_{2,2} + x_{3,2} \leq 30 \qquad \text{(hunting restrictions)} \\
+& x_{1, 1} + x_{2, 1} + x_{3, 1} \leq 80 \qquad \text{(trees restrictions)} \\
+& x_{4} \leq 20 \qquad \text{(cabin restrictions)} \\
+& x_{1,3} + x_{2,3} + x_{3,3} \geq 2 x_{4} \qquad \text{(workdays for cabin management)} \\
+& x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3}, x_{4} \in \mathbb{Z}^{+}
+\end{align} $$
+
+I will relax the problem to a linear programming problem first. If I get a solution with all variable outcomes being integer, then it is the solution to the original integer programming problem. If not, branch-and-cut algorithm has to be used to solve the original integer programming problem iteratively.
+
+---
+
+$$ \begin{array}{clc}
+\hline \text { Variables } & \text { Definition } & \text { is.integer } \\
+\hline \mathrm{x}_{1,1} & \text { how many day I spend on tree per year } & \mathrm{Y} \\
+\mathrm{x}_{1,2} & \text { how many days I spend on hunting per year } & \mathrm{Y} \\
+\mathrm{x}_{1,3} & \text { how many cabin events by me per year } & \mathrm{Y} \\
+\mathrm{x}_{2,1} & \text { how many days uncle spend on tree per year } & \mathrm{Y} \\
+\mathrm{x}_{2,2} & \text { how many days uncle spend on hunting per year } & \mathrm{Y} \\
+\mathrm{x}_{2,3} & \text { how many cabin events by uncle per year } & \mathrm{Y} \\
+\mathrm{x}_{3,1} & \text { how many days cousin spend on tree per year } & \mathrm{Y} \\
+\mathrm{x}_{3,2} & \text { how many days cousin spend on hunting per year } & \mathrm{Y} \\
+\mathrm{x}_{3,3} & \text { how many cabin events by cousin per year } & \mathrm{Y} \\
+\hline
+\end{array} $$
+
+$$ \begin{align}
+\max \quad & 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 (x_{1,3} + x_{2,3} + x_{3,3}) \\
+\text{s.t.} \quad & x_{1,1} + x_{1,2} + 2 x_{1,3} \leq 40 \qquad \text{(available days of me)} \\
+& x_{2,1} + x_{2,2} + 2 x_{2,3} \leq 50 \qquad \text{(available days of uncle)} \\
+& x_{3,1} + x_{3,2} + 2 x_{3,3} \leq 60 \qquad \text{(available days of cousin)} \\
+& x_{1,1} \geq 20 \qquad \text{(I like harvesting trees)} \\
+& x_{2,1} = 0 \qquad \text{(uncle cannot do because of his back issues)} \\
+& x_{2,2} \geq 20 \qquad \text{(uncle likes hunting)} \\
+& x_{2,3} \leq 50 / 3 \qquad \text{(uncle doesn't likes managing cabin)} \\
+& x_{3,3} \geq 3\left(x_{1,3}+x_{2,3}\right) \qquad \text{(cousin likes managing cabin)} \\
+& x_{1,2} + x_{2,2} + x_{3,2} \leq 30 \qquad \text{(hunting restrictions)} \\
+& x_{1, 1} + x_{2, 1} + x_{3, 1} \leq 80 \qquad \text{(trees restrictions)} \\
+& x_{1,3} + x_{2,3} + x_{3,3} \leq 20 \qquad \text{(cabin restrictions)} \\
+& x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0
+\end{align} $$
+
+---
+
+## in Augmented Form
+
+$$ \begin{align}
+\max \quad & 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 (x_{1,3} + x_{2,3} + x_{3,3}) \\
+\text{s.t.} \quad & x_{1,1} + x_{1,2} + 2 x_{1,3} + y_1 = 40 \\
+& x_{2,1} + x_{2,2} + 2 x_{2,3} + y_2 = 50 \\
+& x_{3,1} + x_{3,2} + 2 x_{3,3} + y_3 = 60 \\
+& x_{1,2} + x_{2,2} + x_{3,2} + y_4 = 30 \\
+& x_{1, 1} + x_{2, 1} + x_{3, 1} + y_5 = 80 \\
+& x_{2,3} + y_6 = 50 / 3 \\
+& x_{1,3} + x_{2,3} + x_{3,3} + y_7 = 20 \\
+& x_{1,1} + \bar{y}_8 - y_9 = 20 \\
+& x_{2,1} + \bar{y}_{10} = 0 \\
+& x_{2,2} + \bar{y}_{11} - y_{12} = 20 \\
+& - x_{3,3} + 3 x_{1,3} + 3 x_{2,3} + y_{13} = 0 \\
+& x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
+& y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
+\end{align} $$
+where $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$ are artificial variables, and $y_{9}$ and $y_{12}$ are surplus variables. The two-phase simplex method has to be used.
+
+---
+
+## the First Phase
+
+The first phase is to maximise the following problem until $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$ equals 0.
+$$ \begin{align}
+\max \quad & Z = \bar{y}_{8} + \bar{y}_{10} + \bar{y}_{11} \\
+\text{s.t.} \quad & x_{1,1} + x_{1,2} + 2 x_{1,3} + y_1 = 40 \\
+& x_{2,1} + x_{2,2} + 2 x_{2,3} + y_2 = 50 \\
+& x_{3,1} + x_{3,2} + 2 x_{3,3} + y_3 = 60 \\
+& x_{1,2} + x_{2,2} + x_{3,2} + y_4 = 30 \\
+& x_{1, 1} + x_{2, 1} + x_{3, 1} + y_5 = 80 \\
+& x_{2,3} + y_6 = 50 / 3 \\
+& x_{1,3} + x_{2,3} + x_{3,3} + y_7 = 20 \\
+& x_{1,1} + \bar{y}_8 - y_9 = 20 \\
+& x_{2,1} + \bar{y}_{10} = 0 \\
+& x_{2,2} + \bar{y}_{11} - y_{12} = 20 \\
+& - x_{3,3} + 3 x_{1,3} + 3 x_{2,3} + y_{13} = 0 \\
+& x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
+& y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
+\end{align} $$
+
+---
+
+$$ \begin{array}{ccccccccccccccccccc}
+\hline
+\mathrm{i} & \mathrm{BV} & \mathrm{Z} & {x}_{1,1} & {x}_{1,2} & {x}_{1,3} & {x}_{2,1} & {x}_{2,2} & {x}_{2,3} & {x}_{3,1} & {x}_{3,2} & {x}_{3,3} & {y}_{1} & {y}_{2} & {y}_{3} & {y}_{4} & {y}_{5} & {y}_{6} & {y}_{7} & \bar{y}_{8} & {y}_{9} & \bar{y}_{10} & \bar{y}_{11} & {y}_{12} & {y}_{13} & \mathrm{b} \\
+\hline
+0 & \mathrm{Z} & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 0 & -1 & -1 & 0 & 0 & 0 \\
+1 & y_{1} & 0 & 1 & 1 & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 40 \\
+2 & y_{2} & 0 & 0 & 0 & 0 & 1 & 1 & 2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 50 \\
+3 & y_{3} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 2 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 60 \\
+4 & y_{4} & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 30 \\
+5 & y_{5} & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 80 \\
+6 & y_{6} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 50/3 \\
+7 & y_{7} & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 20 \\
+8 & \bar{y}_{8} & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 20 \\
+9 & \bar{y}_{10} & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+10 & \bar{y}_{11} & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 20 \\
+11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+\hline
+\end{array} $$
+
+---
+
+## To Make Basis Variables in Row `0` all 0
+
+Coefficients in row `0` are added with coefficients in row `8`, row `9` and row `10`
+$$ \begin{array}{ccccccccccccccccccc}
+\hline
+\mathrm{i} & \mathrm{BV} & \mathrm{Z} & {x}_{1,1} & {x}_{1,2} & {x}_{1,3} & {x}_{2,1} & {x}_{2,2} & {x}_{2,3} & {x}_{3,1} & {x}_{3,2} & {x}_{3,3} & {y}_{1} & {y}_{2} & {y}_{3} & {y}_{4} & {y}_{5} & {y}_{6} & {y}_{7} & \bar{y}_{8} & {y}_{9} & \bar{y}_{10} & \bar{y}_{11} & {y}_{12} & {y}_{13} & \mathrm{b} \\
+\hline
+0 & \mathrm{Z} & 1 & 1 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & -1 & 0 & 0 & -1 & 0 & 40 \\
+1 & y_{1} & 0 & 1 & 1 & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 40 \\
+2 & y_{2} & 0 & 0 & 0 & 0 & 1 & 1 & 2 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 50 \\
+3 & y_{3} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 2 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 60 \\
+4 & y_{4} & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 30 \\
+5 & y_{5} & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 80 \\
+6 & y_{6} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 50/3 \\
+7 & y_{7} & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 20 \\
+8 & \bar{y}_{8} & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 20 \\
+9 & \bar{y}_{10} & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+10 & \bar{y}_{11} & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 20 \\
+11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+\hline
+\end{array} $$
+
+
+---
+
+Put the solution in all constraints. If all are respected, then it is a feasible solution. Change all the inequality to equality constraints, and find those met by the set. If two or more equality constraints are met, then the solution is one of the cross sections in the edge of the feasible region. Move the solution along the edges to see if there is a better solution. If not, the solution is the optimal one.
+
+---
