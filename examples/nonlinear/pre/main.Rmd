@@ -2,14 +2,20 @@
 title: Nonlinear, Dynamic, and Linear Programming
 author: Jie Xu (s181238)
 date: \today
-# institute: Centre for Modern Beamer Themes
-# output: binb::metropolis
-output: slidy_presentation
+output:
+  slidy_presentation:
+    font_adjustment: -1
+# output:
+#   prettydoc::html_pretty:
+#     theme: cayman
+#     highlight: github
+#     toc: true
+#     toc_depth: 2
 ---
 
-# Nonlinear Programming using Convexity Analysis and KKT
+# NLP1, Problem Formulation
 
-The decision variables are defined as follows:
+The decision variables in part B are defined as follows:
 $$ \begin{array}{clc}
 \hline
 \text { Variables } & \text { Definition } & \text{ Type } \\
@@ -26,13 +32,13 @@ $$ \begin{align} \begin{split}
     & x_{1}, x_{2} \in \mathbb{R}^+
 \end{split} \end{align} $$
 
----
+# NLP2, Convexity Analysis
 
 Two parts in the function $L(x_{1}, x_{2}, \lambda)$ are monotonically increasing, so the function is strictly convex. (Its Hessian matrix is positive semidefinite for all possible values.) It is obvious that the decision variables belong to a convex set.
 
 Point (1, 1) is a slater point, so the problem satisfies Slater's condition. The strong duality holds.
 
----
+# NLP3, Lagrangian Function
 
 The Lagrangian function is:
 $$ \begin{align} \begin{split}
@@ -51,7 +57,7 @@ $$ \begin{align}
   \lambda \geq 0
 \end{align} $$
 
----
+# NLP4, KKT Conditions
 
 For a given nonlinear programming problem:
 $$ \begin{align}
@@ -73,7 +79,7 @@ $$ \begin{align}
   h(\mathbf{x}, \boldsymbol{\lambda}) &= f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i}\left[g_{i}(\mathbf{x})-b_{i}\right]
 \end{align} $$
 
----
+# NLP5, Solutions
 
 Critical points can be calculated by the symbolic math toolbox in MATLAB:
 
@@ -95,13 +101,9 @@ $$ \begin{align}
 
 So I would allocate 56.133 hours in total to produce 22 and half bottles of IPA, and 63.867 hours in total to produce 32 bottles of Lager. The obtained maximum revenue is 240.250.
 
-# Dynamic Programming
+# DP1, State Space Model
 
 The shape of a suspended chain can be described and solved using dynamic programming. The chain is composed of $N$ identical segments, the length of which is $l$. The position of the end of some segment $i$ can be described by a vector $[z, y]_{i}^{T}$.
-
----
-
-## Formulation
 
 The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For $i=0,1, \ldots N-1$, we have:
 $$ \begin{align}
@@ -117,7 +119,7 @@ $$ \begin{align}
 
 So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$.
 
----
+# DP2, Formulation
 
 With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
 $$ \begin{align}
@@ -130,8 +132,6 @@ $$ \begin{align}
 	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_i \right) &= m g y_{i} + \frac{1}{2} m g l sin(\theta_i)
 \end{align} $$
 
----
-
 The deterministic dynamic programming can be summarised as:
 $$ \begin{align}
 \min_{\theta_0, \theta_1, ..., \theta_{N-1}} \quad & J = \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right] \\
@@ -141,8 +141,7 @@ $$ \begin{align}
 \end{align} $$
 where $z_1, z_2, ..., z_{N-1}$ and $y_1, y_2, ..., y_{N-1}$ are decision variables as well, but they are determined once $\theta_0, \theta_1, ..., \theta_{N-1}$ are chosen.
 
----
-## Solution
+# DP3, Euler-Lagrange Equations
 
 The	$i$-th Hamiltonian function of can be expressed as:
 
@@ -172,7 +171,7 @@ $$
 \end{align}
 $$
 
----
+# DP4, Solution
 
 Numerical method can be used to find the optimal values. The calculate procedure for iterations can be expressed by the following five equations:
 
@@ -186,8 +185,6 @@ $$
 \end{align}
 $$
 
----
-
 When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
 
 When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
@@ -198,7 +195,7 @@ The two results can be visualised by the figure 1:
 knitr::include_graphics('Dyn-1.png')
 ```
 
-# Linear Programming
+# LP1, Problem Formulation
 
 A integer variable $x_4$ indicating the number of cabin events per year is introduced. All variables are defined as integer variables, though it seems that it is not necessary:
 $$ \begin{array}{clc}
@@ -215,10 +212,6 @@ $$ \begin{array}{clc}
 \mathrm{x}_{4} & \text { Num of cabin events per year } & \mathrm{Y} \\
 \hline
 \end{array} $$
-
----
-
-## Problem Formulation
 
 The problem can be formualted as follows:
 $$ \begin{align}
@@ -240,21 +233,19 @@ $$ \begin{align}
 
 I will relax the problem to a linear programming problem first. If I get a solution with all variable outcomes being integer, then it is the solution to the original integer programming problem. If not, branch-and-cut algorithm has to be used to solve the original integer programming problem iteratively.
 
----
-
-## Simplification
+# LP2, Simplification
 
 $$ \begin{array}{clc}
 \hline \text { Variables } & \text { Definition } & \text { is.integer } \\
-\hline \mathrm{x}_{1,1} & \text { how many day I spend on tree per year } & \mathrm{Y} \\
-\mathrm{x}_{1,2} & \text { how many days I spend on hunting per year } & \mathrm{Y} \\
-\mathrm{x}_{1,3} & \text { how many cabin events by me per year } & \mathrm{Y} \\
-\mathrm{x}_{2,1} & \text { how many days uncle spend on tree per year } & \mathrm{Y} \\
-\mathrm{x}_{2,2} & \text { how many days uncle spend on hunting per year } & \mathrm{Y} \\
-\mathrm{x}_{2,3} & \text { how many cabin events by uncle per year } & \mathrm{Y} \\
-\mathrm{x}_{3,1} & \text { how many days cousin spend on tree per year } & \mathrm{Y} \\
-\mathrm{x}_{3,2} & \text { how many days cousin spend on hunting per year } & \mathrm{Y} \\
-\mathrm{x}_{3,3} & \text { how many cabin events by cousin per year } & \mathrm{Y} \\
+\hline x_{1,1} & \text { how many day I spend on tree per year } & \mathrm{F} \\
+x_{1,2} & \text { how many days I spend on hunting per year } & \mathrm{F} \\
+x_{1,3} & \text { how many cabin events by me per year } & \mathrm{F} \\
+x_{2,1} & \text { how many days uncle spend on tree per year } & \mathrm{F} \\
+x_{2,2} & \text { how many days uncle spend on hunting per year } & \mathrm{F} \\
+x_{2,3} & \text { how many cabin events by uncle per year } & \mathrm{F} \\
+x_{3,1} & \text { how many days cousin spend on tree per year } & \mathrm{F} \\
+x_{3,2} & \text { how many days cousin spend on hunting per year } & \mathrm{F} \\
+x_{3,3} & \text { how many cabin events by cousin per year } & \mathrm{F} \\
 \hline
 \end{array} $$
 
@@ -274,9 +265,7 @@ $$ \begin{align}
 & x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0
 \end{align} $$
 
----
-
-## in Augmented Form
+# LP3, in Augmented Form
 
 $$ \begin{align}
 \max \quad & 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 (x_{1,3} + x_{2,3} + x_{3,3}) \\
@@ -294,11 +283,12 @@ $$ \begin{align}
 & x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
 & y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
 \end{align} $$
-where $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$ are artificial variables, and $y_{9}$ and $y_{12}$ are surplus variables. The two-phase simplex method has to be used.
+where $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$ are artificial variables, and $y_{9}$ and $y_{12}$ are surplus variables. The two-phase simplex method has to be used:
 
----
+- First phase: $\max Z = \bar{y}_{8} + \bar{y}_{10} + \bar{y}_{11}$
+- Second phase: $\max Z = 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 (x_{1,3} + x_{2,3} + x_{3,3})$
 
-## the First Phase
+# LP4, the First Phase
 
 The first phase is to maximise the following problem:
 $$ \begin{align}
@@ -317,9 +307,7 @@ $$ \begin{align}
 & x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
 & y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
 \end{align} $$
-
----
-
+which can be represented by the following tableau:
 $$ \begin{array}{ccccccccccccccccccc}
 \hline
 \mathrm{i} & \mathrm{BV} & \mathrm{Z} & {x}_{1,1} & {x}_{1,2} & {x}_{1,3} & {x}_{2,1} & {x}_{2,2} & {x}_{2,3} & {x}_{3,1} & {x}_{3,2} & {x}_{3,3} & {y}_{1} & {y}_{2} & {y}_{3} & {y}_{4} & {y}_{5} & {y}_{6} & {y}_{7} & \bar{y}_{8} & {y}_{9} & \bar{y}_{10} & \bar{y}_{11} & {y}_{12} & {y}_{13} & \mathrm{b} \\
@@ -339,11 +327,11 @@ $$ \begin{array}{ccccccccccccccccccc}
 \hline
 \end{array} $$
 
----
+# LP5, To Make Basis Variables in Row `0` all 0
 
-## To Make Basis Variables in Row `0` all 0
+Coefficients for basis variables, $y_{1}$, $y_{2}$, $y_{3}$, $y_{4}$, $y_{5}$, $y_{6}$, $y_{7}$, $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$, and $y_{13}$ in the tableau must be 0. In contrast, those for ${y}_{9}$, and ${y}_{12}$ can be larger or smaller than 0.
 
-Coefficients in row `0` are added with coefficients in row `8`, row `9` and row `10`
+So, coefficients in row `0` are added with coefficients in row `8`, row `9` and row `10`
 $$ \begin{array}{ccccccccccccccccccc}
 \hline
 \mathrm{i} & \mathrm{BV} & \mathrm{Z} & {x}_{1,1} & {x}_{1,2} & {x}_{1,3} & {x}_{2,1} & {x}_{2,2} & {x}_{2,3} & {x}_{3,1} & {x}_{3,2} & {x}_{3,3} & {y}_{1} & {y}_{2} & {y}_{3} & {y}_{4} & {y}_{5} & {y}_{6} & {y}_{7} & \bar{y}_{8} & {y}_{9} & \bar{y}_{10} & \bar{y}_{11} & {y}_{12} & {y}_{13} & \mathrm{b} \\
@@ -362,29 +350,25 @@ $$ \begin{array}{ccccccccccccccccccc}
 11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
 \hline
 \end{array} $$
-Then, minimum ratio tests and Gaussian elimination has to be used to convert all coefficients for decision variables in row `0` to 0.
+Then, minimum ratio tests and Gaussian elimination has to be used to convert all coefficients in row `0` larger than 0.
 
----
-
-## Minimum Ratio Test
+# LP6, Illustration of Minimum Ratio Test
 
 The entering column can be the one with $x_{1, 1}$, because absolute values of coefficients in columns $x_{1, 1}$, $x_{2, 1}$, $x_{2, 2}$ are the same.
 
 Then the row with minimum ratio of $b / x_{1, 1}$ is chosen:
 $$ \begin{array}{ccc}
 \hline
-i & \mathrm{BV} & x_{1, 1} & \mathrm{ratio} \\
+i & \mathrm{BV} & x_{1, 1} & b & \mathrm{ratio} \\
 \hline
-1 & y_{1} & 1 & 40 \\
-5 & y_5 & 1 & 80 \\
-8 & \bar{y}_8 & 1 & 20 \\
+1 & y_{1} & 1 & 40 & 40 \\
+5 & y_5 & 1 & 80 & 80 \\
+8 & \bar{y}_8 & 1 & 20 & 20 \\
 \hline
 \end{array} $$
 Then Gausian elimination is used to create a new tableau.
 
----
-
-## Gausian Elimination
+# LP7, Illustration of Gausian Elimination
 
 Row `0`, row `1`, and row `5` are all minus the coefficients in row `8`:
 $$ \begin{array}{ccc|c|ccccccccccccccc}
@@ -407,10 +391,9 @@ $$ \begin{array}{ccc|c|ccccccccccccccc}
 11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
 \hline
 \end{array} $$
+Repeat the minimum ratio test and Gausian elimination until all coefficients in row `0` larger than 0.
 
----
-
-## the Second Phase
+# LP8, the Second Phase
 
 The second phase is to maximise the following problem:
 $$ \begin{align}
@@ -430,8 +413,6 @@ $$ \begin{align}
 & y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
 \end{align} $$
 
----
-
 From the final tableau in the first phase, following preliminary transformation needs to be done:
 
 - Drop the columns with $\bar{y}_8$, $\bar{y}_{10}$, $\bar{y}_{11}$.
@@ -439,8 +420,58 @@ From the final tableau in the first phase, following preliminary transformation 
 - Use Gaussian elimination to transform coefficients for decision variables to 0
 - Apply standard simplex algorithm.
 
----
+# LP9, Optimal Solution
 
-Put the solution in all constraints. If all are respected, then it is a feasible solution. Change all the inequality to equality constraints, and find those met by the set. If two or more equality constraints are met, then the solution is one of the cross sections in the edge of the feasible region. Move the solution along the edges to see if there is a better solution. If not, the solution is the optimal one.
+Put the solution in all constraints. If all are respected, then it is a feasible solution.
 
----
+```matlab
+A = [1, 1, 2, 0, 0, 0, 0, 0, 0;
+0, 0, 0, 1, 1, 2, 0, 0, 0;
+0, 0, 0, 0, 0, 0, 1, 1, 2;
+0, 1, 0, 0, 1, 0, 0, 1, 0;
+1, 0, 0, 1, 0, 0, 1, 0, 0;
+0, 0, 0, 0, 0, 1, 0, 0, 0;
+0, 0, 1, 0, 0, 1, 0, 0, 1;
+1, 0, 0, 0, 0, 0, 0, 0, 0;
+0, 0, 0, 1, 0, 0, 0, 0, 0;
+0, 0, 0, 0, 1, 0, 0, 0, 0;
+0, 0, 3, 0, 0, 3, 0, 0, -1];
+b = [40 50 60 30 80 50/3 20 20 0 20 0]';
+x = [40 0 0 0 20 5 20 10 15]';
+sum(A * x <= b) == 11
+```
+
+Change all the inequality to equality constraints, and find those met by the set. If two or more equality constraints are met, then the solution is one of the cross sections in the edge of the feasible region. Move the solution along the edges to see if there is a better solution. If not, the solution is the optimal one.
+
+```matlab
+syms x [3 3] y [1 13]
+eq(1) = x1_1 + x1_2 + 2 * x1_3 + y1 == 40;
+eq(2) = x2_1 + x2_2 + 2 * x2_3 + y2 == 50;
+eq(3) = x3_1 + x3_2 + 2 * x3_3 + y3 == 60;
+eq(4) = x1_2 + x2_2 + x3_2 + y4 == 30;
+eq(5) = x1_1 + x2_1 + x3_1 + y5 == 80;
+eq(6) = x2_3 + y6 == 50 / 3;
+eq(7) = x1_3 + x2_3 + x3_3 + y7 == 20;
+eq(8) = x1_1 + y8 - y9 == 20;
+eq(9) = x2_1 + y10 == 0;
+eq(10) = x2_2 + y11 - y12 == 20;
+eq(11) = - x3_3 + 3 * x1_3 + 3 * x2_3 + y13 == 0;
+
+eq(12) = x1_1 == 40;
+eq(13) = x1_2 == 0;
+eq(14) = x1_3 == 0;
+eq(15) = x2_1 == 0;
+eq(16) = x2_2 == 20;
+eq(17) = x2_3 == 5;
+eq(18) = x3_1 == 20;
+eq(19) = x3_2 == 10;
+eq(20) = x3_3 == 15;
+
+sol = solve(eq)
+```
+
+# LP10, Sensitivity Analysis
+
+After the two-phase simplex algorithm is done, the coefficients in the `b` column will indicate the optimal value of the objective function, optimal values of decision variables, and shadow prices.
+
+Shadow prices from restrictions on distributions can be used to identify the profitability of redistribution of forests, and those on labours can be used to identify how additional labours contribute to the profitability.
