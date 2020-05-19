@@ -25,6 +25,12 @@ knitr::include_graphics("images/LP-2.png")
 > 1. The parameters for a (functional) constraint in either problem are the coefficients of a variable in the other problem.  
 > 2. The coefficients in the objective function of either problem are the right-hand sides for the other problem.
 
+### SOB Rules
+
+```{r, out.width='90%', echo=F, fig.align='center', fig.cap='Primal-Dual Table '}
+knitr::include_graphics("images/LP-3.png")
+```
+
 ### Primal-Dual Relationships
 
 ```{definition, name='Complementary optimal solutions property'}
@@ -44,3 +50,11 @@ The following are the only possible relationships between the primal and dual pr
 2. If one problem has feasible solutions and an unbounded objective function (and so no optimal solution), then the other problem has no feasible solutions.  
 3. If one problem has no feasible solutions, then the other problem has either no feasible solutions or an unbounded objective function.
 ```
+
+### Complementary Slackness
+
+Assume that $x$ is a feasible solution to the primal problem and $y$ is a feasible solution to the dual problem. Then, a necessary and sufficient condition for $x$ and $y$ being optimal are:
+$$ \begin{align}
+& \sum_{j=1}^{n} a_{i j} x_{j}=b_{i} \text { or } y_{i}=0 \quad \forall i=1 \ldots m \\
+& \sum_{i=1}^{m} a_{i j} y_{i}=c_{j} \text { or } x_{j}=0 \quad \forall j=1 \ldots n
+\end{align} $$

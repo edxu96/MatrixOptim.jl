@@ -8,7 +8,8 @@ function [err, vec_s, mat_x_s] = cal_chain_diff(vec_la_0, struct_data)
 	h = struct_data.h;
 
 	vec_x_0 = [z_0; y_0; vec_la_0];
-	[vec_s, mat_x_s] = ode45(@(s, vec_x) ode_chain(s, vec_x, struct_data), [0 s_total], vec_x_0, []);
+	[vec_s, mat_x_s] = ode45(@(s, vec_x) ode_chain(s, vec_x, struct_data), ...
+		[0 s_total], vec_x_0, []);
 
 	vec_x_end = mat_x_s(end, :)';
 	vec_zy_end = vec_x_end(1:2);
@@ -35,4 +36,4 @@ function vec_x_diff = ode_chain(s, vec_x, struct_data)
 	la_y_diff = - rho * g / s_total;
 
 	vec_x_diff = [z_diff; y_diff; la_z_diff; la_y_diff];
-end 
+end

@@ -32,13 +32,17 @@ $$ \begin{align} \begin{split}
     & x_{1}, x_{2} \in \mathbb{R}^+
 \end{split} \end{align} $$
 
-# NLP2, Convexity Analysis
+## Convexity Analysis
 
-Two parts in the function $L(x_{1}, x_{2}, \lambda)$ are monotonically increasing, so the function is strictly convex. (Its Hessian matrix is positive semidefinite for all possible values.) It is obvious that the decision variables belong to a convex set.
+Two parts in the function $L(x_{1}, x_{2}, \lambda)$ are monotonically increasing, so the function is strictly convex. It is obvious that the decision variables belong to a convex set.
+
+<!-- (Its Hessian matrix is positive semidefinite for all possible values.)  -->
 
 Point (1, 1) is a slater point, so the problem satisfies Slater's condition. The strong duality holds.
 
-# NLP3, Lagrangian Function
+Therefore, KKT conditions is the necessary and sufficient condition for the optimal solution.
+
+# NLP2, Lagrangian Function
 
 The Lagrangian function is:
 $$ \begin{align} \begin{split}
@@ -48,7 +52,7 @@ whose derivatives are:
 $$ \begin{align} \begin{split}
   \frac{\partial L}{\partial x_{1}} &= \frac{15}{2 \sqrt{x_{1}}} - \lambda \\
   \frac{\partial L}{\partial x_{2}} &= 8 / \sqrt{x_{2}} - \lambda \\
-  \frac{\partial L}{\partial \lambda} &= x_{1} + x_{2} - 120
+  \frac{\partial L}{\partial \lambda} &= 120 - x_{1} - x_{2}
 \end{split} \end{align} $$
 
 Also:
@@ -57,7 +61,7 @@ $$ \begin{align}
   \lambda \geq 0
 \end{align} $$
 
-# NLP4, KKT Conditions
+# NLP3, KKT Conditions
 
 For a given nonlinear programming problem:
 $$ \begin{align}
@@ -79,19 +83,34 @@ $$ \begin{align}
   h(\mathbf{x}, \boldsymbol{\lambda}) &= f(\mathbf{x})-\sum_{i=1}^{m} \lambda_{i}\left[g_{i}(\mathbf{x})-b_{i}\right]
 \end{align} $$
 
-# NLP5, Solutions
+# NLP4, Solutions
 
-Critical points can be calculated by the symbolic math toolbox in MATLAB:
+Because the derivatives are meaningless when $x_1$ or $x_2$ equals 0. Those points, (0, 0, 0), (120, 0, 0.6847), and (0, 120, 0.7303), are obtained first and their corresponding objective function values are 0, 164.3168, 175.2712.
+
+Thus, critical points can be obtained from the following system of equations:
+$$ \begin{align}
+	\frac{15}{2 \sqrt{x_{1}}} - \lambda &= 0 \\
+	8 / \sqrt{x_{2}} - \lambda &= 0 \\
+	120 - x_{1} - x_{2} &\leq 0 \\
+	\lambda (120 - x_{1} - x_{2}) &= 0 \\
+	x_{1}, x_{2} &> 0 \\
+	\lambda &\geq 0
+\end{align} $$
+which can be solved by the symbolic math toolbox in MATLAB:
 
 ```matlab
 syms x1 x2 lbd
 eq(1) = lbd * (x1 + x2 - 120) == 0;
-eq(2) = x1 * (15/2/sqrt(x1) - lbd) == 0;
-eq(3) = x2 * (8/sqrt(x2) - lbd) == 0;
+eq(2) = x1 + x2 - 120 <= 0;
+eq(3) = x1 * (15/2/sqrt(x1) - lbd) == 0;
+eq(4) = x2 * (8/sqrt(x2) - lbd) == 0;
+eq(5) = x1 > 0;
+eq(6) = x2 > 0;
+eq(7) = lbd >= 0;
 sol = solve(eq)
 ```
 
-Results are (0, 0, 0), (120, 0, 0.6847), (0, 120, 0.7303), and (56.133, 63.867, 1.0010), and corresponding values of the objective function are 0, 164.3168, 175.2712, and 240.2499. So the point (56.133, 63.867, 1.0010) is chosen as the optimal solution.
+The point (56.133, 63.867, 1.0010) is obtained, and its corresponding value of the objective function is 240.2499. Thus, the point (56.133, 63.867, 1.0010) is chosen as the optimal solution.
 $$ \begin{align}
     x_{1} &= 56.133 \quad \text{so that  } 3 \sqrt{x_{1}} \approx 22.5 \\
     x_{2} &= 63.867 \quad \text{so that  } 4 \sqrt{x_{2}} \approx 32 \\
@@ -99,105 +118,11 @@ $$ \begin{align}
     15 \sqrt{x_{1}} + 16 \sqrt{x_{2}} &= 240.250 \\
 \end{align} $$
 
-So I would allocate 56.133 hours in total to produce 22 and half bottles of IPA, and 63.867 hours in total to produce 32 bottles of Lager. The obtained maximum revenue is 240.250.
-
-# DP1, State Space Model
-
-The shape of a suspended chain can be described and solved using dynamic programming. The chain is composed of $N$ identical segments, the length of which is $l$. The position of the end of some segment $i$ can be described by a vector $[z, y]_{i}^{T}$.
-
-The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equation, and the angels are described in the Radian system. That is, For $i=0,1, \ldots N-1$, we have:
-$$ \begin{align}
-	\left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \\
-	= f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right]
-\end{align} $$
-
-where two end points of the chain are:
-$$ \begin{align}
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
-\end{align} $$
-
-So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$.
-
-# DP2, Formulation
-
-With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
-$$ \begin{align}
-	J &= \sum_{i=0}^{N-1} \frac{1}{2} m g \left( y_{i} + y_{i+1} \right) \\
-	&= \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right]
-\end{align} $$
-where the scalar $\phi$, $L$ in the standard form of the cost function can be expressed by the following equations with $N$ fixed:
-$$ \begin{align}
-	\phi \left( \left[ \begin{array}{l}{z} \\ {y} \end{array} \right]_{N} \right) &= 0 \\
-	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_i \right) &= m g y_{i} + \frac{1}{2} m g l sin(\theta_i)
-\end{align} $$
-
-The deterministic dynamic programming can be summarised as:
-$$ \begin{align}
-\min_{\theta_0, \theta_1, ..., \theta_{N-1}} \quad & J = \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right] \\
-\text{s.t.} \quad & \left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right] \quad \text{for } i = 0, 1, ..., N-1 \\
-& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} = \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
-& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} = \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
-\end{align} $$
-where $z_1, z_2, ..., z_{N-1}$ and $y_1, y_2, ..., y_{N-1}$ are decision variables as well, but they are determined once $\theta_0, \theta_1, ..., \theta_{N-1}$ are chosen.
-
-# DP3, Euler-Lagrange Equations
-
-The	$i$-th Hamiltonian function of can be expressed as:
-
-$$
-H_i \left(z_i, y_i, \theta_i, \lambda^z_{i+1}, \lambda^y_{i+1} \right) = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + l \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + l \sin \left(\theta_{i} \right)  \right]
-$$
-
-Hence the set of Euler-Lagrange equations can be expressed by the following five equations:
-
-$$
-\begin{align}
-	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
-	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
-	\lambda^{z}_{i} &= \lambda^z_{i+1} \\
-	\lambda^{y}_{i} &= m g + \lambda^y_{i+1} \\
-	0 &= \left[ \frac{1}{2} m g + \lambda^y_{i+1} \right] \cos(\theta_i) - \lambda^z_{i+1} \sin(\theta_i)
-\end{align}
-$$
-
-where the boundary conditions are:
-
-$$
-\begin{align}
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
-	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right] \\
-	\left[ \begin{array}{l}{\lambda_z} \\ {\lambda_y} \\ {\theta} \end{array} \right]_{N} &= \left[ \begin{array}{l}{\nu_z} \\ {\nu_y} \\ {1} \end{array} \right] \\
-\end{align}
-$$
-
-# DP4, Solution
-
-Numerical method can be used to find the optimal values. The calculate procedure for iterations can be expressed by the following five equations:
-
-$$
-\begin{align}
-	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
-	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
-	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g \right) / \lambda^z_{i+1} \right] \\
-	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
-	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
-\end{align}
-$$
-
-When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
-
-When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
-
-The two results can be visualised by the figure 1:
-
-```{r, out.width='55%', echo=F, fig.align='center', fig.cap='Result.'}
-knitr::include_graphics('Dyn-1.png')
-```
+So I would allocate 56.133 hours in total to produce 22 and half bottles of IPA, and 63.867 hours in total to produce 32 bottles of Lager. The obtained maximum revenue is 240.250. 1 more working hour can contribute to 1.001 unit of utility increment.
 
 # LP1, Problem Formulation
 
-A integer variable $x_4$ indicating the number of cabin events per year is introduced. All variables are defined as integer variables, though it seems that it is not necessary:
+The question 1 in part B can be formulated as follows. An integer variable $x_4$ indicating the number of cabin events per year is introduced. All variables are defined as integer variables, though it seems that it is not necessary:
 $$ \begin{array}{clc}
 \hline \text { Variables } & \text { Definition } & \text { is.integer } \\
 \hline \mathrm{x}_{1,1} & \text { how many days I spend on trees per year } & \mathrm{Y} \\
@@ -213,7 +138,7 @@ $$ \begin{array}{clc}
 \hline
 \end{array} $$
 
-The problem can be formualted as follows:
+The problem is:
 $$ \begin{align}
 \max \quad & 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 x_{4} \\
 \text{s.t.} \quad & x_{1,1} + x_{1,2} + x_{1,3} \leq 40 \qquad \text{(available days of me)} \\
@@ -235,6 +160,7 @@ I will relax the problem to a linear programming problem first. If I get a solut
 
 # LP2, Simplification
 
+We say that the person responsible for any cabin event must work two workdays for that event, then the problem can be simplified.
 $$ \begin{array}{clc}
 \hline \text { Variables } & \text { Definition } & \text { is.integer } \\
 \hline x_{1,1} & \text { how many day I spend on tree per year } & \mathrm{F} \\
@@ -285,12 +211,12 @@ $$ \begin{align}
 \end{align} $$
 where $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$ are artificial variables, and $y_{9}$ and $y_{12}$ are surplus variables. The two-phase simplex method has to be used:
 
-- First phase: $\max Z = \bar{y}_{8} + \bar{y}_{10} + \bar{y}_{11}$
-- Second phase: $\max Z = 1000 \left(x_{1,1} + x_{2,1} + x_{3,1}\right) + 750 \left(x_{1,2} + x_{2,2} + x_{3,2} \right) + 2000 (x_{1,3} + x_{2,3} + x_{3,3})$
+- In the first phase, maximize $Z = \bar{y}_{8} + \bar{y}_{10} + \bar{y}_{11}$ with the same feasible region to locate a feasible basic solution to the original problem.
+- In the second phase, maximize the oroginal problem to find the optimal solution.
 
 # LP4, the First Phase
 
-The first phase is to maximise the following problem:
+The first phase is to maximise the following problem, whose objective function is composed of artificial variables.
 $$ \begin{align}
 \max \quad & Z = \bar{y}_{8} + \bar{y}_{10} + \bar{y}_{11} \\
 \text{s.t.} \quad & x_{1,1} + x_{1,2} + 2 x_{1,3} + y_1 = 40 \\
@@ -326,10 +252,11 @@ $$ \begin{array}{ccccccccccccccccccc}
 11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
 \hline
 \end{array} $$
+where we start by setting all decision variables in the original problem and surplus variables as non-basic variables, which makes it easir to obtain values of basis variables.
 
 # LP5, To Make Basis Variables in Row `0` all 0
 
-Coefficients for basis variables, $y_{1}$, $y_{2}$, $y_{3}$, $y_{4}$, $y_{5}$, $y_{6}$, $y_{7}$, $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$, and $y_{13}$ in the tableau must be 0. In contrast, those for ${y}_{9}$, and ${y}_{12}$ can be larger or smaller than 0.
+Coefficients for basic variables, $y_{1}$, $y_{2}$, $y_{3}$, $y_{4}$, $y_{5}$, $y_{6}$, $y_{7}$, $\bar{y}_{8}$, $\bar{y}_{10}$, $\bar{y}_{11}$, and $y_{13}$ in row `0` must be 0. In contrast, those for surplus variables, ${y}_{9}$, and ${y}_{12}$, can be larger or smaller than 0.
 
 So, coefficients in row `0` are added with coefficients in row `8`, row `9` and row `10`
 $$ \begin{array}{ccccccccccccccccccc}
@@ -350,7 +277,7 @@ $$ \begin{array}{ccccccccccccccccccc}
 11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
 \hline
 \end{array} $$
-Then, minimum ratio tests and Gaussian elimination has to be used to convert all coefficients in row `0` larger than 0.
+Then, minimum ratio tests and Gaussian elimination should be used to make sure that all non-zero coefficients in row `0` have the same sign.
 
 # LP6, Illustration of Minimum Ratio Test
 
@@ -384,14 +311,17 @@ $$ \begin{array}{ccc|c|ccccccccccccccc}
 6 & y_{6} & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 50/3 \\
 7 & y_{7} & 0 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 20 \\
 \hline
-8 & \bar{y}_{8} & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 20 \\
+8 & x_{1, 1} & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 0 & 0 & 0 & 20 \\
 \hline
 9 & \bar{y}_{10} & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
 10 & \bar{y}_{11} & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & 20 \\
 11 & y_{13} & 0 & 0 & 0 & 3 & 0 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
 \hline
 \end{array} $$
-Repeat the minimum ratio test and Gausian elimination until all coefficients in row `0` larger than 0.
+
+The basic variable in row `8` becomes $x_{1, 1}$.
+
+Repeat the minimum ratio test and Gausian elimination until all coefficients of variables in row `0` larger than or equal to 0. That is, the non-zero coefficients have the positive or negative signs at the same time.
 
 # LP8, the Second Phase
 
@@ -405,22 +335,29 @@ $$ \begin{align}
 & x_{1, 1} + x_{2, 1} + x_{3, 1} + y_5 = 80 \\
 & x_{2,3} + y_6 = 50 / 3 \\
 & x_{1,3} + x_{2,3} + x_{3,3} + y_7 = 20 \\
-& x_{1,1} + \bar{y}_8 - y_9 = 20 \\
-& x_{2,1} + \bar{y}_{10} = 0 \\
-& x_{2,2} + \bar{y}_{11} - y_{12} = 20 \\
+& x_{1,1} - y_9 = 20 \\
+& x_{2,1} = 0 \\
+& x_{2,2} - y_{12} = 20 \\
 & - x_{3,3} + 3 x_{1,3} + 3 x_{2,3} + y_{13} = 0 \\
 & x_{1,1}, x_{1,2}, x_{1,3}, x_{2,1}, x_{2,2}, x_{2,3}, x_{3,1}, x_{3,2}, x_{3,3} \geq 0 \\
-& y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, \bar{y}_{8}, y_{9}, \bar{y}_{10}, \bar{y}_{11}, y_{12}, y_{13} \geq 0
+& y_{1}, y_{2}, y_{3}, y_{4}, y_{5}, y_{6}, y_{7}, y_{9}, y_{12}, y_{13} \geq 0
 \end{align} $$
+where $\bar{y}_8$, $\bar{y}_{10}$, $\bar{y}_{11}$ are set to 0.
 
 From the final tableau in the first phase, following preliminary transformation needs to be done:
 
 - Drop the columns with $\bar{y}_8$, $\bar{y}_{10}$, $\bar{y}_{11}$.
 - Replace row `0` with the objective function from the problem in the second phase.
-- Use Gaussian elimination to transform coefficients for decision variables to 0
+- Transform coefficients for decision variables in row `0` to 0.
 - Apply standard simplex algorithm.
 
-# LP9, Optimal Solution
+# LP9, Sensitivity Analysis
+
+After the two-phase simplex algorithm, the coefficients in the `b` column will indicate the optimal value of the objective function and optimal values of decision variables. Coefficients in Row `0` for dual variables will indicate shadow prices.
+
+Shadow prices from restrictions on distributions can be used to identify the profitability of redistribution of forests, and those on labours can be used to identify how additional labours contribute to the profitability.
+
+# LP10, Optimality Test
 
 Put the solution in all constraints. If all are respected, then it is a feasible solution.
 
@@ -441,7 +378,7 @@ x = [40 0 0 0 20 5 20 10 15]';
 sum(A * x <= b) == 11
 ```
 
-Change all the inequality to equality constraints, and find those met by the set. If two or more equality constraints are met, then the solution is one of the cross sections in the edge of the feasible region. Move the solution along the edges to see if there is a better solution. If not, the solution is the optimal one.
+Alternatively, if values of all basic variables calculated using the following sricpts exist and larger than or equal to 0, the solution is feasible.
 
 ```matlab
 syms x [3 3] y [1 13]
@@ -470,8 +407,108 @@ eq(20) = x3_3 == 15;
 sol = solve(eq)
 ```
 
-# LP10, Sensitivity Analysis
+If at least two values of basic variables are 0, the solution is a corner point feasible (CPF) solution.
 
-After the two-phase simplex algorithm is done, the coefficients in the `b` column will indicate the optimal value of the objective function, optimal values of decision variables, and shadow prices.
+Then it is possible that the solution is optimal, we should initialize the simplex algorithm with the given solution and see if the tableau passes the optimality test.
 
-Shadow prices from restrictions on distributions can be used to identify the profitability of redistribution of forests, and those on labours can be used to identify how additional labours contribute to the profitability.
+In this case, the given solution is not a feasible solution.
+
+<!--
+# LP10, Optimal Solution
+
+Change all the inequality to equality constraints, and find those met by the set. If two or more equality constraints are met, then the solution is one of the cross sections in the edge of the feasible region. Move the solution along the edges to see if there is a better solution. If not, the solution is the optimal one.
+-->
+
+# DP1, State Space Model
+
+The shape of a suspended chain can be described and solved using dynamic programming. The chain is composed of $N$ identical segments, the length of which is $l$. The position of the end of some segment $i$ can be described by a vector $[z, y]_{i}^{T}$.
+
+The equations to describe the dynamics of the chain are simplified to one dimensional unconstrained equations by describing angles in the radian system. That is, For $i=0,1, \ldots N-1$, we have:
+$$ \begin{align}
+	\left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + \left[ \begin{array}{l}{u} \\ {v}\end{array} \right]_{i} \\
+	= f \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_{i} \right) &= \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right]
+\end{align} $$
+
+where two end points of the chain are:
+$$ \begin{align}
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+\end{align} $$
+
+So the constraint $u_i^2 + v_i^2 = l^2$ is no longer needed. Notice that the angels are not constrained, but they can be estimated to be between $- 0.5 \pi$ and $0.5 \pi$.
+
+# DP2, Formulation
+
+With the new one dimensional unconstrained equation, the (steady state) potential energy can be used as the cost function:
+$$ \begin{align}
+	J &= \sum_{i=0}^{N-1} \frac{1}{2} m g \left( y_{i} + y_{i+1} \right) \\
+	&= \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right]
+\end{align} $$
+where the scalar $\phi$, $L$ in the standard form of the cost function can be expressed by the following equations with $N$ fixed:
+$$ \begin{align}
+	\phi \left( \left[ \begin{array}{l}{z} \\ {y} \end{array} \right]_{N} \right) &= 0 \\
+	L \left( \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i}, \theta_i \right) &= m g y_{i} + \frac{1}{2} m g l sin(\theta_i)
+\end{align} $$
+
+The deterministic dynamic programming can be summarised as:
+$$ \begin{align}
+\min_{\theta_0, \theta_1, ..., \theta_{N-1}} \quad & J = \sum_{i=0}^{N-1} \left[ m g y_{i} + \frac{1}{2} m g l sin(\theta_i) \right] \\
+\text{s.t.} \quad & \left[\begin{array}{l}{z} \\ {y}\end{array}\right]_{i+1} = \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{i} + l \left[ \begin{array}{l}{\cos \left(\theta_{i} \right)} \\ {\sin \left(\theta_{i} \right)}\end{array} \right] \quad \text{for } i = 0, 1, ..., N-1 \\
+& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} = \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+& \left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} = \left[ \begin{array}{l}{h} \\ {0}\end{array} \right]
+\end{align} $$
+where $z_1, z_2, ..., z_{N-1}$ and $y_1, y_2, ..., y_{N-1}$ are decision variables as well, but they are determined once $\theta_0, \theta_1, ..., \theta_{N-1}$ are chosen.
+
+# DP3, Euler-Lagrange Equations
+
+The	$i$-th Hamiltonian function can be expressed as:
+
+$$
+H_i \left(z_i, y_i, \theta_i, \lambda^z_{i+1}, \lambda^y_{i+1} \right) = m g y_{i} + \frac{1}{2} m g l \sin(\theta_i) + \lambda^z_{i+1} \left[ z_{i} + l \cos \left(\theta_{i} \right) \right] + \lambda^y_{i+1} \left[ y_{i} + l \sin \left(\theta_{i} \right)  \right]
+$$
+
+Hence the set of Euler-Lagrange equations can be expressed by the following five equations:
+
+$$
+\begin{align}
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
+	\lambda^{z}_{i} &= \lambda^z_{i+1} \\
+	\lambda^{y}_{i} &= m g + \lambda^y_{i+1} \\
+	0 &= \left[ \frac{1}{2} m g + \lambda^y_{i+1} \right] \cos(\theta_i) - \lambda^z_{i+1} \sin(\theta_i)
+\end{align}
+$$
+
+where the boundary conditions are:
+
+$$
+\begin{align}
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{0} &= \left[ \begin{array}{l}{0} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{z} \\ {y}\end{array} \right]_{N} &= \left[ \begin{array}{l}{h} \\ {0}\end{array} \right] \\
+	\left[ \begin{array}{l}{\lambda_z} \\ {\lambda_y} \\ {\theta} \end{array} \right]_{N} &= \left[ \begin{array}{l}{\nu_z} \\ {\nu_y} \\ {1} \end{array} \right] \\
+\end{align}
+$$
+
+# DP4, Solution
+
+Numerical method can be used to find the optimal values. The calculation procedure for iterations can be expressed by the following five equations:
+
+$$
+\begin{align}
+	\lambda^z_{i+1} &= \lambda^{z}_{i} \\
+	\lambda^y_{i+1} &= \lambda^{y}_{i} - m g \\
+	\theta_i &= \arctan \left[ \left( \lambda^y_{i+1} + \frac{1}{2} m g \right) / \lambda^z_{i+1} \right] \\
+	z_{i+1} &= z_{i} + l \cos \left(\theta_{i} \right) \\
+	y_{i+1} &= y_{i} + l \sin \left(\theta_{i} \right) \\
+\end{align}
+$$
+
+When $h = 6, L = 10, M = 14, N = 6$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.3645, 68.6700]$.
+
+When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\left[ \lambda^{z}_{i}, \lambda^{y}_{i} \right]^{T}_{0}$, is $[-22.4092, 68.6700]$.
+
+The two results can be visualised by the figure 1:
+
+```{r, out.width='55%', echo=F, fig.align='center', fig.cap='Result.'}
+knitr::include_graphics('Dyn-1.png')
+```

@@ -112,9 +112,3 @@ So I would allocate 56.133 hours in total to produce 22 and half bottles of IPA,
 The results obtained from modern optimisation algorithms can be validated using the duality gap and KKT conditions.
 
 > For complicated problems, it may be difficult, if not essentially impossible, to derive an optimal solution directly from the KKT conditions. Nevertheless, these conditions still provide valuable clues as to the identity of an optimal solution, and they also permit us to check whether a proposed solution may be optimal. [@hillier2012introduction]
-
-### Lagrangian Duality
-
-> There also are many valuable indirect applications of the KKT conditions. One of these applications arises in the duality theory that has been developed for nonlinear programming to parallel the duality theory for linear programming. [@hillier2012introduction]
-
-The basic idea in Lagrangian duality is to take the constraints in (5.1) into account by augmenting the objective function with a weighted sum of the constraint functions.

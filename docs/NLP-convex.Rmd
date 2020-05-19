@@ -61,3 +61,24 @@ A convex set is a collection of points such that, for each pair of points in the
 > In mathematics, Slater's condition (or Slater condition) is a sufficient condition for strong duality to hold for a convex optimisation problem.
 
 > If a convex optimization problem with differentiable objective and constraint functions satisfies Slater’s condition, then the KKT conditions provide necessary and sufficient conditions for optimality. [@boyd2004convex]
+
+### Lagrangian Duality
+
+> There also are many valuable indirect applications of the KKT conditions. One of these applications arises in the duality theory that has been developed for nonlinear programming to parallel the duality theory for linear programming. [@hillier2012introduction]
+
+The basic idea in Lagrangian duality is to take the constraints in (5.1) into account by augmenting the objective function with a weighted sum of the constraint functions.
+
+For example:
+$$ \begin{align}
+\max_{\mathbf{x}} \quad & f(\mathbf{x})\\
+\text{s.t.} \quad & \boldsymbol{g}(\boldsymbol{x}) \leq \mathbf{0} \\
+& \boldsymbol{h}(\boldsymbol{x}) = \mathbf{0}
+\end{align} $$
+
+The dual problem is
+$$ \begin{align}
+\min_{\boldsymbol{u}, \boldsymbol{v}} \quad & \theta(\boldsymbol{u}, \boldsymbol{v}) \\
+\text{s.t.} \quad & \boldsymbol{u} \geq 0
+\end{align} $$
+where
+$$ \theta(\boldsymbol{u}, \boldsymbol{v}) = \max _{\boldsymbol{x}} \{f(\boldsymbol{x}) + \boldsymbol{u} \boldsymbol{g}(\boldsymbol{x}) + \boldsymbol{v} \boldsymbol{h}(\boldsymbol{x}) \} $$
