@@ -510,5 +510,5 @@ When $h = 6, L = 10, M = 14, N = 100$, the value of the costate vector at 0, $\l
 The two results can be visualised by the figure 1:
 
 ```{r, out.width='55%', echo=F, fig.align='center', fig.cap='Result.'}
-knitr::include_graphics('Dyn-1.png')
+knitr::include_graphics('./1.png')
 ```
