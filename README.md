@@ -1,15 +1,19 @@
-
 # MatrixOptim.jl
 
-MILP, Robust Optim. and Stochastic Optim., and Decomposition Algorithm in Matrix (by Julia)
+[![Build Status](https://travis-ci.org/edxu96/MatrixOptim.jl.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim.jl) [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
-[![Build Status](https://travis-ci.org/edxu96/MatrixOptim.jl.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim.jl)
+MILP, Robust Optim. and Stochastic Optim., Decomposition Algorithms, and more in Matrix.
 
-![Tangram](/images/tangram_1.png)
+![Tangram](/img/tangram.png)
 
-`MatrixOptim.jl` is a package to model and solve optimization in uncertain context. The templates for robust optimization and stochastic optimization formulated in matrix are very coherent comprehensive, and the algorithms in matrix are very explicit.
+`MatrixOptim.jl` is a package to model and solve optimization in uncertain context. The
+templates for robust optimization and stochastic optimization formulated in matrix are very
+coherent comprehensive, and the algorithms in matrix are very explicit.
 
-## 1, Introduction
+This is a package I developed in 2019. Don't know too much about tests and documentation
+that time. I am trying to keep it up-to-date these days.
+
+## Introduction
 
 The MILP can always be formulated in the following matrixes:
 
@@ -20,7 +24,7 @@ s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
      vec_y in Z
 ```
 
-## 2, To Install and Test
+## Installation and Test
 
 ```
 (v1.1) pkg> add MatrixOptim
@@ -30,7 +34,7 @@ s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
 (v1.1) pkg> test MatrixOptim
 ```
 
-## 3, How to Use
+## How to Use
 
 For mixed integer linear programming:
 
@@ -46,39 +50,35 @@ model = getModelBenders(n_x, n_y, vec_min_y, vec_max_y, vec_c, vec_f, vec_b, mat
 solveModelBenders!(model)
 ```
 
-Right now, the supported solver is `GLPK`. I will add the feature to select other solvers, like `Gurobi` and `CPLEX` later.
+Right now, the supported solver is `GLPK`. Will add the feature to select other solvers,
+like `Gurobi` and `CPLEX` later.
 
-## 4, Features
+## Features
 
-Right now, the project is still in alpha stage. There are many new updates on `JuMP`, so the algorithms need to be updated. You can try to get the latest feature by the following line.
-
-```
-(v1.1) pkg> add https://github.com/edxu96/MatrixOptim.git
-```
-
-## 4.1, Models
+### Models
 
 - [x] Linear Programming
 - [x] Mixed Integer Linear Programming
 - [ ] Robust Optimization
 - [ ] Stochastic Optimization
-- [ ] Dynamical Systems and State Space Model
 - [ ] Markov Decision Process
 - [x] Dynamic Optimization
 
-## 4.2, Algorithms
+### Algorithms
 
 - [ ] Simplex Method
 - [ ] Branch and Cut for MILP
 - [X] Benders Decomposition for MILP
 - [ ] L-Shaped Benders Decomp for Stochastic Optim
 - [ ] Dantzig-Wolfe Decomposition Family
-- [ ] Dynamic Programming
-- [ ] Stochastic Dynamic Programming
-- [ ] Find Shortest Path
 
-## 5, More Info
+### Related to Development
 
-- wiki for documents and examples: [edxu96/MatrixOptim/wiki](https://github.com/edxu96/MatrixOptim/wiki/1-Home) .
-- Cookbook for theories and algorithms in MatrixOptim: [MatrixOptim-Cookbook](./files/MatrixOptim-Cookbook.pdf) .
-- 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
+- [BlueStyle](https://github.com/invenia/BlueStyle): a Style Guide for Julia
+
+## More Info
+
+- Cookbook for theories and algorithms in MatrixOptim:
+  [MatrixOptim-Cookbook](./files/MatrixOptim-Cookbook.pdf) .
+- 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用
+  英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
