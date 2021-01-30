@@ -1,0 +1,13 @@
+{
+    "editor.wordWrapColumn": 92,
+    "editor.rulers": [92],
+    "cSpell.language": "en-GB",
+    "rewrap.wrappingColumn": 92,
+    "cSpell.words": [],
+    "[markdown]": {
+        "editor.wordWrap": "on",
+     },
+     "[julia]": {
+        "editor.defaultFormatter": "singularitti.vscode-julia-formatter"
+    },
+}
