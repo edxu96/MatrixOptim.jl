@@ -81,7 +81,9 @@ function solve_mod_sub!(mod::ModSub)
         mod.obj = objective_value(model)
         mod.vec_result_x = repeat([NaN], length(vec_c))
     else  # if Int(primal_status(model)) == 3  # Infeasible
-        println("    Not solved to optimality because infeasibility. Something is wrong. $(Int(primal_status(model)))")
+        println(
+            "    Not solved to optimality because infeasibility. Something is wrong. $(Int(primal_status(model)))"
+        )
         mod.bool = false
         mod.vec_result_x = hcat(repeat([NaN], length(vec_c)))
     end
@@ -147,7 +149,7 @@ function solveModMixBD!(mod::ModBD, epsilon=1e-6, timesIterationMax=100)
         while check_whe_continue(
                 boundUp, boundLow, epsilon, result_q, obj_sub,
                 timesIteration, timesIterationMax
-                )
+            )
             mod_sub = get_mod_sub(mod_mod_sub_head)
             solve_mod_sub!(mod_sub)
             if mod_sub.bool

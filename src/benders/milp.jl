@@ -27,22 +27,22 @@ mutable struct ModMilpBenders
             mat_bCap::Array{Int64,2}
             )
         # Check if the vectors are column vectors.
-        checkColVec(vec_c, "vec_c")
-        checkColVec(vec_f, "vec_f")
-        checkColVec(vec_b, "vec_b")
+        check_col_vec(vec_c, "vec_c")
+        check_col_vec(vec_f, "vec_f")
+        check_col_vec(vec_b, "vec_b")
 
         # Check if the corresponding lengths match with each other.
         n_x = length(vec_c)
         n_y = length(vec_f)
         n_cons = length(vec_b)
-        checkMatrixMatch(n_y, vec_min_y, "vec_min_y")
-        checkMatrixMatch(n_y, vec_max_y, "vec_max_y")
-        checkMatrixMatch(n_x, mat_aCap, col, "num of x", "mat_aCap")
-        checkMatrixMatch(n_y, mat_bCap, col, "num of y", "mat_bCap")
-        checkMatrixMatch(
+        check_mat_match(n_y, vec_min_y, "vec_min_y")
+        check_mat_match(n_y, vec_max_y, "vec_max_y")
+        check_mat_match(n_x, mat_aCap, col, "num of x", "mat_aCap")
+        check_mat_match(n_y, mat_bCap, col, "num of y", "mat_bCap")
+        check_mat_match(
             n_cons, mat_aCap, row, "num of constraints", "mat_aCap"
             )
-        checkMatrixMatch(
+        check_mat_match(
             n_cons, mat_bCap, row, "num of constraints", "mat_bCap"
             )
 

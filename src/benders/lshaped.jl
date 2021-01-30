@@ -22,13 +22,13 @@ mutable struct ModelLSBD
       mat_bCap::Array{Int64,2}
       )
     checkListLength(vec_min_y, vec_max_y, 'vec_min_y', 'vec_max_y')
-    checkColVec(vec_c, "vec_c")
-    checkColVec(vec_f, "vec_f")
-    checkColVec(vec_b, "vec_b")
-    checkMatrixMatch(vec_c, mat_aCap, row, col, "vec_c", "mat_aCap")
-    checkMatrixMatch(vec_f, mat_bCap, row, col, "vec_f", "mat_bCap")
-    checkMatrixMatch(mat_aCap, mat_bCap, row, row, "mat_aCap", "mat_bCap")
-    checkMatrixMatch(mat_aCap, vec_b, row, row, "mat_aCap", "vec_b")
+    check_col_vec(vec_c, "vec_c")
+    check_col_vec(vec_f, "vec_f")
+    check_col_vec(vec_b, "vec_b")
+    check_mat_match(vec_c, mat_aCap, row, col, "vec_c", "mat_aCap")
+    check_mat_match(vec_f, mat_bCap, row, col, "vec_f", "mat_bCap")
+    check_mat_match(mat_aCap, mat_bCap, row, row, "mat_aCap", "mat_bCap")
+    check_mat_match(mat_aCap, vec_b, row, row, "mat_aCap", "vec_b")
     new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b, missing)
   end
 end
