@@ -1,6 +1,0 @@
-
-## Separable Programming
-
-> A separable function is a function that can be expressed as the sum of functions of a single variable. [@williams2013model]
-
-> The importance of separable functions in a mathematical programming model lies in the fact that they can be approximated to by piecewise linear functions. It is then possible to use separable programming to obtain a global optimum to a convex problem or possibly only a local optimum for a non-convex problem. [@williams2013model]
