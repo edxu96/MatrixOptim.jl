@@ -1,30 +1,25 @@
-
 name = "MatrixOptim"
 uuid = "cccf0e64-bc08-11e9-3692-c1021c9b9532"
 license = "GNU GPL 3"
-desc = "MILP, Robust Optim and Stochastic Optim with Decomposition Algorithm in Matrix"
-authors = ["edxu96 <edxu96@outlook.com>"]
-version = "0.2.1"
+desc = "Decision Making under Uncertainty in Matrix"
+authors = ["Edward Xu <edxu96@outlook.com>"]
+version = "0.2.2"
 
 [deps]
-CPLEX = "a076750e-1247-5638-91d2-ce28b192dca0"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
-Gurobi = "2e9cd046-0924-5485-92f1-d5272153d98b"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
+JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-MathProgBase = "fdba3010-5040-5b88-9595-932c9decdf73"
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 
 [compat]
-JuMP = "= 0.19.2"
-julia = ">= 1.1"
-GLPK = "= 0.10.0"
-CPLEX = "= 0.5.0"
-Gurobi = "= 0.6.0"
-MathProgBase = "= 0.7.7"
-PrettyTables = "= 0.5.1"
+GLPK = ">= 0.14.0"
+JuMP = ">= 0.21.0"
+PrettyTables = ">= 0.11.0"
+julia = ">= 1.5"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
