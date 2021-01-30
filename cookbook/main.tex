@@ -1,0 +1,885 @@
+\documentclass[fleqn,10pt]{wlscirep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Table with Three Lines
+\usepackage{booktabs}
+\usepackage{longtable}
+
+% Ensure Floats Stay inside the Section
+\usepackage[section]{placeins}
+
+% Julia definition (c) 2014 Jubobs
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+\lstdefinelanguage{Julia}%
+  {morekeywords={abstract, break, case, catch, const, continue, do, else, elseif, %
+      end, export, false, for, function, immutable, import, importall, if, in, %
+      macro, module, otherwise, quote, return, switch, true, try, type, typealias, %
+      using,while, solve, @constraint, @variable, sum, Model, zeros, readxl, openxl, cat},%
+   sensitive=true,%
+   % alsoother={$},%
+   morecomment=[l]{\#},%
+   morecomment=[f][\color{forestgreen(web)}][0]{\#},%
+   morestring=[s]{"}{"},%
+   morestring=[m]{'}{'},%
+}[keywords,comments,strings]%
+
+\usepackage{color}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{forestgreen(web)}{rgb}{0.13, 0.55, 0.13}
+\lstset{%
+    language         = Julia,
+    basicstyle       = \ttfamily,
+    keywordstyle     = \bfseries\color{blue},
+    stringstyle      = \color{magenta},
+    commentstyle     = \color{forestgreen(web)},
+    showstringspaces = false,
+    backgroundcolor  = \color{backcolour}, 
+    numbers          = left,                    
+    numbersep        = 5pt,
+    basicstyle       = \footnotesize
+}
+
+% Remove the abstract
+\usepackage{abstract}
+\renewcommand{\abstractname}{}    % clear the title
+\renewcommand{\absnamepos}{empty} % originally center
+
+% Allow environments like 'align' to display in multiple pages
+\allowdisplaybreaks
+
+% Bold Symbol
+\usepackage{bm}
+
+% Code
+\usepackage{listings}
+
+% ------------------------------------------------------------
+% ------------------------------------------------------------
+% ------------------------------------------------------------
+\begin{document}
+
+\flushbottom
+{\noindent \LARGE \textbf{MatrixOptim-Cookbook}} \\
+\\[-1em]
+{\noindent \textbf{Edward J. Xu (Jie Xu), edxu96@outlook.com}} \\
+\\[-1em]
+{\noindent \textbf{DTU Management, Denmark}} \\
+\\[-1em]
+{\noindent \textbf{Sept. 7th, 2019}}
+
+% ------------------------------------------------------------
+% ------------------------------------------------------------
+% ------------------------------------------------------------
+
+\section{Introduction}
+
+The package has been registered in official Julia register. Install and test it by:
+
+\begin{lstlisting}
+(v1.1) pkg> add MatrixOptim
+(v1.1) pkg> test MatrixOptim
+\end{lstlisting}
+
+The detailed code and installation guide can be found in \href{https://github.com/edxu96/MatrixOptim.jl}{github.com/edxu96/MatrixOptim.jl}.
+
+Right now, the project is still in alpha stage. There are many new updates on `JuMP`, so the algorithms and documents need to be updated. 
+
+\begin{itemize}
+    \item Mixed Integer Linear Programming
+    \item Robust Optimization
+    \item Benders Decomposition
+    \item Dantzig-Wolfe Decomposition (to be updated)
+    \item Stochastic Programming (to be updated)
+\end{itemize}
+
+\section{Simple MILP}
+
+Standard Mixed Integer Linear Programming (MILP):
+\begin{align}
+    \min \quad& \mathbf{c} ^ { T } \mathbf{x} + \mathbf{f} ^ { T } \mathbf{y} \label{eq:1} \\
+    \text{s.t.} \quad& \mathbf{A} \mathbf{x} + \mathbf{B} \mathbf{y} \geq \mathbf{b} \label{eq:2} \\ 
+    & \mathbf{y} \in Y \label{eq:3} \\ 
+    & \mathbf{x} \geq 0 \label{eq:4} 
+\end{align}
+where the $\mathbf{y}$ is vector of integer variables.
+
+\section{Robust Optimization}
+
+Robust optimization is a field of optimization theory that deals with optimization problems in which a certain measure of robustness is sought against uncertainty that can be represented as deterministic variability in the value of the parameters of the problem itself and/or its solution. \cite{wiki:xxx}
+
+To illustrate the importance of robustness in practical applications, we quote from the case study by Ben-Tal and Nemirovski (2000) \cite{ben2000robust} on linear optimization problems from the Net Lib library:
+
+\begin{quote}
+	In real-world applications of Linear Programming, one can- not ignore the possibility that a small uncertainty in the data can make the usual optimal solution completely meaningless from a practical viewpoint.
+\end{quote}
+
+The budget of uncertainty indicates we stipulate that nature will be restricted in its behavior, in that only a subset of the coefficients will change in order to adversely affect the solution. \cite{bertsimas2004price}
+
+\subsection{Linear Programming with Box Uncertainty}
+
+\begin{align}
+    \min_{\mathbf{x}} \quad & \mathbf{c}^T \mathbf{x} \\
+    \text{s.t.} \quad & \mathbf{A} \mathbf{x} \geq \mathbf{b} \\
+    & \left(\overline{\mathbf{A}} \pm \widehat{\mathbf{A}} \right) \mathbf{x} \geq \overline{\mathbf{b}} \\
+    & \mathbf{x} \geq 0
+\end{align}
+
+Introduce $\boldsymbol{\zeta}$ to represent the box uncertainty:
+\begin{align}
+    \min_{\mathbf{x}, \zeta} \quad & \mathbf{c}^T \mathbf{x} \\
+    \text{s.t.} \quad & \mathbf{A} \mathbf{x} \geq \mathbf{b} \\
+    & \overline{\mathbf{A}} \mathbf{x} + \hat{\mathbf{A}} \left(\mathbf{II} \boldsymbol{\zeta}^{T} \cdot \mathbf{x} \right) \geq \overline{\mathbf{b}} \\
+    & \mathbf{x} \geq 0
+\end{align}
+
+Linearize the production of $\boldsymbol{\zeta}$ and other variables:
+\begin{align}
+    \min_{\mathbf{x}, \mathbf{z}, \gamma} \quad& \mathbf{c}^{T} \mathbf{x} \\
+    \text{s.t.} \quad & \mathbf{A} \mathbf{x} \geq \mathbf{b} \\ 
+    & \begin{cases}
+        \overline{\mathbf{A}} \mathbf{x} + \hat{\mathbf{A}} \left(\mathbf{II} \boldsymbol{\theta}_{2}^{T} \right) \geq \overline{\mathbf{b}} \\
+        - \mathbf{x} \leq \mathbf{II} \boldsymbol{\theta}_{2}^{T} \leq \mathbf{x}
+    \end{cases} \\
+    & \mathbf{x} \in \mathbb{R}^{+}
+\end{align}
+
+If there is box uncertainty in objective function, it can be writen as:
+\begin{align}
+    \min_{\mathbf{x}} \quad & \left(\overline{\mathbf{c}} \pm \hat{\mathbf{c}} \right)^T \mathbf{x} \\
+    \text{s.t.} \quad & \mathbf{A} \mathbf{x} \geq \mathbf{b} \\
+    & \left(\overline{\mathbf{A}} \pm \widehat{\mathbf{A}} \right) \mathbf{x} \geq \overline{\mathbf{b}} \\
+    & \mathbf{x} \geq 0
+\end{align}
+
+\subsection{Linear Robust Optimization with Polyhedral Uncertainty}
+
+\begin{align}
+    \min_{\mathbf{x}} \quad & \mathbf{c}^T \mathbf{x} \\
+    \text{s.t.} \quad & \mathbf{A} \mathbf{x} \geq \mathbf{b} \\
+    & \left(\overline{\mathbf{A}} \pm \widehat{\mathbf{A}} \right) \mathbf{x} \geq \overline{\mathbf{b}} \\
+    & \mathbf{x} \geq 0
+\end{align}
+
+\subsection{MILP with Box Uncertainty and Budget of Uncertainty}
+
+The standard mixed integer linear programming (MILP) is:
+\begin{align}
+    \min \quad& \mathbf{c}^{T} \mathbf{x} + \mathbf{f}^{T} \mathbf{y} \label{eq:1} \\
+    \text{s.t.} \quad& \mathbf{A} \mathbf{x} + \mathbf{B} \mathbf{y} \geq \mathbf{b} \label{eq:2} \\ 
+    & \mathbf{y} \in \mathbf{Y} \label{eq:3} \\ 
+    & \mathbf{x} \geq 0 \label{eq:4} 
+\end{align}
+where the $\mathbf{y}$ is vector of integer variables.
+
+If continuous variables in some constraints have uncertain coefficients. The problem becomes robust optimization of mixed integer problems. For now, we only deal with box uncertainty. The expression becomes:
+\begin{align}
+    \min \quad& \mathbf{c}^{T} \mathbf{x} + \mathbf{f}^{T} \mathbf{y} \label{eq:5} \\
+    \text{s.t.} \quad& \mathbf{A} \mathbf{x} + \mathbf{B} \mathbf{y} \geq \mathbf{b} \label{eq:6} \\ 
+    & \left(\overline{\mathbf{A}} \pm \hat{\mathbf{A}} \right) \mathbf{x} + \overline{\mathbf{B}} \mathbf{y} \leq \overline{\mathbf{b}} \label{eq:7} \\
+    & \mathbf{y} \in \mathbf{Y} \label{eq:8} \\ 
+    & \mathbf{x} \geq 0 \label{eq:9}
+\end{align}
+where the $\overline{\mathbf{A}}$ is vector of mean values for the coefficients of continuous variables, and $\hat{\mathbf{A}} $ are vector of uncertainties. Note that the sign of the constraint is "less equal". 
+
+After linearization according to theorem 1 in paper \cite{bertsimas2004price}, the problem becomes:
+\begin{align}
+    \min \quad& \mathbf{c}^{T} \mathbf{x} + \mathbf{f}^{T} \mathbf{y} \label{eq:10} \\
+    \text{s.t.} \quad& \mathbf{A} \mathbf{x} + \mathbf{B} \mathbf{y} \geq \mathbf{b} \label{eq:11} \\ 
+    & \begin{cases}
+        \, \overline{\mathbf{A}}_{i}^{T} \mathbf{x} + \Gamma_{i} \lambda_{i} + \boldsymbol{\mu}_{i}^{T} \mathbf{1} + \overline{\mathbf{B}}_{i} \mathbf{y} \leq \overline{b}_{i} \\
+        \, \lambda_{i} + \boldsymbol{\mu}_{i} \geq \hat{\mathbf{A}}_{i} \circ \mathbf{z} \quad \text{(total $J$ rows)} \\
+        \, \lambda_{i} \geq 0 \\
+        \, \boldsymbol{\mu}_{i} \geq \mathbf{0} \quad \text{(total $J$ rows)}
+    \end{cases} \quad \forall i \in I \text{(row)} \label{eq:12} \\
+    & - \mathbf{z} \leq \mathbf{x} \leq \mathbf{z} \quad \text{(total $J$ rows)} \\
+    & \mathbf{z} \geq \mathbf{0} \\
+    & \mathbf{y} \in \mathbf{Y} \label{eq:13} \\ 
+    & \mathbf{x} \geq 0 \label{eq:14}
+\end{align}
+where $J$ is the column number of the matrix $\overline{\mathbf{A}}$ and $I$ is the row number. $\Gamma_{i}$ is the budget of uncertainty for $i$-the constraint. 
+
+\subsection{Adjustable Robust Optimization for LP with Box Uncertainty}
+
+Two stage stochastic linear programming:
+\begin{align}
+    \min_{\mathbf{y}, \mathbf{x}, \mathbf{z}} \quad& \mathbf{f}^{T} \mathbf{y} + \mathbf{c}^{T} \mathbf{x} \\
+    \text{s.t.} \quad& \mathbf{B} \mathbf{y} + \mathbf{A} \mathbf{x} \geq \mathbf{b} \\ 
+    & \overline{\mathbf{B}} \mathbf{y} + \left(\overline{\mathbf{A}} \pm \hat{\mathbf{A}} \right) \mathbf{x} \leq \overline{\mathbf{b}} \\
+    & \mathbf{y} \in \mathbf{Y} \\
+    & \mathbf{x} \in \mathbb{R}^{+}
+\end{align}
+where $\mathbf{x}$ is second stage decision variables, which means it can adjust according to the outcome of uncertainty.
+
+Introduce $\boldsymbol{\zeta}$ to represent the box uncertainty:
+\begin{align}
+    \min_{\mathbf{y}, \mathbf{x}, \mathbf{z}, \zeta} \quad& \mathbf{f}^{T} \mathbf{y} + \mathbf{c}^{T} \mathbf{x} + \mathbf{g}^{T} \mathbf{z} \\
+    \text{s.t.} \quad & \mathbf{B} \mathbf{y} + \mathbf{A} \mathbf{x} + \mathbf{D} \mathbf{z}(\boldsymbol{\zeta}) \geq \mathbf{b} \\
+    & \overline{\mathbf{B}} \mathbf{y} + \overline{\mathbf{A}} \mathbf{x} + \hat{\mathbf{A}} \left(\mathbf{II} \boldsymbol{\zeta}^{T} \cdot \mathbf{x} \right) + \overline{\mathbf{D}} \mathbf{z}(\boldsymbol{\zeta} ) \leq \overline{\mathbf{b}} \\
+    & \mathbf{x}, \mathbf{z}(\boldsymbol{\zeta} ) \in \mathbb{R}^{+} \\
+    & \mathbf{y} \in \mathbf{Y} \\
+    & \gamma \in \mathbb{R} \\
+    & - \mathbf{1} < \boldsymbol{\zeta}  \leq \mathbf{1}
+\end{align}
+
+Approximate $\mathbf{z}(\boldsymbol{\zeta})$ by affine (or linear) decision rules $(\boldsymbol{\alpha} + \boldsymbol{\beta}^T \boldsymbol{\zeta})$:
+\begin{align}
+    \min_{\mathbf{y}, \mathbf{x}, \mathbf{z}, \gamma, \zeta} \quad& \mathbf{f}^{T} \mathbf{y} + \mathbf{c}^{T} \mathbf{x} + \gamma \\
+    \text{s.t.} \quad & \mathbf{B} \mathbf{y} + \mathbf{A} \mathbf{x} + \mathbf{D} (\boldsymbol{\alpha} + \boldsymbol{\beta}^T \boldsymbol{\zeta}) \geq \mathbf{b} \\ 
+    & \gamma \geq \mathbf{g}^{T} (\boldsymbol{\alpha} + \boldsymbol{\beta}^T \boldsymbol{\zeta}) \\
+    & \overline{\mathbf{B}} \mathbf{y} + \overline{\mathbf{A}} \mathbf{x} + \hat{\mathbf{A}} \left(\mathbf{II} \boldsymbol{\zeta}^{T} \cdot \mathbf{x} \right) + \overline{\mathbf{D}} \left(\boldsymbol{\alpha} + \boldsymbol{\beta}^T \boldsymbol{\zeta} \right) \leq \overline{\mathbf{b}} \\
+    & \boldsymbol{\alpha} + \boldsymbol{\beta}^T \boldsymbol{\zeta} \geq 0 \\
+    & \mathbf{x} \in \mathbb{R}^{+} \\
+    & \gamma \in \mathbb{R} \\
+    & \boldsymbol{\alpha}, \boldsymbol{\beta} \in \mathbb{R} \\
+    & \mathbf{y} \in \mathbf{Y} \\
+    & - \mathbf{1} < \boldsymbol{\zeta}  \leq \mathbf{1}
+\end{align}
+
+Linearize the production of $\boldsymbol{\zeta}$ and other variables:
+\begin{align}
+    \min_{\mathbf{y}, \mathbf{x}, \mathbf{z}, \gamma} \quad& \mathbf{f}^{T} \mathbf{y} + \mathbf{c}^{T} \mathbf{x} + \gamma \\
+    \text{s.t.} \quad & \mathbf{B} \mathbf{y} + \mathbf{A} \mathbf{x} + \mathbf{D} (\boldsymbol{\alpha} + \boldsymbol{\theta}_{1}) \geq \mathbf{b} \\ 
+    & \begin{cases}
+        \gamma \geq \mathbf{g}^{T} (\boldsymbol{\alpha} + \boldsymbol{\theta}_{1}) \\
+        - \boldsymbol{\beta} \leq \boldsymbol{\theta}_{1} \leq \boldsymbol{\beta} \\   
+        \boldsymbol{\alpha} + \boldsymbol{\theta}_{1} \geq 0 \\
+        \gamma \in \mathbb{R}
+    \end{cases} \\
+    & \begin{cases}
+        \overline{\mathbf{B}} \mathbf{y} + \overline{\mathbf{A}} \mathbf{x} + \hat{\mathbf{A}} \left(\mathbf{II} \boldsymbol{\theta}_{2}^{T} \right) + \overline{\mathbf{D}} (\boldsymbol{\alpha} + \boldsymbol{\theta}_{1}) \leq \overline{\mathbf{b}} \\
+        - \mathbf{x} \leq \mathbf{II} \boldsymbol{\theta}_{2}^{T} \leq \mathbf{x}
+    \end{cases} \\
+    & \mathbf{x} \in \mathbb{R}^{+} \\
+    & \mathbf{y} \in \mathbf{Y} \\
+    & \boldsymbol{\alpha}, \boldsymbol{\beta} \in \mathbb{R}
+\end{align}
+
+\subsection{Examples}
+
+\subsubsection{Production Planning with Uncertainty in Production Efficiency}
+
+You work for a production company and support them with optimizing their capacity and production schedule for a new factory.
+
+The company has $p \in P$ different products that are produced on different machine types $m \in M$. Not each product can be produced on each machine, i.e., parameter $a_{m, p} = 1$, if product $p$ can be produced on machine type $m$ and $a_{m, p} = 0$ otherwise. As you are opening a new factory, you also have to decide how many machines of type m you want to buy. The price is $c^{M}_{m}$ for one machine of type $m \in M$. Each machine of type m $\in$ M provides Tm hours of production. 
+
+The production costs are $c^{P}_{m}$ for each $p \in P$. The targeted production quantities $d_{p}$ for each product $p \in P$ for the next year are given. Because we consider the entire year, we approximate the production quantities as continuous values.
+
+The production time of product $p \in P$ on machine type $m \in M$ is uncertain. You know that the expected production time is $\overline{t_{m, p}}$ and the deviation (positive and negative) can be up to $t_{m, p}$. From experience from other factories, we can conclude that for each machine type $m \in M$ not more than 30\% of the products that can be produced on machine type $m$ will have a deviation from the expected production time.
+
+Formulate a robust optimization model that decides the number of machines and production quantities for each product and machine to have minimal cost and cover the demand in all cases of production time deviation. Use a budget of uncertainty.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{lll}
+    \hline
+    \\[-1em]
+    Set & Definition & Size \\
+    \\[-1em]
+    \hline
+    \\[-1em]
+    P & different products & 10 \\
+    \\[-1em]
+    M & different machines & 4 \\
+    \\[-1em]
+    \hline
+    \end{tabular}
+    \caption{Categories of Sets and Their Attributes}
+\end{table}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{llll}
+    \hline
+    \\[-1em]
+    Decision Variable & Definition & Stage & Value Range \\
+    \\[-1em]
+    \hline
+    \\[-1em]
+    y_{m} & different products & First & $\{0, 1, 2, ..., 10\}$ \\
+    \\[-1em]
+    x_{m, p} & different machines & First & $\mathbb{R}^+$ \\
+    \\[-1em]
+    \hline
+    \end{tabular}
+    \caption{Categories of Decision Variables and Their Attributes}
+\end{table}
+
+The problem becomes:
+\begin{align}
+    \min \quad & \sum_{M} y_{m} c^{M}_{m} + \sum_{P} \left[c^{P}_{p} \sum_{M} x_{m, p} \right] \\
+    \text{s.t.} \quad & \sum_{M} x_{m, p} \geq d_{p} && \forall p \quad \text{(Cover all demand, \$)} \\
+    & x_{m, p} \leq a_{m, p} y_{m} \frac{1}{\epsilon} && \forall p, m \quad \text{(machine produces some products)} \\
+    & \sum_{P} \left[\overline{t_{m, p}} \pm t_{m, p} \right] x_{m, p} \leq T_{m} y_{m} && \forall m \quad \text{(Limited machine production time, hour)} \\
+    & x_{m, p} \in \mathbb{R}^+ \\
+    & y_{m} \in \{0, 1, 2, ..., 10\}
+\end{align}
+
+It can be transformed into standard robust optimization form by:
+\begin{align}
+    \mathbf{x} &= \left[x^{1}(1), x^{2}(1), x^{3}(1), x^{4}(1), x^{1}(2), x^{2}(2), x^{3}(2), x^{4}(2), ... \right]^T \\
+    \mathbf{y} &= \left[y^{1}, y^{2}, y^{3}, y^{4} \right]^T \\
+    J/K &= |P| = 10 \\
+    K &= |M| = 4 \\
+    \mathbf{c} &= [c^{P}(1), c^{P}(1), c^{P}(1), c^{P}(1), c^{P}(2), c^{P}(2), c^{P}(2), c^{P}(2), ..., c^{P}(10)]^T && \text{($J = 40$ rows)} \\
+    \mathbf{f} &= [cm^{1}, cm^{2}, cm^{3}, cm^{4}]^T && \text{($K = 4$ rows)} \\
+    \overline{\mathbf{A}} &= \left[\begin{array}{ccccccccc}
+        \overline{t^1(1)} & 0 & 0 & 0 & \dots & \overline{t^1(10)} & 0 & 0 & 0 \\
+        0 & \overline{t^2(1)} & 0 & 0 & \dots & 0 & \overline{t^2(10)} & 0 & 0 \\
+        0 & 0 & \overline{t^3(1)} & 0 & \dots & 0 & 0 & \overline{t^3(10)} & 0 \\
+        0 & 0 & 0 & \overline{t^4(1)} & \dots & 0 & 0 & 0 & \overline{t^4(10)} \\
+    \end{array} \right] && \text{($K = 4$ rows, $J = 40$ columns)} \\
+    \hat{\mathbf{A}} &= \left[\begin{array}{ccccccccc}
+        t^1(1) & 0 & 0 & 0 & \dots & t^1(10) & 0 & 0 & 0 \\
+        0 & t^2(1) & 0 & 0 & \dots & 0 & t^2(10) & 0 & 0 \\
+        0 & 0 & t^3(1) & 0 & \dots & 0 & 0 & t^3(10) & 0 \\
+        0 & 0 & 0 & t^4(1) & \dots & 0 & 0 & 0 & t^4(10) \\
+    \end{array} \right] && \text{($K = 4$ rows, $J = 40$ columns)} \\
+    \overline{\mathbf{B}} &= \left[\begin{array}{cccc}
+        - T^1 & 0 & 0 & 0 \\
+        0 & - T^2 & 0 & 0 \\
+        0 & 0 & - T^3 & 0 \\
+        0 & 0 & 0 & - T^4 \\
+    \end{array} \right] && \text{($K = 4$ rows, $K = 4$ columns)} \\
+    \mathbf{A} &= \left[\begin{array}{ccccccccccc}
+        1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & \dots & 0 \\
+        0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & \dots & 0 \\
+        0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & 1 \\
+        -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \dots & 0 \\
+        0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \dots & 0 \\
+        0 & 0 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & \dots & 0 \\
+        \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \ddots & -1 \\
+    \end{array} \right] && \text{($J/K + J = 50$ rows, $J = 40$ columns)} \\
+    \mathbf{B} &= \left[\begin{array}{cccc}
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 \\
+        \vdots & \vdots & \vdots & \vdots \\
+        a^1(1) \cfrac{1}{\epsilon} & 0 & 0 & 0 \\
+        0 & a^2(1) \cfrac{1}{\epsilon} & 0 & 0 \\
+        0 & 0 & a^3(1) \cfrac{1}{\epsilon} & 0 \\
+        0 & 0 & 0 & a^4(1) \cfrac{1}{\epsilon} \\
+        a^1(2) \cfrac{1}{\epsilon} & 0 & 0 & 0 \\
+        0 & a^2(2) \cfrac{1}{\epsilon} & 0 & 0 \\
+        0 & 0 & a^3(2) \cfrac{1}{\epsilon} & 0 \\
+        0 & 0 & 0 & a^4(2) \cfrac{1}{\epsilon} \\
+        \vdots & \vdots & \vdots & \vdots \\
+    \end{array} \right] && \text{($J/K + J = 50$ rows, $K = 4$ columns)} \\
+    \mathbf{b} &= \left[\underbrace{d(1), d(2), ..., d(10)}_{\text{total $J/K = 10$}}, \underbrace{0, 0, ..., 0}_{\text{total $J = 40$}} \right]^{T}
+\end{align}
+
+To solve it in a traditional robust optimization manner, the problem becomes:
+\begin{align}
+    \min \quad & \sum_{M} y_{m} c^{M}_{m} + \sum_{P} \left[c^{P}_{p} \sum_{M} x_{m, p} \right] \\
+    \text{s.t.} \quad & \sum_{M} x_{m, p} \geq d_{p} && \forall p \quad \text{(Cover all demand, \$)} \\
+    & x_{m, p} \leq a_{m, p} y_{m} \frac{1}{\epsilon} && \forall p, m \quad \text{(machine produces some products)} \\
+    & \begin{cases}
+        \, \sum_{P} \overline{t_{m, p}} x_{m, p} + \Gamma_{m} \lambda_{m} + \sum_{P} \mu_{m}(p) \leq T_{m} y_{m} \\
+        \, \lambda_{m} + \mu_{m}(p) \geq t_{m, p} z_{m} \quad \forall p \\
+        \, - z_{m} \leq x_{m, p} \leq z_{m} \quad \forall p \\
+        \, \lambda_{m} \geq 0 \\
+        \, \mu_{m}(p) \geq 0 \quad \forall p \\
+        \, z_{m} \geq 0  \\
+    \end{cases} && \forall m \quad \text{(Limited machine production time, hour)} \\
+    & x_{m, p} \in \mathbb{R}^+ \\
+    & y_{m} \in \{0, 1, 2, ..., 10\}
+\end{align}
+
+For more simplification, because $x_{m, p}$ is always positive:
+\begin{align}
+    \min \quad & \sum_{M} y_{m} c^{M}_{m} + \sum_{P} \left[c^{P}_{p} \sum_{M} x_{m, p} \right] \\
+    \text{s.t.} \quad & \sum_{M} x_{m, p} \geq d_{p} && \forall p \quad \text{(Cover all demand, \$)} \\
+    & x_{m, p} \leq a_{m, p} y_{m} \frac{1}{\epsilon} && \forall p, m \quad \text{(machine produces some products)} \\
+    & \begin{cases}
+        \, \sum_{P} \overline{t_{m, p}} x_{m, p} + \Gamma_{m} \lambda_{m} + \sum_{P} \mu_{m}(p) \leq T_{m} y_{m} \\
+        \, \lambda_{m} + \mu_{m}(p) \geq t_{m, p} x_{m, p} \quad \forall p \\
+        \, \lambda_{m} \geq 0 \\
+        \, \mu_{m}(p) \geq 0 \quad \forall p
+    \end{cases} && \forall m \quad \text{(Limited machine production time, hour)} \\
+    & x_{m, p} \in \mathbb{R}^+ \\
+    & y_{m} \in \{0, 1, 2, ..., 10\}
+\end{align}
+
+\subsubsection{Punitive Shortage in Production Planning: Adjustable Robust Optimization}
+
+The problem above can be formulated as a two-stage stochastic programming.
+
+By introducing punishment if there is shortage in the second stage, the problem becomes:
+\begin{align}
+    \min \quad & \sum_{M} c^{M}_{m} y_{m} + \sum_{P} \sum_{M} c^{P}_{p} x_{m, p} + \sum_{P} J \phi_{p} \\
+    \text{s.t.} \quad & \sum_{M} x_{m, p} + \phi_{p} \geq d_{p} && \forall p \quad \text{(Cover all demand, \$)} \\
+    & x_{m, p} \leq a_{m, p} y_{m} \frac{1}{\epsilon} && \forall p, m \quad \text{(machine produces some products)} \\
+    & \sum_{P} \left[\overline{t_{m, p}} \pm t_{m, p} \right] x_{m, p} \leq T_{m} y_{m} && \forall m \quad \text{(Limited machine production time, hour)} \\
+    & x_{m, p}, \phi_{p} \in \mathbb{R}^+ \\
+    & y_{m} \in \{0, 1, 2, ..., 10\}
+\end{align}
+
+Re-arrange the expression:
+\begin{align}
+    \min \quad & \sum_{M} c^{M}_{m} y_{m} + \sum_{P} \sum_{M} c^{P}_{p} x_{m, p} + \sum_{P} J \phi_{p} \\
+    \text{s.t.} \quad & \sum_{M} x_{m, p} + \phi_{p} \geq d_{p} && \forall p \quad \text{(Cover all demand, \$)} \\
+    & a_{m, p} y_{m} \frac{1}{\epsilon} - x_{m, p} \geq 0 && \forall p, m \quad \text{(machine produces some products)} \\
+    & - T_{m} y_{m} + \sum_{P} \overline{t_{m, p}} x_{m, p} \pm \sum_{P} t_{m, p} x_{m, p} \leq 0 && \forall m \quad \text{(Limited machine production time, hour)} \\
+    & x_{m, p}, \phi_{p} \in \mathbb{R}^+ \\
+    & y_{m} \in \{0, 1, 2, ..., 10\}
+\end{align}
+
+To program in traditional way:
+\begin{align}
+    \min \quad & \sum_{M} c^{M}_{m} y_{m} + \sum_{P} \sum_{M} c^{P}_{p} x_{m, p} \\
+    \text{s.t.} \quad & \begin{cases}
+        \gamma \geq \sum_{P} J \left[\alpha_{p} + \theta_{1, p} \right] \\
+        \sum_{M} x_{m, p} + \alpha_{p} + \theta_{1, p} \geq d_{p} \qquad \forall p \quad \text{(Cover all demand, \$)} \\
+        - \beta \leq \theta_{1, p} \leq \beta \\
+        a_{m, p} y_{m} \frac{1}{\epsilon} - x_{m, p} \geq 0 \qquad \forall p, m \quad \text{(machine produces some products)} \\
+        \alpha_{p} + \theta_{1, p} \geq 0 \\
+        \gamma \in \mathbb{R}
+    \end{cases} \\
+    & \begin{cases}
+        - T_{m} y_{m} + \sum_{P} \overline{t_{m, p}} x_{m, p} + \sum_{P} \theta_{2, p} \leq 0 \qquad \forall m \quad \text{(Limited machine production time, hour)} \\
+        - \sum_{P} t_{m, p} x_{m, p} \leq \theta_{2, p} \leq \sum_{P} t_{m, p} x_{m, p}
+    \end{cases} \\
+    & x_{m, p}, \phi_{p} \in \mathbb{R}^+ \\
+    & y_{m} \in \{0, 1, 2, ..., 10\}
+\end{align}
+
+
+\bibliography{Robust_Optimization}
+
+\clearpage
+\section{Benders Decomposition}
+
+According to wikipedia:
+\begin{quote}
+    Benders decomposition (or Benders' decomposition) is a technique in mathematical programming that allows the solution of very large linear programming problems that have a special block structure. This block structure often occurs in applications such as stochastic programming as the uncertainty is usually represented with scenarios. The technique is named after Jacques F. Benders.
+\end{quote}
+
+\subsection{Benders Decomposition for Standard MILP}
+
+For standard MILP, get rid of $\mathbf{x}$, we get:
+\begin{align}
+    \min \quad& \mathbf{f} ^ { T } \mathbf{y} + g ( y ) \\
+    \text{s.t.} \quad& \mathbf{y} \in Y
+\end{align}
+and 
+\begin{align}
+    g(y) = \min \quad& \mathbf{c}^{T} \mathbf{x} \\
+    \text{s.t.} \quad& \mathbf{A} \mathbf{x} \geq \mathbf{b} - \mathbf{B} \overline{\mathbf{y}} \\ 
+    & \mathbf{x} \geq 0
+\end{align}
+
+The dual function of $g(y)$:
+\begin{align}
+    g_d(y) = \max \quad& (\mathbf{b} - \mathbf{B}\overline{\mathbf{y}})^{T} \mathbf{u} \\
+    \text{s.t.} \quad& \mathbf{A}^{T} \mathbf{u} \leq \mathbf{c} \\ 
+    & \mathbf{u} \geq 0
+\end{align}
+where the constraints of the dual $g(y)$ does not contain any $\mathbf{y}$ values. Hence we can now analyze the feasibility of the model without considering the value of $\mathbf{y}$.
+
+Given the Minkovsky Fication theorem, we can hence reformulate the dual $g(y)$ LP program as extreme points $u^p$ and extreme rays $u^r$. Assume that we enumerate all the extreme points and extreme rays, we can reformulate:
+\begin{align} 
+    u & = \sum _ { i } \lambda _ { i } ^ { p } \cdot u _ { i } ^ { P } + \sum _ { j } \lambda _ { j } ^ { r } \cdot u _ { j } ^ { r } \\ 
+    \sum _ { i } \lambda _ { i } ^ { p } &= 1 \\
+    \lambda _ { i } ^ { p } , \lambda _ { j } ^ { r } & \geq 0 
+\end{align}
+
+$g_d(y)$ can be expressed to:
+\begin{align}
+    g_{\text{dual}}(y) = \max \quad& (\mathbf{b} - \mathbf{B}\overline{\mathbf{y}})^{T} \mathbf{u} \\
+    \text{s.t.} \quad& u = \sum _ { i } \lambda _ { i } ^ { p } \cdot u _ { i } ^ { p } + \sum _ { j } \lambda _ { j } ^ { r } \cdot u _ { j } ^ { r } \\ 
+    & \sum _ { i } \lambda _ { i } ^ { p } = 1 \\ 
+    & \lambda _ { i } ^ { p } , \lambda _ { j } ^ { r } \geq 0 \\
+    & \mathbf{u} \geq 0
+\end{align}
+
+Substitute the $u$ variables with the extreme points and extreme rays (and multiply $(b − By)$ into the sum’s):
+\begin{align}
+    g_{\text{dual}}(y) = \max \quad& ( b - B \overline { y } ) ^ { T } \times \sum _ { i } \lambda _ { i } ^ { p } \cdot u _ { i } ^ { p } + ( b - B \overline { y } ) ^ { T } \times \sum _ { j } \lambda _ { j } ^ { r } \cdot u _ { j } ^ { r } \\
+    \text{s.t.} \quad& \sum _ { i } \lambda _ { i } ^ { p } = 1 \\ 
+    & \lambda _ { i } ^ { p } , \lambda _ { j } ^ { r } \geq 0
+\end{align}
+
+If we select a $y$ such that just one term $(b - B\overline{y})^T u_j^r$ becomes positive, i.e. $(b - B\overline{y})^T u_j^r > 0$ then the LP is unbounded because there are no limits on the $\lambda_j^r$. Hence in order not to get an unbounded dual $g(y)$ function corresponding to not getting an infeasible $g(y)$ we have to ensure that this does not happen for any extreme ray.
+
+If an optimal solution exists (i.e. the polyhedron is not un-bounded or infeasible), at least one optimal solution to the dual $g(y)$ function is a corner point $u_i^p$. Hence the dual $g(y)$ function has the value of the maximal point. We need to find the corner point 
+
+Let’s ensure feasibility and add the value of the maximal point:
+\begin{align}
+    \min \quad& q \\
+    \text{s.t.} \quad& \overline { u _ { j } ^ { r } } \cdot ( b - B y ) \leq 0 \quad \forall j \\ 
+    & \overline { u _ { i } ^ { p } } \cdot ( b - B y ) \leq q \quad \forall i \\ 
+    & y \in Y , q \in R
+\end{align}
+
+The problem (\ref{eq:1}, \ref{eq:2}, \ref{eq:3}, \ref{eq:4}) becomes the so-called \textbf{Benders Master Problem (BMP)}:
+\begin{align}
+    \min \quad& \mathbf{f}^{T} \mathbf{y} + q \\
+    \text{s.t.} \quad& \mathbf{\overline {u_{j}^{r}}} (\mathbf{b} - \mathbf{B} \mathbf{y} ) \leq 0 \quad \forall j \\ 
+    & \mathbf{\overline {u_{i}^{p}}} (\mathbf{b} - \mathbf{B} \mathbf{y} ) \leq q \quad \forall i \\ 
+    & y \in Y \\
+    & q \in R
+\end{align}
+
+\subsubsection{Cutting Planes}
+
+We can consider the Bender’s algorithm as a cutting plane algorithm: We know there is an exponential amount of cuts, but we only generate them when needed ... by solving the Benders Sub Problem (BSP):
+\begin{align}
+    \max \quad& (\mathbf{b} - \mathbf{B} \mathbf{\overline{y}})^{T} \mathbf{u} \\
+    \text{s.t.} \quad& \mathbf{A}^{T} \mathbf{u} \leq \mathbf{c} \\ 
+    & \mathbf{u} \geq \mathbf{0}
+\end{align}
+We use the BSP problem to find the extreme points $\overline{u_i^p}$. These we use to generate the so-called optimality cuts.
+
+To generate the so-called feasibility cuts, we need to be able to find extreme rays, i.e. if the BSP is un-bounded when we try to solve it, we need to find one extreme ray of that problem. This we will deal with next week. For now (in the exercises) we will assume that the BSP is NOT un-bounded.
+
+\subsubsection{Benders Algorithm}
+
+Write up the MASTER-PROBLEM, without any constraints:
+\begin{align}
+    \min \quad& z_{MAS} = q + f ^ { T } y \\
+    \text{s.t.} \quad& y \in Y \\
+    & q , z_{MAS} \in R
+\end{align}
+Actually, if there are constraints in the original problem with only $y$ variables, then these constraints can and should stay.
+
+Assume the $y$ variables are fixed. Move the (now) $y$ constants to the right hand side and dualize the problem. This is the SUB-PROBLEM:
+\begin{align}
+    \max \quad & z_{SUB} = ( b - B \overline { y } ) ^ { T } u \\
+    \text{s.t.} \quad & A ^ { T } u \leq c \\ 
+    & u \geq 0 \\
+    & z_{SUB} \in R
+\end{align}
+
+The BSP is the dual of the following model:
+\begin{align}
+    \min \quad& c^T x \\
+    \text{s.t.} \quad& A x \geq b - B \overline{y} \\ 
+    & x \geq 0
+\end{align}
+But this model is the original problem and if we add $f^T \overline{y}$ to the value, then it is a feasible solution to the original problem, hence a legal upper bound.
+
+The $z_{LOW}$ bound is the optimal value of the BMP:
+\begin{align}
+    \min \quad& z_{LOW} = z_{MAS} = q + f ^ { T } y \\
+    \quad& \overline { u _ { j } ^ { r } } \cdot ( b - B y ) \leq 0 \quad \forall j \\ 
+    & \overline { u _ { i } ^ { p } } \cdot ( b - B y ) \leq q \quad \forall i \\ 
+    & y \in Y , q \in R
+\end{align}
+Notice that during the Benders algorithm the relaxed problem is solved (not all constraints are there). Hence a feasible lower bound.
+
+If the Benders sub-problem is un-bounded, then the original problem, changed by the chosen y variables, is in-feasible. Hence we add a constraint to the Benders master problem, the feasibility constraint, which makes such a choice of y variable values impossible.
+
+To find the extreme rays, we first insert 0 on the right-hand side.
+
+Benders' Sub Problem
+\begin{align}
+    g_d(y) = \max \quad& (\mathbf{b} - \mathbf{B}\overline{\mathbf{y}})^{T} \mathbf{u} \\
+    \text{s.t.} \quad& \mathbf{A}^{T} \mathbf{u} \leq \mathbf{c} \\ 
+    & \mathbf{u} \geq 0
+\end{align}
+
+Then, we set dummy:
+\begin{align}
+	g_d(y) = \max \quad & dummy \\
+    \text{s.t.} \quad & dummy = 1 \\
+    &  (\mathbf{b} - \mathbf{B}\overline{\mathbf{y}})^{T} \mathbf{u}  = 1\\
+    & \mathbf{A}^{T} \mathbf{u} \leq 0 \\ 
+    & \mathbf{u} \geq 0
+\end{align}
+
+\subsubsection{Simple Illustration}
+
+\begin{align}
+    \min \quad& z_0 = 5 x - 3 y \\
+    \text{s.t.} \quad& x + 2 y \geq 4 \\ 
+    & 2 x - y \geq 0 \\ 
+    & x - 3 y \geq - 13 \\ 
+    & x \geq 0 \\ 
+    & y \in \{ 0,1 , \ldots , 10 \}
+\end{align}
+In standard form:
+\begin{align}
+    \min \quad& \mathbf{c} ^ { T } \mathbf{x} + \mathbf{f} ^ { T } \mathbf{y} \label{eq:1} \\
+    \text{s.t.} \quad& \mathbf{A} \mathbf{x} + \mathbf{B} \mathbf{y} \geq \mathbf{b} \label{eq:2} \\ 
+    & \mathbf{y} \in Y \label{eq:3} \\ 
+    & \mathbf{x} \geq 0 \label{eq:4} 
+\end{align}
+where 
+\begin{align}
+	\mathbf{c} &= (5)^T \\
+    \mathbf{f} &= (-3)^T \\
+    \mathbf{b} &= (4, 0, -13)^T \\
+    \mathbf{x} &= (x)^T \\
+    \mathbf{y} &= (y)^T \\
+    \mathbf{A} &= \left(\begin{array}{c}
+    	1 \\
+        2 \\
+        1
+    \end{array} \right) \\
+    \mathbf{B} &= \left(\begin{array}{c}
+    	2 \\
+        -1 \\
+        -3
+    \end{array} \right)
+\end{align}
+
+Move the $y$ constants to the right hand side of the constraints.
+\begin{align}
+    \min \quad& 5 x - 3 \overline{y} \\
+    \text{s.t.} \quad& x \geq 4 - 2 \overline{y} \\ 
+    & 2 x \geq \overline{y} \\ 
+    & x \geq 3 \overline{y} - 13 \\ 
+    & x \geq 0
+\end{align}
+
+Dualize the model (we need to find the u values, keeping the $y$ constants in the in the objective. This is the Benders Sub Problem:
+\begin{align}
+    OBJ_{SUB} = \max \quad& (4 - 2 \overline{y}) u_1 + \overline{y} u_2 + (3 \overline{y} - 13) u_3 \\
+    \text{s.t.} \quad& u_1 + 2 u_2 + u_3 \leq 5 \\
+    & u_1, u_2, u_3 \geq 0
+\end{align}
+
+\begin{align}
+    UB = \min \left(OBJ_{SUB} - 3 \overline{y}, UB \right)
+\end{align}
+
+\begin{align}
+    OBJ_{MAS} = \min \quad& - 3 y + q \\
+    \text{s.t.} \quad& (4 - 2 y) \overline{u_1} + y \overline{u_2} + (3 y - 13) \overline{u_3} \leq q \quad \forall p \\
+    & y \in T \\
+    & q \in R
+\end{align} 
+
+\begin{align}
+    LB = \max(OBJ_{MAS}, LB)
+\end{align}
+
+Now we are ready to execute the algorithm:
+\begin{enumerate}
+    \item Assign initial bounds $UB = +\infty$, $LB = -\infty$ and $\epsilon = a$ small number
+    \item Assign inital $\overline{y}$ value (possibly randomly)
+    \item Set in the fixed $\overline{y}$ into the Benders sub-problem and solve the Benders sub-problem to get the extreme point $\overline{u}$ and $OBJ_{SUB}$.
+    \item Calculate the upper-bound: $UB = \min \left(OBJ_{SUB} - 3 \overline{y}\right)$
+    \item Add new constraint $\sum _ { i } \left( b _ { i } - \sum _ { k } B _ { k } ^ { i } \cdot y _ { k } \right) \overline { u _ { i } } \leq q$ to the Benders master-problem.
+    \item Solve the Benders master-problem to get new y values.
+    \item Calculate the lower-bound: $LB = OBJ_{MAS}$.
+    \item Terminate if $U B - L B \leq \epsilon$
+    \item Go to 3 (with the new value for $y$)
+\end{enumerate}
+
+\subsubsection{Simple Illustration 2}
+
+\begin{align}
+\min \quad & 5 x_1 + 3 x_2 - 3 y_1 + y_2 \\
+\text{s.t.} \quad & x_1 + 3 x_2 + 2 y_1 - 4 y_2 \geq 4 \\
+& 2 x_1 + x_2 - y_1 + 2 y_2 \geq 0 \\ 
+& x_1 - 5 x_2 - 3 y_1 + y_2 \geq-13 \\ 
+& x_1, x_2  \geq 0 \\
+& y_1, y_2 \in \{0, 1, 2, ..., 10 \}
+\end{align}
+which can be transformed into standard form:
+\begin{align}
+	\mathbf{c} &= (5, 3)^T \\
+    \mathbf{f} &= (-3, 1)^T \\
+    \mathbf{b} &= (4, 0, -13)^T \\
+    \mathbf{x} &= (x_1, x_2)^T \\
+    \mathbf{y} &= (y_1, y_2)^T \\
+    \mathbf{A} &= \left(\begin{array}{c}
+    	1 & 3\\
+        2 & 1 \\
+        1 & -5
+    \end{array} \right) \\
+    \mathbf{B} &= \left(\begin{array}{c}
+    	2 & -4 \\
+        -1 & 2 \\
+        -3 & 1
+    \end{array} \right)
+\end{align}
+\subsubsection{Benders Algorithm with Extreme Rays}
+
+\begin{align}
+	\min \quad & 2 x_{1} + 6 x_{2} + 2 y_{1} + 3 y_{2} \\
+    \text{s.t.} \quad & - x_{1} + 2 x_{2} + 3 y_{1} - y_{2} \geq 5 \\ 
+    & x_{1} - 3 x_{2} + 2 y_{1} + 2 y_{2} \geq 4 \\
+    & x_{1}, x_{2} \geq 0 \\
+    & y_{1}, y_{2} \in \{0, 1, 2 \}
+\end{align}
+which can be transformed into standard form:
+\begin{align}
+	\mathbf{c} &= (2, 6)^T \\
+    \mathbf{f} &= (2, 3)^T \\
+    \mathbf{b} &= (5, 4)^T \\
+    \mathbf{x} &= (x_1, x_2)^T \\
+    \mathbf{y} &= (y_1, y_2)^T \\
+    \mathbf{A} &= \left(\begin{array}{c}
+    	-1 & 2 \\
+        1 & -3
+    \end{array} \right) \\
+    \mathbf{B} &= \left(\begin{array}{c}
+    	3 & -1 \\
+        2 & 2
+    \end{array} \right)
+\end{align}
+
+\subsubsubsection{Test: If there is infeasibility in $x$ variables}
+
+\begin{align}
+	\min \quad & 2 x_{1} + 6 x_{2} + 2 y_{1} + 3 y_{2} \\
+    \text{s.t.} \quad & - x_{1} + 2 x_{2} + 3 y_{1} - y_{2} \geq 5 \\ 
+    & x_{1} - 3 x_{2} + 2 y_{1} + 2 y_{2} \geq 4 \\
+    & x_{1} + x_{2} \leq -1 \\
+    & x_{1}, x_{2} \geq 0 \\
+    & y_{1}, y_{2} \in \{0, 1, 2 \}
+\end{align}
+which can be transformed into standard form:
+\begin{align}
+	\mathbf{c} &= (2, 6)^T \\
+    \mathbf{f} &= (2, 3)^T \\
+    \mathbf{b} &= (5, 4, 1)^T \\
+    \mathbf{x} &= (x_1, x_2)^T \\
+    \mathbf{y} &= (y_1, y_2)^T \\
+    \mathbf{A} &= \left(\begin{array}{c}
+    	-1 & 2 \\
+        1 & -3 \\
+        -1 & -1
+    \end{array} \right) \\
+    \mathbf{B} &= \left(\begin{array}{c}
+    	3 & -1 \\
+        2 & 2 \\
+        0 & 0
+    \end{array} \right)
+\end{align}
+
+\subsubsubsection{Test: If there is infeasibility in $y$ variables}
+
+\begin{align}
+	\min \quad & 2 x_{1} + 6 x_{2} + 2 y_{1} + 3 y_{2} \\
+    \text{s.t.} \quad & - x_{1} + 2 x_{2} + 3 y_{1} - y_{2} \geq 5 \\ 
+    & x_{1} - 3 x_{2} + 2 y_{1} + 2 y_{2} \geq 4 \\
+    & y_{1} + y_{2} \geq 5 \\
+    & x_{1}, x_{2} \geq 0 \\
+    & y_{1}, y_{2} \in \{0, 1, 2 \}
+\end{align}
+which can be transformed into standard form:
+\begin{align}
+	\mathbf{c} &= (2, 6)^T \\
+    \mathbf{f} &= (2, 3)^T \\
+    \mathbf{b} &= (5, 4, 5)^T \\
+    \mathbf{x} &= (x_1, x_2)^T \\
+    \mathbf{y} &= (y_1, y_2)^T \\
+    \mathbf{A} &= \left(\begin{array}{c}
+    	-1 & 2 \\
+        1 & -3 \\
+        0 & 0
+    \end{array} \right) \\
+    \mathbf{B} &= \left(\begin{array}{c}
+    	3 & -1 \\
+        2 & 2 \\
+        1 & 1
+    \end{array} \right)
+\end{align}
+
+\subsection{L-Shaped Benders Decomposition}
+
+The standard form for two stage stochastic programming with no integer variables in second stage:
+\begin{align}
+    \min \quad& \mathbf{f} ^ { T } \mathbf{y} + \sum_{s \in \Omega} \pi_s \mathbf{c}_s^T \mathbf{x}_s \\
+    \text{s.t.} \quad& \mathbf{T}_s \mathbf{y} + \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s \quad \forall s \\ 
+    & \mathbf{y} \in \mathbf{Y} \\ 
+    & \mathbf{x}_s \geq 0 \quad \forall s
+\end{align}
+where the $\mathbf{y}$ is vector of integer variables.
+
+Master Problem:
+\begin{align}
+    \min \quad& \mathbf{f} ^ { T } \mathbf{y} + q \\
+    \text{s.t.} \quad& \overline{\mathbf{u}_j^r}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq 0 \quad \forall j \\ 
+    & \overline{\mathbf{u}_i^p}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq \quad \forall i \\ 
+    & \mathbf{y} \in \mathbf{Y}
+\end{align}
+
+Sub-problem for each scenario:
+\begin{align}
+    \min \quad & \mathbf{c}_s^T \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
+    & \mathbf{x}_s \geq 0
+\end{align}
+
+Dual problem of sub-problem is:
+\begin{align}
+    \max \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^T \mathbf{u}_s \\
+    \text{s.t.} \quad & \mathbf{w}_s^T \mathbf{u}_s \leq \mathbf{c}^T \\
+    & \mathbf{u}_s \geq 0
+\end{align}
+
+The aggregation of $\overline{\mathbf{u}}$ and $\text{obj}_{\text{sub}}$ from all scenarios are:
+\begin{align}
+    \overline{\mathbf{u}} &= \sum_{s \in \Omega} \pi_s \mathbf{u}_s \\
+    \text{obj}_{\text{sub}} &= \sum_{s \in \Omega} \pi_s \text{obj}_{\text{sub}, s} \\
+\end{align}
+
+\subsection{Simple Example: News Boy problem}
+
+\begin{align}
+    \max \quad & \sum_{s} \pi_{s}(p-h) x_{s}+\sum_{s} \pi_{s}(h-c) y \\
+    \text{s.t.} \quad & x_{s} \leq d_{s} \quad \forall s \\ 
+    & x_{s} \leq y \quad \forall s \\ 
+    & x \in R^{+} \\
+    & y \in Z^{+} 
+\end{align}
+
+\subsection{L-Shaped Benders Decomposition with Integer Variables in Second Stage}
+
+The standard form for two stage stochastic programming with integer variables in second stage:
+\begin{align}
+    \min_{\mathbf{y}, \mathbf{x}_s, \mathbf{z}_s} \quad& \mathbf{f} ^ { T } \mathbf{y} + \sum_{s \in \Omega} \pi_s \left(\mathbf{c}_s^T \mathbf{x}_s + \mathbf{d}_s^T \mathbf{z}_s \right) \\
+    \text{s.t.} \quad& \mathbf{T}_s \mathbf{y} + \mathbf{w}_s \mathbf{x}_s + \mathbf{g}_s \mathbf{z}_s \geq \mathbf{h}_s \quad \forall s \\ 
+    & \mathbf{y} \in \mathbf{Y} \\ 
+    & \mathbf{x}_s \geq 0 \quad \forall s \\
+    & \mathbf{z}_s \in \mathbf{Z} \quad \forall s
+\end{align}
+where the $\mathbf{y}$ is vector of integer variables.
+
+Master Problem:
+\begin{align}
+    \min \quad& \mathbf{f}^{T} \mathbf{y} + \sum_{s \in \Omega} \pi_s q_s(\mathbf{y}) \\
+    \text{s.t.} \quad& \overline{\mathbf{u}_j^r}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq 0 \quad \forall j \\ 
+    & \overline{\mathbf{u}_i^p}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq q_s(\mathbf{y}) \quad \forall i \\ 
+    & \mathbf{y} \in \mathbf{Y}
+\end{align}
+
+Sub-problem for each scenario:
+\begin{align}
+    q_s(\mathbf{y}) = \min \quad & \mathbf{d}^{T}_s \mathbf{z}_s + \mathbf{c}_s^T \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{g}_s \mathbf{z}_s + \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
+    & \mathbf{x}_s \geq 0
+\end{align}
+which is a standard MILP problem.
+
+So we use the benders algorithm again. The Sub-Mas problem is:
+\begin{align}
+    q_s(\mathbf{y}) = \min \quad & \mathbf{d}^{T}_s \mathbf{z}_s + p_s(\mathbf{z}_s) \\
+    \text{s.t.} \quad & \overline{\mathbf{v}_m^p}^T \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right] \leq p_s(\mathbf{z}_s) \quad \forall m \\ 
+    & \overline{\mathbf{v}_n^r}^T \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right] \leq 0 \quad \forall n \\ 
+    & \mathbf{x}_s \geq 0
+\end{align}
+
+Sub-Sub-problem for each scenario:
+\begin{align}
+    p_s(\mathbf{y}) = \min \quad & \mathbf{c}_s^T \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{w}_s \mathbf{x}_s \geq \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s}  \\
+    & \mathbf{x}_s \geq 0
+\end{align}
+
+The dual function of $p_s(\mathbf{y})$ is:
+\begin{align}
+    p_s^d(\mathbf{y}) = \max \quad & \left[\left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right) - \mathbf{g}_s \overline{\mathbf{z}_s} \right]^{T} \mathbf{v} \\
+    \text{s.t.} \quad & \mathbf{w}_s^{T} \mathbf{v} \leq \mathbf{c}_s \\
+    & \mathbf{v} \geq 0
+\end{align}
+
+\end{document}
