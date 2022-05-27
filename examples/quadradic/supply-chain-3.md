@@ -7,15 +7,117 @@ It is assumed that all the products produced are sold in the current year. For e
 
 ## 2, Definition of Mathematical Expressions
 
-<p align="center"><img src="/examples/quadradic/tex/50220e9df8aa71e1f6400321ad0b7c20.svg?invert_in_darkmode&sanitize=true" align=middle width=679.5676040999999pt height=396.97115204999994pt/></p>
+$$
+\begin{array}{c l c}
+	  \hline
+	  \text{Symbol} & \text{Definition} & \text{Expression} \\
+	  \hline
+	  T^1 & \text{type of timber 1} & \{\text{MAT}, \text{KUT}, \text{KOT} \} \\
+	  T^2 & \text{type of timber 2} & \{\text{MAK}, \text{KUK}, \text{KOK} \} \\
+		T & \text{type of timber} & T^1 \cup T^2 \\
+		I^{T1}_{t = \text{MAT}} & \text{outputs of wood production corresponding to input MAT} & \{\text{MAS} \} \\
+		I^{T1}_{t = \text{KUT}} & \text{outputs of wood production corresponding to input KUT} & \{\text{KUS}, \text{KUV} \} \\
+		I^{T1}_{t = \text{KOT}} & \text{outputs of wood production corresponding to input KOT} & \{\text{KOS}, \text{KOV} \} \\
+		I^{T2}_{t = \text{MAK}} & \text{outputs of wood production corresponding to output MAK} & \{\text{MAS} \} \\
+		I^{T2}_{t = \text{KUK}} & \text{outputs of wood production corresponding to output KUK} & \{\text{KUS}, \text{KUV} \} \\
+		I^{T2}_{t = \text{KOK}} & \text{outputs of wood production corresponding to output KOK} & \{\text{KOS}, \text{KOV} \} \\
+	  I^{\text{saw}} & \text{outputs of wood production in saw mill} & \{\text{MAS}, \text{KUS}, \text{KOS} \} \\
+	  I^{\text{plywood}} & \text{outputs of wood production in plywood mill} & \{\text{KUV}, \text{KOV} \} \\
+		I & \text{outputs of wood production} & I^{\text{saw}} \cup I^{\text{plywood}} \\
+		J & \text{outputs of pulp production} & \{\text{HSEL}, \text{LSEL} \} \\
+		J^{T2}_{t = \text{MAK}} & \text{outputs of pulp production corresponding to input MAK} & \{\text{HSEL} \} \\
+		J^{T2}_{t = \text{KUK}} & \text{outputs of pulp production corresponding to input KUK} & \varnothing \\
+		J^{T2}_{t = \text{KOK}} & \text{outputs of pulp production corresponding to input KOK} & \{\text{LSEL} \} \\
+		K & \text{regions to sell products} & \{\text{EU}, \text{IE}, \text{PA}, \text{KI} \} \\
+    M & \text{three years in the planning horizon} & \{1, 2, 3 \} \\
+		N & \text{four scenarios} & \{1, 2, 3, 4\} \\
+	  \hline
+\end{array}
+$$
 
 _Table 1, summary of sets_
 
-<p align="center"><img src="/examples/quadradic/tex/cf61a5bb7805cac098934981614a7b21.svg?invert_in_darkmode&sanitize=true" align=middle width=855.4807404pt height=469.3945311pt/></p>
+$$
+\begin{array}{c l c c c}
+		\hline
+		\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
+		\hline
+		h_t & \text{purchasing amount of timber $t$ in the first year} & \text{integer} & 1000 m^3 & T \\
+		y^I_{i} & \text{production amount of wood $i$ in the first year} & \text{linear} & 1000 m^3 & I \\
+		y^J_{j} & \text{production amount of pulp $j$ in the first year} & \text{linear} & 1000 m^3 & J \\
+		y^{\text{paper}} & \text{production amount of paper in the first year} & \text{linear} & 1000 m^3 & - \\
+		z^I_{i, k} & \text{selling amount of wood $i$ in region $k$ in the first year} & \text{linear} & 1000 m^3 & I, K \\
+		z^J_{j, k} & \text{selling amount of pulp $j$ in region $k$ in the first year} & \text{linear} & 1000 m^3 & J, K \\
+		z^{\text{paper}}_{k} & \text{selling amount of paper in region $k$ in the first year} & \text{linear} & 1000 m^3 & K \\
+		\hline
+		h_{m, t} & \text{purchasing amount of timber $t$ in the year $m$} & \text{integer} & 1000 m^3 & M / \{1\}, T \\
+		y^I_{m, i} & \text{production amount of wood $i$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, I \\
+		y^J_{m, j} & \text{production amount of pulp $j$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, J \\
+		y^{\text{paper}}_{m} & \text{production amount of paper in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\} \\
+		z^I_{m, i, k} & \text{selling amount of wood in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, I, K \\
+		z^J_{m, j, k} & \text{selling amount of pulp in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, J, K \\
+		z^{\text{paper}}_{m, k} & \text{selling amount of paper in the region $k$ in the year $m$} & \text{linear} & 1000 m^3 & M / \{1\}, K \\
+		\hline
+    x^{\text{saw}}_{m} & \text{capacity of saw mill} & \text{linear} & 1000 m^3 / \text{year} & M / \{3\} \\
+    x^{\text{plywood}}_{m} & \text{capacity of plywood mill} & \text{linear} & 1000 m^3 / \text{year} & M / \{3\} \\
+    x^J_{m, j} & \text{capacity of pulp production line} & \text{linear} & 1000 \text{ton} / \text{year} & M / \{3\}, J \\
+    x^{\text{paper}}_{m} & \text{capacity of paper production line} & \text{linear} & 1000 \text{ton} / \text{year} & M / \{3\} \\
+		x^{\text{saw}}_{n, 3} & \text{capacity of saw mill in the year $3$ decide in the year 2} & \text{linear} & 1000 m^3 / \text{year} & N \\
+    x^{\text{plywood}}_{n, 3} & \text{capacity of plywood mill in the year $3$ decide in the year 2} & \text{linear} & 1000 m^3 / \text{year} & N \\
+    x^J_{n, 3, j} & \text{capacity of pulp production line in the year $3$ decide in the year 2} & \text{linear} & 1000 \text{ton} / \text{year} & N, J \\
+    x^{\text{paper}}_{n, 3} & \text{capacity of paper production line in the year $3$ decide in the year 2} & \text{linear} & 1000 \text{ton} / \text{year} & N \\
+		\hline
+\end{array}
+$$
 
 _Table 2, summary of decision variables_
 
-<p align="center"><img src="/examples/quadradic/tex/5b397e525492622299d4993f12ad5f59.svg?invert_in_darkmode&sanitize=true" align=middle width=759.1170212999999pt height=744.9944733pt/></p>
+$$
+\begin{array}{c l c c}
+		\hline
+		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
+		\hline
+		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
+		\alpha_t & \text{fixed cost factor of purchasing timber $t$} & \text{euro} / (1000 m^3) & T \\
+		\beta_t & \text{unit cost factor of purchasing timber $t$} & \text{euro} / (1000 m^6) & T \\
+		a^I_i & \text{relation of timber input and output in wood production $i$} & - & I\\
+		b^I_i & \text{relation of timber output and output in wood production $i$ $i$} & - & I \\
+		e^I_i & \text{relation of fuel output and output in wood production $i$} & - & I \\
+		c^I_i & \text{cost of wood production $i$} & \text{euro} / (1000 m^3) & I \\
+		r^{\text{saw}} & \text{original capacity of saw mill} & 1000 m^3 / \text{year} & - \\
+		r^{\text{plywood}} & \text{original capacity of plywood mill} & 1000 m^3 / \text{year} & - \\
+		a^J_j & \text{input and output relation of pulp production $j$} & - & J \\
+		c^J_j & \text{cost of pulp production $j$} & \text{euro} / (1000 \text{ton}) & J \\
+		r^J_j & \text{original capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
+		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
+		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
+		c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
+		r^{\text{paper}} & \text{original capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
+		\hline
+		\gamma^{I}_{m, i, k} & \text{fixed price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (1000 m^3) & M, I, K \\
+		\delta^{I}_{m, i, k} & \text{unit price factor of wood $i$ in the region $k$ in the year $m$} & \text{euro} / (10^6 m^6) & M, I, K \\
+		\gamma^{J}_{m, j, k} & \text{fixed price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, J, K \\
+		\delta^{J}_{m, j, k} & \text{unit price factor of pulp $j$ in the region $k$ in the year $m$} & \text{euro} / (10^6 \text{ton}^2) & M, J, K \\
+		\gamma^{\text{paper}}_{m, k} & \text{fixed price factor of paper in the region $k$ in the year $m$} & \text{euro} / (1000 \text{ton}) & M, K \\
+		\delta^{\text{paper}}_{m, k} & \text{unit price factor of paper in the region $k$ in the year $m$} & \text{euro} / (10^6 \text{ton}^2) & M, K \\
+		\sigma & \text{annual discounting factor} & - & - \\
+		\omega^I_i & \text{demand growth coefficient of wood $i$} & - & I \\
+		\omega^J_j & \text{demand growth coefficient of pulp $j$} & - & J \\
+		\omega^{\text{paper}} & \text{demand growth coefficient of paper} & - & - \\
+		o^{\text{saw}} & \text{capacity expansion cost of saw mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+		o^{\text{plywood}} & \text{capacity expansion cost of plywood mill} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+		o^J_j & \text{capacity expansion cost of pulp production $j$} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+		o^{\text{paper}} & \text{capacity expansion cost of paper production} & \text{euro} / (1000 m^3 / \text{year}) & - \\
+		\nu^{\text{saw}} & \text{max capacity expansion factor of saw mill} & - & - \\
+		\nu^{\text{plywood}} & \text{max capacity expansion factor of saw mill} & - & - \\
+		\nu^J_j & \text{max capacity expansion factor of pulp production $j$} & - & J \\
+		\nu^{\text{paper}} & \text{max capacity expansion factor of paper production} & - & - \\
+		\hline
+		\rho_{n, m} & \text{price coefficient of the scenario $n$ in the year $m$} & - & N, M \\
+		\pi_{n} & \text{probability of scenario $n$} & - & N \\
+		\hline
+\end{array}
+$$
 
 _Table 3, summary of constants_
 
@@ -23,106 +125,159 @@ _Table 3, summary of constants_
 
 The Objective function composes of many parts:
 
-<p align="center"><img src="/examples/quadradic/tex/f510bdb99fec8650c01a20e8bbec9304.svg?invert_in_darkmode&sanitize=true" align=middle width=686.5706594999999pt height=78.5391552pt/></p>
+$$
+\begin{align}
+    & f^{\text{timber}}_1 + f^{\text{wood}}_1 + f^{\text{pp}}_1 + g^{\text{timber}}_1 + g^{\text{fuel}}_1 + g^{\text{wood}}_1 + g^{\text{pulp}}_1 + g^{\text{paper}}_1 + f^{\text{cap}}_2 + \\
+		& \sum_{n \in N} \pi_{n} \left\{ \sum_{m = 2}^3 \sigma^{m - 1} \left[f^{\text{timber}}_{n, m} + f^{\text{wood}}_{n, m} + f^{\text{pp}}_{n, m} + g^{\text{timber}}_{n, m} + g^{\text{fuel}}_{n, m} + g^{\text{wood}}_{n, m} + g^{\text{pulp}}_{n, m} + g^{\text{paper}}_{n, m} \right] + \sigma f^{\text{cap}}_{n, 3} \right\}
+\end{align}
+$$
 
 - When m = 1, the variables are here-and-now decisions variables, and this part of the objective function is the same as those in the static model:
 
-1. cost of timber procurement: <img src="/examples/quadradic/tex/75523156026f00a6d598b4ba9ac9fbc1.svg?invert_in_darkmode&sanitize=true" align=middle width=225.03610634999995pt height=27.91243950000002pt/>
+1. cost of timber procurement: $ f^{\text{timber}}_1 = - \sum_{t \in T} h_{t} (\alpha_t + \beta_t h_{t}) $
 
-2. cost of wood production: <img src="/examples/quadradic/tex/59f0c6e89f79532a2e60684c71947bd5.svg?invert_in_darkmode&sanitize=true" align=middle width=149.35345919999997pt height=27.91243950000002pt/>
+2. cost of wood production: $ f^{\text{wood}}_1 = - \sum_{i \in I} c^I_i y^I_i $
 
-3. cost of pulp and paper production: <img src="/examples/quadradic/tex/eb41c7351a74af51cbb40949a8a4fcac.svg?invert_in_darkmode&sanitize=true" align=middle width=242.45478509999998pt height=27.6567522pt/>
+3. cost of pulp and paper production: $ f^{\text{pp}}_1 = - \sum_{j \in J} c^J_j y^J_j - c^{\text{paper}} y^{\text{paper}} $
 
 4. profit of left timbers selling:
 
-<p align="center"><img src="/examples/quadradic/tex/35099bea2233d526f210f053f46a6fe0.svg?invert_in_darkmode&sanitize=true" align=middle width=659.45019525pt height=59.1786591pt/></p>
+$$
+g^{\text{timber}}_1 = \sum_{t \in T^1} \alpha_t \left(h_t - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) + \sum_{t \in T^2} \alpha_t \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i - \sum_{j \in J^{T2}_t} a^J_j y^J_j - a^{\text{paper}}_t y^{\text{paper}} \right)
+$$
 
-5. profit of fuel wood selling: <img src="/examples/quadradic/tex/b477f842f851b9a0d69dd7dcf12b6ca5.svg?invert_in_darkmode&sanitize=true" align=middle width=153.77517044999996pt height=27.91243950000002pt/>
+5. profit of fuel wood selling: $ g^{\text{fuel}}_1 = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_i $
 
-6. profit of wood selling: <img src="/examples/quadradic/tex/fe9d9ea09e3891a788b8bde8f0805149.svg?invert_in_darkmode&sanitize=true" align=middle width=281.8592964pt height=27.91243950000002pt/>
+6. profit of wood selling: $ g^{\text{wood}}_1 = \sum_{i \in I} \sum_{k \in K} z^I_{i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{i, k}) $
 
-7. profit of pulp selling: <img src="/examples/quadradic/tex/ab9091bad3b8c3d3fe015769854eee38.svg?invert_in_darkmode&sanitize=true" align=middle width=283.33392285pt height=31.780732499999996pt/>
+7. profit of pulp selling: $ g^{\text{pulp}}_1 = \sum_{j \in J} \sum_{k \in K} z^J_{j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{j, k}) $
 
-8. profit of paper selling: <img src="/examples/quadradic/tex/35a3eb5f73102153a87eb2d050d6a8e4.svg?invert_in_darkmode&sanitize=true" align=middle width=312.3548339999999pt height=25.70766330000001pt/>
+8. profit of paper selling: $ g^{\text{paper}}_1 = \sum_{k \in K} z^{\text{paper}}_k (\gamma^{\text{paper}}_k - \delta^{\text{paper}}_k z^{\text{paper}}_k) $
 
 - When m = 2 or 3, the variables are wait-and-see decisions variables:
 
-1. cost of timber procurement: <img src="/examples/quadradic/tex/6c41817d4a436c6309207a1fc3e61469.svg?invert_in_darkmode&sanitize=true" align=middle width=280.23427905pt height=27.91243950000002pt/>
+1. cost of timber procurement: $ f^{\text{timber}}_{n, m} = - \sum_{t \in T} h_{n, m, t} (\alpha_t + \beta_t h_{n, m, t}) $
 
-2. cost of wood production: <img src="/examples/quadradic/tex/98b4b6b1bee975301832194268281de3.svg?invert_in_darkmode&sanitize=true" align=middle width=174.29335275pt height=27.91243950000002pt/>
+2. cost of wood production: $ f^{\text{wood}}_{n, m} = - \sum_{i \in I} c^I_i y^I_{n, m, i} $
 
-3. cost of pulp and paper production: <img src="/examples/quadradic/tex/c3174ee6a8ee525caeb9a996453bbf34.svg?invert_in_darkmode&sanitize=true" align=middle width=329.8210509pt height=27.6567522pt/>
+3. cost of pulp and paper production: $ f^{\text{pp}}_{n, m} = - \sum_{j \in J} c^J_j y^J_{n, m, j} - \sum_{m \in M} c^{\text{paper}} y^{\text{paper}}_{n, m} $
 
 4. profit of left timbers selling:
 
-<p align="center"><img src="/examples/quadradic/tex/6f641b10cb2ff0d8d3941cf8289eaa41.svg?invert_in_darkmode&sanitize=true" align=middle width=781.9776525pt height=59.1786591pt/></p>
+$$
+g^{\text{timber}}_{n, m} = \sum_{t \in T^1} \alpha_t \left(h_{n, m, t} - \sum_{i \in I^{T1}_t} a^I_i y^I_{n, m, i} \right) + \sum_{t \in T^2} \alpha_t \left(h_{n, m, t} + \sum_{i \in I^{T2}_t} b^I_i y^I_{n, m, i} - \sum_{j \in J^{T2}_t} a^J_j y^J_{n, m, j} - a^{\text{paper}}_t  y^{\text{paper}}_{n, m} \right)
+$$
 
-5. profit of fuel wood selling: <img src="/examples/quadradic/tex/0b07657ea33ed91ad7c547e5636e37a8.svg?invert_in_darkmode&sanitize=true" align=middle width=180.91832549999998pt height=27.91243950000002pt/>
+5. profit of fuel wood selling: $ g^{\text{fuel}}_{n, m} = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_{n, m, i} $
 
-6. profit of wood selling: <img src="/examples/quadradic/tex/6a532dd8375b9383f701742768d0eff8.svg?invert_in_darkmode&sanitize=true" align=middle width=430.53615495pt height=27.91243950000002pt/>
+6. profit of wood selling: $ g^{\text{wood}}_{n, m} = \sum_{i \in I} \sum_{k \in K} \rho_{n, m} (\omega^{I}_i)^{m-1} z^I_{n, m, i, k} (\gamma^{I}_{i, k} - \delta^{I}_{i, k} z^I_{n, m, i, k}) $
 
-7. profit of pulp selling: <img src="/examples/quadradic/tex/fd7a1babe8e030285e370ebdb1ebdf28.svg?invert_in_darkmode&sanitize=true" align=middle width=433.64887335pt height=27.91243950000002pt/>
+7. profit of pulp selling: $ g^{\text{pulp}}_{n, m} = \sum_{j \in J} \sum_{k \in K} \rho_{n, m} (\omega^{J}_j)^{m-1} z^J_{n, m, j, k} (\gamma^{J}_{j, k} - \delta^{J}_{j, k} z^J_{n, m, j, k}) $
 
-8. profit of paper selling: <img src="/examples/quadradic/tex/f491bd518f22008565ccf4d9b60f0f5b.svg?invert_in_darkmode&sanitize=true" align=middle width=434.9886535499999pt height=26.76175259999998pt/>
+8. profit of paper selling: $ g^{\text{paper}}_{n, m} = \sum_{k \in K} \rho_{n, m} (\omega^{\text{paper}})^{m-1} z^{\text{paper}}_{n, m, k} (\gamma^{\text{paper}}_{k} - \delta^{\text{paper}}_{k} z^{\text{paper}}_{n, m, k}) $
 
 - Cost of capacity expansion:
 
-<p align="center"><img src="/examples/quadradic/tex/aa5777dad7fc4a20b461c70e45b75ec2.svg?invert_in_darkmode&sanitize=true" align=middle width=744.4544002499999pt height=86.50267889999999pt/></p>
+$$
+\begin{align}
+		f^{\text{cap}}_2 = o^{\text{saw}} (x^{\text{saw}}_2 - x^{\text{saw}}_{1}) + o^{\text{plywood}} (x^{\text{plywood}}_2 - x^{\text{plywood}}_{1}) + \sum_{j \in J} o^J_j (x^J_{2, j} - x^J_{1, j}) + o^{\text{paper}} (x^{\text{paper}}_2 - x^{\text{paper}}_1) \\
+		f^{\text{cap}}_{n, 3} = o^{\text{saw}} (x^{\text{saw}}_{n, 3} - x^{\text{saw}}_{2}) + o^{\text{plywood}} (x^{\text{plywood}}_{n, 3} - x^{\text{plywood}}_{2}) + \sum_{j \in J} o^J_j (x^J_{n, 3, j} - x^J_{2, j}) + o^{\text{paper}} (x^{\text{paper}}_{n, 3} - x^{\text{paper}}_{2})
+\end{align}
+$$
 
-where variables regarding capacities in the first year, like <img src="/examples/quadradic/tex/38083a80fd93637bf89cc3440ee4a046.svg?invert_in_darkmode&sanitize=true" align=middle width=30.36197504999999pt height=21.839370299999988pt/>, are fixed value variables, those in the second year are here-and-now decision variables, and those in the third year are wait-and-see variables. Those here-and-now decision variables are forced to be equal for different scenarios by constraints 7-10 in the following section.  
+where variables regarding capacities in the first year, like $x^{\text{saw}}_1$, are fixed value variables, those in the second year are here-and-now decision variables, and those in the third year are wait-and-see variables. Those here-and-now decision variables are forced to be equal for different scenarios by constraints 7-10 in the following section.  
 
 ## 4, Constraints
 
-When <img src="/examples/quadradic/tex/a08aa3f720eb59983ccb69372a8b620d.svg?invert_in_darkmode&sanitize=true" align=middle width=44.56994024999999pt height=21.18721440000001pt/>, the constraints are the same as those in dynamic model, which are neglected here. When <img src="/examples/quadradic/tex/de8eee40443fcbaf76ac873e40ccc291.svg?invert_in_darkmode&sanitize=true" align=middle width=78.40560584999999pt height=21.18721440000001pt/>, besides the constraints that all variables are non-negative, there many ten sets of constraints:
+When $m = 1$, the constraints are the same as those in dynamic model, which are neglected here. When $m = 2 \text{ or } 3$, besides the constraints that all variables are non-negative, there many ten sets of constraints:
 
 1. limit of timber amount in wood production:
 
-<p align="center"><img src="/examples/quadradic/tex/ffc9eedc722fe451ea0fbe96ae63927f.svg?invert_in_darkmode&sanitize=true" align=middle width=364.92959744999996pt height=41.9486826pt/></p>
+$$
+h_{n, m, t} \geq \sum_{i \in I^{T1}_t} a^I_{i} y^I_{n, m, i} \quad \forall t \in T^1, m \in \{2, 3\}, n \in N
+$$
 
 2. limit of timber amount in pulp and paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/620567475c0888e96f18984d417f6388.svg?invert_in_darkmode&sanitize=true" align=middle width=617.2434774pt height=59.1786591pt/></p>
+$$
+\left(h_{n, m, t} + \sum_{i \in I^{T2}_t} b^I_{i} y^I_{n, m, i} \right) \geq \sum_{j \in J^{T2}_t} a^J_j y^J_{n, m, j} + a^{\text{paper}}_{t} y^{\text{paper}}_{n, m} \quad \forall t \in T^2, m \in \{2, 3\}, n \in N
+$$
 
 3. limit of pulp amount in paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/66b3a7c5988dc1ccb4a7b0d36d3e9237.svg?invert_in_darkmode&sanitize=true" align=middle width=343.18696994999993pt height=21.469790099999997pt/></p>
+$$
+y^J_{n, m, j} \geq b^{\text{paper}}_j y^{\text{paper}}_{n, m} \quad \forall j \in J, m \in \{2, 3\}, n \in N
+$$
 
 4. limit of wood amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/b7c1f237d96d57f9e10bf0b854331c10.svg?invert_in_darkmode&sanitize=true" align=middle width=339.7693233pt height=37.90293045pt/></p>
+$$
+y^I_{n, m, i} \geq \sum_{k \in K} z^I_{n, m, i, k} \quad \forall i \in I, m \in \{2, 3\}, n \in N
+$$
 
 5. limit of pulp amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/a7a5ffa153a30f3921e3f987517c4e4a.svg?invert_in_darkmode&sanitize=true" align=middle width=446.6264913pt height=37.90293045pt/></p>
+$$
+y^J_{n, m, j} - b^{\text{paper}}_j y^{\text{paper}}_{n, m} \geq \sum_{k \in K} z^J_{n, m, j, k} \quad \forall j \in J, m \in \{2, 3\}, n \in N
+$$
 
 6. limit of paper amount in selling:
 
-<p align="center"><img src="/examples/quadradic/tex/7648147f3d5b1911c43d9f192d9ed01d.svg?invert_in_darkmode&sanitize=true" align=middle width=290.3867472pt height=37.90293045pt/></p>
+$$
+y^{\text{paper}}_{n, m} \geq \sum_{k \in K} z^{\text{paper}}_{n, m, k} \quad \forall m \in \{2, 3\}, n \in N
+$$
 
 7. limit of capacity in saw mill:
 
-<p align="center"><img src="/examples/quadradic/tex/ddea00002a798a378239a083ed553ab9.svg?invert_in_darkmode&sanitize=true" align=middle width=293.7277167pt height=66.10372725pt/></p>
+$$
+\begin{align}
+    & \sum_{i \in I^{\text{saw}}} y^I_{n, m, i} \leq x^{\text{saw}}_{n, m} \quad \forall m \in \{2, 3\}, n \in N \\
+		& x^{\text{saw}}_{1, 2} = x^{\text{saw}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
+\end{align}
+$$
 
 8. limit of capacity in plywood mill:
 
-<p align="center"><img src="/examples/quadradic/tex/d0153c1c0720e53c21047d8b994cc07f.svg?invert_in_darkmode&sanitize=true" align=middle width=329.16755355pt height=69.63788865pt/></p>
+$$
+\begin{align}
+    & \sum_{i \in I^{\text{plywood}}} y^I_{m, i} \leq x^{\text{plywood}}_{n, m} \quad \forall m \in \{2, 3\}, n \in N \\
+		& x^{\text{plywood}}_{1, 2} = x^{\text{plywood}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
+\end{align}
+$$
 
 9. limit of capacity in pulp production:
 
-<p align="center"><img src="/examples/quadradic/tex/e6052920e5c407b94c09850de256d7a1.svg?invert_in_darkmode&sanitize=true" align=middle width=304.94197965pt height=48.478473449999996pt/></p>
+$$
+\begin{align}
+		& y^J_{n, m, j} \leq x^J_{n, m, j} \quad \forall j \in J, m \in \{2, 3\}, n \in N \\
+		& x^J_{1, 2, j} = x^J_{n, 2, j} \quad \forall n \in \{2, 3, 4\}, j \in J
+\end{align}
+$$
 
 10. limit of capacity in paper production:
 
-<p align="center"><img src="/examples/quadradic/tex/33153e97b3d700fb293e5ff0654c7edf.svg?invert_in_darkmode&sanitize=true" align=middle width=258.96496725pt height=45.634419599999994pt/></p>
+$$
+\begin{align}
+    & y^{\text{paper}}_{n, m} \leq x^{\text{paper}}_{n, m} \quad \forall m \in \{2, 3\}, n \in N \\
+		& x^{\text{paper}}_{1, 2} = x^{\text{paper}}_{n, 2} \quad \forall n \in \{2, 3, 4\}
+\end{align}
+$$
 
 11. relation between capacity expansion factors
 
-<p align="center"><img src="/examples/quadradic/tex/093c5077d93657dcfaddcfd524d62a28.svg?invert_in_darkmode&sanitize=true" align=middle width=155.37469695pt height=88.58448225pt/></p>
+$$
+\begin{align}
+    & x_{1} = r \quad \forall x, r \\
+    & x_{2} \geq x_{1} \quad \forall x \\
+    & x_{3} \geq x_{2} \quad \forall x \\
+    & x_{m} \leq \nu r \quad \forall x, m \in M \\
+\end{align}
+$$
 
 ## 4, Results
 
-obj = <img src="/examples/quadradic/tex/6d97a4427606463465aaa42cce843fd7.svg?invert_in_darkmode&sanitize=true" align=middle width=61.535618099999986pt height=21.18721440000001pt/>
+obj = $\underline{\underline{1.3801e6}}$
 
-profit in the first year = <img src="/examples/quadradic/tex/578c7b26a80e4191c8bc4fbaf24ddc53.svg?invert_in_darkmode&sanitize=true" align=middle width=86.75831834999998pt height=21.18721440000001pt/> ;
-discounted average profit in the second year = <img src="/examples/quadradic/tex/4794fc1ceaab8475bdafb5a367c83d1c.svg?invert_in_darkmode&sanitize=true" align=middle width=86.75831834999998pt height=21.18721440000001pt/> ;
-discounted average profit in the third year = <img src="/examples/quadradic/tex/d0a9b6ec7fea06620d8749fb0ae5b4fc.svg?invert_in_darkmode&sanitize=true" align=middle width=86.75831834999998pt height=21.18721440000001pt/> ;
+profit in the first year = $\underline{\underline{325372.4171}}$ ;
+discounted average profit in the second year = $\underline{\underline{517107.8649}}$ ;
+discounted average profit in the third year = $\underline{\underline{537152.0540}}$ ;
