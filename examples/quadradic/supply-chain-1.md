@@ -11,27 +11,27 @@ The supply chain is illustrated using the following figure:
 
 $$
 \begin{array}{c l c}
-	  \hline
-	  \text{Symbol} & \text{Definition} & \text{Expression} \\
-	  \hline
-	  T^1 & \text{type of timber 1} & \{\text{MAT}, \text{KUT}, \text{KOT} \} \\
-	  T^2 & \text{type of timber 2} & \{\text{MAK}, \text{KUK}, \text{KOK} \} \\
-		T & \text{type of timber} & T^1 \cup T^2 \\
-		I^{T1}_{t = \text{MAT}} & \text{outputs of wood production corresponding to input MAT} & \{\text{MAS} \} \\
-		I^{T1}_{t = \text{KUT}} & \text{outputs of wood production corresponding to input KUT} & \{\text{KUS}, \text{KUV} \} \\
-		I^{T1}_{t = \text{KOT}} & \text{outputs of wood production corresponding to input KOT} & \{\text{KOS}, \text{KOV} \} \\
-		I^{T2}_{t = \text{MAK}} & \text{outputs of wood production corresponding to output MAK} & \{\text{MAS} \} \\
-		I^{T2}_{t = \text{KUK}} & \text{outputs of wood production corresponding to output KUK} & \{\text{KUS}, \text{KUV} \} \\
-		I^{T2}_{t = \text{KOK}} & \text{outputs of wood production corresponding to output KOK} & \{\text{KOS}, \text{KOV} \} \\
-	  I^{\text{saw}} & \text{outputs of wood production in saw mill} & \{\text{MAS}, \text{KUS}, \text{KOS} \} \\
-	  I^{\text{plywood}} & \text{outputs of wood production in plywood mill} & \{\text{KUV}, \text{KOV} \} \\
-		I & \text{outputs of wood production} & I^{\text{saw}} \cup I^{\text{plywood}} \\
-		J & \text{outputs of pulp production} & \{\text{HSEL}, \text{LSEL} \} \\
-		J^{T2}_{t = \text{MAK}} & \text{outputs of pulp production corresponding to input MAK} & \{\text{HSEL} \} \\
-		J^{T2}_{t = \text{KUK}} & \text{outputs of pulp production corresponding to input KUK} & \varnothing \\
-		J^{T2}_{t = \text{KOK}} & \text{outputs of pulp production corresponding to input KOK} & \{\text{LSEL} \} \\
-		K & \text{regions to sell products} & \{\text{EU}, \text{IE}, \text{PA}, \text{KI} \} \\
-	  \hline
+	\hline
+	\text{Symbol} & \text{Definition} & \text{Expression} \\
+	\hline
+	T^1 & \text{type of timber 1} & \{\text{MAT}, \text{KUT}, \text{KOT} \} \\
+	T^2 & \text{type of timber 2} & \{\text{MAK}, \text{KUK}, \text{KOK} \} \\
+	T & \text{type of timber} & T^1 \cup T^2 \\
+	I^{T1}_{t = \text{MAT}} & \text{outputs of wood production corresponding to input MAT} & \{\text{MAS} \} \\
+	I^{T1}_{t = \text{KUT}} & \text{outputs of wood production corresponding to input KUT} & \{\text{KUS}, \text{KUV} \} \\
+	I^{T1}_{t = \text{KOT}} & \text{outputs of wood production corresponding to input KOT} & \{\text{KOS}, \text{KOV} \} \\
+	I^{T2}_{t = \text{MAK}} & \text{outputs of wood production corresponding to output MAK} & \{\text{MAS} \} \\
+	I^{T2}_{t = \text{KUK}} & \text{outputs of wood production corresponding to output KUK} & \{\text{KUS}, \text{KUV} \} \\
+	I^{T2}_{t = \text{KOK}} & \text{outputs of wood production corresponding to output KOK} & \{\text{KOS}, \text{KOV} \} \\
+	I^{\text{saw}} & \text{outputs of wood production in saw mill} & \{\text{MAS}, \text{KUS}, \text{KOS} \} \\
+	I^{\text{plywood}} & \text{outputs of wood production in plywood mill} & \{\text{KUV}, \text{KOV} \} \\
+	I & \text{outputs of wood production} & I^{\text{saw}} \cup I^{\text{plywood}} \\
+	J & \text{outputs of pulp production} & \{\text{HSEL}, \text{LSEL} \} \\
+	J^{T2}_{t = \text{MAK}} & \text{outputs of pulp production corresponding to input MAK} & \{\text{HSEL} \} \\
+	J^{T2}_{t = \text{KUK}} & \text{outputs of pulp production corresponding to input KUK} & \varnothing \\
+	J^{T2}_{t = \text{KOK}} & \text{outputs of pulp production corresponding to input KOK} & \{\text{LSEL} \} \\
+	K & \text{regions to sell products} & \{\text{EU}, \text{IE}, \text{PA}, \text{KI} \} \\
+	\hline
 \end{array}
 $$
 
@@ -39,17 +39,17 @@ _Table 1, summary of sets_
 
 $$
 \begin{array}{c l c c c}
-		\hline
-		\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
-		\hline
-		h_t & \text{purchasing amount of timber $t$} & \text{integer} & 1000 m^3 & T \\
-		y^I_{i} & \text{production amount of wood $i$} & \text{linear} & 1000 m^3 & I \\
-		y^J_{j} & \text{production amount of pulp $j$} & \text{linear} & 1000 m^3 & J \\
-		y^{\text{paper}} & \text{production amount of paper} & \text{linear} & 1000 m^3 & - \\
-		z^I_{i, k} & \text{selling amount of wood $i$ in region $k$} & \text{linear} & 1000 m^3 & I, K \\
-		z^J_{j, k} & \text{selling amount of pulp $j$ in region $k$} & \text{linear} & 1000 m^3 & J, K \\
-		z^{\text{paper}}_{k} & \text{selling amount of paper in region $k$} & \text{linear} & 1000 m^3 & K \\
-		\hline
+	\hline
+	\text{Symbol} & \text{Definition} & \text{Type} & \text{Unit} & \text{Set} \\
+	\hline
+	h_t & \text{purchasing amount of timber $t$} & \text{integer} & 1000 m^3 & T \\
+	y^I_{i} & \text{production amount of wood $i$} & \text{linear} & 1000 m^3 & I \\
+	y^J_{j} & \text{production amount of pulp $j$} & \text{linear} & 1000 m^3 & J \\
+	y^{\text{paper}} & \text{production amount of paper} & \text{linear} & 1000 m^3 & - \\
+	z^I_{i, k} & \text{selling amount of wood $i$ in region $k$} & \text{linear} & 1000 m^3 & I, K \\
+	z^J_{j, k} & \text{selling amount of pulp $j$ in region $k$} & \text{linear} & 1000 m^3 & J, K \\
+	z^{\text{paper}}_{k} & \text{selling amount of paper in region $k$} & \text{linear} & 1000 m^3 & K \\
+	\hline
 \end{array}
 $$
 
@@ -57,32 +57,32 @@ _Table 2, summary of decision variables_
 
 $$
 \begin{array}{c l c c}
-		\hline
-		\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
-		\hline
-		\alpha_t & \text{fixed cost factor of purchasing wood $t$} & \text{euro} / (1000 m^3) & T \\
-		\beta_t & \text{unit cost factor of purchasing wood $t$} & \text{euro} / (1000 m^6) & T \\
-		a^I_i & \text{relation of timber input and output in wood production $i$} & - & I\\
-		b^I_i & \text{relation of timber output and output in wood production $i$} & - & I \\
-		e^I_i & \text{relation of fuel output and output in wood production $i$} & - & I \\
-		c^I_i & \text{cost of wood production $i$} & \text{euro} / (1000 m^3) & I \\
-		r^{\text{saw}} & \text{capacity of saw mill in wood production $i$} & 1000 m^3 / \text{year} & - \\
-		r^{\text{plywood}} & \text{capacity of plywood mill in wood production $i$} & 1000 m^3 / \text{year} & - \\
-		a^J_j & \text{input and output relation of pulp production $j$} & - & J \\
-		c^J_j & \text{cost of pulp production $j$} & \text{euro} / (1000 \text{ton}) & J \\
-		r^J_j & \text{capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
-		a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
-		b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
-		c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
-		r^{\text{paper}} & \text{capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
-		\gamma^{I}_{i, k} & \text{fixed price factor of wood $i$ in region $k$} & \text{euro} / (1000 m^3) & I, K \\
-		\delta^{I}_{i, k} & \text{unit price factor of wood $i$ in region $k$} & \text{euro} / (10^6 m^6) & I, K \\
-		\gamma^{J}_{j, k} & \text{fixed price factor of pulp $j$ in region $k$} & \text{euro} / (1000 \text{ton}) & J, K \\
-		\delta^{J}_{j, k} & \text{unit price factor of pulp $j$ in region $k$} & \text{euro} / (10^6 \text{ton}^2) & J, K \\
-		\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in region $k$} & \text{euro} / (1000 \text{ton}) & K \\
-		\delta^{\text{paper}}_{k} & \text{unit price factor of paper in region $k$} & \text{euro} / (10^6 \text{ton}^2) & K \\
-		p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
-		\hline
+	\hline
+	\text{Symbol} & \text{Definition} & \text{Unit} & \text{Set} \\
+	\hline
+	\alpha_t & \text{fixed cost factor of purchasing wood $t$} & \text{euro} / (1000 m^3) & T \\
+	\beta_t & \text{unit cost factor of purchasing wood $t$} & \text{euro} / (1000 m^6) & T \\
+	a^I_i & \text{relation of timber input and output in wood production $i$} & - & I\\
+	b^I_i & \text{relation of timber output and output in wood production $i$} & - & I \\
+	e^I_i & \text{relation of fuel output and output in wood production $i$} & - & I \\
+	c^I_i & \text{cost of wood production $i$} & \text{euro} / (1000 m^3) & I \\
+	r^{\text{saw}} & \text{capacity of saw mill in wood production $i$} & 1000 m^3 / \text{year} & - \\
+	r^{\text{plywood}} & \text{capacity of plywood mill in wood production $i$} & 1000 m^3 / \text{year} & - \\
+	a^J_j & \text{input and output relation of pulp production $j$} & - & J \\
+	c^J_j & \text{cost of pulp production $j$} & \text{euro} / (1000 \text{ton}) & J \\
+	r^J_j & \text{capacity of pulp production $j$} & 1000 \text{ton} / \text{year} & J \\
+	a^{\text{paper}}_{t} & \text{relation of timber inputs in paper production} & - & T \\
+	b^{\text{paper}}_{j} & \text{relation of pulp inputs in paper production} & - & J \\
+	c^{\text{paper}} & \text{cost of paper production} & \text{euro} / (1000 \text{ton}) & - \\
+	r^{\text{paper}} & \text{capacity of paper production} & 1000 \text{ton} / \text{year} & - \\
+	\gamma^{I}_{i, k} & \text{fixed price factor of wood $i$ in region $k$} & \text{euro} / (1000 m^3) & I, K \\
+	\delta^{I}_{i, k} & \text{unit price factor of wood $i$ in region $k$} & \text{euro} / (10^6 m^6) & I, K \\
+	\gamma^{J}_{j, k} & \text{fixed price factor of pulp $j$ in region $k$} & \text{euro} / (1000 \text{ton}) & J, K \\
+	\delta^{J}_{j, k} & \text{unit price factor of pulp $j$ in region $k$} & \text{euro} / (10^6 \text{ton}^2) & J, K \\
+	\gamma^{\text{paper}}_{k} & \text{fixed price factor of paper in region $k$} & \text{euro} / (1000 \text{ton}) & K \\
+	\delta^{\text{paper}}_{k} & \text{unit price factor of paper in region $k$} & \text{euro} / (10^6 \text{ton}^2) & K \\
+	p^{\text{fuel}} & \text{price of fuel wood} & \text{euro} / (1000 m^3) & - \\
+	\hline
 \end{array}
 $$
 
@@ -102,11 +102,7 @@ $$
 
 3. cost of pulp and paper production: $ f^{\text{pp}} = - \sum_{j \in J} c^J_j y^J_j - c^{\text{paper}} y^{\text{paper}} $
 
-4. profit of left timbers selling:
-
-$$
-g^{\text{timber}} = \sum_{t \in T^1} \alpha_t \left(h_t - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) + \sum_{t \in T^2} \alpha_t \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i - \sum_{j \in J^{T2}_t} a^J_j y^J_j - a^{\text{paper}}_t y^{\text{paper}} \right)
-$$
+4. profit of left timbers selling: $ g^{\text{timber}} = \sum_{t \in T^1} \alpha_t \left(h_t - \sum_{i \in I^{T1}_t} a^I_i y^I_i \right) + \sum_{t \in T^2} \alpha_t \left(h_t + \sum_{i \in I^{T2}_t} b^I_i y^I_i - \sum_{j \in J^{T2}_t} a^J_j y^J_j - a^{\text{paper}}_t y^{\text{paper}} \right) $
 
 5. profit of fuel wood selling: $ g^{\text{fuel}} = \sum_{i \in I} p^{\text{fuel}} e^I_i y^I_i $
 
