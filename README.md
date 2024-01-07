@@ -1,6 +1,6 @@
 # MatrixOptim.jl
 
-[![Build Status](https://travis-ci.org/edxu96/MatrixOptim.jl.svg?branch=master)](https://travis-ci.org/edxu96/MatrixOptim.jl) [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
+[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
 
 MILP, Robust Optim. and Stochastic Optim., Decomposition Algorithms, and more in Matrix.
 
