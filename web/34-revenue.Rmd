@@ -26,14 +26,3 @@ Usually, advance selling is the background.
 > Early purchase discount may have to be offered to consumers to compensate them against the risks of realizing negative surplus in the future. [@prasad2011advance]
 
 - [3] Load Shifting
-
-
-
-```{r child = '../docs/revenue-pricing.Rmd'}
-```
-
-```{r child = '../docs/revenue-scalper.Rmd'}
-```
-
-```{r child = '../docs/revenue-strategic.Rmd'}
-```

@@ -1,9 +1,0 @@
----
-editor_options:
-  chunk_output_type: console
----
-
-# Game Theory
-
-```{r child = '../docs/game-MD.Rmd'}
-```
