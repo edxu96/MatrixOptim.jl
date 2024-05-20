@@ -1,9 +1,0 @@
-# book_filename: "MatrixOptim"
-book_filename: _main.md
-language:
-  ui:
-    chapter_name: "Chapter "
-delete_merged_file: true
-new_session: yes
-output_dir: _book
-clean: [packages.bib, bookdown.bbl]

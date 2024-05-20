@@ -1,6 +1,3 @@
-# Framework for
-# Edward J. Xu, edxu96@outlook.com
-# Aug 25, 2019
 
 module MatrixOptimFramework
 
