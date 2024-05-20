@@ -4,8 +4,6 @@
 
 MILP, Robust Optim. and Stochastic Optim., Decomposition Algorithms, and more in Matrix.
 
-![Tangram](/img/tangram.png)
-
 `MatrixOptim.jl` is a package to model and solve optimization in uncertain context. The
 templates for robust optimization and stochastic optimization formulated in matrix are very
 coherent comprehensive, and the algorithms in matrix are very explicit.
