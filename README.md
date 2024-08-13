@@ -1,7 +1,5 @@
 # MatrixOptim.jl
 
-[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
-
 MILP, Robust Optim. and Stochastic Optim., Decomposition Algorithms, and more in Matrix.
 
 `MatrixOptim.jl` is a package to model and solve optimization in uncertain context. The
@@ -15,7 +13,7 @@ that time. I am trying to keep it up-to-date these days.
 
 The MILP can always be formulated in the following matrixes:
 
-```
+```plain
 min  vec_c' * vec_x + vec_f' * vec_y
 s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
      vec_x in R
@@ -24,11 +22,11 @@ s.t. mat_A * vec_x + mat_B * vec_y <= vec_b
 
 ## Installation and Test
 
-```
+```console
 (v1.1) pkg> add MatrixOptim
 ```
 
-```
+```console
 (v1.1) pkg> test MatrixOptim
 ```
 
@@ -70,13 +68,8 @@ like `Gurobi` and `CPLEX` later.
 - [ ] L-Shaped Benders Decomp for Stochastic Optim
 - [ ] Dantzig-Wolfe Decomposition Family
 
-### Related to Development
-
-- [BlueStyle](https://github.com/invenia/BlueStyle): a Style Guide for Julia
-
 ## More Info
 
 - Cookbook for theories and algorithms in MatrixOptim:
-  [MatrixOptim-Cookbook](./files/MatrixOptim-Cookbook.pdf) .
-- 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。虽然项目是用
-  英文写的，但是有[中文详解](https://github.com/edxu96/MatrixOptim/wiki/9-zh)。
+  [MatrixOptim-Cookbook](https://github.com/edxu96/MatrixOptim.jl/releases/download/v0.1.0/190907.pdf) .
+- 矩阵优化：通过矩阵表示混合整数线性规划，鲁棒（抗差）优化，随机优化和分解算法。
