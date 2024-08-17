@@ -4,46 +4,65 @@ author: "Edward Xu"
 jupyter: julia-1.8
 ---
 
-The standard form for a two-stage stochastic programming problem (without integer variable in the second stage) is:
+| Symbol       | Definition                                         | Note |
+|--------------|----------------------------------------------------|------|
+| $\Omega$     | scenarios                                          |      |
+| $\mathbf{Y}$ | possible values of the vector of integer variables |      |
+
+: Definitions and notes of symbols.
+
+The standard form of a two-stage stochastic programming problem (without integer variable in the second stage) is:
 
 $$
 \begin{align}
-    \min \quad & \mathbf{f}^T \mathbf{y} + \sum_{s \in \Omega} \pi_s \mathbf{c}_s^T \mathbf{x}_s \\
-    \text{s.t.} \quad & \mathbf{T}_s \mathbf{y} + \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s \quad \forall s \\ 
+    \min \quad & \mathbf{f}^\top \mathbf{y} + 
+        \sum_{s \in \Omega} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{T}_s \mathbf{y} 
+        + \mathbf{W}_s \mathbf{x}_s 
+        \geq \mathbf{h}_s 
+        \quad \forall s \in \Omega \\ 
     & \mathbf{y} \in \mathbf{Y} \\ 
-    & \mathbf{x}_s \geq 0 \quad \forall s
+    & \mathbf{x}_s \geq 0 \quad \forall s \in \Omega
 \end{align}
 $$
 
 where $\mathbf{y}$ represents all the integer variables.
 
+### Main problem
+
 The main problem is:
 
 $$
 \begin{align}
-    \min \quad& \mathbf{f}^T \mathbf{y} + q \\
-    \text{s.t.} \quad& \overline{\mathbf{u}_j^r}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq 0 \quad \forall j \\ 
-    & \overline{\mathbf{u}_i^p}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq \quad \forall i \\ 
+    \min \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
+    \text{s.t.} \quad & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
+        \leq 0 \quad \forall j \\ 
+    & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
+        \leq \theta \quad \forall i \\ 
     & \mathbf{y} \in \mathbf{Y}
 \end{align}
 $$
 
-Sub-problem for each scenario:
+### Sub problem
+
+The sub-problem of scenario $s$ is:
 
 $$
 \begin{align}
-    \min \quad & \mathbf{c}_s^T \mathbf{x}_s \\
-    \text{s.t.} \quad & \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
+    \min \quad & \mathbf{c}_s^\top \mathbf{x}_s \\
+    \text{s.t.} \quad & 
+    \mathbf{W}_s \mathbf{x}_s \geq 
+        \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
     & \mathbf{x}_s \geq 0
 \end{align}
 $$
 
-Dual problem of sub-problem is:
+of which the dual problem is:
 
 $$
 \begin{align}
-    \max \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^T \mathbf{u}_s \\
-    \text{s.t.} \quad & \mathbf{w}_s^T \mathbf{u}_s \leq \mathbf{c}^T \\
+    \max \quad & w = \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
+    \text{s.t.} \quad & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{c}^T \\
     & \mathbf{u}_s \geq 0
 \end{align}
 $$
@@ -52,7 +71,19 @@ The aggregation of $\overline{\mathbf{u}}$ and $\text{obj}_{\text{sub}}$ from al
 
 $$
 \begin{align}
-    \overline{\mathbf{u}} &= \sum_{s \in \Omega} \pi_s \mathbf{u}_s \\
-    \text{obj}_{\text{sub}} &= \sum_{s \in \Omega} \pi_s \text{obj}_{\text{sub}, s} \\
+    \overline{\mathbf{u}} &= \sum_{s \in \Omega} p_s \mathbf{u}_s \\
+    \overline{w} &= \sum_{s \in \Omega} p_s w_s \\
 \end{align}
 $$
+
+### Feasibility cut
+
+extreme ray
+
+### Optimality cut
+
+extrame point
+
+## Compare deterministic formulation with stochastic one
+
+## Risk aversion
