@@ -4,10 +4,10 @@ author: "Edward Xu"
 jupyter: julia-1.8
 ---
 
-| Symbol       | Definition                                         | Note |
-|--------------|----------------------------------------------------|------|
-| $\Omega$     | scenarios                                          |      |
-| $\mathbf{Y}$ | possible values of the vector of integer variables |      |
+| Symbol        | Definition                                         | Note |
+|---------------|----------------------------------------------------|------|
+| $\mathcal{S}$ | scenarios                                          |      |
+| $\mathbf{Y}$  | possible values of the vector of integer variables |      |
 
 : Definitions and notes of symbols.
 
@@ -16,17 +16,36 @@ The standard form of a two-stage stochastic programming problem (without integer
 $$
 \begin{align}
     \min \quad & \mathbf{f}^\top \mathbf{y} + 
-        \sum_{s \in \Omega} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
+        \sum_{s \in \mathcal{S}} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
     \text{s.t.} \quad & \mathbf{T}_s \mathbf{y} 
         + \mathbf{W}_s \mathbf{x}_s 
         \geq \mathbf{h}_s 
-        \quad \forall s \in \Omega \\ 
+        \quad \forall s \in \mathcal{S} \\ 
     & \mathbf{y} \in \mathbf{Y} \\ 
-    & \mathbf{x}_s \geq 0 \quad \forall s \in \Omega
+    & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
 \end{align}
 $$
 
 where $\mathbf{y}$ represents all the integer variables.
+
+It can be formulated in another way that highlights the nature stochasticity:
+
+$$
+\begin{align}
+    \min \quad & \mathbf{f}^\top \mathbf{y} + 
+        \mathscr{Q}(x) \\
+    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\ 
+    & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
+\end{align}
+$$
+
+where $\mathscr{Q}(\overline{\mathbf{y}})$ represents the costs in the second stage, because of the first stage decision, $\overline{\mathbf{y}}$:
+
+$$
+\mathscr{Q}(\overline{\mathbf{y}}) = \mathrm{E}_{s \in \mathcal{S}} 
+    \left[ \min_{x_s} \left\{ c_s^\top x_s | \mathbf{T}_s \overline{\mathbf{y}} 
+        + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
+$$
 
 ### Main problem
 
@@ -36,9 +55,9 @@ $$
 \begin{align}
     \min \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
-        \leq 0 \quad \forall j \\ 
+        \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\ 
     & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
-        \leq \theta \quad \forall i \\ 
+        \leq \theta \quad \forall i \quad \text{(optimality cuts)} \\ 
     & \mathbf{y} \in \mathbf{Y}
 \end{align}
 $$
