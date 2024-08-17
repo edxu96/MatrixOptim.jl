@@ -26,7 +26,7 @@ $$
     & \mathbf{y} \in \mathbf{Y} \\ 
     & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
 \end{align}
-$$
+$$ {#eq-2-stage-stochastic}
 
 where $\mathbf{y}$ represents all the integer variables.
 
@@ -38,7 +38,7 @@ $$
         \mathscr{Q}(x) \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y}
 \end{align}
-$$
+$$ {#eq-2-stage-stochastic-2}
 
 where $\mathscr{Q}(\overline{\mathbf{y}})$ represents the costs in the second stage, because of the first stage decision, $\overline{\mathbf{y}}$:
 
@@ -48,7 +48,7 @@ $$
         + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
 $$
 
-$\mathscr{Q}(\overline{\mathbf{y}})$ can be easily calcualted in the corresponding deterministic formulation, but it will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
+$\mathscr{Q}(\overline{\mathbf{y}})$ can be easily calcuated in the corresponding deterministic formulation, but it will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
 
 ## L-shaped decomposition
 
@@ -67,13 +67,17 @@ $$
 \end{align}
 $$
 
-### Sub problem
+which is a relaxed problem of @eq-2-stage-stochastic, because not all the original constraints are considered. So every solution might result in a new lower bound.
+
+### Optimality cut
+
+extreme point
 
 The sub-problem of scenario $s$ is:
 
 $$
 \begin{align}
-    \min \quad & w = \mathbf{c}_s^\top \mathbf{x}_s \\
+    \min_{\mathbf{x}_s} \quad & w_s = \mathbf{c}_s^\top \mathbf{x}_s \\
     \text{s.t.} \quad & 
     \mathbf{W}_s \mathbf{x}_s \geq 
         \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
@@ -85,7 +89,7 @@ of which the dual problem is:
 
 $$
 \begin{align}
-    \max \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
+    \max_{\mathbf{u}_s} \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
     \text{s.t.} \quad & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{c}^T \\
     & \mathbf{u}_s \geq 0
 \end{align}
@@ -102,12 +106,21 @@ $$
 
 ### Feasibility cut
 
+If the sub problem is unbounded, then the original problem with the chosen integer variable values is infeasible. So we add a constraint to the main problem, a.k.a. a **feasibility cut**, which makes such a choice impossible in the next run.
+
 extreme ray
 
-### Optimality cut
-
-extrame point
+$$
+\begin{align}
+    \max_{\mathbf{u}_s} \quad & 1 \\
+    \text{s.t.} \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s = 1 \\
+    & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{0} \\
+    & \mathbf{u}_s \geq \mathbf{0}
+\end{align}
+$$
 
 ## Compare deterministic formulation with stochastic one
 
 ## Risk aversion
+
+## 
