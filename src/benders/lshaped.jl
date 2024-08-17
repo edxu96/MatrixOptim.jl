@@ -145,6 +145,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
         bool_sub_s[s], vec_result_x[s, :, :] = solve_sub!(mat_uBar[s, :, :],
           obj_sub_s[s], vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :],
           mat3_w[s, :, :], mat_c[s, :, :])
+
         if !(bool_sub_s[s])
           solve_ray!(mat_uBar[s, :, :], obj_sub_s[s], vec_ybar, n_constraint,
             mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :])

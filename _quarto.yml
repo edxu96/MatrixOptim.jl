@@ -2,7 +2,7 @@ project:
   title: "Decision making under uncertainty using matrices"
   output-dir: _output
   render:
-    - ./examples/benders/l_shaped.qmd
+    - ./docs/l-shaped.qmd
 toc: true
 number-sections: true
 format:

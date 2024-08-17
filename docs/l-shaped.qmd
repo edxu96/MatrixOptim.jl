@@ -1,7 +1,6 @@
 ---
 title: "L-shapred Benders Decomposition"
 author: "Edward Xu"
-jupyter: julia-1.8
 ---
 
 ## Two-stage stochastic programming problem
@@ -16,7 +15,7 @@ jupyter: julia-1.8
 The standard form of a two-stage stochastic programming problem (without integer variable in the second stage) is:
 
 $$
-\begin{align}
+\begin{aligned}
     \min \quad & \mathbf{f}^\top \mathbf{y} + 
         \sum_{s \in \mathcal{S}} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
     \text{s.t.} \quad & \mathbf{T}_s \mathbf{y} 
@@ -25,7 +24,7 @@ $$
         \quad \forall s \in \mathcal{S} \\ 
     & \mathbf{y} \in \mathbf{Y} \\ 
     & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
-\end{align}
+\end{aligned}
 $$ {#eq-2-stage-stochastic}
 
 where $\mathbf{y}$ represents all the integer variables.
@@ -33,11 +32,11 @@ where $\mathbf{y}$ represents all the integer variables.
 It can be formulated to the deterministic equivalent problem (DEP) that highlights the nature stochasticity:
 
 $$
-\begin{align}
+\begin{aligned}
     \min \quad & \mathbf{f}^\top \mathbf{y} + 
         \mathscr{Q}(x) \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y}
-\end{align}
+\end{aligned}
 $$ {#eq-2-stage-stochastic-2}
 
 where $\mathscr{Q}(\overline{\mathbf{y}})$ represents the costs in the second stage, because of the first stage decision, $\overline{\mathbf{y}}$:
@@ -57,14 +56,14 @@ $\mathscr{Q}(\overline{\mathbf{y}})$ can be easily calcuated in the correspondin
 The main problem is:
 
 $$
-\begin{align}
+\begin{aligned}
     \min \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
         \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\ 
     & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
         \leq \theta \quad \forall i \quad \text{(optimality cuts)}
-\end{align}
+\end{aligned}
 $$
 
 which is a relaxed problem of @eq-2-stage-stochastic, because not all the original constraints are considered. So every solution might result in a new lower bound.
@@ -76,32 +75,32 @@ extreme point
 The sub-problem of scenario $s$ is:
 
 $$
-\begin{align}
+\begin{aligned}
     \min_{\mathbf{x}_s} \quad & w_s = \mathbf{c}_s^\top \mathbf{x}_s \\
     \text{s.t.} \quad & 
     \mathbf{W}_s \mathbf{x}_s \geq 
         \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
     & \mathbf{x}_s \geq 0
-\end{align}
+\end{aligned}
 $$
 
 of which the dual problem is:
 
 $$
-\begin{align}
+\begin{aligned}
     \max_{\mathbf{u}_s} \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
     \text{s.t.} \quad & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{c}^T \\
     & \mathbf{u}_s \geq 0
-\end{align}
+\end{aligned}
 $$
 
 The aggregation of $\overline{\mathbf{u}}$ and $\text{obj}_{\text{sub}}$ from all scenarios are:
 
 $$
-\begin{align}
+\begin{aligned}
     \overline{\mathbf{u}} &= \sum_{s \in \Omega} p_s \mathbf{u}_s \\
     \overline{w} &= \sum_{s \in \Omega} p_s w_s \\
-\end{align}
+\end{aligned}
 $$
 
 ### Feasibility cut
@@ -111,16 +110,14 @@ If the sub problem is unbounded, then the original problem with the chosen integ
 extreme ray
 
 $$
-\begin{align}
+\begin{aligned}
     \max_{\mathbf{u}_s} \quad & 1 \\
     \text{s.t.} \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s = 1 \\
     & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{0} \\
     & \mathbf{u}_s \geq \mathbf{0}
-\end{align}
+\end{aligned}
 $$
 
 ## Compare deterministic formulation with stochastic one
 
 ## Risk aversion
-
-## 
