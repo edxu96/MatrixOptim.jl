@@ -4,6 +4,8 @@ author: "Edward Xu"
 jupyter: julia-1.8
 ---
 
+## Two-stage stochastic programming problem
+
 | Symbol        | Definition                                         | Note |
 |---------------|----------------------------------------------------|------|
 | $\mathcal{S}$ | scenarios                                          |      |
@@ -28,14 +30,13 @@ $$
 
 where $\mathbf{y}$ represents all the integer variables.
 
-It can be formulated in another way that highlights the nature stochasticity:
+It can be formulated to the deterministic equivalent problem (DEP) that highlights the nature stochasticity:
 
 $$
 \begin{align}
     \min \quad & \mathbf{f}^\top \mathbf{y} + 
         \mathscr{Q}(x) \\
-    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\ 
-    & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
+    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y}
 \end{align}
 $$
 
@@ -47,6 +48,10 @@ $$
         + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
 $$
 
+$\mathscr{Q}(\overline{\mathbf{y}})$ can be easily calcualted in the corresponding deterministic formulation, but it will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
+
+## L-shaped decomposition
+
 ### Main problem
 
 The main problem is:
@@ -54,11 +59,11 @@ The main problem is:
 $$
 \begin{align}
     \min \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
-    \text{s.t.} \quad & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
+    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
+    & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
         \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\ 
     & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
-        \leq \theta \quad \forall i \quad \text{(optimality cuts)} \\ 
-    & \mathbf{y} \in \mathbf{Y}
+        \leq \theta \quad \forall i \quad \text{(optimality cuts)}
 \end{align}
 $$
 
@@ -68,7 +73,7 @@ The sub-problem of scenario $s$ is:
 
 $$
 \begin{align}
-    \min \quad & \mathbf{c}_s^\top \mathbf{x}_s \\
+    \min \quad & w = \mathbf{c}_s^\top \mathbf{x}_s \\
     \text{s.t.} \quad & 
     \mathbf{W}_s \mathbf{x}_s \geq 
         \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
@@ -80,7 +85,7 @@ of which the dual problem is:
 
 $$
 \begin{align}
-    \max \quad & w = \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
+    \max \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
     \text{s.t.} \quad & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{c}^T \\
     & \mathbf{u}_s \geq 0
 \end{align}
