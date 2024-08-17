@@ -1,5 +1,6 @@
 
 cookbook/*.pdf
+docs/product.qmd
 
 # Created by https://www.gitignore.io/api/julia,macos
 # Edit at https://www.gitignore.io/?templates=julia,macos
