@@ -3,10 +3,9 @@
     "editor.wordWrapColumn": 79,
     "editor.wordWrap": "wordWrapColumn",
     "rewrap.wrappingColumn": 79,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "block",
     "[markdown]": {
         "editor.wordWrap": "on",
-    },
-    "[julia]": {
-        "editor.defaultFormatter": "singularitti.vscode-julia-formatter"
     },
 }
