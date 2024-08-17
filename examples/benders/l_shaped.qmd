@@ -4,7 +4,7 @@ author: "Edward Xu"
 jupyter: julia-1.8
 ---
 
-The standard form for a two-stage stochastic programming problem (without integer variable in the second stage) is: 
+The standard form for a two-stage stochastic programming problem (without integer variable in the second stage) is:
 
 $$
 \begin{align}
