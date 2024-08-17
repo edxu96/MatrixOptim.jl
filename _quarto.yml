@@ -1,0 +1,15 @@
+project:
+  title: "Decision making under uncertainty using matrices"
+  output-dir: _output
+  render:
+    - ./examples/benders/l_shaped.qmd
+toc: true
+number-sections: true
+format:
+  html:
+    html-math-method: katex
+    code-fold: true
+  pdf:
+    documentclass: report
+    margin-left: 30mm
+    margin-right: 30mm

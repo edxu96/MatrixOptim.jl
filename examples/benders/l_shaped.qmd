@@ -1,0 +1,52 @@
+---
+title: "L-shapred Benders Decomposition"
+author: "Edward Xu"
+jupyter: julia-1.8
+---
+
+The standard form for two stage stochastic programming with no integer variables in second stage:
+$$
+\begin{align}
+    \min \quad & \mathbf{f}^T \mathbf{y} + \sum_{s \in \Omega} \pi_s \mathbf{c}_s^T \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{T}_s \mathbf{y} + \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s \quad \forall s \\ 
+    & \mathbf{y} \in \mathbf{Y} \\ 
+    & \mathbf{x}_s \geq 0 \quad \forall s
+\end{align}
+$$
+where $\mathbf{y}$ represents all the integer variables.
+
+Master Problem:
+$$
+\begin{align}
+    \min \quad& \mathbf{f}^T \mathbf{y} + q \\
+    \text{s.t.} \quad& \overline{\mathbf{u}_j^r}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq 0 \quad \forall j \\ 
+    & \overline{\mathbf{u}_i^p}^T (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \leq \quad \forall i \\ 
+    & \mathbf{y} \in \mathbf{Y}
+\end{align}
+$$
+
+Sub-problem for each scenario:
+$$
+\begin{align}
+    \min \quad & \mathbf{c}_s^T \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{w}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
+    & \mathbf{x}_s \geq 0
+\end{align}
+$$
+
+Dual problem of sub-problem is:
+$$
+\begin{align}
+    \max \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^T \mathbf{u}_s \\
+    \text{s.t.} \quad & \mathbf{w}_s^T \mathbf{u}_s \leq \mathbf{c}^T \\
+    & \mathbf{u}_s \geq 0
+\end{align}
+$$
+
+The aggregation of $\overline{\mathbf{u}}$ and $\text{obj}_{\text{sub}}$ from all scenarios are:
+$$
+\begin{align}
+    \overline{\mathbf{u}} &= \sum_{s \in \Omega} \pi_s \mathbf{u}_s \\
+    \text{obj}_{\text{sub}} &= \sum_{s \in \Omega} \pi_s \text{obj}_{\text{sub}, s} \\
+\end{align}
+$$
