@@ -13,3 +13,12 @@ format:
     documentclass: report
     margin-left: 30mm
     margin-right: 30mm
+  revealjs:
+    scrollable: true
+    smaller: true
+    html-math-method: katex
+    self-contained-math: true
+    chalkboard: true
+    auto-stretch: true
+    width: 125%
+    height: 125%
