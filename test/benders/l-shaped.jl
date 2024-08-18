@@ -2,7 +2,7 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
 
-using MatrixOptim
+using MatrixOptim.LShaped
 
 function main()
     demand = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30] # Demand of newspapers in each scenario

@@ -85,7 +85,7 @@ L-Shaped decomposition for stochastic programming without integer variables in t
 function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h,
     mat3_t, mat3_w, epsilon=1e-6, timesIterationMax=100)
 
-    println("Begin L-Shaped Benders Decomposition")
+    println("Begin L-shaped decomposition")
     n_y = length(vec_min_y)
     num_s = length(mat3_t[:, 1, 1])
     n_constraint = length(mat3_w[1, :, 1])
