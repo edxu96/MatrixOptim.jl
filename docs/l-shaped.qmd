@@ -92,6 +92,8 @@ $$
 
 which is a relaxed problem of @eq-2-stage-stochastic, because not all the original constraints are considered. So every solution might result in a new lower bound.
 
+$\theta$
+
 ### Optimality cut
 
 extreme point
@@ -112,18 +114,19 @@ of which the dual problem is:
 
 $$
 \begin{aligned}
-    \max_{\mathbf{u}_s} \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
+    \max_{\mathbf{u}_s} \quad & \left(\mathbf{h}_s -
+        \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
     \text{s.t.} \quad & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{c}^T \\
     & \mathbf{u}_s \geq 0
 \end{aligned}
 $$
 
-The aggregation of $\overline{\mathbf{u}}$ and $\text{obj}_{\text{sub}}$ from all scenarios are:
+The expectation of $\overline{\mathbf{u}}$ based on all the scenarios is:
 
 $$
 \begin{aligned}
     \overline{\mathbf{u}} &= \sum_{s \in \Omega} p_s \mathbf{u}_s \\
-    \overline{w} &= \sum_{s \in \Omega} p_s w_s \\
+    \theta &= \sum_{s \in \Omega} p_s \mathbf{w}_s \\
 \end{aligned}
 $$
 
@@ -140,6 +143,14 @@ $$
     & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{0} \\
     & \mathbf{u}_s \geq \mathbf{0}
 \end{aligned}
+$$
+
+### Convergence criteria
+
+If the current $\mathbf{y}$ candidate satisfies the optimality constraint to be added in the next iteration:
+
+$$
+\left( \sum_{s \in \Omega} p_s \mathbf{u}_s \right)^\top (\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}}) \leq 0
 $$
 
 ## Compare deterministic formulation with stochastic one
