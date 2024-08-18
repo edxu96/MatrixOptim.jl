@@ -83,13 +83,21 @@ It will be obtained iteratively in the L-shaped decomposition, together with ite
 
 ```{mermaid}
 flowchart LR
-    BEGIN --> main(main problem)
+    main(main problem)
+    expectation(dual values)
+    sub1(sub problem 1)
+    sub2(sub problem 2)
+    convergence{tolerance}
+    status1{solution status 1}
+    status2{solution status 2}
+
+    BEGIN --> main
     main --> candidate
-    candidate --> sub1(sub problem 1)
-    candidate --> sub2(sub problem 2)
-    main --> |lower bound| convergence{tolerance}
-    sub1 --> status1{solution status 1}
-    sub2 --> status2{solution status 2}
+    candidate --> sub1
+    candidate --> sub2
+    main --> |lower bound| convergence
+    sub1 --> status1
+    sub2 --> status2
     status1 -- feasible --> expectation
     status2 -- feasible --> expectation
     status1 -- infeasible --> END
