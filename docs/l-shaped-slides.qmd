@@ -97,9 +97,26 @@ $$
 4. Add the cut to the main problem, and start the first step of a new iteration.
 
 ```{mermaid}
-graph LR
-    main(main problem) -->|candidate of the first stage| sub(sub problems)
-    sub -->|new cuts describing the second stage| main
+flowchart LR
+    BEGIN --> main(main problem)
+    main --> candidate
+    candidate --> sub1(sub problem 1)
+    candidate --> sub2(sub problem 2)
+    main --> |lower bound| convergence{tolerance}
+    sub1 --> status1{solution status 1}
+    sub2 --> status2{solution status 2}
+    status1 -- feasible --> expectation
+    status2 -- feasible --> expectation
+    status1 -- infeasible --> END
+    status2 -- infeasible --> END
+    status1 -- unbounded --> ray1(modified dual 1)
+    status2 -- unbounded --> ray2(modified dual 2)
+    ray1 --> expectation
+    ray2 --> expectation
+    expectation -->|cuts| main
+    expectation --> |upper bound| convergence
+    convergence -- yes --> END
+    convergence -- no --> main
 ```
 
 ---
