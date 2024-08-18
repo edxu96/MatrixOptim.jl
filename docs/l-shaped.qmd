@@ -16,34 +16,36 @@ The standard form of a two-stage stochastic programming problem (without integer
 
 $$
 \begin{aligned}
-    \min \quad & \mathbf{f}^\top \mathbf{y} + 
+    \min \quad & \mathbf{f}^\top \mathbf{y} +
         \sum_{s \in \mathcal{S}} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
-    \text{s.t.} \quad & \mathbf{T}_s \mathbf{y} 
-        + \mathbf{W}_s \mathbf{x}_s 
-        \geq \mathbf{h}_s 
-        \quad \forall s \in \mathcal{S} \\ 
-    & \mathbf{y} \in \mathbf{Y} \\ 
+    \text{s.t.} \quad & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
+    & \mathbf{y} \in \mathbf{Y} \\
+    & \mathbf{T}_s \mathbf{y}
+        + \mathbf{W}_s \mathbf{x}_s
+        \geq \mathbf{h}_s
+        \quad \forall s \in \mathcal{S} \\
     & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
 \end{aligned}
 $$ {#eq-2-stage-stochastic}
 
 where $\mathbf{y}$ represents all the integer variables.
 
-It can be formulated to the deterministic equivalent problem (DEP) that highlights the nature stochasticity:
+It can be formulated to the deterministic equivalent problem (DEP) with $\mathscr{Q}(\mathbf{y})$ represents the costs in the second stage, because of the first stage decision, $\mathbf{y}$:
 
 $$
 \begin{aligned}
-    \min \quad & \mathbf{f}^\top \mathbf{y} + 
-        \mathscr{Q}(x) \\
-    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y}
+    \min \quad & \mathbf{f}^\top \mathbf{y} +
+        \mathscr{Q}(\mathbf{y}) \\
+    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
+    & \mathbf{A} \mathbf{y} \geq \mathbf{b}
 \end{aligned}
 $$ {#eq-2-stage-stochastic-2}
 
-where $\mathscr{Q}(\overline{\mathbf{y}})$ represents the costs in the second stage, because of the first stage decision, $\overline{\mathbf{y}}$:
+For the sake of clearity, $\overline{\mathbf{y}}$ can represent a given value of $\mathbf{y}$:
 
 $$
-\mathscr{Q}(\overline{\mathbf{y}}) = \mathrm{E}_{s \in \mathcal{S}} 
-    \left[ \min_{x_s} \left\{ c_s^\top x_s | \mathbf{T}_s \overline{\mathbf{y}} 
+\mathscr{Q}(\overline{\mathbf{y}}) = \mathrm{E}_{s \in \mathcal{S}}
+    \left[ \min_{x_s} \left\{ c_s^\top x_s | \mathbf{T}_s \overline{\mathbf{y}}
         + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
 $$
 
@@ -59,9 +61,10 @@ $$
 \begin{aligned}
     \min \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
-    & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
-        \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\ 
-    & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) 
+    & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
+    & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+        \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\
+    & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
         \leq \theta \quad \forall i \quad \text{(optimality cuts)}
 \end{aligned}
 $$
@@ -77,8 +80,8 @@ The sub-problem of scenario $s$ is:
 $$
 \begin{aligned}
     \min_{\mathbf{x}_s} \quad & w_s = \mathbf{c}_s^\top \mathbf{x}_s \\
-    \text{s.t.} \quad & 
-    \mathbf{W}_s \mathbf{x}_s \geq 
+    \text{s.t.} \quad &
+    \mathbf{W}_s \mathbf{x}_s \geq
         \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
     & \mathbf{x}_s \geq 0
 \end{aligned}

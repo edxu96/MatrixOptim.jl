@@ -5,6 +5,8 @@
     "rewrap.wrappingColumn": 79,
     "editor.cursorBlinking": "solid",
     "editor.cursorStyle": "block",
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true,
     "[markdown]": {
         "editor.wordWrap": "on",
     },
