@@ -279,7 +279,7 @@ $$
 
 ---
 
-Convert the input to the standard format:
+Convert the input to the standard format (automatically):
 
 ```julia
 demand = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
@@ -320,6 +320,38 @@ lshaped(
 ```
 
 to reuse the main procedure (inside `lshaped` in this case), which has been validated by known test cases.
+
+---
+
+We can utilize the built-in Benders decomposition (for example, in Cplex) better by annotating the model:
+
+```python
+# Create a CPLEX problem instance
+cpx = cplex.Cplex()
+cpx.set_problem_type(cpx.problem_type.LP)
+cpx.objective.set_sense(cpx.objective.sense.minimize)
+
+# Variables
+# Q - order quantity
+# z[i] - total cost for scenario i
+cpx.variables.add(names=["Q"])
+for i in range(len(demands)):
+    cpx.variables.add(obj=[probability[i]], names=[f"z_{i}"])
+
+# Set Benders annotations
+cpx.variables.set_annotations("BendersAnnotation", [0], [1])  # Q is in master problem
+for i in range(len(demands)):
+    cpx.variables.set_annotations("BendersAnnotation", [i + 1], [-1])  # z[i] in subproblem
+
+# Constraints
+for i, demand in enumerate(demands):
+    # Subproblem constraints
+    expr = cplex.SparsePair(ind=["Q", f"z_{i}"], val=[C_o - C_h, 1])
+    cpx.linear_constraints.add(lin_expr=[expr], senses=["G"], rhs=[-C_h * demand])
+
+    expr = cplex.SparsePair(ind=["Q", f"z_{i}"], val=[C_o + C_p, 1])
+    cpx.linear_constraints.add(lin_expr=[expr], senses=["G"], rhs=[C_p * demand])
+```
 
 ---
 
