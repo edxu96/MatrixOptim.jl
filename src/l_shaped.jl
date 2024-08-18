@@ -54,12 +54,9 @@ function solve_sub(vec_ybar, n_constraint, vec_h, mat_t, mat_w, vec_c)
         obj_sub = objective_value(model_sub)
         vec_result_x = repeat([NaN], length(vec_c))
     elseif status == JuMP.INFEASIBLE
-        print("Not solved optimally because of infeasibility. Something is ",
-            "wrong.\n")
-        bool_sub = false
-        obj_sub = NaN
-        vec_ubar = hcat(vec_ubar)
-        vec_result_x = hcat(repeat([NaN], length(vec_c)))
+        throw(ErrorException("The original problem unbounded."))
+    else
+        throw(ErrorException("Unexpected termination status of a sub problem."))
     end
 
     return bool_sub, vec_result_x, vec_ubar, obj_sub
@@ -126,8 +123,8 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h
                         vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :])
                 end
             end
-            obj_sub = (transpose(probabilities)*obj_sub_s)[1]
-            ub = min(ub, obj_sub + (transpose(vec_f)*vec_ybar)[1])
+            obj_sub = (transpose(probabilities) * obj_sub_s)[1]
+            ub = min(ub, obj_sub + (transpose(vec_f) * vec_ybar)[1])
 
             ## 2. Add optimal cut to master problem
             e1_mat = sum(probabilities[s] * (transpose(mat_uBar[s, :])*mat3_t[s, :, :])[1]
