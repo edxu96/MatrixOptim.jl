@@ -185,7 +185,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h
         obj_sub_sRay = zeros(timesIteration - 1)
         vec_obj_mas = zeros(timesIteration - 1)
         vec_q = zeros(timesIteration - 1)
-        vec_type = repeat(["ray"], (timesIteration - 1))
+        vec_type = repeat([""], (timesIteration - 1))
 
         #
         for i = 1:(timesIteration-1)
@@ -197,6 +197,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h
                 vec_type[i] = "sub"
                 obj_sub_sRay[i] = round(dict_obj_sub[i], digits=5)
             else
+                vec_type[i] = "ray"
                 obj_sub_sRay[i] = round(dict_obj_ray[i], digits=5)
             end
         end

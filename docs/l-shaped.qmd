@@ -160,7 +160,7 @@ $$
 
 ### Newsvendor problem
 
-| Iteration | Upper bound | Lower bound | Objective function value of main problem | Value of theta | Sub or ray problem | Objective function value of sub/ray problem |
+| Iteration | Upper bound | Lower bound | Objective function value of main problem | Value of theta | Sub or ray problem | Expected value of objective function values of sub/ray problems |
 |------|--------|--------|-----------------|-------|-----------|-----------------|
 | 1         | 0.0         | -1500.0     | -1500.0                                  | -1800.0        | sub                | 0.0                                         |
 | 2         | -960.0      | -1050.0     | -1050.0                                  | -1260.0        | sub                | -1260.0                                     |
