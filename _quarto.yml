@@ -2,17 +2,19 @@ project:
   title: "Decision making under uncertainty using matrices"
   output-dir: _output
   render:
-    - ./docs/l-shaped.qmd
-toc: true
-number-sections: true
+    - ./docs/l-shaped-slides.qmd
 format:
   html:
+    toc: true
     html-math-method: katex
     code-fold: true
+    number-sections: true
   pdf:
+    toc: true
     documentclass: report
     margin-left: 30mm
     margin-right: 30mm
+    number-sections: true
   revealjs:
     scrollable: true
     smaller: true
