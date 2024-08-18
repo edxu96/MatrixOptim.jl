@@ -165,14 +165,6 @@ So, each sub problem is solved as follows:
 -   If the sub problem is unbounded, will solve a modified version of its dual problem, to find the extreme ray.
 -   If the sub problem is infeasible, will stop the iteration, because the original problem is unbounded.
 
-### Convergence criteria
-
-If the current $\mathbf{y}$ candidate satisfies the optimality constraint to be added in the next iteration:
-
-$$
-\left( \sum_{s \in \Omega} p_s \mathbf{u}_s \right)^\top (\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}}) \leq 0
-$$
-
 ## Example
 
 ### Newsvendor problem
@@ -202,7 +194,7 @@ $$
 | 5         | -975.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1245.0                                                         |
 | 6         | -976.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1236.0                                                         |
 
-: Detailed result of 6 iterations.
+: Detailed result of 6 iterations for the Newsvendor problem in standard format (which is a min problem).
 
 ### Day-ahead market and balancing market
 
