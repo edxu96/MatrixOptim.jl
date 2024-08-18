@@ -1,9 +1,5 @@
 
-import Pkg
 using Test
-
-Pkg.activate(".")
-
 using MatrixOptim
 
 include("./milp.jl")
