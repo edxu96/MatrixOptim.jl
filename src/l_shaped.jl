@@ -127,10 +127,12 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h
             ub = min(ub, obj_sub + (transpose(vec_f) * vec_ybar)[1])
 
             ## 2. Add optimal cut to master problem
-            e1_mat = sum(probabilities[s] * (transpose(mat_uBar[s, :])*mat3_t[s, :, :])[1]
-                         for s = 1:num_s)
-            e2 = sum(probabilities[s] * (transpose(mat_uBar[s, :])*mat_h[s, :])[1] for
-                     s = 1:num_s)
+            e1_mat = sum(
+                probabilities[s] * (transpose(mat_uBar[s, :]) * mat3_t[s, :, :])[1]
+                for s = 1:num_s)
+            e2 = sum(
+                probabilities[s] * (transpose(mat_uBar[s, :]) * mat_h[s, :])[1]
+                for s = 1:num_s)
 
             obj_mas = solve_main(mod_mas, vec_y, e1_mat, e2, is_sub_feasible[1])
             vec_ybar = value.(vec_y)

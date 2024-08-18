@@ -68,7 +68,7 @@ $$
         + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
 $$
 
-In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\overline{\mathbf{y}})$ to be easy, so there is no the second stage variables in the formulation.
+In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\overline{\mathbf{y}})$ to be easy, so there is no the second stage variables in that formulation.
 
 It will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
 
@@ -82,21 +82,22 @@ It will be obtained iteratively in the L-shaped decomposition, together with ite
 
 ### Main problem
 
-The main problem is:
+The main problem is a relaxed problem of @eq-2-stage-stochastic, with $\theta$ representing the cost of the second stage:
 
 $$
 \begin{aligned}
-    \min_{\mathbf{y}, $\theta$} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
+    \min_{\mathbf{y}, \theta} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
-    & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+    & {\overline{\mathbf{u}}_j}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
         \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\
-    & {\overline{\mathbf{u}}_i^p}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
-        \leq \theta \quad \forall i \quad \text{(optimality cuts)}
+    & {\overline{\mathbf{u}}_i}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+        \leq \theta \quad \forall i \quad \text{(optimality cuts)} \\
+    & \theta \in \mathbb{R}
 \end{aligned}
 $$
 
-which is a relaxed problem of @eq-2-stage-stochastic, because not all the original constraints are considered. So every solution might result in a new lower bound.
+Not all the original constraints are considered, but new cuts will be added in each iteration. Every solution of the main problem might result in a new lower bound.
 
 ### Optimality cut
 
