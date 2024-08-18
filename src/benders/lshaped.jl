@@ -8,11 +8,11 @@ using Random
 using SparseArrays
 using PrettyTables
 
-function set_mod_mas(n_y::Int64, vec_min_y::Matrix, vec_max_y::Matrix, vec_f::Matrix)
+function set_model_main(n_y::Int64, vec_min_y::Matrix, vec_max_y::Matrix, vec_f::Matrix)
     expr = Model(GLPK.Optimizer)
     @variable(expr, q)
     @variable(expr, vec_y[1:n_y], Int)
-    @objective(expr, Min, (transpose(vec_f)*vec_y)[1] + q)
+    @objective(expr, Min, (transpose(vec_f) * vec_y)[1] + q)
     @constraint(expr, vec_y[1:n_y] .<= vec_max_y)
     @constraint(expr, vec_y[1:n_y] .>= vec_min_y)
 
@@ -20,19 +20,19 @@ function set_mod_mas(n_y::Int64, vec_min_y::Matrix, vec_max_y::Matrix, vec_f::Ma
 end
 
 "First two variables are updated."
-function solve_master!(model_mas, vec_y, e1_mat, e2, opt_cut::Bool)::Float64
-    q = variable_by_name(model_mas, "q")
+function solve_main!(model_main, vec_y, e1_mat, e2, opt_cut::Bool)::Float64
+    q = variable_by_name(model_main, "q")
 
     if opt_cut
-        @constraint(model_mas, (e1_mat*vec_y)[1] + q >= e2)
+        @constraint(model_main, (e1_mat*vec_y)[1] + q >= e2)
     else
         ## Add feasible cut Constraints
-        @constraint(model_mas, (e1_mat*vec_y)[1] >= e2)
-        @constraint(model_mas, (e1_mat*vec_y)[1] + q >= e2)
+        @constraint(model_main, (e1_mat*vec_y)[1] >= e2)
+        @constraint(model_main, (e1_mat*vec_y)[1] + q >= e2)
     end
 
-    optimize!(model_mas)
-    return objective_value(model_mas)
+    optimize!(model_main)
+    return objective_value(model_main)
 end
 
 
@@ -92,22 +92,8 @@ function solve_ray!(vec_ubar, obj_ray, vec_ybar, n_constraint, vec_h, mat_t,
 end
 
 
-function check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub,
-    timesIteration, timesIterationMax)
-    whe_continue = true
-    if (boundUp - boundLow <= epsilon) & (boundUp - boundLow >= -epsilon)
-        if (result_q - obj_sub <= epsilon) & (result_q - obj_sub >= -epsilon)
-            whe_continue = false
-        end
-    end
-
-    return (timesIteration <= timesIterationMax) && whe_continue
-end
-
-
 """
-L-Shaped Benders Decomposition for Stochastic Programming without Integer
-  Variables in Second Stage.
+L-Shaped decomposition for stochastic programming without integer variables in the second stage.
 """
 function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
     mat3_t, mat3_w, epsilon=1e-6, timesIterationMax=100)
@@ -116,7 +102,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
     n_y = length(vec_min_y)
     num_s = length(mat3_t[:, 1, 1])
     n_constraint = length(mat3_w[1, :, 1])
-    mod_mas, vec_y = set_mod_mas(n_y, vec_min_y, vec_max_y, vec_f)
+    mod_mas, vec_y = set_model_main(n_y, vec_min_y, vec_max_y, vec_f)
 
     let
         ub = Inf  # upper bound
@@ -138,18 +124,18 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
         dict_lb = Dict()
 
         # Must make sure "result_q == obj_sub" in the final iteration
+		# while check_whe_continue(ub, lb, epsilon, result_q, obj_sub,
+		#     timesIteration, timesIterationMax)
         while ((ub - lb > epsilon) && (timesIteration <= timesIterationMax))
-            !!!
-            # while check_whe_continue(ub, lb, epsilon, result_q, obj_sub,
-            #     timesIteration, timesIterationMax)
+
             ## 1. Solve sub/ray problem for each scenario
-            bool_sub_s = trues(num_s)
+            is_model_sub_feasible = trues(num_s)
             for s = 1:num_s
-                bool_sub_s[s], vec_result_x[s, :, :] = solve_sub!(mat_uBar[s, :, :],
+                is_model_sub_feasible[s], vec_result_x[s, :, :] = solve_sub!(mat_uBar[s, :, :],
                     obj_sub_s[s], vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :],
                     mat3_w[s, :, :], mat_c[s, :, :])
 
-                if !(bool_sub_s[s])
+                if !(is_model_sub_feasible[s])
                     solve_ray!(mat_uBar[s, :, :], obj_sub_s[s], vec_ybar, n_constraint,
                         mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :])
                 end
@@ -163,7 +149,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
             e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :])*mat_h[s, :])[1] for
                      s = 1:num_s)
 
-            obj_mas = solve_master!(mod_mas, vec_y, e1_mat, e2, bool_sub_s[1])
+            obj_mas = solve_main!(mod_mas, vec_y, e1_mat, e2, is_model_sub_feasible[1])
             vec_ybar = value.(vec_y)
 
             ## 3. Compare the bounds and decide whether to stop
@@ -177,7 +163,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
             dict_obj_sub[timesIteration] = obj_sub
             dict_q[timesIteration] = result_q
 
-            if bool_sub_s[1]
+            if is_model_sub_feasible[1]
                 println("------------------ Result in $(timesIteration)-th Iteration with Sub ",
                     "-------------------\n", "ub: $(round(ub, digits = 5)), ",
                     "lb: $(round(lb, digits = 5)), obj_mas: $(round(obj_mas, digits = 5)), ",
