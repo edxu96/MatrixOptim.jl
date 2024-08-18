@@ -1,0 +1,269 @@
+---
+title: "L-shapred Benders Decomposition"
+author: "Edward Xu"
+---
+
+## Two-stage stochastic programming problem
+
+| Symbol         | Type                           | Definition                                    | Note                                                     |
+|-----------------|-----------------|-----------------|---------------------|
+| $\mathbf{y}$   | vector of integer variables    | variables in the first stage                  | The continuous variables in the first stage are omitted. |
+| $\mathbf{x}_s$ | vector of continuous variables | variables in the second stage of scenario $s$ |                                                          |
+
+: Symbols and definitions of decision variables
+
+| Symbol        | Definition                                         | Note |
+|---------------|----------------------------------------------------|------|
+| $\mathcal{S}$ | scenarios                                          |      |
+| $\mathbf{Y}$  | possible values of the vector of integer variables |      |
+
+: Definitions and notes of sets.
+
+The standard form of a two-stage stochastic programming problem (without integer variable in the second stage) is:
+
+$$
+\begin{aligned}
+    \min_{\mathbf{y}, \forall \mathbf{x}_s \in \mathcal{S}} \quad & \mathbf{f}^\top \mathbf{y} +
+        \sum_{s \in \mathcal{S}} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
+    \text{s.t.} \quad & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
+    & \mathbf{y} \in \mathbf{Y} \\
+    & \mathbf{T}_s \mathbf{y}
+        + \mathbf{W}_s \mathbf{x}_s
+        \geq \mathbf{h}_s
+        \quad \forall s \in \mathcal{S} \\
+    & \mathbf{x}_s \geq 0 \quad \forall s \in \mathcal{S}
+\end{aligned}
+$$ {#eq-2-stage-stochastic}
+
+| $\mathbf{y}$   | $\mathbf{x}_1$ | $\mathbf{x}_2$ | $\ldots$ | $\mathbf{x}_S$ | right-hand side |
+|------------|------------|------------|------------|------------|------------|
+| $\mathbf{A}$   |                |                |          |                | $\mathbf{b}$    |
+| $\mathbf{T}_1$ | $\mathbf{W}_1$ |                |          |                | $\mathbf{h}_1$  |
+| $\mathbf{T}_2$ |                | $\mathbf{W}_2$ |          |                | $\mathbf{h}_2$  |
+| $\vdots$       |                |                | $\ddots$ |                | $\vdots$        |
+| $\mathbf{T}_S$ |                |                |          | $\mathbf{W}_S$ | $\mathbf{h}_S$  |
+
+: Illustration of the block structure shown in the coefficient matrix.
+
+$\mathbf{y}$ is a vector of complicating variables, which make the decomposition a necessity.
+
+### Deterministic equivalent problem
+
+It can be formulated to the deterministic equivalent problem (DEP) with $\mathscr{Q}(\mathbf{y})$ represents the costs in the second stage, because of the first stage decision, $\mathbf{y}$:
+
+$$
+\begin{aligned}
+    \min_{\mathbf{y}, \forall \mathbf{x}_s \in \mathcal{S}} \quad & \mathbf{f}^\top \mathbf{y} +
+        \mathscr{Q}(\mathbf{y}) \\
+    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
+    & \mathbf{A} \mathbf{y} \geq \mathbf{b}
+\end{aligned}
+$$ {#eq-2-stage-stochastic-2}
+
+where:
+
+$$
+\mathscr{Q}(\mathbf{y}) = \mathrm{E}_{s \in \mathcal{S}}
+    \left[ \min_{x_s} \left\{ c_s^\top x_s |
+        \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right\} \right]
+$$ {#eq-second-stage}
+
+In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\mathbf{y})$ to be easy, so there is no the second stage variables in that formulation.
+
+It will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
+
+## L-shaped decomposition
+
+### Iteratively
+
+1. Solve the main problem to get $\overline{\mathbf{y}}$ (a set of candidate variable values of the first stage) and the latest lower bound.
+2. Based on $\overline{\mathbf{y}}$, solve all the sub problems to get an optimality or a feasibility cut and the upper bound.
+3. If two bounds are close enough, stop.
+4. Add the cut to the main problem, and start the first step of a new iteration.
+
+```{mermaid}
+flowchart LR
+    main(main problem)
+    expectation(dual values)
+    sub1(sub problem 1)
+    sub2(sub problem 2)
+    convergence{tolerance}
+    status1{solution status 1}
+    status2{solution status 2}
+
+    BEGIN --> main
+    main --> candidate
+    candidate --> sub1
+    candidate --> sub2
+    main --> |lower bound| convergence
+    sub1 --> status1
+    sub2 --> status2
+    status1 -- feasible --> expectation
+    status2 -- feasible --> expectation
+    status1 -- infeasible --> END
+    status2 -- infeasible --> END
+    status1 -- unbounded --> ray1(modified dual 1)
+    status2 -- unbounded --> ray2(modified dual 2)
+    ray1 --> expectation
+    ray2 --> expectation
+    expectation -->|cuts| main
+    expectation --> |upper bound| convergence
+    convergence -- yes --> END
+    convergence -- no --> main
+```
+
+### Main problem
+
+The main problem is a relaxed problem of @eq-2-stage-stochastic, with $\theta$ representing the cost of the second stage:
+
+$$
+\begin{aligned}
+    \min_{\mathbf{y}, \theta} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
+    \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
+    & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
+    & \mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_{s, j}}^\top
+        (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
+        \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\
+    & \mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_{s, i}}^\top
+        (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
+        \leq \theta \quad \forall i \quad \text{(optimality cuts)} \\
+    & \theta \in \mathbb{R}
+\end{aligned}
+$$ {#eq-main}
+
+Not all the original constraints are considered, but new cuts will be added in each iteration. Every solution of the main problem might result in a new lower bound.
+
+### Sub problems
+
+The sub problem of scenario $s$ is exactly the same as @eq-second-stage:
+
+$$
+\begin{aligned}
+    \min_{\mathbf{x}_s} \quad & w_s = \mathbf{c}_s^\top \mathbf{x}_s \\
+    \text{s.t.} \quad &
+    \mathbf{W}_s \mathbf{x}_s \geq
+        \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \\
+    & \mathbf{x}_s \geq 0
+\end{aligned}
+$$
+
+of which the dual problem is:
+
+$$
+\begin{aligned}
+    \max_{\mathbf{u}_s} \quad & \left(\mathbf{h}_s -
+        \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s \\
+    \text{s.t.} \quad & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{c}^T \\
+    & \mathbf{u}_s \geq 0
+\end{aligned}
+$$
+
+The expectation of $\overline{\mathbf{u}}$ based on all the scenarios is:
+
+$$
+\begin{aligned}
+    \overline{\mathbf{u}} &= \sum_{s \in \Omega} p_s \mathbf{u}_s
+\end{aligned}
+$$
+
+$\mathbf{f}^\top \overline{\mathbf{y}} + \overline{\mathbf{u}}$ might be the upper bound of the original problem.
+
+### Optimality cut
+
+The new optimality cut will be:
+
+$$
+\mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_s}^\top
+    (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
+    \leq 0
+$$
+
+### Feasibility cut
+
+If the sub problem is unbounded, then the original problem with the chosen integer variable values is infeasible. So we add a constraint to the main problem, a.k.a. a **feasibility cut**, which makes such a choice impossible in the next run.
+
+The sub problem does not have a solution, so we need to solve a modified version of its dual problem (to find extreme rays):
+
+$$
+\begin{aligned}
+    \max_{\mathbf{u}_s} \quad & 1 \\
+    \text{s.t.} \quad & \left(\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right)^\top \mathbf{u}_s = 1 \\
+    & \mathbf{W}_s^\top \mathbf{u}_s \leq \mathbf{0} \\
+    & \mathbf{u}_s \geq \mathbf{0}
+\end{aligned}
+$$
+
+So, each sub problem is solved as follows:
+
+-   If the sub problem is feasible, will consider its values of the dual variables.
+-   If the sub problem is unbounded, will solve a modified version of its dual problem, to find the extreme ray.
+-   If the sub problem is infeasible, will stop the iteration, because the original problem is unbounded.
+
+## Example
+
+### Newsvendor problem
+
+- $\pi_s$ : Probability of scenario $s$.
+- $c = 20$ : Purchase cost for the newsboy.
+- $p = 70$ : Salesprice for the newsboy.
+- $h = 10$ : Scrap value for the newsboy, for newspapers he does not manage to sell.
+- $D_s$ : Demand of newspapers in scenario $s$.
+
+$$
+\begin{aligned}
+    \max_{x_s \forall s \in \mathcal{S}, y} \quad & \sum_s \pi_s (p - h) x_s + \sum_s \pi_s (h - c) y \\
+    \text{s.t.} \quad & x_s \leq D_s \quad \forall s \in \mathcal{S} \\
+    & x_s \leq y \quad \forall s \in \mathcal{S} \\
+    & x \in \mathbb{R}^+ \\
+    & y \in \mathbb{Z}^+
+\end{aligned}
+$$
+
+| Iteration | Upper bound | Lower bound | Objective function value of main problem | Value of theta | Sub or ray problem | Expected value of objective function values of sub/ray problems |
+|-------|-------|-------|------------|---------|--------|-------------------|
+| 1         | 0.0         | -1500.0     | -1500.0                                  | -1800.0        | sub                | 0.0                                                             |
+| 2         | -960.0      | -1050.0     | -1050.0                                  | -1260.0        | sub                | -1260.0                                                         |
+| 3         | -960.0      | -1004.0     | -1004.0                                  | -1254.0        | sub                | -1134.0                                                         |
+| 4         | -971.0      | -981.0      | -981.0                                   | -1251.0        | sub                | -1221.0                                                         |
+| 5         | -975.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1245.0                                                         |
+| 6         | -976.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1236.0                                                         |
+
+: Detailed result of 6 iterations for the Newsvendor problem in standard format (which is a min problem).
+
+### Day-ahead market and balancing market
+
+- $\mathcal{S}$: Set of scenarios.
+- $\lambda^D$: Electricity price of the day-ahead market.
+- $\lambda^{+}$: Selling electricity price of the balancing market.
+- $\lambda^{-}$: Purchasing electricity price of the balancing market.
+- $\bar{P}$: Capacity of the wind farm.
+- $W_s$: Wind power production in scenario $s$.
+- $\pi_s$: Probability of scenario $s$.
+- $p^D$: Power sold on the day-ahead market.
+- $p^{+}$: Excess production sold on the balancing market.
+- $p^{-}$: Missing production bought on the balancing market.
+
+$$
+\begin{aligned}
+    \max \quad & \lambda^D p^D
+        + \sum_{s \in \mathcal{S}} \pi_s\left(\lambda^+ p_s^+
+        - \lambda^- p_s^-\right) \\
+    \text{s.t.} \quad & p^D \leq \bar{P} \\
+    & W_s-p^D=p_s^+-p_s^- \\
+    & p^D, p_s^+, p_s^- \in \mathbb{R}^+
+\end{aligned}
+$$
+
+## Analysis
+
+### Compare formulations
+
+For a stochastic programming problem, it is a good idea to compare with the deterministic formulation. As mentioned before, $\mathscr{Q}(\mathbf{y})$ is simplified in that formulation.
+
+### Benefits of decomposition
+
+Also, check if the decomposition brings significant benefits, in terms of computational time, complexity, and resources.
+
+### Risk aversion
+
+More risk management measures can be introduced in $\mathscr{Q}(\mathbf{y})$.

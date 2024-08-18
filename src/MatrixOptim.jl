@@ -1,18 +1,10 @@
 
 module MatrixOptim
 
-using JuMP
-using GLPK
-using LinearAlgebra
-using Random
-using SparseArrays
+include("./l_shaped.jl")
 
-include("./utils.jl")
-# include("./benders/main.jl")
-# include("./robust/main.jl")
-include("./milp.jl")
-# include("./dw/main.jl")
+using .LShaped
 
-export Solution, SolutionMix
+export LShaped
 
 end

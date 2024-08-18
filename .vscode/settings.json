@@ -3,10 +3,12 @@
     "editor.wordWrapColumn": 79,
     "editor.wordWrap": "wordWrapColumn",
     "rewrap.wrappingColumn": 79,
+    "editor.cursorBlinking": "solid",
+    "editor.cursorStyle": "block",
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true,
     "[markdown]": {
         "editor.wordWrap": "on",
     },
-    "[julia]": {
-        "editor.defaultFormatter": "singularitti.vscode-julia-formatter"
-    },
+    "julia.executablePath": "/opt/homebrew/bin/julia"
 }
