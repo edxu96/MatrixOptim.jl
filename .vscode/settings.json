@@ -10,4 +10,5 @@
     "[markdown]": {
         "editor.wordWrap": "on",
     },
+    "julia.executablePath": "/opt/homebrew/bin/julia"
 }
