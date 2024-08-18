@@ -125,8 +125,7 @@ The expectation of $\overline{\mathbf{u}}$ based on all the scenarios is:
 
 $$
 \begin{aligned}
-    \overline{\mathbf{u}} &= \sum_{s \in \Omega} p_s \mathbf{u}_s \\
-    \theta &= \sum_{s \in \Omega} p_s \mathbf{w}_s \\
+    \overline{\mathbf{u}} &= \sum_{s \in \Omega} p_s \mathbf{u}_s
 \end{aligned}
 $$
 
