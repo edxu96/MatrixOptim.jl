@@ -136,7 +136,7 @@ $$
 
 If the sub problem is unbounded, then the original problem with the chosen integer variable values is infeasible. So we add a constraint to the main problem, a.k.a. a **feasibility cut**, which makes such a choice impossible in the next run.
 
-extreme ray
+The sub problem does not have a solution, so we need to solve a modified version of its dual problem (to find extreme rays):
 
 $$
 \begin{aligned}
