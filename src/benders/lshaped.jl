@@ -24,11 +24,10 @@ function solve_main!(m, vec_y, e1_mat, e2, is_sub_feasible::Bool)::Float64
     q = variable_by_name(m, "q")
 
     if is_sub_feasible
-        @constraint(m, (e1_mat*vec_y)[1] + q >= e2)
+        @constraint(m, (e1_mat * vec_y)[1] + q >= e2)
     else
-        ## Add feasible cut Constraints
-        @constraint(m, (e1_mat*vec_y)[1] >= e2)
-        @constraint(m, (e1_mat*vec_y)[1] + q >= e2)
+        @constraint(m, (e1_mat * vec_y)[1] >= e2)
+        @constraint(m, (e1_mat * vec_y)[1] + q >= e2)
     end
 
     optimize!(m)
@@ -37,8 +36,7 @@ end
 
 
 "First two variables are updated."
-function solve_sub!(vec_ubar, obj_sub, vec_ybar, n_constraint, vec_h, mat_t,
-    mat_w, vec_c)
+function solve_sub(vec_ybar, n_constraint, vec_h, mat_t, mat_w, vec_c)
 
     model_sub = Model(GLPK.Optimizer)
     @variable(model_sub, vec_u[1:n_constraint] >= 0)
@@ -68,7 +66,7 @@ function solve_sub!(vec_ubar, obj_sub, vec_ybar, n_constraint, vec_h, mat_t,
         vec_result_x = hcat(repeat([NaN], length(vec_c)))
     end
 
-    return bool_sub, vec_result_x
+    return bool_sub, vec_result_x, vec_ubar, obj_sub
 end
 
 
@@ -76,7 +74,7 @@ end
 Solve the sub-problem with ray.
   First two variables are updated.
 """
-function solve_ray!(vec_ubar, obj_ray, vec_ybar, n_constraint, vec_h, mat_t,
+function solve_ray(vec_ybar, n_constraint, vec_h, mat_t,
     mat_w)
 
     model_ray = Model(GLPK.Optimizer)
@@ -87,15 +85,14 @@ function solve_ray!(vec_ubar, obj_ray, vec_ybar, n_constraint, vec_h, mat_t,
     optimize!(model_ray)
 
     print("  Ray Problem\n")
-    vec_ubar = value.(vec_u)
-    obj_ray = objective_value(model_ray)
+    return value.(vec_u), objective_value(model_ray)
 end
 
 
 """
 L-Shaped decomposition for stochastic programming without integer variables in the second stage.
 """
-function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
+function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h,
     mat3_t, mat3_w, epsilon=1e-6, timesIterationMax=100)
 
     println("Begin L-Shaped Benders Decomposition")
@@ -131,22 +128,21 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
             ## 1. Solve sub/ray problem for each scenario
             is_sub_feasible = trues(num_s)
             for s = 1:num_s
-                is_sub_feasible[s], vec_result_x[s, :, :] = solve_sub!(mat_uBar[s, :, :],
-                    obj_sub_s[s], vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :],
-                    mat3_w[s, :, :], mat_c[s, :, :])
+                is_sub_feasible[s], vec_result_x[s, :, :], mat_uBar[s, :, :], obj_sub_s[s] = solve_sub(
+                    vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :], mat_c[s, :, :])
 
                 if !(is_sub_feasible[s])
-                    solve_ray!(mat_uBar[s, :, :], obj_sub_s[s], vec_ybar, n_constraint,
-                        mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :])
+                    mat_uBar[s, :, :], obj_sub_s[s]= solve_ray(
+                        vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :])
                 end
             end
-            obj_sub = (transpose(vec_pi)*obj_sub_s)[1]
+            obj_sub = (transpose(probabilities)*obj_sub_s)[1]
             ub = min(ub, obj_sub + (transpose(vec_f)*vec_ybar)[1])
 
             ## 2. Add optimal cut to master problem
-            e1_mat = sum(vec_pi[s] * (transpose(mat_uBar[s, :])*mat3_t[s, :, :])[1]
+            e1_mat = sum(probabilities[s] * (transpose(mat_uBar[s, :])*mat3_t[s, :, :])[1]
                          for s = 1:num_s)
-            e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :])*mat_h[s, :])[1] for
+            e2 = sum(probabilities[s] * (transpose(mat_uBar[s, :])*mat_h[s, :])[1] for
                      s = 1:num_s)
 
             obj_mas = solve_main!(mod_mas, vec_y, e1_mat, e2, is_sub_feasible[1])
