@@ -211,7 +211,7 @@ So, each sub problem is solved as follows:
 
 $$
 \begin{aligned}
-    \max_{x_s \forall s in \mathcal{S}, y} \quad & \sum_s \pi_s (p - h) x_s + \sum_s \pi_s (h - c) y \\
+    \max_{x_s \forall s \in \mathcal{S}, y} \quad & \sum_s \pi_s (p - h) x_s + \sum_s \pi_s (h - c) y \\
     \text{s.t.} \quad & x_s \leq D_s \quad \forall s \in \mathcal{S} \\
     & x_s \leq y \quad \forall s \in \mathcal{S} \\
     & x \in \mathbb{R}^+ \\
@@ -256,7 +256,7 @@ $$
 
 ## Analysis
 
-### Compare deterministic formulation with stochastic one
+### Compare formulations
 
 For a stochastic programming problem, it is a good idea to compare with the deterministic formulation. As mentioned before, $\mathscr{Q}(\mathbf{y})$ is simplified in that formulation.
 
