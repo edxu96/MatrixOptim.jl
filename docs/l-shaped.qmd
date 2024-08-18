@@ -6,14 +6,14 @@ author: "Edward Xu"
 ## Two-stage stochastic programming problem
 
 | Symbol         | Type                           | Definition                                    | Note                                                     |
-|------|------------|---------------|----------------------|
+|---------------|---------------|-----------------|-------------------------|
 | $\mathbf{y}$   | vector of integer variables    | variables in the first stage                  | The continuous variables in the first stage are omitted. |
 | $\mathbf{x}_s$ | vector of continuous variables | variables in the second stage of scenario $s$ |                                                          |
 
 : Symbols and definitions of decision variables
 
 | Symbol        | Definition                                         | Note |
-|------|----------------------------------------------------|------|
+|---------------|----------------------------------------------------|------|
 | $\mathcal{S}$ | scenarios                                          |      |
 | $\mathbf{Y}$  | possible values of the vector of integer variables |      |
 
@@ -36,7 +36,7 @@ $$
 $$ {#eq-2-stage-stochastic}
 
 | $\mathbf{y}$   | $\mathbf{x}_1$ | $\mathbf{x}_2$ | $\ldots$ | $\mathbf{x}_S$ | right-hand side |
-|--|--|--|--|--|----|
+|------------|------------|------------|------------|------------|--------------|
 | $\mathbf{A}$   |                |                |          |                | $\mathbf{b}$    |
 | $\mathbf{T}_1$ | $\mathbf{W}_1$ |                |          |                | $\mathbf{h}_1$  |
 | $\mathbf{T}_2$ |                | $\mathbf{W}_2$ |          |                | $\mathbf{h}_2$  |
@@ -155,3 +155,16 @@ $$
 ## Compare deterministic formulation with stochastic one
 
 ## Risk aversion
+
+## Example
+
+### Newsvendor problem
+
+| Iteration | Upper bound | Lower bound | Objective function value of main problem | Value of theta | Sub or ray problem | Objective function value of sub/ray problem |
+|------|--------|--------|-----------------|-------|-----------|-----------------|
+| 1         | 0.0         | -1500.0     | -1500.0                                  | -1800.0        | sub                | 0.0                                         |
+| 2         | -960.0      | -1050.0     | -1050.0                                  | -1260.0        | sub                | -1260.0                                     |
+| 3         | -960.0      | -1004.0     | -1004.0                                  | -1254.0        | sub                | -1134.0                                     |
+| 4         | -971.0      | -981.0      | -981.0                                   | -1251.0        | sub                | -1221.0                                     |
+| 5         | -975.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1245.0                                     |
+| 6         | -976.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1236.0                                     |

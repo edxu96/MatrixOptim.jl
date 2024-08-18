@@ -44,7 +44,6 @@ function solve_sub(vec_ybar, n_constraint, vec_h, mat_t, mat_w, vec_c)
     cons_dual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
     optimize!(model_sub)
 
-    print("  Sub Problem")
     vec_ubar = value.(vec_u)
     status = termination_status(model_sub)
 
@@ -84,7 +83,6 @@ function solve_ray(vec_ybar, n_constraint, vec_h, mat_t,
     @constraint(model_ray, transpose(mat_w) * vec_u .<= 0)
     optimize!(model_ray)
 
-    print("  Ray Problem\n")
     return value.(vec_u), objective_value(model_ray)
 end
 
