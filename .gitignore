@@ -1,6 +1,7 @@
 
 cookbook/*.pdf
 docs/product.qmd
+docs/l-shaped-slides.qmd
 docs/*.html
 _output/
 
