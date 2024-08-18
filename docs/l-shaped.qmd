@@ -80,7 +80,7 @@ The main problem is:
 
 $$
 \begin{aligned}
-    \min_{\mathbf{y}} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
+    \min_{\mathbf{y}, $\theta$} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
     & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
@@ -91,8 +91,6 @@ $$
 $$
 
 which is a relaxed problem of @eq-2-stage-stochastic, because not all the original constraints are considered. So every solution might result in a new lower bound.
-
-$\theta$
 
 ### Optimality cut
 
