@@ -1,9 +1,9 @@
 name = "MatrixOptim"
 uuid = "cccf0e64-bc08-11e9-3692-c1021c9b9532"
 license = "GNU GPL 3"
-desc = "Decision Making under Uncertainty in Matrix"
+desc = "Decision making under uncertainty using matrices."
 authors = ["Edward Xu <edxu96@outlook.com>"]
-version = "0.2.2"
+version = "0.3.0"
 
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
@@ -11,6 +11,7 @@ GLPK = "60bf3e95-4087-53dc-ae20-288a0d20c6a6"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
 JuliaFormatter = "98e50ef6-434e-11e9-1051-2b60c6c9e899"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 PrettyTables = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
