@@ -183,8 +183,6 @@ $$
 - $h = 10$ : Scrap value for the newsboy, for newspapers he does not manage to sell.
 - $D_s$ : Demand of newspapers in scenario $s$.
 
-The formulation is:
-
 $$
 \begin{aligned}
     \max_{x_s \forall s in \mathcal{S}, y} \quad & \sum_s \pi_s (p - h) x_s + \sum_s \pi_s (h - c) y \\
@@ -205,6 +203,30 @@ $$
 | 6         | -976.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1236.0                                                         |
 
 : Detailed result of 6 iterations.
+
+### Day-ahead market and balancing market
+
+- $\mathcal{S}$: Set of scenarios.
+- $\lambda^D$: Electricity price of the day-ahead market.
+- $\lambda^{+}$: Selling electricity price of the balancing market.
+- $\lambda^{-}$: Purchasing electricity price of the balancing market.
+- $\bar{P}$: Capacity of the wind farm.
+- $W_s$: Wind power production in scenario $s$.
+- $\pi_s$: Probability of scenario $s$.
+- $p^D$: Power sold on the day-ahead market.
+- $p^{+}$: Excess production sold on the balancing market.
+- $p^{-}$: Missing production bought on the balancing market.
+
+$$
+\begin{aligned}
+    \max \quad & \lambda^D p^D
+        + \sum_{s \in \mathcal{S}} \pi_s\left(\lambda^+ p_s^+
+        - \lambda^- p_s^-\right) \\
+    \text{s.t.} \quad & p^D \leq \bar{P} \\
+    & W_s-p^D=p_s^+-p_s^- \\
+    & p^D, p_s^+, p_s^- \in \mathbb{R}^+
+\end{aligned}
+$$
 
 ## Analysis
 
