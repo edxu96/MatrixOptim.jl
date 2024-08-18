@@ -54,7 +54,7 @@ function solve_sub(vec_ybar, n_constraint, vec_h, mat_t, mat_w, vec_c)
         obj_sub = objective_value(model_sub)
         vec_result_x = repeat([NaN], length(vec_c))
     elseif status == JuMP.INFEASIBLE
-        throw(ErrorException("The original problem unbounded."))
+        throw(ErrorException("The original problem is unbounded."))
     else
         throw(ErrorException("Unexpected termination status of a sub problem."))
     end
