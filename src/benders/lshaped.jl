@@ -1,41 +1,28 @@
-## L-Shaped Benders Decomposition for Stochastic Programming
-## Edward J. Xu <edxu96@outlook.com>
-## August 11, 2019
 
+module LShaped
 
-"MILP model for L-Shaped Benders decomposition (LSBD) in matrix form."
-mutable struct ModelLSBD
-  n_x
-  vec_min_y
-  vec_max_y
-  vec_c
-  vec_f
-  vec_b
-  mat_aCap
-  mat_bCap
-  solution::Union{Solution, Missing}
+using JuMP
+using GLPK
+using LinearAlgebra
+using Random
+using SparseArrays
+using PrettyTables
 
-  function ModelLSBD(
-      vec_min_y::Array{Int64,1}, vec_max_y::Array{Int64,1},
-      vec_c::Array{Int64,2}, vec_b::Array{Int64,2},
-      vec_f::Array{Int64,2}, mat_aCap::Array{Int64,2},
-      mat_bCap::Array{Int64,2}
-      )
-    checkListLength(vec_min_y, vec_max_y, 'vec_min_y', 'vec_max_y')
-    check_col_vec(vec_c, "vec_c")
-    check_col_vec(vec_f, "vec_f")
-    check_col_vec(vec_b, "vec_b")
-    check_mat_match(vec_c, mat_aCap, row, col, "vec_c", "mat_aCap")
-    check_mat_match(vec_f, mat_bCap, row, col, "vec_f", "mat_bCap")
-    check_mat_match(mat_aCap, mat_bCap, row, row, "mat_aCap", "mat_bCap")
-    check_mat_match(mat_aCap, vec_b, row, row, "mat_aCap", "vec_b")
-    new(vec_c, mat_aCap, vec_f, mat_bCap, vec_b, missing)
-  end
+function set_mod_mas(n_y::Int64, vec_min_y::Matrix, vec_max_y::Matrix, vec_f::Matrix)
+  	expr = Model(GLPK.Optimizer)
+    @variable(expr, q)
+    @variable(expr, vec_y[1: n_y], Int)
+    @objective(expr, Min, (transpose(vec_f) * vec_y)[1] + q)
+    @constraint(expr, vec_y[1: n_y] .<= vec_max_y)
+    @constraint(expr, vec_y[1: n_y] .>= vec_min_y)
+
+	return expr, vec_y
 end
 
-
 "First two variables are updated."
-function solve_master!(obj_mas, model_mas, e1_mat, e2, opt_cut::Bool)
+function solve_master!(model_mas, vec_y, e1_mat, e2, opt_cut::Bool)::Float64
+	q = variable_by_name(model_mas, "q")
+
   if opt_cut
     @constraint(model_mas, (e1_mat * vec_y)[1] + q >= e2)
   else
@@ -45,7 +32,7 @@ function solve_master!(obj_mas, model_mas, e1_mat, e2, opt_cut::Bool)
   end
 
   optimize!(model_mas)
-  obj_mas = objective_value(model_mas)
+  return objective_value(model_mas)
 end
 
 
@@ -53,33 +40,35 @@ end
 function solve_sub!(vec_ubar, obj_sub, vec_ybar, n_constraint, vec_h , mat_t,
     mat_w, vec_c)
 
-  model_sub = Model(with_optimizer(GLPK.Optimizer))
-  @variable(model_sub, vec_u[1: n_constraint] >= 0)
-  @objective(model_sub, Max, (transpose(vec_h - mat_t * vec_ybar) * vec_u)[1])
-  cons_dual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
-  sol = optimize!(model_sub)
+	model_sub = Model(GLPK.Optimizer)
+	@variable(model_sub, vec_u[1: n_constraint] >= 0)
+	@objective(model_sub, Max, (transpose(vec_h - mat_t * vec_ybar) * vec_u)[1])
+	cons_dual = @constraint(model_sub, transpose(mat_w) * vec_u .<= vec_c)
+	optimize!(model_sub)
 
-  print("  Sub Problem")
-  vec_ubar = value.(vec_u)
-  if sol == :OPTIMAL
-    bool_sub = true
-    obj_sub = objective_value(model_sub)
-    vec_result_x = dual(cons_dual)
-  elseif sol == :DUAL_INFEASIBLE # ???
-    print("Not solved optimally because the feasible set is unbounded.\n")
-    bool_sub = false
-    obj_sub = objective_value(model_sub)
-    vec_result_x = repeat([NaN], length(vec_c))
-  elseif sol == :INFEASIBLE
-    print("Not solved optimally because of infeasibility. Something is ",
-      "wrong.\n")
-    bool_sub = false
-    obj_sub = NaN
-    vec_ubar = hcat(vec_ubar)
-    vec_result_x = hcat(repeat([NaN], length(vec_c)))
-  end
+	print("  Sub Problem")
+	vec_ubar = value.(vec_u)
+	status = termination_status(model_sub)
 
-  return bool_sub, vec_result_x
+	if status == JuMP.OPTIMAL
+		bool_sub = true
+		obj_sub = objective_value(model_sub)
+		vec_result_x = dual.(cons_dual)
+	elseif status == JuMP.DUAL_INFEASIBLE # ???
+		print("Not solved optimally because the feasible set is unbounded.\n")
+		bool_sub = false
+		obj_sub = objective_value(model_sub)
+		vec_result_x = repeat([NaN], length(vec_c))
+	elseif status == JuMP.INFEASIBLE
+		print("Not solved optimally because of infeasibility. Something is ",
+		"wrong.\n")
+		bool_sub = false
+		obj_sub = NaN
+		vec_ubar = hcat(vec_ubar)
+		vec_result_x = hcat(repeat([NaN], length(vec_c)))
+	end
+
+	return bool_sub, vec_result_x
 end
 
 
@@ -90,7 +79,7 @@ Solve the sub-problem with ray.
 function solve_ray!(vec_ubar, obj_ray, vec_ybar, n_constraint, vec_h, mat_t,
     mat_w)
 
-  model_ray = Model(with_optimizer(GLPK.Optimizer))
+  model_ray = Model(GLPK.Optimizer)
   @variable(model_ray, vec_u[1: n_constraint] >= 0)
   @objective(model_ray, Max, 1)
   @constraint(model_ray, (transpose(vec_h - mat_t * vec_ybar) * vec_u)[1] == 1)
@@ -100,6 +89,19 @@ function solve_ray!(vec_ubar, obj_ray, vec_ybar, n_constraint, vec_h, mat_t,
   print("  Ray Problem\n")
   vec_ubar = value.(vec_u)
   obj_ray = objective_value(model_ray)
+end
+
+
+function check_whe_continue(boundUp, boundLow, epsilon, result_q, obj_sub,
+	timesIteration, timesIterationMax)
+whe_continue = true
+if (boundUp - boundLow <= epsilon) & (boundUp - boundLow >= - epsilon)
+	if (result_q - obj_sub <= epsilon) & (result_q - obj_sub >= - epsilon)
+		whe_continue = false
+	end
+end
+
+return (timesIteration <= timesIterationMax) && whe_continue
 end
 
 
@@ -114,7 +116,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
   n_y = length(vec_min_y)
   num_s = length(mat3_t[:, 1, 1])
   n_constraint = length(mat3_w[1, :, 1])
-  mod_mas = set_mod_mas(n_y, vec_min_y, vec_max_y)
+  mod_mas, vec_y = set_mod_mas(n_y, vec_min_y, vec_max_y, vec_f)
 
   let
     ub = Inf  # upper bound
@@ -136,9 +138,9 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
     dict_lb = Dict()
 
     # Must make sure "result_q == obj_sub" in the final iteration
-    # while ((ub - lb > epsilon) && (timesIteration <= timesIterationMax))  !!!
-    while check_whe_continue(ub, lb, epsilon, result_q, obj_sub,
-        timesIteration, timesIterationMax)
+    while ((ub - lb > epsilon) && (timesIteration <= timesIterationMax))  !!!
+    # while check_whe_continue(ub, lb, epsilon, result_q, obj_sub,
+    #     timesIteration, timesIterationMax)
       ## 1. Solve sub/ray problem for each scenario
       bool_sub_s = trues(num_s)
       for s = 1: num_s
@@ -160,12 +162,13 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
       e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :]) * mat_h[s, :])[1] for
         s = 1: num_s)
 
-      solve_master!(obj_mas, e1_mat, e2, bool_sub_s[1])
+	obj_mas = solve_master!(mod_mas, vec_y, e1_mat, e2, bool_sub_s[1])
       vec_ybar = value.(vec_y)
 
       ## 3. Compare the bounds and decide whether to stop
       lb = max(lb, obj_mas)
-      result_q = value.(q)
+
+      result_q = value(variable_by_name(mod_mas, "q"))
 
       dict_ub[timesIteration] = ub
       dict_lb[timesIteration] = lb
@@ -187,7 +190,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
       timesIteration += 1
     end
 
-    println("obj_mas: $(objective_value(model_mas))")
+    println("obj_mas: $(objective_value(mod_mas))")
     println("-------------------------------------------------------------------------\n",
         "------------------------------ 2/4. Result ------------------------------\n",
         "-------------------------------------------------------------------------")
@@ -195,7 +198,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
         "difference: $(round(ub - lb, digits = 5))")
     println("vec_x: $vec_result_x")
     vec_result_y = value.(vec_y)
-    result_q = value.(q)
+	result_q = value(variable_by_name(mod_mas, "q"))
     println("vec_y: $vec_result_y")
     println("result_q: $result_q")
 
@@ -227,11 +230,10 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
     table_iterationResult = hcat(seq_timesIteration, vec_ub, vec_lb,
       vec_obj_mas, vec_q, vec_type, obj_sub_sRay)
     pretty_table(table_iterationResult,
-      ["Seq", "ub", "lb", "obj_mas", "q", "sub/ray", "obj_sub/ray"],
-      compact; alignment=:l)
+      ; alignment=:l, header=["Seq", "ub", "lb", "obj_mas", "q", "sub/ray", "obj_sub/ray"])
   end
+end
 
-  println("-------------------------------------------------------------------------\n",
-      "-------------------------- 4/4. Nominal Ending --------------------------\n",
-      "-------------------------------------------------------------------------\n")
+export lshaped
+
 end

@@ -2,7 +2,9 @@
 # Author: Edward J. Xu, edxu96@outlook.com
 # Date: April 5th, 2019
 
-function get_data()
+using MatrixOptim
+
+function main()
     demand = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30] # Demand of newspapers in each scenario
     lengthS = length(demand)
     vec_prob = [0.05, 0.10, 0.10, 0.10, 0.15, 0.15, 0.10, 0.10, 0.10, 0.05 ] # probability of scenario
@@ -34,14 +36,19 @@ function get_data()
     mat3_w = - ones(10, 2, 1)
     epsilon = 0.001
     timesIterationMax = 500
-    return
+
+    lshaped(
+        n_x=n_x,
+        vec_min_y=vec_min_y,
+        vec_max_y=vec_max_y,
+        vec_f=vec_f,
+        vec_pi=vec_pi,
+        mat_c=mat_c,
+        mat_h=mat_h,
+        mat3_t=mat3_t,
+        mat3_w=mat3_w,
+        epsilon=epsilon,
+        timesIterationMax=timesIterationMax)
 end
 
-
-function main()
-    
-    BendersLshaped(; n_x = n_x, n_y = n_y, vec_min_y = vec_min_y, vec_max_y = vec_max_y, vec_f = vec_f,
-        vec_pi = vec_pi, mat_c = mat_c, mat_h = mat_h, mat3_t = mat3_t, mat3_w = mat3_w,
-        epsilon = epsilon, timesIterationMax = timesIterationMax)
-    # answer: obj = - 976
-end
+main()
