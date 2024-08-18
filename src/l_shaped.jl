@@ -19,8 +19,7 @@ function set_model_main(n_y::Int64, vec_min_y::Matrix, vec_max_y::Matrix, vec_f:
     return m, vec_y
 end
 
-"First two variables are updated."
-function solve_main!(m, vec_y, e1_mat, e2, is_sub_feasible::Bool)::Float64
+function solve_main(m, vec_y, e1_mat, e2, is_sub_feasible::Bool)::Float64
     q = variable_by_name(m, "q")
 
     if is_sub_feasible
@@ -34,8 +33,6 @@ function solve_main!(m, vec_y, e1_mat, e2, is_sub_feasible::Bool)::Float64
     return objective_value(m)
 end
 
-
-"First two variables are updated."
 function solve_sub(vec_ybar, n_constraint, vec_h, mat_t, mat_w, vec_c)
 
     model_sub = Model(GLPK.Optimizer)
@@ -68,11 +65,6 @@ function solve_sub(vec_ybar, n_constraint, vec_h, mat_t, mat_w, vec_c)
     return bool_sub, vec_result_x, vec_ubar, obj_sub
 end
 
-
-"""
-Solve the sub-problem with ray.
-  First two variables are updated.
-"""
 function solve_ray(vec_ybar, n_constraint, vec_h, mat_t,
     mat_w)
 
@@ -100,8 +92,8 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h
     mod_mas, vec_y = set_model_main(n_y, vec_min_y, vec_max_y, vec_f)
 
     let
-        ub = Inf  # upper bound
-        lb = -Inf  # lower bound
+        ub = Inf
+        lb = -Inf
 
         # initial value of master variables
         mat_uBar = zeros(num_s, n_constraint, 1)
@@ -143,7 +135,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, probabilities, mat_c, mat_h
             e2 = sum(probabilities[s] * (transpose(mat_uBar[s, :])*mat_h[s, :])[1] for
                      s = 1:num_s)
 
-            obj_mas = solve_main!(mod_mas, vec_y, e1_mat, e2, is_sub_feasible[1])
+            obj_mas = solve_main(mod_mas, vec_y, e1_mat, e2, is_sub_feasible[1])
             vec_ybar = value.(vec_y)
 
             ## 3. Compare the bounds and decide whether to stop
