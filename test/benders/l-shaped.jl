@@ -12,9 +12,8 @@ function main()
     p = 70 # selling price
     h = 10 # scrap value
     y = 20
-    # 2. Data Transfer -----------------------------------------------------------------------------------------------------
-    n_x = 10  # Number of all the x
-    n_y = 1
+
+    n_x = 10
     vec_min_y = hcat([0])
     vec_max_y = hcat([30])
     vec_f = hcat(c - 10)
@@ -42,7 +41,7 @@ function main()
         vec_min_y=vec_min_y,
         vec_max_y=vec_max_y,
         vec_f=vec_f,
-        vec_pi=vec_pi,
+        probabilities=vec_pi,
         mat_c=mat_c,
         mat_h=mat_h,
         mat3_t=mat3_t,
