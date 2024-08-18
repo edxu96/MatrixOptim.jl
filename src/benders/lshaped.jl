@@ -9,30 +9,30 @@ using SparseArrays
 using PrettyTables
 
 function set_model_main(n_y::Int64, vec_min_y::Matrix, vec_max_y::Matrix, vec_f::Matrix)
-    expr = Model(GLPK.Optimizer)
-    @variable(expr, q)
-    @variable(expr, vec_y[1:n_y], Int)
-    @objective(expr, Min, (transpose(vec_f) * vec_y)[1] + q)
-    @constraint(expr, vec_y[1:n_y] .<= vec_max_y)
-    @constraint(expr, vec_y[1:n_y] .>= vec_min_y)
+    m = Model(GLPK.Optimizer)
+    @variable(m, q)
+    @variable(m, vec_y[1:n_y], Int)
+    @objective(m, Min, (transpose(vec_f) * vec_y)[1] + q)
+    @constraint(m, vec_y[1:n_y] .<= vec_max_y)
+    @constraint(m, vec_y[1:n_y] .>= vec_min_y)
 
-    return expr, vec_y
+    return m, vec_y
 end
 
 "First two variables are updated."
-function solve_main!(model_main, vec_y, e1_mat, e2, opt_cut::Bool)::Float64
-    q = variable_by_name(model_main, "q")
+function solve_main!(m, vec_y, e1_mat, e2, is_sub_feasible::Bool)::Float64
+    q = variable_by_name(m, "q")
 
-    if opt_cut
-        @constraint(model_main, (e1_mat*vec_y)[1] + q >= e2)
+    if is_sub_feasible
+        @constraint(m, (e1_mat*vec_y)[1] + q >= e2)
     else
         ## Add feasible cut Constraints
-        @constraint(model_main, (e1_mat*vec_y)[1] >= e2)
-        @constraint(model_main, (e1_mat*vec_y)[1] + q >= e2)
+        @constraint(m, (e1_mat*vec_y)[1] >= e2)
+        @constraint(m, (e1_mat*vec_y)[1] + q >= e2)
     end
 
-    optimize!(model_main)
-    return objective_value(model_main)
+    optimize!(m)
+    return objective_value(m)
 end
 
 
@@ -129,13 +129,13 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
         while ((ub - lb > epsilon) && (timesIteration <= timesIterationMax))
 
             ## 1. Solve sub/ray problem for each scenario
-            is_model_sub_feasible = trues(num_s)
+            is_sub_feasible = trues(num_s)
             for s = 1:num_s
-                is_model_sub_feasible[s], vec_result_x[s, :, :] = solve_sub!(mat_uBar[s, :, :],
+                is_sub_feasible[s], vec_result_x[s, :, :] = solve_sub!(mat_uBar[s, :, :],
                     obj_sub_s[s], vec_ybar, n_constraint, mat_h[s, :, :], mat3_t[s, :, :],
                     mat3_w[s, :, :], mat_c[s, :, :])
 
-                if !(is_model_sub_feasible[s])
+                if !(is_sub_feasible[s])
                     solve_ray!(mat_uBar[s, :, :], obj_sub_s[s], vec_ybar, n_constraint,
                         mat_h[s, :, :], mat3_t[s, :, :], mat3_w[s, :, :])
                 end
@@ -149,7 +149,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
             e2 = sum(vec_pi[s] * (transpose(mat_uBar[s, :])*mat_h[s, :])[1] for
                      s = 1:num_s)
 
-            obj_mas = solve_main!(mod_mas, vec_y, e1_mat, e2, is_model_sub_feasible[1])
+            obj_mas = solve_main!(mod_mas, vec_y, e1_mat, e2, is_sub_feasible[1])
             vec_ybar = value.(vec_y)
 
             ## 3. Compare the bounds and decide whether to stop
@@ -163,7 +163,7 @@ function lshaped(; n_x, vec_min_y, vec_max_y, vec_f, vec_pi, mat_c, mat_h,
             dict_obj_sub[timesIteration] = obj_sub
             dict_q[timesIteration] = result_q
 
-            if is_model_sub_feasible[1]
+            if is_sub_feasible[1]
                 println("------------------ Result in $(timesIteration)-th Iteration with Sub ",
                     "-------------------\n", "ub: $(round(ub, digits = 5)), ",
                     "lb: $(round(lb, digits = 5)), obj_mas: $(round(obj_mas, digits = 5)), ",
