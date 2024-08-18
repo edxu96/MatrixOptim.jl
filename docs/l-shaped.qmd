@@ -5,18 +5,18 @@ author: "Edward Xu"
 
 ## Two-stage stochastic programming problem
 
-| Symbol        | Definition                                         | Note |
+| Set           | Definition                                         | Note |
 |---------------|----------------------------------------------------|------|
 | $\mathcal{S}$ | scenarios                                          |      |
 | $\mathbf{Y}$  | possible values of the vector of integer variables |      |
 
-: Definitions and notes of symbols.
+: Definitions and notes of sets.
 
 The standard form of a two-stage stochastic programming problem (without integer variable in the second stage) is:
 
 $$
 \begin{aligned}
-    \min \quad & \mathbf{f}^\top \mathbf{y} +
+    \min_{\mathbf{y}, \forall \mathbf{x}_s \in \mathcal{S}} \quad & \mathbf{f}^\top \mathbf{y} +
         \sum_{s \in \mathcal{S}} p_s \mathbf{c}_s^\top \mathbf{x}_s \\
     \text{s.t.} \quad & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
     & \mathbf{y} \in \mathbf{Y} \\
@@ -34,14 +34,14 @@ It can be formulated to the deterministic equivalent problem (DEP) with $\mathsc
 
 $$
 \begin{aligned}
-    \min \quad & \mathbf{f}^\top \mathbf{y} +
+    \min_{\mathbf{y}, \forall \mathbf{x}_s \in \mathcal{S}} \quad & \mathbf{f}^\top \mathbf{y} +
         \mathscr{Q}(\mathbf{y}) \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & \mathbf{A} \mathbf{y} \geq \mathbf{b}
 \end{aligned}
 $$ {#eq-2-stage-stochastic-2}
 
-For the sake of clearity, $\overline{\mathbf{y}}$ can represent a given value of $\mathbf{y}$:
+For the sake of clearity, $\overline{\mathbf{y}}$ can represent a given value of $\mathbf{y}$, then the function becomes:
 
 $$
 \mathscr{Q}(\overline{\mathbf{y}}) = \mathrm{E}_{s \in \mathcal{S}}
@@ -49,7 +49,9 @@ $$
         + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
 $$
 
-$\mathscr{Q}(\overline{\mathbf{y}})$ can be easily calcuated in the corresponding deterministic formulation, but it will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
+In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\overline{\mathbf{y}})$ to be easy, so there is no the second stage variables in the formulation.
+
+It will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
 
 ## L-shaped decomposition
 
