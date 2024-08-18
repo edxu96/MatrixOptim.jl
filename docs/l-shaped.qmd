@@ -60,15 +60,15 @@ $$
 \end{aligned}
 $$ {#eq-2-stage-stochastic-2}
 
-For the sake of clearity, $\overline{\mathbf{y}}$ can represent a given value of $\mathbf{y}$, then the function becomes:
+where:
 
 $$
-\mathscr{Q}(\overline{\mathbf{y}}) = \mathrm{E}_{s \in \mathcal{S}}
+\mathscr{Q}(\mathbf{y}) = \mathrm{E}_{s \in \mathcal{S}}
     \left[ \min_{x_s} \left\{ c_s^\top x_s | \mathbf{T}_s \overline{\mathbf{y}}
         + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
 $$
 
-In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\overline{\mathbf{y}})$ to be easy, so there is no the second stage variables in that formulation.
+In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\mathbf{y})$ to be easy, so there is no the second stage variables in that formulation.
 
 It will be obtained iteratively in the L-shaped decomposition, together with iteratively added optimality cuts and feasibility cuts.
 
@@ -76,9 +76,10 @@ It will be obtained iteratively in the L-shaped decomposition, together with ite
 
 ### Iteratively
 
--   If the sub problem is feasible, will consider its values of the dual variables.
--   If the sub problem is unbounded, will solve a modified version of its dual problem, to find the extreme ray.
--   If the sub problem is infeasible, will stop the iteration, because the original problem is unbounded.
+1. Solve the main problem to get $\overline{\mathbf{y}}$ (a set of candidate variable values of the first stage) and the latest lower bound.
+2. Based on $\overline{\mathbf{y}}$, solve all the sub problems to get an optimality or a feasibility cut and the upper bound.
+3. If two bounds are close enough, stop.
+4. Add the cut to the main problem, and start the first step of a new iteration.
 
 ### Main problem
 
@@ -99,7 +100,7 @@ $$
 
 Not all the original constraints are considered, but new cuts will be added in each iteration. Every solution of the main problem might result in a new lower bound.
 
-### Optimality cut
+### Sub problems
 
 The sub problem of scenario $s$ is:
 
@@ -132,6 +133,17 @@ $$
 \end{aligned}
 $$
 
+$\mathbf{f}^\top \overline{\mathbf{y}} + \overline{\mathbf{u}}$ might be the upper bound of the original problem.
+
+### Optimality cut
+
+The new optimality cut will be:
+
+$$
+{\overline{\mathbf{u}}}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+        \leq \theta
+$$
+
 ### Feasibility cut
 
 If the sub problem is unbounded, then the original problem with the chosen integer variable values is infeasible. So we add a constraint to the main problem, a.k.a. a **feasibility cut**, which makes such a choice impossible in the next run.
@@ -147,6 +159,12 @@ $$
 \end{aligned}
 $$
 
+So, each sub problem is solved as follows:
+
+-   If the sub problem is feasible, will consider its values of the dual variables.
+-   If the sub problem is unbounded, will solve a modified version of its dual problem, to find the extreme ray.
+-   If the sub problem is infeasible, will stop the iteration, because the original problem is unbounded.
+
 ### Convergence criteria
 
 If the current $\mathbf{y}$ candidate satisfies the optimality constraint to be added in the next iteration:
@@ -155,13 +173,27 @@ $$
 \left( \sum_{s \in \Omega} p_s \mathbf{u}_s \right)^\top (\mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}}) \leq 0
 $$
 
-## Compare deterministic formulation with stochastic one
-
-## Risk aversion
-
 ## Example
 
 ### Newsvendor problem
+
+- $\pi_s$ : Probability of scenario $s$.
+- $c = 20$ : Purchase cost for the newsboy.
+- $p = 70$ : Salesprice for the newsboy.
+- $h = 10$ : Scrap value for the newsboy, for newspapers he does not manage to sell.
+- $D_s$ : Demand of newspapers in scenario $s$.
+
+The formulation is:
+
+$$
+\begin{aligned}
+    \max_{x_s \forall s in \mathcal{S}, y} \quad & \sum_s \pi_s (p - h) x_s + \sum_s \pi_s (h - c) y \\
+    \text{s.t.} \quad & x_s \leq D_s \quad \forall s \in \mathcal{S} \\
+    & x_s \leq y \quad \forall s \in \mathcal{S} \\
+    & x \in \mathbb{R}^+ \\
+    & y \in \mathbb{Z}^+
+\end{aligned}
+$$
 
 | Iteration | Upper bound | Lower bound | Objective function value of main problem | Value of theta | Sub or ray problem | Expected value of objective function values of sub/ray problems |
 |-------|-------|-------|------------|---------|--------|-------------------|
@@ -171,3 +203,19 @@ $$
 | 4         | -971.0      | -981.0      | -981.0                                   | -1251.0        | sub                | -1221.0                                                         |
 | 5         | -975.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1245.0                                                         |
 | 6         | -976.0      | -976.0      | -976.0                                   | -1236.0        | sub                | -1236.0                                                         |
+
+: Detailed result of 6 iterations.
+
+## Analysis
+
+### Compare deterministic formulation with stochastic one
+
+For a stochastic programming problem, it is a good idea to compare with the deterministic formulation. As mentioned before, $\mathscr{Q}(\mathbf{y})$ is simplified in that formulation.
+
+### Benefits of decomposition
+
+Also, check if the decomposition brings significant benefits, in terms of computational time, complexity, and resources.
+
+### Risk aversion
+
+More risk management measures can be introduced in $\mathscr{Q}(\mathbf{y})$.
