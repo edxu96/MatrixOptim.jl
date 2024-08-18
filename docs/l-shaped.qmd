@@ -5,8 +5,15 @@ author: "Edward Xu"
 
 ## Two-stage stochastic programming problem
 
-| Set           | Definition                                         | Note |
-|---------------|----------------------------------------------------|------|
+| Symbol         | Type                           | Definition                                    | Note                                                     |
+|------|------------|---------------|----------------------|
+| $\mathbf{y}$   | vector of integer variables    | variables in the first stage                  | The continuous variables in the first stage are omitted. |
+| $\mathbf{x}_s$ | vector of continuous variables | variables in the second stage of scenario $s$ |                                                          |
+
+: Symbols and definitions of decision variables
+
+| Symbol        | Definition                                         | Note |
+|------|----------------------------------------------------|------|
 | $\mathcal{S}$ | scenarios                                          |      |
 | $\mathbf{Y}$  | possible values of the vector of integer variables |      |
 
@@ -28,7 +35,19 @@ $$
 \end{aligned}
 $$ {#eq-2-stage-stochastic}
 
-where $\mathbf{y}$ represents all the integer variables.
+| $\mathbf{y}$   | $\mathbf{x}_1$ | $\mathbf{x}_2$ | $\ldots$ | $\mathbf{x}_S$ | right-hand side |
+|--|--|--|--|--|----|
+| $\mathbf{A}$   |                |                |          |                | $\mathbf{b}$    |
+| $\mathbf{T}_1$ | $\mathbf{W}_1$ |                |          |                | $\mathbf{h}_1$  |
+| $\mathbf{T}_2$ |                | $\mathbf{W}_2$ |          |                | $\mathbf{h}_2$  |
+| $\vdots$       |                |                | $\ddots$ |                | $\vdots$        |
+| $\mathbf{T}_S$ |                |                |          | $\mathbf{W}_S$ | $\mathbf{h}_S$  |
+
+: Illustration of the block structure shown in the coefficient matrix.
+
+$\mathbf{y}$ is a vector of complicating variables, which make the decomposition a necessity.
+
+### Deterministic equivalent problem
 
 It can be formulated to the deterministic equivalent problem (DEP) with $\mathscr{Q}(\mathbf{y})$ represents the costs in the second stage, because of the first stage decision, $\mathbf{y}$:
 
@@ -61,7 +80,7 @@ The main problem is:
 
 $$
 \begin{aligned}
-    \min \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
+    \min_{\mathbf{y}} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
     & {\overline{\mathbf{u}}_j^r}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
