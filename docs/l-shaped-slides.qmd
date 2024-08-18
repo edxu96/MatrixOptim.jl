@@ -279,6 +279,50 @@ $$
 
 ---
 
+Convert the input to the standard format:
+
+```julia
+demand = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+probabilities = [0.05, 0.10, 0.10, 0.10, 0.15, 0.15, 0.10, 0.10, 0.10, 0.05 ]
+c = 20
+
+n_x = 10
+vec_min_y = hcat([0])
+vec_max_y = hcat([30])
+vec_f = hcat(c - 10)
+vec_pi = hcat(probabilities)
+mat_c = zeros(10, 1, 1)
+for i = 1:10
+    mat_c[i, :, :] = hcat([- 70 + 10])
+end
+mat_h = zeros(10, 2, 1)
+for i = 1: 10
+    mat_h[i, 1, :] = hcat(- demand[i])
+    mat_h[i, 2, :] = hcat(0)
+end
+mat3_t = zeros(10, 2, 1)
+for i = 1:10
+    mat3_t[i, 1, :] = hcat(0)
+    mat3_t[i, 2, :] = hcat(1)
+end
+mat3_w = - ones(10, 2, 1)
+
+lshaped(
+    n_x=n_x,
+    vec_min_y=vec_min_y,
+    vec_max_y=vec_max_y,
+    vec_f=vec_f,
+    probabilities=vec_pi,
+    mat_c=mat_c,
+    mat_h=mat_h,
+    mat3_t=mat3_t,
+    mat3_w=mat3_w)
+```
+
+to reuse the main procedure (inside `lshaped` in this case), which has been validated by known test cases.
+
+---
+
 ### Day-ahead market and balancing market
 
 - $\mathcal{S}$: Set of scenarios.

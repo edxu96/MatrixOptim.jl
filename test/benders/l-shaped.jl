@@ -5,19 +5,18 @@
 using MatrixOptim.LShaped
 
 function main()
-    demand = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30] # Demand of newspapers in each scenario
-    lengthS = length(demand)
-    vec_prob = [0.05, 0.10, 0.10, 0.10, 0.15, 0.15, 0.10, 0.10, 0.10, 0.05 ] # probability of scenario
-    c = 20 # purchase price
-    p = 70 # selling price
-    h = 10 # scrap value
+    demand = [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]
+    probabilities = [0.05, 0.10, 0.10, 0.10, 0.15, 0.15, 0.10, 0.10, 0.10, 0.05 ] # probability of scenario
+    c = 20  # purchase price
+    p = 70  # selling price
+    h = 10  # scrap value
     y = 20
 
     n_x = 10
     vec_min_y = hcat([0])
     vec_max_y = hcat([30])
     vec_f = hcat(c - 10)
-    vec_pi = hcat(vec_prob)
+    vec_pi = hcat(probabilities)
     mat_c = zeros(10, 1, 1)
     for i = 1:10
         mat_c[i, :, :] = hcat([- 70 + 10])
