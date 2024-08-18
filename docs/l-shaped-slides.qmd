@@ -57,9 +57,9 @@ where:
 
 $$
 \mathscr{Q}(\mathbf{y}) = \mathrm{E}_{s \in \mathcal{S}}
-    \left[ \min_{x_s} \left\{ c_s^\top x_s | \mathbf{T}_s \overline{\mathbf{y}}
-        + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
-$$
+    \left[ \min_{x_s} \left\{ c_s^\top x_s |
+        \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right\} \right]
+$$ {#eq-second-stage}
 
 - The deterministic formulation says $\mathscr{Q}(\mathbf{y})$ is easy.
 - Update iteratively in the L-shaped decomposition
@@ -75,13 +75,15 @@ $$
     \min_{\mathbf{y}, \theta} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
-    & {\overline{\mathbf{u}}_j}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+    & \mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_{s, j}}^\top
+        (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
         \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\
-    & {\overline{\mathbf{u}}_i}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+    & \mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_{s, i}}^\top
+        (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
         \leq \theta \quad \forall i \quad \text{(optimality cuts)} \\
     & \theta \in \mathbb{R}
 \end{aligned}
-$$
+$$ {#eq-main}
 
 - $\theta$ represents the cost of the second stage.
 - The objective function is the lower bound of @eq-2-stage-stochastic-2.
@@ -123,7 +125,7 @@ flowchart LR
 
 ### Sub problems
 
-The sub problem of scenario $s$ is:
+Exactly the same as @eq-second-stage:
 
 $$
 \begin{aligned}
@@ -134,8 +136,6 @@ $$
     & \mathbf{x}_s \geq 0
 \end{aligned}
 $$
-
----
 
 The expectation of $\overline{\mathbf{u}}$ based on all the scenarios is:
 
@@ -149,12 +149,17 @@ $\mathbf{f}^\top \overline{\mathbf{y}} + \overline{\mathbf{u}}$ might be the upp
 
 ### Optimality cut
 
-The new optimality cut will be:
+Add the new optimality cut:
 
 $$
-{\overline{\mathbf{u}}}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
-        \leq \theta
+\mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_s}^\top
+    (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
+    \leq 0
 $$
+
+to @eq-main.
+
+---
 
 ### Feasibility cut
 

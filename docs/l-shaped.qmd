@@ -64,9 +64,9 @@ where:
 
 $$
 \mathscr{Q}(\mathbf{y}) = \mathrm{E}_{s \in \mathcal{S}}
-    \left[ \min_{x_s} \left\{ c_s^\top x_s | \mathbf{T}_s \overline{\mathbf{y}}
-        + \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s \right\} \right]
-$$
+    \left[ \min_{x_s} \left\{ c_s^\top x_s |
+        \mathbf{W}_s \mathbf{x}_s \geq \mathbf{h}_s - \mathbf{T}_s \overline{\mathbf{y}} \right\} \right]
+$$ {#eq-second-stage}
 
 In contrast, the corresponding deterministic formulation assumes the calculation of $\mathscr{Q}(\mathbf{y})$ to be easy, so there is no the second stage variables in that formulation.
 
@@ -81,6 +81,29 @@ It will be obtained iteratively in the L-shaped decomposition, together with ite
 3. If two bounds are close enough, stop.
 4. Add the cut to the main problem, and start the first step of a new iteration.
 
+```{mermaid}
+flowchart LR
+    BEGIN --> main(main problem)
+    main --> candidate
+    candidate --> sub1(sub problem 1)
+    candidate --> sub2(sub problem 2)
+    main --> |lower bound| convergence{tolerance}
+    sub1 --> status1{solution status 1}
+    sub2 --> status2{solution status 2}
+    status1 -- feasible --> expectation
+    status2 -- feasible --> expectation
+    status1 -- infeasible --> END
+    status2 -- infeasible --> END
+    status1 -- unbounded --> ray1(modified dual 1)
+    status2 -- unbounded --> ray2(modified dual 2)
+    ray1 --> expectation
+    ray2 --> expectation
+    expectation -->|cuts| main
+    expectation --> |upper bound| convergence
+    convergence -- yes --> END
+    convergence -- no --> main
+```
+
 ### Main problem
 
 The main problem is a relaxed problem of @eq-2-stage-stochastic, with $\theta$ representing the cost of the second stage:
@@ -90,19 +113,21 @@ $$
     \min_{\mathbf{y}, \theta} \quad& \mathbf{f}^\top \mathbf{y} + \theta \\
     \text{s.t.} \quad & \mathbf{y} \in \mathbf{Y} \\
     & \mathbf{A} \mathbf{y} \geq \mathbf{b} \\
-    & {\overline{\mathbf{u}}_j}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+    & \mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_{s, j}}^\top
+        (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
         \leq 0 \quad \forall j \quad \text{(feasibility cuts)} \\
-    & {\overline{\mathbf{u}}_i}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
+    & \mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_{s, i}}^\top
+        (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
         \leq \theta \quad \forall i \quad \text{(optimality cuts)} \\
     & \theta \in \mathbb{R}
 \end{aligned}
-$$
+$$ {#eq-main}
 
 Not all the original constraints are considered, but new cuts will be added in each iteration. Every solution of the main problem might result in a new lower bound.
 
 ### Sub problems
 
-The sub problem of scenario $s$ is:
+The sub problem of scenario $s$ is exactly the same as @eq-second-stage:
 
 $$
 \begin{aligned}
@@ -140,8 +165,9 @@ $\mathbf{f}^\top \overline{\mathbf{y}} + \overline{\mathbf{u}}$ might be the upp
 The new optimality cut will be:
 
 $$
-{\overline{\mathbf{u}}}^\top (\mathbf{h}_s - \mathbf{T}_s \mathbf{y})
-        \leq \theta
+\mathrm{E}_{s \in \mathcal{S}} \left[ {\overline{\mathbf{u}}_s}^\top
+    (\mathbf{h}_s - \mathbf{T}_s \mathbf{y}) \right]
+    \leq 0
 $$
 
 ### Feasibility cut
